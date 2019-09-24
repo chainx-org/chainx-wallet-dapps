@@ -1,5 +1,5 @@
 {
-  "name": "chainx-dapps",
+  "name": "chainx-wallet-dapps",
   "private": true,
   "workspaces": [
     "packages/*"
