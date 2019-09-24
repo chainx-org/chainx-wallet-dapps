@@ -1,20 +1,40 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 import { configureStore } from 'redux-starter-kit'
 import { Provider } from 'react-redux'
 import rootReducer from './reducers'
+import { createGlobalStyle } from 'styled-components'
+
+const GlobalStyle = createGlobalStyle`
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+`
 
 const store = configureStore({
   reducer: rootReducer
 })
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <React.Fragment>
+    <GlobalStyle />
+    <Provider store={store}>
+      <GlobalStyle />
+      <App />
+    </Provider>
+  </React.Fragment>,
   document.getElementById('root')
 )
 
