@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import Card from '../components/Card'
 import styled from 'styled-components'
-import chainx from '../services/chainx'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAccountAssets, fetchAssetsInfo } from '../reducers/assetSlice'
 
@@ -19,22 +18,13 @@ export default function() {
   const assets = useSelector(state => state.assets)
   console.log('store assets:', assets)
 
-  const { asset } = chainx
-
-  asset
-    .getAssets(0, 100)
-    .then(resp => {
-      console.log('assets:', resp)
-    })
-    .catch(console.error)
-
   useEffect(() => {
     dispatch(fetchAccountAssets(address))
-  }, [asset, dispatch, address])
+  }, [dispatch, address])
 
   useEffect(() => {
     dispatch(fetchAssetsInfo())
-  }, [asset, dispatch])
+  }, [dispatch])
 
   return (
     <Card>
