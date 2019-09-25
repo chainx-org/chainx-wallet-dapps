@@ -23,6 +23,7 @@ body {
   background: #F0F1F2;
   min-width: 1280px;
   overflow-x: auto;
+  padding: 16px;
 }
 `
 
