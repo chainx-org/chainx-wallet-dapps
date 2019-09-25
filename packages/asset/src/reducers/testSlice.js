@@ -5,7 +5,7 @@ const testSlice = createSlice({
   initialState: 'test',
   reducers: {
     setTest: {
-      reducer(action) {
+      reducer(state, action) {
         console.log(action)
         const { text } = action.payload
         return text
