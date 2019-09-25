@@ -15,8 +15,6 @@ const InnerWrapper = styled.div`
 export default function() {
   const { address } = useSelector(state => state.address)
   const dispatch = useDispatch()
-  const assets = useSelector(state => state.assets)
-  console.log('store assets:', assets)
 
   useEffect(() => {
     dispatch(fetchAccountAssets(address))
