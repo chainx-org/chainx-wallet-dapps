@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setTest } from './reducers/testSlice'
+import Card from './components/Card'
 
 function App() {
   const test = useSelector(state => state.test)
@@ -10,9 +11,11 @@ function App() {
     <div className="App">
       <span>{test}</span>
 
-      <button onClick={() => dispatch(setTest('hello'))}>
-        Set text to hello
-      </button>
+      <Card>
+        <button onClick={() => dispatch(setTest('hello'))}>
+          Set text to hello
+        </button>
+      </Card>
     </div>
   )
 }

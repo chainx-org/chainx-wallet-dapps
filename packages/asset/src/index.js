@@ -20,6 +20,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #F0F1F2;
+  min-width: 1280px;
+  overflow-x: auto;
 }
 `
 
