@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchAccountAssets, fetchAssetsInfo } from '../../reducers/assetSlice'
 import { pcxDetailsSelector, pcxFreeSelector } from './selectors'
 import AssetView from './AssetView'
+import $t from '../../locale'
 
 const InnerWrapper = styled.div`
   opacity: 0.8;
@@ -26,7 +27,6 @@ export default function() {
   const { address } = useSelector(state => state.address)
   const pcxFree = useSelector(pcxFreeSelector)
   const pcxDetails = useSelector(pcxDetailsSelector)
-  console.log('details', pcxDetails)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function() {
           {pcxFree && (
             <AssetView
               bold
-              title={'可用余额'}
+              title={$t('ASSET_FREE')}
               value={pcxFree.free}
               precision={pcxFree.precision}
             />
@@ -54,22 +54,22 @@ export default function() {
           {pcxDetails && (
             <>
               <AssetView
-                title={'总余额'}
+                title={$t('ASSET_TOTAL')}
                 value={pcxDetails.total}
                 precision={pcxFree.precision}
               />
               <AssetView
-                title={'交易冻结'}
+                title={$t('ASSET_RESERVED_DEX_SPOT')}
                 value={pcxDetails.reservedDexSpot}
                 precision={pcxFree.precision}
               />
               <AssetView
-                title={'投票冻结'}
+                title={$t('ASSET_RESERVED_STAKING')}
                 value={pcxDetails.reservedStaking}
                 precision={pcxFree.precision}
               />
               <AssetView
-                title={'赎回冻结'}
+                title={$t('ASSET_RESERVED_REVOCATION')}
                 value={pcxDetails.reservedStakingRevocation}
                 precision={pcxFree.precision}
               />
