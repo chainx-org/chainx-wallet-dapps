@@ -21,6 +21,18 @@ const asset = {
   }
 }
 
+const intention = {
+  INTENTION_VALIDATOR: {
+    zh: '验证节点',
+    en: 'Validator'
+  },
+  INTENTION_TRUSTEE: {
+    zh: '信托',
+    en: 'Trustee'
+  }
+}
+
 export default {
-  ...asset
+  ...asset,
+  ...intention
 }
