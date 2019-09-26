@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { toPrecision } from '../../utils'
 
 const Title = styled.h6`
@@ -12,17 +12,26 @@ const Title = styled.h6`
 
 const Value = styled.p`
   margin: 4px 0 0;
-  font-size: 24px;
+  font-size: 16px;
+  line-height: 24px;
   color: #000000;
-  line-height: 36px;
   font-weight: 600;
+
+  ${props =>
+    props.bold &&
+    css`
+      font-size: 24px;
+      line-height: 36px;
+    `}
 `
 
 export default function(props) {
   return (
     <div>
       <Title>{props.title}</Title>
-      <Value>{toPrecision(props.value, props.precision)}</Value>
+      <Value bold={props.bold}>
+        {toPrecision(props.value, props.precision)}
+      </Value>
     </div>
   )
 }

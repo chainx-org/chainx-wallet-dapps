@@ -17,3 +17,23 @@ export const pcxFreeSelector = createSelector(
     return precision !== null && asset ? { free: asset.free, precision } : null
   }
 )
+
+export const pcxDetailsSelector = createSelector(
+  pcxPrecisionSelector,
+  pcxAssetSelector,
+  (precision, asset) => {
+    if (precision !== null && asset) {
+      const total = Object.values(asset).reduce(
+        (result, value) => result + value,
+        0
+      )
+      return {
+        total,
+        ...asset,
+        precision
+      }
+    }
+
+    return null
+  }
+)
