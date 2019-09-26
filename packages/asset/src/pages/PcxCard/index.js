@@ -6,6 +6,7 @@ import { fetchAccountAssets, fetchAssetsInfo } from '../../reducers/assetSlice'
 import { pcxDetailsSelector, pcxFreeSelector } from './selectors'
 import AssetView from './AssetView'
 import $t from '../../locale'
+import Info from './Info'
 
 const InnerWrapper = styled.div`
   opacity: 0.8;
@@ -13,6 +14,10 @@ const InnerWrapper = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.04);
   border-radius: 10px;
   padding: 16px;
+
+  section.free {
+    margin-top: 30px;
+  }
 
   section.details {
     display: flex;
@@ -40,6 +45,7 @@ export default function() {
   return (
     <Card>
       <InnerWrapper>
+        <Info />
         <section className="free">
           {pcxFree && (
             <AssetView

@@ -37,3 +37,9 @@ export const pcxDetailsSelector = createSelector(
     return null
   }
 )
+
+export const pcxInfoSelector = state => {
+  const pcxInfo = state.assets.assetsInfo.find(info => info.name === 'PCX')
+
+  return pcxInfo || {}
+}
