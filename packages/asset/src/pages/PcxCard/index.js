@@ -6,7 +6,7 @@ import { fetchAccountAssets, fetchAssetsInfo } from '../../reducers/assetSlice'
 import { pcxDetailsSelector, pcxFreeSelector } from './selectors'
 import AssetView from './AssetView'
 import $t from '../../locale'
-import Info from './Info'
+import Logo from './Logo'
 
 const InnerWrapper = styled.div`
   opacity: 0.8;
@@ -45,7 +45,7 @@ export default function() {
   return (
     <Card>
       <InnerWrapper>
-        <Info />
+        <Logo />
         <section className="free">
           {pcxFree && (
             <AssetView
