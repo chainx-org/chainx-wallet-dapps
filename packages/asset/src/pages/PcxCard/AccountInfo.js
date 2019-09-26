@@ -41,14 +41,12 @@ const Roles = styled.p`
 export default function() {
   const account = useSelector(state => state.address)
   const intentions = useSelector(state => state.intentions.intentions)
-  console.log('intentions', intentions)
   const dispatch = useDispatch()
 
   const id = chainx.account.decodeAddress(account.address, false)
   const validator = intentions.find(intention => intention.account === id)
   const isValidator = !!validator
   const isTrustee = validator && validator.isTrustee.length > 0
-  console.log(validator)
 
   const roles = []
   if (isTrustee) {

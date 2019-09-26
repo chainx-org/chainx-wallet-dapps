@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 436.22 436.22">
+    <defs>
+        <style>
+            .cls-1{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3{fill:#f2f2f2;}.cls-4{fill:#4d4d4d;}.cls-5{fill:#d64ca8;}
+        </style>
+        <clipPath id="clip-path">
+            <circle class="cls-1" cx="219.01" cy="220.24" r="215.98" />
+        </clipPath>
+    </defs>
+    <title>资源 2</title>
+    <g id="图层_2" data-name="图层 2">
+        <g id="Layer_1" data-name="Layer 1">
+            <g class="cls-2">
+                <rect class="cls-3" width="436.22" height="436.22" transform="translate(0 436.22) rotate(-90)" />
+                <circle class="cls-4" cx="84.89" cy="298" r="22.44" />
+                <circle class="cls-4" cx="84.89" cy="222.44" r="22.44" />
+                <circle class="cls-4" cx="84.89" cy="146.89" r="22.44" />
+                <circle class="cls-4" cx="153.81" cy="334.98" r="22.44" />
+                <circle class="cls-4" cx="153.81" cy="259.43" r="22.44" />
+                <circle class="cls-4" cx="153.81" cy="183.88" r="22.44" />
+                <circle class="cls-4" cx="153.81" cy="108.33" r="22.44" />
+                <circle class="cls-4" cx="220.2" cy="373.55" r="22.44" />
+                <circle class="cls-4" cx="220.2" cy="298" r="22.44" />
+                <circle class="cls-5" cx="220.2" cy="222.44" r="22.44" />
+                <circle class="cls-4" cx="220.2" cy="146.89" r="22.44" />
+                <circle class="cls-4" cx="220.2" cy="71.34" r="22.44" />
+                <circle class="cls-4" cx="289.12" cy="334.98" r="22.44" />
+                <circle class="cls-4" cx="289.12" cy="259.43" r="22.44" />
+                <circle class="cls-4" cx="289.12" cy="183.88" r="22.44" />
+                <circle class="cls-4" cx="289.12" cy="108.33" r="22.44" />
+                <circle class="cls-4" cx="355.5" cy="298" r="22.44" />
+                <circle class="cls-4" cx="355.5" cy="222.44" r="22.44" />
+                <circle class="cls-4" cx="355.5" cy="146.89" r="22.44" />
+            </g>
+        </g>
+    </g>
+</svg>
