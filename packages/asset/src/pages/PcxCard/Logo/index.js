@@ -6,6 +6,7 @@ import logo from './chainx.svg'
 
 const Wrapper = styled.div`
   display: flex;
+  max-height: 50px;
   img {
     margin-right: 20px;
     width: 50px;

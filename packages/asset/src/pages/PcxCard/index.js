@@ -7,6 +7,7 @@ import { pcxDetailsSelector, pcxFreeSelector } from './selectors'
 import AssetView from './AssetView'
 import $t from '../../locale'
 import Logo from './Logo'
+import AccountInfo from './AccountInfo'
 
 const InnerWrapper = styled.div`
   opacity: 0.8;
@@ -15,8 +16,13 @@ const InnerWrapper = styled.div`
   border-radius: 10px;
   padding: 16px;
 
+  header {
+    display: flex;
+    justify-content: space-between;
+  }
+
   section.free {
-    margin-top: 30px;
+    margin-top: 10px;
   }
 
   section.details {
@@ -45,7 +51,10 @@ export default function() {
   return (
     <Card>
       <InnerWrapper>
-        <Logo />
+        <header>
+          <Logo />
+          <AccountInfo />
+        </header>
         <section className="free">
           {pcxFree && (
             <AssetView
