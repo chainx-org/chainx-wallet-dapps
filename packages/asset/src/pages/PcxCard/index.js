@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react'
-import Card from '../components/Card'
+import Card from '../../components/Card'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchAccountAssets, fetchAssetsInfo } from '../reducers/assetSlice'
+import { fetchAccountAssets, fetchAssetsInfo } from '../../reducers/assetSlice'
+import { pcxFreeSelector } from './selectors'
+import AssetView from './AssetView'
 
 const InnerWrapper = styled.div`
   opacity: 0.8;
@@ -14,6 +16,8 @@ const InnerWrapper = styled.div`
 
 export default function() {
   const { address } = useSelector(state => state.address)
+  const pcxFree = useSelector(pcxFreeSelector)
+  console.log('free', pcxFree)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -26,7 +30,17 @@ export default function() {
 
   return (
     <Card>
-      <InnerWrapper>This is the PCX card.</InnerWrapper>
+      <InnerWrapper>
+        <section className="free">
+          {pcxFree && (
+            <AssetView
+              title={'可用余额'}
+              value={pcxFree.free}
+              precision={pcxFree.precision}
+            ></AssetView>
+          )}
+        </section>
+      </InnerWrapper>
     </Card>
   )
 }

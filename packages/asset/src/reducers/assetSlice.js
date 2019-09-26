@@ -16,7 +16,6 @@ const assetSlice = createSlice({
     },
     setAssets: {
       reducer(state, action) {
-        console.log('payload', action.payload)
         state.assets = action.payload
       }
     }
