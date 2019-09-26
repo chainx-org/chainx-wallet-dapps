@@ -13,7 +13,7 @@ html {
 }
 
 body {
-  margin: 0;
+  margin: 0 auto;
   height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -22,6 +22,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: #F0F1F2;
   min-width: 1280px;
+  max-width: 1440px;
   overflow-x: auto;
   padding: 16px;
 }
