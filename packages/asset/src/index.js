@@ -26,6 +26,10 @@ body {
   overflow-x: auto;
   padding: 16px;
 }
+
+h6, p {
+  margin: 0;
+}
 `
 
 export const store = configureStore({
