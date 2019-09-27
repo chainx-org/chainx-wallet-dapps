@@ -24,6 +24,9 @@ export default function(props) {
         />
       )}
       {props.children}
+
+      <hr />
+      <footer>{props.footer}</footer>
     </Card>
   )
 }
