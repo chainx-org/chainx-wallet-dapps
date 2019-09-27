@@ -6,26 +6,11 @@ import AssetCard from '../components/AssetCard'
 import InfoView from '../components/InfoView'
 import $t from '../../../locale'
 import AssetView from '../components/AssetView'
-import styled from 'styled-components'
-
-const DetailWrapper = styled.div`
-  & > div:not(:first-of-type) {
-    margin-top: 16px;
-  }
-`
-
-const AssetLine = styled.div`
-  display: flex;
-  & > div {
-    flex: 1;
-  }
-`
+import { AssetLine, DetailWrapper } from '../components/common'
 
 export default function() {
   const meta = useSelector(xbtcMetaSelector)
   const { details } = useSelector(xbtcAssetSelector)
-  console.log('details', details)
-
   const showDetails = meta.precision && Object.keys(details).length > 0
 
   return (
