@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import { toPrecision } from '../../utils'
+import { toPrecision } from '../../../utils'
 
 const Title = styled.h6`
   opacity: 0.32;

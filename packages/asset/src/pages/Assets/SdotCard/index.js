@@ -1,10 +1,10 @@
 import React from 'react'
-import Logo from '../Logo'
+import Logo from '../components/Logo'
 import sdotLogo from './sdot.svg'
 import { useSelector } from 'react-redux'
 import { sdotAssetSelector, sdotMetaSelector } from '../selectors'
-import Card from '../CardWrapper'
-import AssetView from '../AssetView'
+import Card from '../components/CardWrapper'
+import AssetView from '../components/AssetView'
 
 export default function() {
   const meta = useSelector(sdotMetaSelector)

@@ -1,10 +1,10 @@
 import React from 'react'
-import Logo from '../Logo'
+import Logo from '../components/Logo'
 import xbtcLogo from './xbtc.svg'
 import { useSelector } from 'react-redux'
 import { xbtcMetaSelector, xbtcAssetSelector } from '../selectors'
-import AssetView from '../AssetView'
-import Card from '../CardWrapper'
+import AssetView from '../components/AssetView'
+import Card from '../components/CardWrapper'
 
 export default function() {
   const meta = useSelector(xbtcMetaSelector)
