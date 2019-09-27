@@ -32,7 +32,22 @@ export const assetsSelector = state => {
 export const xbtcAssetSelector = createSelector(
   assetsSelector,
   assets => {
-    return assets.find(asset => asset.name === 'BTC') || { details: {} }
+    const asset = assets.find(asset => asset.name === 'BTC')
+    if (!asset) {
+      return { details: {} }
+    }
+
+    const total = Object.values(asset.details).reduce(
+      (result, value) => result + value,
+      0
+    )
+    return {
+      ...asset,
+      details: {
+        total,
+        ...asset.details
+      }
+    }
   }
 )
 

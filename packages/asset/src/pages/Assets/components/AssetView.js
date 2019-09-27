@@ -1,14 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import { toPrecision } from '../../../utils'
-
-const Title = styled.h6`
-  opacity: 0.32;
-  font-size: 14px;
-  color: #000000;
-  line-height: 20px;
-  font-weight: 300;
-`
+import Title from './Title'
 
 const Value = styled.p`
   opacity: 0.72;

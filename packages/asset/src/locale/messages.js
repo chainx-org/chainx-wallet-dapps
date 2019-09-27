@@ -18,6 +18,14 @@ const asset = {
   ASSET_RESERVED_REVOCATION: {
     en: 'Revocation Reserved',
     zh: '赎回冻结'
+  },
+  ASSET_RESERVED_WITHDRAWAL: {
+    en: 'Withdrawal Reserved',
+    zh: '提现冻结'
+  },
+  ASSET_CHAIN: {
+    en: 'Chain',
+    zh: '原链'
   }
 }
 
