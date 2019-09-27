@@ -8,13 +8,16 @@ import AssetView from './AssetView'
 import $t from '../../locale'
 import Logo from './Logo'
 import AccountInfo from './AccountInfo'
+import backgroundImg from './background.svg'
 
 const InnerWrapper = styled.div`
+  position: relative;
   opacity: 0.8;
   background-image: linear-gradient(90deg, #ffe981 0%, #f6ca4a 100%);
   border: 1px solid rgba(0, 0, 0, 0.04);
   border-radius: 10px;
   padding: 16px;
+  min-height: 222px;
 
   header {
     display: flex;
@@ -32,6 +35,16 @@ const InnerWrapper = styled.div`
       margin-left: 66px;
     }
   }
+`
+
+const CornerBackground = styled.div`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background-image: url(${backgroundImg});
+  width: 179px;
+  height: 147px;
+  opacity: 0.2;
 `
 
 export default function() {
@@ -91,6 +104,7 @@ export default function() {
             </>
           )}
         </section>
+        <CornerBackground />
       </InnerWrapper>
     </Card>
   )

@@ -28,8 +28,8 @@ const BaseRow = styled.p`
 `
 
 const Address = styled(BaseRow)`
-  font-size: 18px;
-  line-height: 28px;
+  font-size: 14px;
+  line-height: 20px;
 `
 
 const Roles = styled.p`
