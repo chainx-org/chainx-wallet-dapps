@@ -5,7 +5,7 @@ import { sdotAssetSelector, sdotMetaSelector } from '../selectors'
 import AssetCard from '../components/AssetCard'
 import { AssetLine, DetailWrapper } from '../components/common'
 import InfoView from '../components/InfoView'
-import $t from '../../../locale'
+import $t from '../../../../locale'
 import AssetView from '../components/AssetView'
 
 export default function() {

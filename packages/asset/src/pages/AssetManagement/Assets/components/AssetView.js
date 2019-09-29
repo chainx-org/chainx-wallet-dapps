@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import { toPrecision } from '../../../utils'
+import { toPrecision } from '../../../../utils'
 import Title from './Title'
 
 const Value = styled.p`

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { xbtcAssetSelector, xbtcMetaSelector } from '../selectors'
 import AssetCard from '../components/AssetCard'
 import InfoView from '../components/InfoView'
-import $t from '../../../locale'
+import $t from '../../../../locale'
 import AssetView from '../components/AssetView'
 import { AssetLine, DetailWrapper } from '../components/common'
 

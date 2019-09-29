@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react'
-import Card from '../../components/Card'
+import Card from '../../../components/Card'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchAccountAssets, fetchAssetsInfo } from '../../reducers/assetSlice'
+import {
+  fetchAccountAssets,
+  fetchAssetsInfo
+} from '../../../reducers/assetSlice'
 import { pcxDetailsSelector, pcxFreeSelector } from './selectors'
 import AssetView from './AssetView'
-import $t from '../../locale'
+import $t from '../../../locale'
 import Logo from './Logo'
 import AccountInfo from './AccountInfo'
 import backgroundImg from './background.svg'

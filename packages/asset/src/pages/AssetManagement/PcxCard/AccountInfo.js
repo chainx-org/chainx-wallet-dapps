@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchIntentions } from '../../reducers/intentionSlice'
-import chainx from '../../services/chainx'
-import $t from '../../locale'
+import { fetchIntentions } from '../../../reducers/intentionSlice'
+import chainx from '../../../services/chainx'
+import $t from '../../../locale'
 
 const Wrapper = styled.div`
   display: flex;
