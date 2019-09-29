@@ -26,6 +26,9 @@ body {
   #root {
     & > div {
       padding-top: 16px;
+        margin: 0 auto;
+        min-width: 1280px;
+        max-width: 1440px;
     }
   }
 }
