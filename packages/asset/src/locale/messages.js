@@ -1,4 +1,8 @@
 const asset = {
+  ASSET: {
+    en: 'Asset',
+    zh: '资产'
+  },
   ASSET_FREE: {
     en: 'Free',
     zh: '可用余额'
@@ -29,6 +33,13 @@ const asset = {
   }
 }
 
+const pseduIntention = {
+  PSEDU_INTENTION: {
+    en: 'Mining',
+    zh: '跨链挖矿'
+  }
+}
+
 const intention = {
   INTENTION_VALIDATOR: {
     zh: '验证节点',
@@ -42,5 +53,6 @@ const intention = {
 
 export default {
   ...asset,
+  ...pseduIntention,
   ...intention
 }

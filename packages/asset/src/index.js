@@ -21,10 +21,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #F0F1F2;
-  min-width: 1280px;
-  max-width: 1440px;
   overflow-x: auto;
-  padding: 16px;
 }
 
 h6, p {
