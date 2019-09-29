@@ -22,6 +22,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: #F0F1F2;
   overflow-x: auto;
+ 
+  #root {
+    & > div {
+      padding-top: 16px;
+    }
+  }
 }
 
 h6, p {

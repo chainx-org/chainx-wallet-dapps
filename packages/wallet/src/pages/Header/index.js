@@ -1,7 +1,8 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import $t from '../../locale'
 import logo from './logo.svg'
+import { NavLink } from 'react-router-dom'
 
 const Wrapper = styled.header`
   display: flex;
@@ -19,25 +20,35 @@ const Wrapper = styled.header`
 
 const Nav = styled.span`
   margin-left: 23px;
-  opacity: 0.5;
+  & > a {
+    opacity: 0.5;
+    color: #fff;
+    text-decoration: none;
+
+    &.active {
+      opacity: 0.8;
+    }
+  }
   font-size: 15px;
   line-height: 22px;
   font-weight: 600;
   cursor: pointer;
-
-  ${props =>
-    props.active &&
-    css`
-      opacity: 0.8;
-    `}
 `
 
 export default function() {
   return (
     <Wrapper>
       <img src={logo} alt="logo" />
-      <Nav active>{$t('ASSET')}</Nav>
-      <Nav>{$t('PSEDU_INTENTION')}</Nav>
+      <Nav active>
+        <NavLink exact activeClassName="active" to="/">
+          {$t('ASSET')}
+        </NavLink>
+      </Nav>
+      <Nav>
+        <NavLink exact activeClassName="active" to="/mining">
+          {$t('PSEDU_INTENTION')}
+        </NavLink>
+      </Nav>
     </Wrapper>
   )
 }

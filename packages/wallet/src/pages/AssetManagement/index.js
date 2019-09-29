@@ -4,7 +4,7 @@ import Assets from './Assets'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
-  margin: 16px auto 0;
+  margin: 0 auto;
   min-width: 1280px;
   max-width: 1440px;
   & > section:not(:first-of-type) {
