@@ -4,18 +4,24 @@ import chainx from '../services/chainx'
 const intentionSlice = createSlice({
   slice: 'intentions',
   initialState: {
-    intentions: []
+    intentions: [],
+    pseduIntentions: []
   },
   reducers: {
     setIntentions: {
       reducer(state, action) {
         state.intentions = action.payload
       }
+    },
+    setPseduIntentions: {
+      reducer(state, action) {
+        state.pseduIntentions = action.payload
+      }
     }
   }
 })
 
-export const { setIntentions } = intentionSlice.actions
+export const { setIntentions, setPseduIntentions } = intentionSlice.actions
 
 export const fetchIntentions = () => async dispatch => {
   await chainx.isRpcReady()
@@ -23,6 +29,15 @@ export const fetchIntentions = () => async dispatch => {
 
   const resp = await stake.getIntentions()
   dispatch(setIntentions(resp))
+}
+
+export const fetchPseduIntentions = () => async dispatch => {
+  await chainx.isRpcReady()
+  const { stake } = chainx
+
+  const resp = await stake.getPseduIntentionsV1()
+  console.log(resp)
+  dispatch(setPseduIntentions(resp))
 }
 
 export default intentionSlice.reducer

@@ -1,5 +1,5 @@
 import React from 'react'
-import xbtcLogo from './xbtc.svg'
+import xbtcLogo from '../../../../staic/xbtc.svg'
 import { useSelector } from 'react-redux'
 import { xbtcAssetSelector, xbtcMetaSelector } from '../selectors'
 import AssetCard from '../components/AssetCard'
