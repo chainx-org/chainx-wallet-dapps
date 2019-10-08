@@ -5,6 +5,7 @@ import Sdot from './SdotCard'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { fetchPseduIntentions } from '../../reducers/intentionSlice'
+import { fetchAssetsInfo } from '../../reducers/assetSlice'
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,6 +21,7 @@ export default function() {
 
   useEffect(() => {
     dispatch(fetchPseduIntentions())
+    dispatch(fetchAssetsInfo())
   }, [dispatch])
 
   return (

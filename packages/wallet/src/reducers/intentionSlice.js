@@ -36,7 +36,6 @@ export const fetchPseduIntentions = () => async dispatch => {
   const { stake } = chainx
 
   const resp = await stake.getPseduIntentionsV1()
-  console.log(resp)
   dispatch(setPseduIntentions(resp))
 }
 
