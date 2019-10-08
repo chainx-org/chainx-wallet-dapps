@@ -8,59 +8,33 @@ export const pseduIntentionSelector = state => {
   return state.intentions.pseduIntentions
 }
 
-export const xbtcPrecisionSelector = createSelector(
-  assetsInfoSelector,
-  assets => {
-    const asset = assets.find(asset => asset.name === 'BTC')
-    return asset ? asset.precision : null
-  }
-)
+const generatePrecisionSelector = function(token) {
+  return createSelector(
+    assetsInfoSelector,
+    assets => {
+      const asset = assets.find(asset => asset.name === token)
+      return asset ? asset.precision : null
+    }
+  )
+}
 
-export const lbtcPrecisionSelector = createSelector(
-  assetsInfoSelector,
-  assets => {
-    const asset = assets.find(asset => asset.name === 'L-BTC')
-    return asset ? asset.precision : null
-  }
-)
+export const xbtcPrecisionSelector = generatePrecisionSelector('BTC')
+export const lbtcPrecisionSelector = generatePrecisionSelector('L-BTC')
+export const sdotPrecisionSelector = generatePrecisionSelector('SDOT')
+export const pcxPrecisionSelector = generatePrecisionSelector('PCX')
 
-export const sdotPrecisionSelector = createSelector(
-  assetsInfoSelector,
-  assets => {
-    const asset = assets.find(asset => asset.name === 'SDOT')
-    return asset ? asset.precision : null
-  }
-)
+const generateIntentionSelector = function(token) {
+  return createSelector(
+    pseduIntentionSelector,
+    intentions => {
+      return intentions.find(intention => intention.id === token) || null
+    }
+  )
+}
 
-export const pcxPrecisionSelector = createSelector(
-  assetsInfoSelector,
-  assets => {
-    const asset = assets.find(asset => asset.name === 'PCX')
-
-    return asset ? asset.precision : null
-  }
-)
-
-export const xbtcIntentionSelector = createSelector(
-  pseduIntentionSelector,
-  intentions => {
-    return intentions.find(intention => intention.id === 'BTC') || null
-  }
-)
-
-export const lbtcIntentionSelector = createSelector(
-  pseduIntentionSelector,
-  intentions => {
-    return intentions.find(intention => intention.id === 'L-BTC') || null
-  }
-)
-
-export const sdotIntentionSelector = createSelector(
-  pseduIntentionSelector,
-  intentions => {
-    return intentions.find(intention => intention.id === 'SDOT') || null
-  }
-)
+export const xbtcIntentionSelector = generateIntentionSelector('BTC')
+export const lbtcIntentionSelector = generateIntentionSelector('L-BTC')
+export const sdotIntentionSelector = generateIntentionSelector('SDOT')
 
 const generateSelector = function(intention, tokenPrecision, pcxPrecision) {
   return createSelector(
