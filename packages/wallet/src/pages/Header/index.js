@@ -49,6 +49,11 @@ export default function() {
           {$t('PSEDU_INTENTION')}
         </NavLink>
       </Nav>
+      <Nav>
+        <NavLink exact activeClassName="active" to="/staking">
+          {$t('STAKING')}
+        </NavLink>
+      </Nav>
     </Wrapper>
   )
 }

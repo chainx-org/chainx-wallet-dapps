@@ -71,8 +71,16 @@ const intention = {
   }
 }
 
+const staking = {
+  STAKING: {
+    en: 'Staking',
+    zh: '投票选举'
+  }
+}
+
 export default {
   ...asset,
   ...pseduIntention,
-  ...intention
+  ...intention,
+  ...staking
 }
