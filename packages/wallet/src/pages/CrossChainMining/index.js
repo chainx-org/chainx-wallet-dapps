@@ -3,8 +3,11 @@ import Xbtc from './XbtcCard'
 import Lbtc from './LbtcCard'
 import Sdot from './SdotCard'
 import styled from 'styled-components'
-import { useDispatch } from 'react-redux'
-import { fetchPseduIntentions } from '../../reducers/intentionSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  fetchPseduIntentions,
+  fetchPseduNominationRecords
+} from '../../reducers/intentionSlice'
 import { fetchAssetsInfo } from '../../reducers/assetSlice'
 
 const Wrapper = styled.div`
@@ -17,12 +20,14 @@ const Wrapper = styled.div`
 `
 
 export default function() {
+  const { address } = useSelector(state => state.address)
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(fetchPseduIntentions())
     dispatch(fetchAssetsInfo())
-  }, [dispatch])
+    dispatch(fetchPseduNominationRecords(address))
+  }, [dispatch, address])
 
   return (
     <Wrapper>

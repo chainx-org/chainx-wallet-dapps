@@ -27,6 +27,10 @@ export default function() {
         <header>奖池金额（PCX）</header>
         <p>{lbtc.jackpot}</p>
       </li>
+      <li>
+        <header>我的总余额</header>
+        <p>{lbtc.balance}</p>
+      </li>
     </ul>
   )
 

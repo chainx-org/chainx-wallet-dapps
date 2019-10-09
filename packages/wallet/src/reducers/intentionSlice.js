@@ -5,7 +5,8 @@ const intentionSlice = createSlice({
   slice: 'intentions',
   initialState: {
     intentions: [],
-    pseduIntentions: []
+    pseduIntentions: [],
+    pseduNominationRecords: []
   },
   reducers: {
     setIntentions: {
@@ -17,26 +18,47 @@ const intentionSlice = createSlice({
       reducer(state, action) {
         state.pseduIntentions = action.payload
       }
+    },
+    setPseduNominationRecords: {
+      reducer(state, action) {
+        state.pseduNominationRecords = action.payload
+      }
     }
   }
 })
 
-export const { setIntentions, setPseduIntentions } = intentionSlice.actions
+export const {
+  setIntentions,
+  setPseduIntentions,
+  setPseduNominationRecords
+} = intentionSlice.actions
 
-export const fetchIntentions = () => async dispatch => {
+async function getStake() {
   await chainx.isRpcReady()
   const { stake } = chainx
+
+  return stake
+}
+
+export const fetchIntentions = () => async dispatch => {
+  const stake = await getStake()
 
   const resp = await stake.getIntentions()
   dispatch(setIntentions(resp))
 }
 
 export const fetchPseduIntentions = () => async dispatch => {
-  await chainx.isRpcReady()
-  const { stake } = chainx
+  const stake = await getStake()
 
   const resp = await stake.getPseduIntentionsV1()
   dispatch(setPseduIntentions(resp))
+}
+
+export const fetchPseduNominationRecords = address => async dispatch => {
+  const stake = await getStake()
+
+  const resp = await stake.getPseduNominationRecordsV1(address)
+  dispatch(setPseduNominationRecords(resp))
 }
 
 export default intentionSlice.reducer

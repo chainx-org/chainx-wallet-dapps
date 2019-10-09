@@ -47,6 +47,13 @@ const Detail = styled.section`
         color: #000000;
         line-height: 20px;
       }
+
+      &:last-of-type {
+        header,
+        p {
+          text-align: right;
+        }
+      }
     }
   }
 `
