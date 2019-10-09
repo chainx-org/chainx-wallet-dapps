@@ -37,6 +37,26 @@ const pseduIntention = {
   PSEDU_INTENTION: {
     en: 'Mining',
     zh: '跨链挖矿'
+  },
+  PSEDU_CIRCULATION: {
+    en: 'Circulation',
+    zh: '全链总余额'
+  },
+  PSEDU_POWER: {
+    en: 'Power',
+    zh: '挖矿算力'
+  },
+  PSEDU_EQUIVALENT: {
+    en: 'Equivalent',
+    zh: '折合投票数'
+  },
+  PSEDU_JACKPOT: {
+    en: 'Jackpot',
+    zh: '奖池金额'
+  },
+  PSEDU_BALANCE: {
+    en: 'Balance',
+    zh: '我的总余额'
   }
 }
 

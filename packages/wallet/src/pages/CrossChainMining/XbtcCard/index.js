@@ -4,6 +4,7 @@ import icon from '../../../staic/xbtc.svg'
 import CardWrapper from '../components/CardWrapper'
 import { useSelector } from 'react-redux'
 import { normalizedXbtcSelector } from '../selectors'
+import $t from '../../../locale'
 
 export default function() {
   const xbtc = useSelector(normalizedXbtcSelector)
@@ -12,23 +13,23 @@ export default function() {
   const details = (
     <ul>
       <li>
-        <header>全链总余额</header>
+        <header>{$t('PSEDU_CIRCULATION')}</header>
         <p>{xbtc.circulation}</p>
       </li>
       <li>
-        <header>挖矿算力（PCX）</header>
+        <header>{$t('PSEDU_POWER')}（PCX）</header>
         <p>{xbtc.power}</p>
       </li>
       <li>
-        <header>折合投票数（PCX）</header>
+        <header>{$t('PSEDU_EQUIVALENT')}（PCX）</header>
         <p>{xbtc.vote}</p>
       </li>
       <li>
-        <header>奖池金额（PCX）</header>
+        <header>{$t('PSEDU_JACKPOT')}（PCX）</header>
         <p>{xbtc.jackpot}</p>
       </li>
       <li>
-        <header>我的总余额</header>
+        <header>{$t('PSEDU_BALANCE')}</header>
         <p>{xbtc.balance}</p>
       </li>
     </ul>

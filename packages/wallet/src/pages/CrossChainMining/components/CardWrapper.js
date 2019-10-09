@@ -34,6 +34,7 @@ const Detail = styled.section`
     min-height: 40px;
 
     li {
+      min-width: 200px;
       header {
         opacity: 0.32;
         font-size: 12px;
