@@ -1,4 +1,5 @@
 import { createSelector } from 'redux-starter-kit'
+import { token } from '../../utils/constants'
 
 export const assetsInfoSelector = state => {
   return state.assets.assetsInfo
@@ -18,10 +19,10 @@ const generatePrecisionSelector = function(token) {
   )
 }
 
-export const xbtcPrecisionSelector = generatePrecisionSelector('BTC')
-export const lbtcPrecisionSelector = generatePrecisionSelector('L-BTC')
-export const sdotPrecisionSelector = generatePrecisionSelector('SDOT')
-export const pcxPrecisionSelector = generatePrecisionSelector('PCX')
+export const xbtcPrecisionSelector = generatePrecisionSelector(token.XBTC)
+export const lbtcPrecisionSelector = generatePrecisionSelector(token.LBTC)
+export const sdotPrecisionSelector = generatePrecisionSelector(token.SDOT)
+export const pcxPrecisionSelector = generatePrecisionSelector(token.PCX)
 
 const generateIntentionSelector = function(token) {
   return createSelector(
@@ -32,9 +33,9 @@ const generateIntentionSelector = function(token) {
   )
 }
 
-export const xbtcIntentionSelector = generateIntentionSelector('BTC')
-export const lbtcIntentionSelector = generateIntentionSelector('L-BTC')
-export const sdotIntentionSelector = generateIntentionSelector('SDOT')
+export const xbtcIntentionSelector = generateIntentionSelector(token.XBTC)
+export const lbtcIntentionSelector = generateIntentionSelector(token.LBTC)
+export const sdotIntentionSelector = generateIntentionSelector(token.SDOT)
 
 const generateSelector = function(intention, tokenPrecision, pcxPrecision) {
   return createSelector(

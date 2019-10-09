@@ -1,4 +1,5 @@
 import { createSelector } from 'redux-starter-kit'
+import { token } from '../../../utils/constants'
 
 export const assetsInfoSelector = state => {
   return state.assets.assetsInfo
@@ -7,21 +8,21 @@ export const assetsInfoSelector = state => {
 export const xbtcMetaSelector = createSelector(
   assetsInfoSelector,
   assets => {
-    return assets.find(asset => asset.name === 'BTC') || {}
+    return assets.find(asset => asset.name === token.XBTC) || {}
   }
 )
 
 export const lbtcMetaSelector = createSelector(
   assetsInfoSelector,
   assets => {
-    return assets.find(asset => asset.name === 'L-BTC') || {}
+    return assets.find(asset => asset.name === token.LBTC) || {}
   }
 )
 
 export const sdotMetaSelector = createSelector(
   assetsInfoSelector,
   assets => {
-    return assets.find(asset => asset.name === 'SDOT') || {}
+    return assets.find(asset => asset.name === token.SDOT) || {}
   }
 )
 
@@ -51,20 +52,20 @@ function normalizeAsset(assets, token) {
 export const xbtcAssetSelector = createSelector(
   assetsSelector,
   assets => {
-    return normalizeAsset(assets, 'BTC')
+    return normalizeAsset(assets, token.XBTC)
   }
 )
 
 export const lbtcAssetSelector = createSelector(
   assetsSelector,
   assets => {
-    return normalizeAsset(assets, 'L-BTC')
+    return normalizeAsset(assets, token.LBTC)
   }
 )
 
 export const sdotAssetSelector = createSelector(
   assetsSelector,
   assets => {
-    return normalizeAsset(assets, 'SDOT')
+    return normalizeAsset(assets, token.SDOT)
   }
 )
