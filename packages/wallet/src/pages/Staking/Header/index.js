@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import NominationInfo from './NominationInfo'
 
 const Wrapper = styled.header`
   display: flex;
@@ -10,5 +11,9 @@ const Wrapper = styled.header`
 `
 
 export default function() {
-  return <Wrapper>header</Wrapper>
+  return (
+    <Wrapper>
+      <NominationInfo />
+    </Wrapper>
+  )
 }
