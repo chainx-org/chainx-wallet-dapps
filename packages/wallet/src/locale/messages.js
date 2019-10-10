@@ -78,9 +78,21 @@ const staking = {
   }
 }
 
+const footer = {
+  FOOTER_BLOCK_TIME: {
+    en: 'Block time',
+    zh: '出块时间'
+  },
+  FOOTER_BLOCK_NUMBER: {
+    en: 'Block number',
+    zh: '最新高度'
+  }
+}
+
 export default {
   ...asset,
   ...pseduIntention,
   ...intention,
-  ...staking
+  ...staking,
+  ...footer
 }

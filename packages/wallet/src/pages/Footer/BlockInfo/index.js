@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import { blockTimeSelector, producerSelector } from '../selectors'
 import { blockNumberSelector } from '../../../reducers/chainSlice'
+import $t from '../../../locale'
 
 const Wrapper = styled.ul`
   display: flex;
@@ -37,11 +38,11 @@ export default function() {
   return (
     <Wrapper>
       <li>
-        <label>出块时间</label>
+        <label>{$t('FOOTER_BLOCK_TIME')}</label>
         <span>{blockTime}</span>
       </li>
       <li>
-        <label>最新高度</label>
+        <label>{$t('FOOTER_BLOCK_NUMBER')}</label>
         <span>{blockNumber}</span>
         <span className="producer">{producer}</span>
       </li>
