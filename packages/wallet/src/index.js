@@ -25,11 +25,19 @@ body {
   overflow-x: auto;
  
   #root {
-    & > div:not(.staking) {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    
+    & > div {
+      flex: 1;
+      
+      &:not(.staking) {
         padding-top: 16px;
         margin: 0 auto;
         min-width: 1280px;
         max-width: 1440px;
+      }
     }
   }
 }

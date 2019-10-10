@@ -6,6 +6,7 @@ import {
   Switch
 } from 'react-router-dom'
 import Header from './pages/Header'
+import Footer from './pages/Footer'
 import AssetManagement from './pages/AssetManagement'
 import CrossChainMining from './pages/CrossChainMining'
 import Staking from './pages/Staking'
@@ -33,6 +34,7 @@ function App() {
         <Route exact path="/staking" component={Staking} />
         <Redirect to="/" />
       </Switch>
+      <Footer />
     </Router>
   )
 }

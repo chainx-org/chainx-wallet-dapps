@@ -4,3 +4,5 @@ export const token = {
   SDOT: 'SDOT',
   PCX: 'PCX'
 }
+
+export const timeFormat = 'YYYY/MM/DD HH:mm:ss'

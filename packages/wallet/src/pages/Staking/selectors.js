@@ -1,5 +1,5 @@
 import { createSelector } from 'redux-starter-kit'
-import { intentionsSelector } from '../selectors/intentions'
+import { intentionsSelector } from '../../reducers/intentionSlice'
 import { pcxPrecisionSelector } from '../selectors/assets'
 import { toPrecision } from '../../utils'
 import { blockNumberSelector } from '../../reducers/chainSlice'

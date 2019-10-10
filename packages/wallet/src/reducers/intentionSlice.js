@@ -61,4 +61,8 @@ export const fetchPseduNominationRecords = address => async dispatch => {
   dispatch(setPseduNominationRecords(resp))
 }
 
+export const intentionsSelector = state => {
+  return state.intentions.intentions
+}
+
 export default intentionSlice.reducer
