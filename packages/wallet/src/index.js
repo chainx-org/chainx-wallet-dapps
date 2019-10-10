@@ -6,6 +6,7 @@ import { configureStore } from 'redux-starter-kit'
 import { Provider } from 'react-redux'
 import rootReducer from './reducers'
 import { createGlobalStyle } from 'styled-components'
+import chainx from './services/chainx'
 
 const GlobalStyle = createGlobalStyle`
 html {
@@ -48,16 +49,18 @@ export const store = configureStore({
   reducer: rootReducer
 })
 
-ReactDOM.render(
-  <React.Fragment>
-    <GlobalStyle />
-    <Provider store={store}>
+chainx.isRpcReady().then(() => {
+  ReactDOM.render(
+    <React.Fragment>
       <GlobalStyle />
-      <App />
-    </Provider>
-  </React.Fragment>,
-  document.getElementById('root')
-)
+      <Provider store={store}>
+        <GlobalStyle />
+        <App />
+      </Provider>
+    </React.Fragment>,
+    document.getElementById('root')
+  )
+})
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
