@@ -3,8 +3,6 @@ import styled from 'styled-components'
 import React from 'react'
 
 const CardWrapper = styled(Card)`
-  width: 100%;
-
   & > header {
     margin: 3px 0 16px;
   }
