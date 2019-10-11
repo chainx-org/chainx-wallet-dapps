@@ -30,6 +30,30 @@ const asset = {
   ASSET_CHAIN: {
     en: 'Chain',
     zh: '原链'
+  },
+  LOCK: {
+    en: 'LOCK',
+    zh: '锁仓'
+  },
+  VIEW: {
+    en: 'VIEW',
+    zh: '查看'
+  },
+  WITHDRAW: {
+    en: 'WITHDRAW',
+    zh: '提现'
+  },
+  DEPOSIT: {
+    en: 'DEPOSIT',
+    zh: '充值'
+  },
+  TRANSFER: {
+    en: 'TRANSFER',
+    zh: '转账'
+  },
+  MAP: {
+    en: 'MAP',
+    zh: '映射'
   }
 }
 

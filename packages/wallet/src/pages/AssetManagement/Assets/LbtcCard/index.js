@@ -20,13 +20,13 @@ export default function() {
         onClick={() => console.log('click')}
         style={{ marginRight: 8 }}
       >
-        锁仓
+        {$t('LOCK')}
       </PrimaryButton>
       <DefaultButton
         onClick={() => console.log('click')}
         style={{ marginRight: 8 }}
       >
-        查看
+        {$t('VIEW')}
       </DefaultButton>
     </div>
   )

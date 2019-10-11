@@ -20,13 +20,13 @@ export default function() {
         onClick={() => console.log('click')}
         style={{ marginRight: 8 }}
       >
-        映射
+        {$t('MAP')}
       </PrimaryButton>
       <DefaultButton
         onClick={() => console.log('click')}
         style={{ marginRight: 8 }}
       >
-        转账
+        {$t('TRANSFER')}
       </DefaultButton>
     </div>
   )
