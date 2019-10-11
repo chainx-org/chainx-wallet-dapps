@@ -31,6 +31,7 @@ body {
     
     & > div {
       flex: 1;
+      overflow-y: hidden;
       
       &:not(.staking) {
         padding-top: 16px;

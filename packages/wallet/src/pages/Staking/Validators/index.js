@@ -1,13 +1,46 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useSelector } from 'react-redux'
+import Intention from './Intention'
+import { intentionChunksSelector } from './selectors'
 
 const Main = styled.main`
-  display: flex;
-  margin: 0 auto;
-  min-width: 1280px;
-  max-width: 1440px;
+  overflow-y: auto;
+  padding-bottom: 16px;
+  & > div {
+    margin: 0 auto;
+    min-width: 1280px;
+    max-width: 1440px;
+  }
+
+  ul {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 16px;
+  }
 `
 
 export default function() {
-  return <Main>validators</Main>
+  const intentionChunks = useSelector(intentionChunksSelector)
+
+  return (
+    <Main>
+      <div>
+        {intentionChunks.map((intentions, index) => {
+          return (
+            <ul key={index}>
+              {intentions.map(intention => {
+                return (
+                  <li key={intention.account}>
+                    <Intention intention={intention} />
+                  </li>
+                )
+              })}
+            </ul>
+          )
+        })}
+      </div>
+    </Main>
+  )
 }
