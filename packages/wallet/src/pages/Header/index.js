@@ -19,8 +19,13 @@ const Wrapper = styled.header`
 `
 
 const Nav = styled.span`
+  display: inline-flex;
+  height: 100%;
   margin-left: 23px;
   & > a {
+    display: inline-flex;
+    height: 100%;
+    align-items: center;
     opacity: 0.5;
     color: #fff;
     text-decoration: none;
