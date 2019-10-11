@@ -2,6 +2,11 @@ import React from 'react'
 import Card from './CardWrapper'
 import Logo from './Logo'
 import AssetView from './AssetView'
+import styled from 'styled-components'
+
+const Hr = styled.hr`
+  margin: 0;
+`
 
 export default function(props) {
   const { meta, details, logo } = props
@@ -25,7 +30,7 @@ export default function(props) {
       )}
       {props.children}
 
-      <hr />
+      <Hr />
       <footer>{props.footer}</footer>
     </Card>
   )

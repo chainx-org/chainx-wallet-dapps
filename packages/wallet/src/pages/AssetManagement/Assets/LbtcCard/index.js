@@ -7,14 +7,32 @@ import { AssetLine, DetailWrapper } from '../components/common'
 import InfoView from '../components/InfoView'
 import $t from '../../../../locale'
 import AssetView from '../components/AssetView'
+import { PrimaryButton, DefaultButton } from '@chainx/ui'
 
 export default function() {
   const meta = useSelector(lbtcMetaSelector)
   const { details } = useSelector(lbtcAssetSelector)
   const showDetails = meta.precision && Object.keys(details).length > 0
 
+  const footer = (
+    <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+      <PrimaryButton
+        onClick={() => console.log('click')}
+        style={{ marginRight: 8 }}
+      >
+        锁仓
+      </PrimaryButton>
+      <DefaultButton
+        onClick={() => console.log('click')}
+        style={{ marginRight: 8 }}
+      >
+        查看
+      </DefaultButton>
+    </div>
+  )
+
   return (
-    <AssetCard meta={meta} details={details} logo={lbtcLogo}>
+    <AssetCard meta={meta} details={details} logo={lbtcLogo} footer={footer}>
       <div className="details">
         {showDetails && (
           <DetailWrapper>

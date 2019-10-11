@@ -7,14 +7,38 @@ import InfoView from '../components/InfoView'
 import $t from '../../../../locale'
 import AssetView from '../components/AssetView'
 import { AssetLine, DetailWrapper } from '../components/common'
+import { PrimaryButton, DefaultButton } from '@chainx/ui'
 
 export default function() {
   const meta = useSelector(xbtcMetaSelector)
   const { details } = useSelector(xbtcAssetSelector)
   const showDetails = meta.precision && Object.keys(details).length > 0
 
+  const footer = (
+    <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+      <PrimaryButton
+        onClick={() => console.log('click')}
+        style={{ marginRight: 8 }}
+      >
+        充值
+      </PrimaryButton>
+      <DefaultButton
+        onClick={() => console.log('click')}
+        style={{ marginRight: 8 }}
+      >
+        提现
+      </DefaultButton>
+      <DefaultButton
+        onClick={() => console.log('click')}
+        style={{ marginRight: 8 }}
+      >
+        转账
+      </DefaultButton>
+    </div>
+  )
+
   return (
-    <AssetCard meta={meta} details={details} logo={xbtcLogo}>
+    <AssetCard meta={meta} details={details} logo={xbtcLogo} footer={footer}>
       <div className="details">
         {showDetails && (
           <DetailWrapper>
