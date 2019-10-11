@@ -40,6 +40,8 @@ const Wrapper = styled.div`
           }
 
           span {
+            display: inline-block;
+            width: 150px;
             margin-left: 7px;
           }
 

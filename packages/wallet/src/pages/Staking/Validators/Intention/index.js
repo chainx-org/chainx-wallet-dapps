@@ -6,7 +6,6 @@ import Footer from './Footer'
 const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
-  width: 300px;
 
   background: #ffffff;
   border: 1px solid #dce0e2;
