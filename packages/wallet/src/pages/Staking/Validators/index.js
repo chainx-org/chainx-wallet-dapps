@@ -23,7 +23,6 @@ const Main = styled.main`
 
 export default function() {
   const intentionChunks = useSelector(intentionChunksSelector)
-  console.log('chunks', intentionChunks)
 
   return (
     <Main>

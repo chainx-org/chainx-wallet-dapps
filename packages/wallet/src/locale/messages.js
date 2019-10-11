@@ -75,6 +75,14 @@ const staking = {
   STAKING: {
     en: 'Staking',
     zh: '投票选举'
+  },
+  STAKING_TOTAL_NOMINATION: {
+    en: 'Nomination',
+    zh: '总得票'
+  },
+  STAKING_SELF_VOTE: {
+    en: 'Self Vote',
+    zh: '自抵押'
   }
 }
 

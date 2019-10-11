@@ -58,6 +58,13 @@ export const fetchIntentions = () => async dispatch => {
   const stake = await getStake()
 
   const resp = await stake.getIntentions()
+  resp.sort((a, b) => {
+    if (a.selfVote !== b.selfVote) {
+      return b.selfVote - a.selfVote
+    }
+
+    return b.totalNomination - a.totalNomination
+  })
   dispatch(setIntentions(resp))
 }
 

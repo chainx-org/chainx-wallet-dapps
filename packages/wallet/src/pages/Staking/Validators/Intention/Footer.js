@@ -15,9 +15,14 @@ import { useSelector } from 'react-redux'
 const Footer = styled.footer`
   display: flex;
 
-  & > img:not(:first-of-type) {
+  & > img:nth-child(2) {
     position: relative;
     left: -7px;
+  }
+
+  & > img:nth-child(3) {
+    position: relative;
+    left: -14px;
   }
 `
 
