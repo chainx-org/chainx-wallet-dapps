@@ -7,7 +7,8 @@ const intentionSlice = createSlice({
     intentions: [],
     pseduIntentions: [],
     pseduNominationRecords: [],
-    senators: []
+    senators: [],
+    logos: {}
   },
   reducers: {
     setIntentions: {
@@ -29,6 +30,11 @@ const intentionSlice = createSlice({
       reducer(state, action) {
         state.senators = action.payload
       }
+    },
+    setLogos: {
+      reducer(state, action) {
+        state.logos = action.payload
+      }
     }
   }
 })
@@ -37,7 +43,8 @@ export const {
   setIntentions,
   setPseduIntentions,
   setPseduNominationRecords,
-  setSenators
+  setSenators,
+  setLogos
 } = intentionSlice.actions
 
 async function getStake() {
@@ -74,6 +81,21 @@ export const fetchSenators = () => async dispatch => {
   dispatch(setSenators(senators))
 }
 
+export const fetchLogos = () => async dispatch => {
+  const resp = await window.fetch('https://api.chainx.org/intention_logos')
+  const logos = await resp.json()
+  dispatch(
+    setLogos(
+      logos.reduce((result, logo) => {
+        return {
+          ...result,
+          ...logo
+        }
+      }, {})
+    )
+  )
+}
+
 export const intentionsSelector = state => {
   return state.intentions.intentions
 }
@@ -82,20 +104,36 @@ export const senatorsSelector = state => {
   return state.intentions.senators
 }
 
+export const logosSelector = state => state.intentions.logos
+
 export const normalizedIntentionsSelector = createSelector(
   intentionsSelector,
   senatorsSelector,
-  (intentions, senators) => {
+  logosSelector,
+  (intentions, senators, logos = {}) => {
     return intentions.map(intention => {
       let isSenator = false
       if (senators.find(senator => senator === intention.name)) {
         isSenator = true
       }
 
-      return {
-        ...intention,
-        isSenator
+      let hasLogo = false
+      const logo = logos[intention.name.toLowerCase()]
+      if (logos[intention.name.toLowerCase()]) {
+        hasLogo = true
       }
+
+      const result = {
+        ...intention,
+        isSenator,
+        hasLogo
+      }
+
+      if (hasLogo) {
+        Object.assign(result, { logo })
+      }
+
+      return result
     })
   }
 )

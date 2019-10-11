@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react'
 import Header from './Header'
 import Validators from './Validators'
-import { fetchIntentions, fetchSenators } from '../../reducers/intentionSlice'
+import {
+  fetchIntentions,
+  fetchSenators,
+  fetchLogos
+} from '../../reducers/intentionSlice'
 import { useDispatch } from 'react-redux'
 import { fetchAssetsInfo } from '../../reducers/assetSlice'
 import styled from 'styled-components'
@@ -21,6 +25,7 @@ export default function() {
     dispatch(fetchSenators())
     dispatch(fetchIntentions())
     dispatch(fetchAssetsInfo())
+    dispatch(fetchLogos())
   }, [dispatch])
 
   return (

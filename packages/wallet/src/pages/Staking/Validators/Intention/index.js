@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Content from './Content'
 import Footer from './Footer'
 
 const Wrapper = styled.section`
@@ -21,7 +22,7 @@ export default function(props) {
 
   return (
     <Wrapper>
-      {intention.name}
+      <Content intention={intention} />
       <Footer intention={intention} />
     </Wrapper>
   )
