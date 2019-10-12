@@ -1,6 +1,6 @@
 import React from 'react'
 import Logo from '../components/Logo'
-import icon from '../../../staic/xbtc.svg'
+import icon from '../../../static/xbtc.svg'
 import CardWrapper from '../components/CardWrapper'
 import { useSelector } from 'react-redux'
 import { normalizedXbtcSelector } from '../selectors'

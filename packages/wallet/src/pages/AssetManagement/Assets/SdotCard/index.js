@@ -1,5 +1,5 @@
 import React from 'react'
-import sdotLogo from '../../../../staic/sdot.svg'
+import sdotLogo from '../../../../static/sdot.svg'
 import { useSelector } from 'react-redux'
 import { sdotAssetSelector, sdotMetaSelector } from '../selectors'
 import AssetCard from '../components/AssetCard'

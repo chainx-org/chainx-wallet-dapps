@@ -1,6 +1,6 @@
 import React from 'react'
 import Logo from '../components/Logo'
-import icon from '../../../staic/sdot.svg'
+import icon from '../../../static/sdot.svg'
 import CardWrapper from '../components/CardWrapper'
 import { normalizedSdotSelector } from '../selectors'
 import { useSelector } from 'react-redux'

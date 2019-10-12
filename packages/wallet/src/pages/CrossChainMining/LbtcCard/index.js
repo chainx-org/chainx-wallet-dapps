@@ -1,6 +1,6 @@
 import React from 'react'
 import Logo from '../components/Logo'
-import icon from '../../../staic/lbtc.svg'
+import icon from '../../../static/lbtc.svg'
 import CardWrapper from '../components/CardWrapper'
 import { normalizedLbtcSelector } from '../selectors'
 import { useSelector } from 'react-redux'
