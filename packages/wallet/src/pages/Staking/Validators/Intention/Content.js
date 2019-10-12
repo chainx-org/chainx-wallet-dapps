@@ -5,6 +5,7 @@ import { pcxPrecisionSelector } from '../../../selectors/assets'
 import { useSelector } from 'react-redux'
 import { toPrecision } from '../../../../utils'
 import $t from '../../../../locale'
+import { DefaultButton } from '@chainx/ui'
 
 const Wrapper = styled.div`
   display: flex;
@@ -60,6 +61,17 @@ const Wrapper = styled.div`
         }
       }
     }
+
+    div.operation {
+      button {
+        opacity: 0.72;
+        font-size: 12px;
+        color: #000000;
+        letter-spacing: 0.2px;
+        text-align: center;
+        line-height: 16px;
+      }
+    }
   }
 `
 
@@ -88,6 +100,14 @@ export default function(props) {
             </li>
           </ul>
         </div>
+      </div>
+      <div className="operation">
+        <DefaultButton
+          onClick={() => console.log('click')}
+          style={{ padding: 0 }}
+        >
+          {$t('STAKING_VOTE')}
+        </DefaultButton>
       </div>
     </Wrapper>
   )

@@ -107,6 +107,10 @@ const staking = {
   STAKING_SELF_VOTE: {
     en: 'Self Vote',
     zh: '自抵押'
+  },
+  STAKING_VOTE: {
+    en: 'Vote',
+    zh: '投票'
   }
 }
 
