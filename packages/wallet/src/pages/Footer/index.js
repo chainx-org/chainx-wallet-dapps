@@ -10,6 +10,8 @@ const Wrapper = styled.footer`
   padding: 0 16px;
   background: rgba(255, 255, 255, 0.75);
   box-shadow: 0 -2px 10px 0 rgba(0, 0, 0, 0.1), 0 0 0 0 rgba(127, 127, 127, 0.4);
+
+  z-index: 999;
 `
 
 export default function() {
