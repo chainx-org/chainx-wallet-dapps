@@ -29,15 +29,18 @@ body {
     flex-direction: column;
     height: 100%;
     
-    & > div {
+    & > div.wrapper {
+      display: flex;
       flex: 1;
-      overflow-y: hidden;
+      overflow-y: auto;
       
-      &:not(.staking) {
-        padding-top: 16px;
-        margin: 0 auto;
-        min-width: 1280px;
-        max-width: 1440px;
+      & > div {
+        &:not(.staking) {
+          padding: 16px 16px 0;
+          margin: 0 auto;
+          min-width: 1280px;
+          max-width: 1440px;
+        }
       }
     }
   }

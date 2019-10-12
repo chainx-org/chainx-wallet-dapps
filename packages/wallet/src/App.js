@@ -28,12 +28,14 @@ function App() {
   return (
     <Router>
       <Header />
-      <Switch>
-        <Route exact path="/" component={AssetManagement} />
-        <Route exact path="/mining" component={CrossChainMining} />
-        <Route exact path="/staking" component={Staking} />
-        <Redirect to="/" />
-      </Switch>
+      <div className="wrapper">
+        <Switch>
+          <Route exact path="/" component={AssetManagement} />
+          <Route exact path="/mining" component={CrossChainMining} />
+          <Route exact path="/staking" component={Staking} />
+          <Redirect to="/" />
+        </Switch>
+      </div>
       <Footer />
     </Router>
   )
