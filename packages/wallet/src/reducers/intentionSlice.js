@@ -8,7 +8,8 @@ const intentionSlice = createSlice({
     pseduIntentions: [],
     pseduNominationRecords: [],
     senators: [],
-    logos: {}
+    logos: {},
+    nominationRecords: []
   },
   reducers: {
     setIntentions: {
@@ -35,6 +36,11 @@ const intentionSlice = createSlice({
       reducer(state, action) {
         state.logos = action.payload
       }
+    },
+    setNominationRecords: {
+      reducer(state, action) {
+        state.nominationRecords = action.payload
+      }
     }
   }
 })
@@ -44,7 +50,8 @@ export const {
   setPseduIntentions,
   setPseduNominationRecords,
   setSenators,
-  setLogos
+  setLogos,
+  setNominationRecords
 } = intentionSlice.actions
 
 async function getStake() {
@@ -109,6 +116,18 @@ export const fetchLogos = () => async dispatch => {
   )
 }
 
+export const fetchNominationRecords = address => async dispatch => {
+  const stake = await getStake()
+
+  const records = await stake.getNominationRecordsV1(address)
+  const normalized = records.map(record => {
+    const intention = record[0]
+    const info = record[1]
+    return { intention, info }
+  })
+  dispatch(setNominationRecords(normalized))
+}
+
 export const intentionsSelector = state => {
   return state.intentions.intentions
 }
@@ -157,5 +176,8 @@ export const activeIntentionsSelector = createSelector(
     return intentions.filter(intention => intention.isActive)
   }
 )
+
+export const nominationRecordsSelector = state =>
+  state.intentions.nominationRecords
 
 export default intentionSlice.reducer

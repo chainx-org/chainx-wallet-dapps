@@ -4,11 +4,13 @@ import Validators from './Validators'
 import {
   fetchIntentions,
   fetchSenators,
-  fetchLogos
+  fetchLogos,
+  fetchNominationRecords
 } from '../../reducers/intentionSlice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { fetchAssetsInfo } from '../../reducers/assetSlice'
 import styled from 'styled-components'
+import { addressSelector } from '../../reducers/addressSlice'
 
 const Wrapper = styled.div`
   display: flex;
@@ -22,13 +24,16 @@ const Wrapper = styled.div`
 `
 
 export default function() {
+  const address = useSelector(addressSelector)
+
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchSenators())
     dispatch(fetchIntentions())
     dispatch(fetchAssetsInfo())
     dispatch(fetchLogos())
-  }, [dispatch])
+    dispatch(fetchNominationRecords(address))
+  }, [dispatch, address])
 
   return (
     <Wrapper className="staking">

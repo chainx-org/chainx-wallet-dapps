@@ -9,4 +9,6 @@ const addressSlice = createSlice({
   reducers: {}
 })
 
+export const addressSelector = state => state.address.address
+
 export default addressSlice.reducer
