@@ -10,6 +10,7 @@ import Footer from './pages/Footer'
 import AssetManagement from './pages/AssetManagement'
 import CrossChainMining from './pages/CrossChainMining'
 import Staking from './pages/Staking'
+import Trust from './pages/Trust'
 import chainx from './services/chainx'
 import { setHead } from './reducers/chainSlice'
 import { useDispatch } from 'react-redux'
@@ -33,6 +34,7 @@ function App() {
           <Route exact path="/" component={AssetManagement} />
           <Route exact path="/mining" component={CrossChainMining} />
           <Route exact path="/staking" component={Staking} />
+          <Route exact path="/trust" component={Trust} />
           <Redirect to="/" />
         </Switch>
       </div>

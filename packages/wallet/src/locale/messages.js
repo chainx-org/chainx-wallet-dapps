@@ -114,6 +114,13 @@ const staking = {
   }
 }
 
+const trust = {
+  TRUST: {
+    en: 'Trust',
+    zh: '资产信托'
+  }
+}
+
 const footer = {
   FOOTER_BLOCK_TIME: {
     en: 'Block time',
@@ -130,5 +137,6 @@ export default {
   ...pseduIntention,
   ...intention,
   ...staking,
-  ...footer
+  ...footer,
+  ...trust
 }

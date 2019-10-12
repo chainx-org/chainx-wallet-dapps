@@ -5,6 +5,7 @@ import assetReducer from './assetSlice'
 import settingsReducer from './settingsSlice'
 import intentionReducer from './intentionSlice'
 import chainReducer from './chainSlice'
+import trustReducer from './trustSlice'
 
 export default combineReducers({
   test: testReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
   assets: assetReducer,
   settings: settingsReducer,
   intentions: intentionReducer,
-  chain: chainReducer
+  chain: chainReducer,
+  trust: trustReducer
 })
