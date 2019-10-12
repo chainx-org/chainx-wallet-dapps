@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import Intention from './Intention'
-import { intentionChunksSelector } from './selectors'
+import { activeIntentionChunksSelector } from './selectors'
 
 const Main = styled.main`
   overflow-y: auto;
@@ -22,7 +22,7 @@ const Main = styled.main`
 `
 
 export default function() {
-  const intentionChunks = useSelector(intentionChunksSelector)
+  const intentionChunks = useSelector(activeIntentionChunksSelector)
 
   return (
     <Main>

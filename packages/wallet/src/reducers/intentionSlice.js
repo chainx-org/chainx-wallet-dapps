@@ -59,6 +59,12 @@ export const fetchIntentions = () => async dispatch => {
 
   const resp = await stake.getIntentions()
   resp.sort((a, b) => {
+    if (b.isActive && !a.isActive) {
+      return 1
+    } else if (!b.isActive && a.isActive) {
+      return -1
+    }
+
     if (a.selfVote !== b.selfVote) {
       return b.selfVote - a.selfVote
     }
@@ -142,6 +148,13 @@ export const normalizedIntentionsSelector = createSelector(
 
       return result
     })
+  }
+)
+
+export const activeIntentionsSelector = createSelector(
+  normalizedIntentionsSelector,
+  intentions => {
+    return intentions.filter(intention => intention.isActive)
   }
 )
 
