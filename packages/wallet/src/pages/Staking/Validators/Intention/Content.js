@@ -42,7 +42,7 @@ const Wrapper = styled.div`
 
           span {
             display: inline-block;
-            width: 150px;
+            width: 100px;
             margin-left: 7px;
           }
 
@@ -89,13 +89,13 @@ export default function(props) {
             <li>
               <label>{$t('STAKING_TOTAL_NOMINATION')}</label>
               <span className="nomination">
-                {toPrecision(totalNomination, precision)}
+                {parseInt(toPrecision(totalNomination, precision))}
               </span>
             </li>
             <li>
               <label>{$t('STAKING_SELF_VOTE')}</label>
               <span className="self-vote">
-                {toPrecision(selfVote, precision)}
+                {parseInt(toPrecision(selfVote, precision))}
               </span>
             </li>
           </ul>
