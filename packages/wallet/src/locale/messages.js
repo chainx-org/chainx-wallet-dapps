@@ -32,27 +32,27 @@ const asset = {
     zh: '原链'
   },
   LOCK: {
-    en: 'LOCK',
+    en: 'Lock',
     zh: '锁仓'
   },
   VIEW: {
-    en: 'VIEW',
+    en: 'View',
     zh: '查看'
   },
   WITHDRAW: {
-    en: 'WITHDRAW',
+    en: 'Withdraw',
     zh: '提现'
   },
   DEPOSIT: {
-    en: 'DEPOSIT',
+    en: 'Deposit',
     zh: '充值'
   },
   TRANSFER: {
-    en: 'TRANSFER',
+    en: 'Transfer',
     zh: '转账'
   },
   MAP: {
-    en: 'MAP',
+    en: 'Map',
     zh: '映射'
   }
 }

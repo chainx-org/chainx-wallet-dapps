@@ -1,4 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
+
+import SdotTransfer from './SdotTransfer'
+import { PrimaryButton, DefaultButton } from '@chainx/ui'
+
 import sdotLogo from '../../../../static/sdot.svg'
 import { useSelector } from 'react-redux'
 import { sdotAssetSelector, sdotMetaSelector } from '../selectors'
@@ -7,12 +11,12 @@ import { AssetLine, DetailWrapper } from '../components/common'
 import InfoView from '../components/InfoView'
 import $t from '../../../../locale'
 import AssetView from '../components/AssetView'
-import { PrimaryButton, DefaultButton } from '@chainx/ui'
 
 export default function() {
   const meta = useSelector(sdotMetaSelector)
   const { details } = useSelector(sdotAssetSelector)
   const showDetails = meta.precision && Object.keys(details).length > 0
+  const [transferOpen, setTransferOpen] = useState(false)
 
   const footer = (
     <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
@@ -23,7 +27,7 @@ export default function() {
         {$t('MAP')}
       </PrimaryButton>
       <DefaultButton
-        onClick={() => console.log('click')}
+        onClick={() => setTransferOpen(true)}
         style={{ marginRight: 8 }}
       >
         {$t('TRANSFER')}
@@ -53,6 +57,10 @@ export default function() {
             </AssetLine>
           </DetailWrapper>
         )}
+        <SdotTransfer
+          open={transferOpen}
+          handleClose={() => setTransferOpen(false)}
+        />
       </div>
     </AssetCard>
   )

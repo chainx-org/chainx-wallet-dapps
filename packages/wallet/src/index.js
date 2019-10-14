@@ -23,17 +23,17 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: #F0F1F2;
   overflow-x: auto;
- 
+
   #root {
     display: flex;
     flex-direction: column;
     height: 100%;
-    
+
     & > div.wrapper {
       display: flex;
       flex: 1;
       overflow-y: auto;
-      
+
       & > div {
         &:not(.staking) {
           padding: 16px 16px 0;
