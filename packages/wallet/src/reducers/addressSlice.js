@@ -14,6 +14,7 @@ const addressSlice = createSlice({
       reducer(state, action) {
         state.name = action.payload.name
         state.address = action.payload.address
+        window.location.reload()
       }
     },
     setExtensionAccounts: {

@@ -63,14 +63,14 @@ export default function() {
 
   return (
     <Wrapper>
-      <li onClick={selectAccount(demoAccountName, demoAccountAddress)}>
+      <li onClick={() => selectAccount(demoAccountName, demoAccountAddress)}>
         <h4>{demoAccountName}</h4>
         <p>{demoAccountAddress}</p>
       </li>
       {extensionAccounts.map(account => {
         return (
           <li
-            onClick={selectAccount(account.name, account.address)}
+            onClick={() => selectAccount(account.name, account.address)}
             key={account.address}
           >
             <h4>{account.name}</h4>
