@@ -8,6 +8,7 @@ import rootReducer from './reducers'
 import { createGlobalStyle } from 'styled-components'
 import chainx from './services/chainx'
 import throttle from 'lodash.throttle'
+import { setExtensionAccounts } from './reducers/addressSlice'
 
 const GlobalStyle = createGlobalStyle`
 html {
@@ -87,6 +88,15 @@ store.subscribe(
     saveState({ address })
   }, 1000)
 )
+
+window.onload = () => {
+  if (window.chainxProvider) {
+    window.chainxProvider.enable().then(account => {
+      console.log('account', account)
+      store.dispatch(setExtensionAccounts([account]))
+    })
+  }
+}
 
 chainx.isRpcReady().then(() => {
   ReactDOM.render(

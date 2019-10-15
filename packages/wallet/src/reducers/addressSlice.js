@@ -2,7 +2,8 @@ import { createSlice, createSelector } from 'redux-starter-kit'
 
 let initialState = {
   name: 'abc',
-  address: '5TGy4d488i7pp3sjzi1gibqFUPLShddfk7qPY2S445ErhDGq'
+  address: '5TGy4d488i7pp3sjzi1gibqFUPLShddfk7qPY2S445ErhDGq',
+  extensionAccounts: []
 }
 
 const addressSlice = createSlice({
@@ -14,11 +15,16 @@ const addressSlice = createSlice({
         state.name = action.payload.name
         state.address = action.payload.address
       }
+    },
+    setExtensionAccounts: {
+      reducer(state, action) {
+        state.extensionAccounts = action.payload
+      }
     }
   }
 })
 
-export const { setAccount } = addressSlice.actions
+export const { setAccount, setExtensionAccounts } = addressSlice.actions
 
 export const addressSelector = state => state.address.address
 export const nameSelector = state => state.address.name
@@ -27,5 +33,7 @@ export const accountSelector = createSelector(
   addressSelector,
   (name, address) => ({ name, address })
 )
+export const extensionAccountsSelector = state =>
+  state.address.extensionAccounts
 
 export default addressSlice.reducer

@@ -1,6 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import $t from '../../../locale'
+import { useDispatch, useSelector } from 'react-redux'
+import { setAccount } from '../../../reducers/addressSlice'
+import { extensionAccountsSelector } from '../../../reducers/addressSlice'
 
 const Wrapper = styled.ul`
   position: absolute;
@@ -18,6 +21,14 @@ const Wrapper = styled.ul`
   z-index: 2;
 
   & > li {
+    &:not(:first-of-type) {
+      padding-top: 10px;
+      border-top: 1px solid #eee;
+    }
+    &:not(:last-of-type) {
+      padding-bottom: 10px;
+    }
+
     h4 {
       margin: 0;
       opacity: 0.72;
@@ -41,12 +52,32 @@ const Wrapper = styled.ul`
 `
 
 export default function() {
+  const extensionAccounts = useSelector(extensionAccountsSelector)
+  const dispatch = useDispatch()
+  const selectAccount = (name, address) => {
+    dispatch(setAccount({ name, address }))
+  }
+
+  const demoAccountName = $t('HEADER_DEMO_ACCOUNT')
+  const demoAccountAddress = '5TGy4d488i7pp3sjzi1gibqFUPLShddfk7qPY2S445ErhDGq'
+
   return (
     <Wrapper>
-      <li>
-        <h4>{$t('HEADER_DEMO_ACCOUNT')}</h4>
-        <p>5TGy4d488i7pp3sjzi1gibqFUPLShddfk7qPY2S445ErhDGq</p>
+      <li onClick={selectAccount(demoAccountName, demoAccountAddress)}>
+        <h4>{demoAccountName}</h4>
+        <p>{demoAccountAddress}</p>
       </li>
+      {extensionAccounts.map(account => {
+        return (
+          <li
+            onClick={selectAccount(account.name, account.address)}
+            key={account.address}
+          >
+            <h4>{account.name}</h4>
+            <p>{account.address}</p>
+          </li>
+        )
+      })}
     </Wrapper>
   )
 }
