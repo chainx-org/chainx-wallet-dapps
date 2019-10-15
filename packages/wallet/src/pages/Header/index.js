@@ -3,9 +3,11 @@ import styled from 'styled-components'
 import $t from '../../locale'
 import logo from './logo.svg'
 import { NavLink } from 'react-router-dom'
+import Name from './Name'
 
 const Wrapper = styled.header`
   display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: 0 16px;
   background: #3f3f3f;
@@ -13,8 +15,16 @@ const Wrapper = styled.header`
   height: 56px;
   color: #ffffff;
 
-  & > img {
-    height: 24px;
+  & > div {
+    display: flex;
+    align-items: center;
+    & > img {
+      height: 24px;
+    }
+
+    &.right {
+      height: 100%;
+    }
   }
 `
 
@@ -43,27 +53,32 @@ const Nav = styled.span`
 export default function() {
   return (
     <Wrapper>
-      <img src={logo} alt="logo" />
-      <Nav active>
-        <NavLink exact activeClassName="active" to="/">
-          {$t('ASSET')}
-        </NavLink>
-      </Nav>
-      <Nav>
-        <NavLink exact activeClassName="active" to="/mining">
-          {$t('PSEDU_INTENTION')}
-        </NavLink>
-      </Nav>
-      <Nav>
-        <NavLink exact activeClassName="active" to="/staking">
-          {$t('STAKING')}
-        </NavLink>
-      </Nav>
-      <Nav>
-        <NavLink exact activeClassName="active" to="/trust">
-          {$t('TRUST')}
-        </NavLink>
-      </Nav>
+      <div className="left">
+        <img src={logo} alt="logo" />
+        <Nav active>
+          <NavLink exact activeClassName="active" to="/">
+            {$t('ASSET')}
+          </NavLink>
+        </Nav>
+        <Nav>
+          <NavLink exact activeClassName="active" to="/mining">
+            {$t('PSEDU_INTENTION')}
+          </NavLink>
+        </Nav>
+        <Nav>
+          <NavLink exact activeClassName="active" to="/staking">
+            {$t('STAKING')}
+          </NavLink>
+        </Nav>
+        <Nav>
+          <NavLink exact activeClassName="active" to="/trust">
+            {$t('TRUST')}
+          </NavLink>
+        </Nav>
+      </div>
+      <div className="right">
+        <Name />
+      </div>
     </Wrapper>
   )
 }

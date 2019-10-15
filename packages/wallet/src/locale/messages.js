@@ -132,11 +132,19 @@ const footer = {
   }
 }
 
+const header = {
+  HEADER_DEMO_ACCOUNT: {
+    en: 'Demo Account',
+    zh: '体验账户'
+  }
+}
+
 export default {
   ...asset,
   ...pseduIntention,
   ...intention,
   ...staking,
   ...footer,
-  ...trust
+  ...trust,
+  ...header
 }
