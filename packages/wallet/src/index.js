@@ -6,9 +6,10 @@ import { configureStore } from 'redux-starter-kit'
 import { Provider } from 'react-redux'
 import rootReducer from './reducers'
 import { createGlobalStyle } from 'styled-components'
-import { getChainx, setChainx } from './services/chainx'
+import { getChainx } from './services/chainx'
 import throttle from 'lodash.throttle'
 import { setAccount, setExtensionAccounts } from './reducers/addressSlice'
+import { setNode } from './reducers/nodeSlice'
 
 const GlobalStyle = createGlobalStyle`
 html {
@@ -113,7 +114,11 @@ window.onload = () => {
   })
 
   window.chainxProvider.getCurrentNode().then(node => {
-    setChainx(node.url)
+    store.dispatch(setNode(node))
+  })
+
+  window.chainxProvider.listenNodeChange(({ to }) => {
+    store.dispatch(setNode(to))
   })
 }
 

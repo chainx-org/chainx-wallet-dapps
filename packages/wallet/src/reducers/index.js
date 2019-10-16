@@ -6,6 +6,7 @@ import settingsReducer from './settingsSlice'
 import intentionReducer from './intentionSlice'
 import chainReducer from './chainSlice'
 import trustReducer from './trustSlice'
+import nodeReducer from './nodeSlice'
 
 export default combineReducers({
   test: testReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   settings: settingsReducer,
   intentions: intentionReducer,
   chain: chainReducer,
-  trust: trustReducer
+  trust: trustReducer,
+  node: nodeReducer
 })
