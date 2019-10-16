@@ -6,8 +6,7 @@ import { configureStore } from 'redux-starter-kit'
 import { Provider } from 'react-redux'
 import rootReducer from './reducers'
 import { createGlobalStyle } from 'styled-components'
-import { getChainx } from './services/chainx'
-import throttle from 'lodash.throttle'
+import { getChainx, setChainx } from './services/chainx'
 import { setAccount, setExtensionAccounts } from './reducers/addressSlice'
 import { setNode } from './reducers/nodeSlice'
 
@@ -83,12 +82,16 @@ export const store = configureStore({
   preloadedState: persistedState || {}
 })
 
-store.subscribe(
-  throttle(() => {
-    const address = store.getState().address
-    saveState({ address })
-  }, 1000)
-)
+store.subscribe(() => {
+  const address = store.getState().address
+  const node = store.getState().node
+  saveState({ address, node })
+})
+
+let nodeResolve
+const nodePromise = new Promise(resolve => {
+  nodeResolve = resolve
+})
 
 window.onload = () => {
   if (!window.chainxProvider) {
@@ -114,28 +117,45 @@ window.onload = () => {
   })
 
   window.chainxProvider.getCurrentNode().then(node => {
-    store.dispatch(setNode(node))
+    const { url } = store.getState().node
+    if (url !== node.url) {
+      store.dispatch(setNode(node))
+      setChainx(node.url)
+      window.location.reload()
+    } else {
+      setChainx(url)
+    }
+    nodeResolve()
   })
 
   window.chainxProvider.listenNodeChange(({ to }) => {
-    store.dispatch(setNode(to))
+    const { url } = store.getState().node
+    if (url !== to.url) {
+      store.dispatch(setNode(to))
+      setTimeout(() => {
+        window.location.reload()
+      }, 0)
+    }
   })
 }
 
-getChainx()
-  .isRpcReady()
-  .then(() => {
-    ReactDOM.render(
-      <React.Fragment>
-        <GlobalStyle />
-        <Provider store={store}>
+const render = () =>
+  getChainx()
+    .isRpcReady()
+    .then(() => {
+      ReactDOM.render(
+        <React.Fragment>
           <GlobalStyle />
-          <App />
-        </Provider>
-      </React.Fragment>,
-      document.getElementById('root')
-    )
-  })
+          <Provider store={store}>
+            <GlobalStyle />
+            <App />
+          </Provider>
+        </React.Fragment>,
+        document.getElementById('root')
+      )
+    })
+
+nodePromise.then(render)
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

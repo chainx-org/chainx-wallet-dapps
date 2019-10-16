@@ -1,5 +1,4 @@
 import { createSlice } from 'redux-starter-kit'
-import { setChainx } from '../services/chainx'
 
 const nodeSlice = createSlice({
   slice: 'node',
@@ -12,8 +11,6 @@ const nodeSlice = createSlice({
       reducer(state, action) {
         state.name = action.payload.name
         state.url = action.payload.url
-
-        setChainx(action.payload.url)
       }
     }
   }
