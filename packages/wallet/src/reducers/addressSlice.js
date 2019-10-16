@@ -3,6 +3,7 @@ import { createSlice, createSelector } from 'redux-starter-kit'
 let initialState = {
   name: 'abc',
   address: '5TGy4d488i7pp3sjzi1gibqFUPLShddfk7qPY2S445ErhDGq',
+  isFromExtension: false,
   extensionAccounts: []
 }
 
@@ -14,6 +15,7 @@ const addressSlice = createSlice({
       reducer(state, action) {
         state.name = action.payload.name
         state.address = action.payload.address
+        state.isFromExtension = action.payload.isFromExtension
         window.location.reload()
       }
     },

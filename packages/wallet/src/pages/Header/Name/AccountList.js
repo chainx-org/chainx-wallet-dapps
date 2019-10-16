@@ -54,8 +54,8 @@ const Wrapper = styled.ul`
 export default function() {
   const extensionAccounts = useSelector(extensionAccountsSelector)
   const dispatch = useDispatch()
-  const selectAccount = (name, address) => {
-    dispatch(setAccount({ name, address }))
+  const selectAccount = (name, address, isFromExtension) => {
+    dispatch(setAccount({ name, address, isFromExtension }))
   }
 
   const demoAccountName = $t('HEADER_DEMO_ACCOUNT')
@@ -63,14 +63,18 @@ export default function() {
 
   return (
     <Wrapper>
-      <li onClick={() => selectAccount(demoAccountName, demoAccountAddress)}>
+      <li
+        onClick={() =>
+          selectAccount(demoAccountName, demoAccountAddress, false)
+        }
+      >
         <h4>{demoAccountName}</h4>
         <p>{demoAccountAddress}</p>
       </li>
       {extensionAccounts.map(account => {
         return (
           <li
-            onClick={() => selectAccount(account.name, account.address)}
+            onClick={() => selectAccount(account.name, account.address, true)}
             key={account.address}
           >
             <h4>{account.name}</h4>

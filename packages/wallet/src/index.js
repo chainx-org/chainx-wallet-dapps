@@ -8,7 +8,7 @@ import rootReducer from './reducers'
 import { createGlobalStyle } from 'styled-components'
 import chainx from './services/chainx'
 import throttle from 'lodash.throttle'
-import { setExtensionAccounts } from './reducers/addressSlice'
+import { setAccount, setExtensionAccounts } from './reducers/addressSlice'
 
 const GlobalStyle = createGlobalStyle`
 html {
@@ -90,11 +90,27 @@ store.subscribe(
 )
 
 window.onload = () => {
-  if (window.chainxProvider) {
-    window.chainxProvider.enable().then(account => {
-      store.dispatch(setExtensionAccounts([account]))
-    })
+  if (!window.chainxProvider) {
+    return
   }
+
+  window.chainxProvider.enable().then(account => {
+    store.dispatch(setExtensionAccounts([account]))
+  })
+
+  window.chainxProvider.listenAccountChange(({ to }) => {
+    store.dispatch(setExtensionAccounts([to]))
+    const address = store.getState().address
+    if (address.isFromExtension) {
+      store.dispatch(
+        setAccount({
+          name: to.name,
+          address: to.address,
+          isFromExtension: true
+        })
+      )
+    }
+  })
 }
 
 chainx.isRpcReady().then(() => {
