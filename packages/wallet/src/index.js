@@ -92,7 +92,6 @@ store.subscribe(
 window.onload = () => {
   if (window.chainxProvider) {
     window.chainxProvider.enable().then(account => {
-      console.log('account', account)
       store.dispatch(setExtensionAccounts([account]))
     })
   }

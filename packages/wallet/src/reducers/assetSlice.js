@@ -2,6 +2,18 @@ import { createSlice } from 'redux-starter-kit'
 import chainx from '../services/chainx'
 import { camelCaseKey } from './util'
 
+const emptyAsset = {
+  details: {
+    Free: 0,
+    ReservedCurrency: 0,
+    ReservedDexFuture: 0,
+    ReservedDexSpot: 0,
+    ReservedStaking: 0,
+    ReservedStakingRevocation: 0,
+    ReservedWithdrawal: 0
+  }
+}
+
 const assetSlice = createSlice({
   slice: 'asset',
   initialState: {
@@ -26,8 +38,17 @@ export const fetchAccountAssets = address => async dispatch => {
   await chainx.isRpcReady()
   const { asset } = chainx
 
-  const resp = await asset.getAssetsByAccount(address, 0, 100)
-  const assets = resp.data.map(item => {
+  const { data } = await asset.getAssetsByAccount(address, 0, 100)
+  ;['PCX', 'BTC', 'L-BTC', 'SDOT'].forEach(token => {
+    if (!data.find(asset => asset.name === token)) {
+      data.push({
+        name: token,
+        ...emptyAsset
+      })
+    }
+  })
+
+  const assets = data.map(item => {
     return { name: item.name, details: camelCaseKey(item.details) }
   })
 
