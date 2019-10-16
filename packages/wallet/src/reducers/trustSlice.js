@@ -1,5 +1,5 @@
 import { createSlice } from 'redux-starter-kit'
-import chainx from '../services/chainx'
+import { getChainx } from '../services/chainx'
 
 const trustSlice = createSlice({
   slice: 'trust',
@@ -16,6 +16,7 @@ const trustSlice = createSlice({
 })
 
 async function getAsset() {
+  const chainx = getChainx()
   await chainx.isRpcReady()
   const { asset } = chainx
 

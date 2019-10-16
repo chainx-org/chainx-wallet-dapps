@@ -1,5 +1,5 @@
 import { createSlice, createSelector } from 'redux-starter-kit'
-import chainx from '../services/chainx'
+import { getChainx } from '../services/chainx'
 
 const intentionSlice = createSlice({
   slice: 'intentions',
@@ -55,6 +55,7 @@ export const {
 } = intentionSlice.actions
 
 async function getStake() {
+  const chainx = getChainx()
   await chainx.isRpcReady()
   const { stake } = chainx
 

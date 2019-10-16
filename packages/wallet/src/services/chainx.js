@@ -1,3 +1,10 @@
 import ChainX from 'chainx.js'
 
-export default new ChainX('wss://w1.chainx.org.cn/ws')
+let chainx = new ChainX('wss://w1.chainx.org.cn/ws')
+
+export const setChainx = url => {
+  chainx = new ChainX(url)
+  return chainx
+}
+
+export const getChainx = () => chainx

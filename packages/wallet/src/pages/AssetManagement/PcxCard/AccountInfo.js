@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchIntentions } from '../../../reducers/intentionSlice'
-import chainx from '../../../services/chainx'
+import { getChainx } from '../../../services/chainx'
 import $t from '../../../locale'
 
 const Wrapper = styled.div`
@@ -43,7 +43,7 @@ export default function() {
   const intentions = useSelector(state => state.intentions.intentions)
   const dispatch = useDispatch()
 
-  const id = chainx.account.decodeAddress(account.address, false)
+  const id = getChainx().account.decodeAddress(account.address, false)
   const validator = intentions.find(intention => intention.account === id)
   const isValidator = !!validator
   const isTrustee = validator && validator.isTrustee.length > 0

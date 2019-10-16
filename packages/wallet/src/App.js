@@ -11,7 +11,7 @@ import AssetManagement from './pages/AssetManagement'
 import CrossChainMining from './pages/CrossChainMining'
 import Staking from './pages/Staking'
 import Trust from './pages/Trust'
-import chainx from './services/chainx'
+import { getChainx } from './services/chainx'
 import { setHead } from './reducers/chainSlice'
 import { useDispatch } from 'react-redux'
 
@@ -19,9 +19,11 @@ function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const subscriber = chainx.chain.subscribeNewHead().subscribe(head => {
-      dispatch(setHead(head))
-    })
+    const subscriber = getChainx()
+      .chain.subscribeNewHead()
+      .subscribe(head => {
+        dispatch(setHead(head))
+      })
 
     return subscriber.unsubscribe
   }, [dispatch])

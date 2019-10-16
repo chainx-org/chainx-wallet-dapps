@@ -1,5 +1,5 @@
 import { createSlice } from 'redux-starter-kit'
-import chainx from '../services/chainx'
+import { getChainx } from '../services/chainx'
 import { camelCaseKey } from './util'
 
 const emptyAsset = {
@@ -35,6 +35,7 @@ const assetSlice = createSlice({
 })
 
 export const fetchAccountAssets = address => async dispatch => {
+  const chainx = getChainx()
   await chainx.isRpcReady()
   const { asset } = chainx
 
@@ -56,6 +57,7 @@ export const fetchAccountAssets = address => async dispatch => {
 }
 
 export const fetchAssetsInfo = () => async dispatch => {
+  const chainx = getChainx()
   await chainx.isRpcReady()
   const { asset } = chainx
 
