@@ -12,6 +12,7 @@ import $t from '../../../locale'
 import Logo from './Logo'
 import AccountInfo from './AccountInfo'
 import backgroundImg from './background.svg'
+import { DefaultButton } from '@chainx/ui'
 
 const InnerWrapper = styled.div`
   position: relative;
@@ -28,7 +29,9 @@ const InnerWrapper = styled.div`
   }
 
   section.free {
+    display: flex;
     margin-top: 10px;
+    align-items: flex-end;
   }
 
   section.details {
@@ -80,6 +83,12 @@ export default function() {
               precision={pcxFree.precision}
             />
           )}
+          <DefaultButton
+            onClick={() => console.log('click')}
+            style={{ marginLeft: 32, height: 28, marginBottom: 4 }}
+          >
+            {$t('TRANSFER')}
+          </DefaultButton>
         </section>
         <section className="details">
           {pcxDetails && (
