@@ -31,6 +31,14 @@ const asset = {
     en: 'Chain',
     zh: '原链'
   },
+  ASSET_TRANSFER_IN: {
+    en: 'In',
+    zh: '转入'
+  },
+  ASSET_TRANSFER_OUT: {
+    en: 'Out',
+    zh: '转出'
+  },
   LOCK: {
     en: 'Lock',
     zh: '锁仓'

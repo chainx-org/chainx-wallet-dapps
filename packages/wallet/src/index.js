@@ -38,7 +38,7 @@ body {
 
       & > div {
         &:not(.staking) {
-          padding: 16px 16px 0;
+          padding: 16px;
           margin: 0 auto;
           min-width: 1280px;
           max-width: 1440px;
