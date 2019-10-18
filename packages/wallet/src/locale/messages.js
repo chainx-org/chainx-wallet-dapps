@@ -43,6 +43,10 @@ const asset = {
     en: 'Transfer amount',
     zh: '转账数量'
   },
+  ASSET_BALANCE: {
+    en: 'Balance:',
+    zh: '余额：'
+  },
   LOCK: {
     en: 'Lock',
     zh: '锁仓'
