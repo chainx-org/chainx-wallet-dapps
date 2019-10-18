@@ -11,6 +11,9 @@ import $t from '../../../locale'
 import { pcxFreeSelector } from './selectors'
 import { useSelector } from 'react-redux'
 import { toPrecision } from '../../../utils'
+import { getChainx } from '../../../services/chainx'
+
+const StyledDialog = styled(Dialog)``
 
 const Label = styled.label`
   opacity: 0.32;
@@ -32,17 +35,46 @@ export default function({ open, handleClose }) {
   const [address, setAddress] = useState('')
   const [amount, setAmount] = useState('')
   const [memo, setMemo] = useState('')
+  const [addressErrMsg, setAddressErrMsg] = useState('')
+  const [amountErrMsg, setAmountErrMsg] = useState('')
 
   const free = useSelector(pcxFreeSelector)
+  const chainx = getChainx()
+
+  const sign = () => {
+    const isAddressValid = chainx.account.isAddressValid(address)
+    if (!isAddressValid) {
+      setAddressErrMsg($t('ASSET_TRANSFER_ADDR_ERROR'))
+      return
+    }
+
+    const realAmount = parseFloat(amount)
+    if (isNaN(realAmount)) {
+      setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_ERROR'))
+      return
+    }
+
+    if (free && realAmount * Math.pow(10, free.precision) > free.free) {
+      setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_TOO_MUCH_ERROR'))
+      return
+    }
+
+    console.log('call sign dialog')
+  }
 
   return (
-    <Dialog open={open} handleClose={handleClose} title="Transfer(PCX)">
+    <StyledDialog open={open} handleClose={handleClose} title="Transfer(PCX)">
       <div style={{ padding: 16 }}>
         <div>
           <SelectInput
             value={address}
             placeholder="ChainX 接收地址"
-            onChange={setAddress}
+            onChange={value => {
+              setAddressErrMsg('')
+              setAddress(value)
+            }}
+            error={!!addressErrMsg}
+            errorText={addressErrMsg}
           />
         </div>
 
@@ -50,10 +82,15 @@ export default function({ open, handleClose }) {
           <div style={{ width: '50%' }}>
             <AmountInput
               value={amount}
-              onChange={setAmount}
+              onChange={value => {
+                setAmountErrMsg('')
+                setAmount(value)
+              }}
               placeholder={$t('ASSET_TRANSFER_AMOUNT')}
               tokenName="PCX"
               precision={8}
+              error={!!amountErrMsg}
+              errorText={amountErrMsg}
             />
           </div>
           {free ? (
@@ -73,14 +110,11 @@ export default function({ open, handleClose }) {
         </div>
 
         <div style={{ marginTop: 16 }}>
-          <PrimaryButton
-            size="fullWidth"
-            onClick={() => console.log('transfer pcx')}
-          >
+          <PrimaryButton size="fullWidth" onClick={() => sign()}>
             {$t('COMMON_CONFIRM')}
           </PrimaryButton>
         </div>
       </div>
-    </Dialog>
+    </StyledDialog>
   )
 }

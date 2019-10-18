@@ -70,6 +70,18 @@ const asset = {
   MAP: {
     en: 'Map',
     zh: '映射'
+  },
+  ASSET_TRANSFER_ADDR_ERROR: {
+    en: 'Invalid address',
+    zh: '地址错误'
+  },
+  ASSET_TRANSFER_AMOUNT_ERROR: {
+    en: 'Invalid amount',
+    zh: '金额错误'
+  },
+  ASSET_TRANSFER_AMOUNT_TOO_MUCH_ERROR: {
+    en: 'Overflow the balance',
+    zh: '超出可用余额'
   }
 }
 
