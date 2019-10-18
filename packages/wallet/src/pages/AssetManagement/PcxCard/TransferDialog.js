@@ -59,11 +59,18 @@ export default function({ open, handleClose }) {
       return
     }
 
-    console.log('call sign dialog')
+    const extrinsic = chainx.asset.transfer(address, 'PCX', realAmount, memo)
+    console.log('extrinsic', extrinsic)
+
+    handleClose(extrinsic)
   }
 
   return (
-    <StyledDialog open={open} handleClose={handleClose} title="Transfer(PCX)">
+    <StyledDialog
+      open={open}
+      handleClose={() => handleClose()}
+      title="Transfer(PCX)"
+    >
       <div style={{ padding: 16 }}>
         <div>
           <SelectInput
