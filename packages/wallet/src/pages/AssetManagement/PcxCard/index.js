@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Card from '../../../components/Card'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,6 +13,7 @@ import Logo from './Logo'
 import AccountInfo from './AccountInfo'
 import backgroundImg from './background.svg'
 import { DefaultButton } from '@chainx/ui'
+import TransferDialog from './TransferDialog'
 
 const InnerWrapper = styled.div`
   position: relative;
@@ -58,6 +59,7 @@ export default function() {
   const pcxFree = useSelector(pcxFreeSelector)
   const pcxDetails = useSelector(pcxDetailsSelector)
   const dispatch = useDispatch()
+  const [transferOpen, setTransferOpen] = useState(false)
 
   useEffect(() => {
     dispatch(fetchAccountAssets(address))
@@ -84,7 +86,7 @@ export default function() {
             />
           )}
           <DefaultButton
-            onClick={() => console.log('click')}
+            onClick={() => setTransferOpen(true)}
             style={{ marginLeft: 32, height: 28, marginBottom: 4 }}
           >
             {$t('TRANSFER')}
@@ -117,6 +119,10 @@ export default function() {
           )}
         </section>
         <CornerBackground />
+        <TransferDialog
+          open={transferOpen}
+          handleClose={() => setTransferOpen(false)}
+        />
       </InnerWrapper>
     </Card>
   )

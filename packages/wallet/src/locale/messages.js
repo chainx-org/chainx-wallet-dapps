@@ -39,6 +39,10 @@ const asset = {
     en: 'Out',
     zh: '转出'
   },
+  ASSET_TRANSFER_AMOUNT: {
+    en: 'Transfer amount',
+    zh: '转账数量'
+  },
   LOCK: {
     en: 'Lock',
     zh: '锁仓'
@@ -62,6 +66,17 @@ const asset = {
   MAP: {
     en: 'Map',
     zh: '映射'
+  }
+}
+
+const common = {
+  COMMON_CONFIRM: {
+    en: 'OK',
+    zh: '确定'
+  },
+  COMMON_MEMO: {
+    en: 'Memo',
+    zh: '备注'
   }
 }
 
@@ -154,5 +169,6 @@ export default {
   ...staking,
   ...footer,
   ...trust,
-  ...header
+  ...header,
+  ...common
 }
