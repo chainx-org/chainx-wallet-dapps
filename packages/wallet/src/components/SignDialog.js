@@ -11,8 +11,6 @@ const StyledDialog = styled(Dialog)`
 `
 
 export default function({ open, info, switch: switchOpen, extrinsic }) {
-  console.log('to sign extrinsic:', extrinsic)
-
   return (
     <StyledDialog
       open={open}

@@ -1,4 +1,4 @@
-import { createSlice, createSelector } from 'redux-starter-kit'
+import { createSelector, createSlice } from 'redux-starter-kit'
 
 let initialState = {
   name: 'abc',

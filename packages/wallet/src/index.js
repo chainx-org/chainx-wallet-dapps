@@ -63,11 +63,11 @@ function loadState() {
   try {
     const serializedState = localStorage.getItem('state')
     if (serializedState === null) {
-      return undefined
+      return {}
     }
     return JSON.parse(serializedState)
   } catch (err) {
-    return undefined
+    return {}
   }
 }
 
@@ -77,6 +77,22 @@ function saveState(state) {
 }
 
 const persistedState = loadState()
+if (!persistedState.address) {
+  persistedState.address = {
+    address: '5TGy4d488i7pp3sjzi1gibqFUPLShddfk7qPY2S445ErhDGq',
+    extensionAccounts: [],
+    isFromExtension: false,
+    name: '体验账户'
+  }
+}
+
+const defaultNode = {
+  name: 'w1.cn',
+  url: 'wss://w1.chainx.org.cn/ws'
+}
+if (!persistedState.node) {
+  persistedState.node = defaultNode
+}
 export const store = configureStore({
   reducer: rootReducer,
   preloadedState: persistedState || {}
@@ -94,7 +110,10 @@ const nodePromise = new Promise(resolve => {
 })
 
 window.onload = () => {
+  const { url } = store.getState().node
   if (!window.chainxProvider) {
+    setChainx(url)
+    nodeResolve()
     return
   }
 
@@ -119,7 +138,6 @@ window.onload = () => {
   })
 
   window.chainxProvider.getCurrentNode().then(node => {
-    const { url } = store.getState().node
     if (url !== node.url) {
       store.dispatch(setNode(node))
       setChainx(node.url)
