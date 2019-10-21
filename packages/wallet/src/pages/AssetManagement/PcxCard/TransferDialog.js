@@ -70,7 +70,12 @@ export default function({ open, handleClose }) {
           realAmount,
           memo
         ])
-        .then(console.log)
+        .then(hex => {
+          console.log(hex)
+        })
+        .then(() => {
+          handleClose()
+        })
       return
     }
 
