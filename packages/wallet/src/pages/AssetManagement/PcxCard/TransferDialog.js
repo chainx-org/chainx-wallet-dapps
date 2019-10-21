@@ -12,6 +12,7 @@ import { pcxFreeSelector } from './selectors'
 import { useSelector } from 'react-redux'
 import { toPrecision } from '../../../utils'
 import { getChainx } from '../../../services/chainx'
+import { addressSelector } from '../../../reducers/addressSlice'
 
 const StyledDialog = styled(Dialog)``
 
@@ -32,6 +33,8 @@ const Value = styled.span`
 `
 
 export default function({ open, handleClose }) {
+  const accountAddress = useSelector(addressSelector)
+
   const [address, setAddress] = useState('')
   const [amount, setAmount] = useState('')
   const [memo, setMemo] = useState('')
@@ -56,6 +59,18 @@ export default function({ open, handleClose }) {
 
     if (free && realAmount * Math.pow(10, free.precision) > free.free) {
       setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_TOO_MUCH_ERROR'))
+      return
+    }
+
+    if (window.chainxProvider) {
+      window.chainxProvider
+        .call(accountAddress, 'xAssets', 'transfer', [
+          address,
+          'PCX',
+          realAmount,
+          memo
+        ])
+        .then(console.log)
       return
     }
 

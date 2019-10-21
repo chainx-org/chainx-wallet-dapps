@@ -99,7 +99,9 @@ window.onload = () => {
   }
 
   window.chainxProvider.enable().then(account => {
-    store.dispatch(setExtensionAccounts([account]))
+    if (account) {
+      store.dispatch(setExtensionAccounts([account]))
+    }
   })
 
   window.chainxProvider.listenAccountChange(({ to }) => {
