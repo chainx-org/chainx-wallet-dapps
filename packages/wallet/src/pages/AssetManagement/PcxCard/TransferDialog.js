@@ -73,9 +73,9 @@ export default function({ open, handleClose }) {
         ])
         .then(hex => {
           console.log(hex)
-        })
-        .then(() => {
-          handleClose()
+          console.log('will send this extrinsic')
+          // TODO: send the extrinsic
+          // window.chainxProvider.sendExtrinsic(hex, console.log)
         })
       return
     }

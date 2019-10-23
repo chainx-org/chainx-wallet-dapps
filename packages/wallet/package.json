@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@chainx/ui": "^0.0.5",
+    "@chainx/ui": "^0.0.7",
     "bignumber.js": "^9.0.0",
     "camelcase": "^5.3.1",
     "chainx.js": "^2.21.0",
