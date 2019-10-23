@@ -9,6 +9,7 @@ import { createGlobalStyle } from 'styled-components'
 import { getChainx, setChainx } from './services/chainx'
 import { setAccount, setExtensionAccounts } from './reducers/addressSlice'
 import { setNode } from './reducers/nodeSlice'
+import SnackGallery from './SnackGallery'
 
 const GlobalStyle = createGlobalStyle`
 html {
@@ -167,7 +168,7 @@ const render = () =>
         <React.Fragment>
           <GlobalStyle />
           <Provider store={store}>
-            <GlobalStyle />
+            <SnackGallery />
             <App />
           </Provider>
         </React.Fragment>,

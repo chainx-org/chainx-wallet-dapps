@@ -8,6 +8,7 @@ import chainReducer from './chainSlice'
 import trustReducer from './trustSlice'
 import nodeReducer from './nodeSlice'
 import transactionReducer from './transactionSlice'
+import snackReducer from './snackSlice'
 
 export default combineReducers({
   test: testReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
   chain: chainReducer,
   trust: trustReducer,
   node: nodeReducer,
-  transaction: transactionReducer
+  transaction: transactionReducer,
+  snack: snackReducer
 })
