@@ -51,13 +51,14 @@ export default function({ open, handleClose }) {
       return
     }
 
-    const realAmount = parseFloat(amount)
-    if (isNaN(realAmount)) {
+    const floatAmount = parseFloat(amount)
+    if (isNaN(floatAmount)) {
       setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_ERROR'))
       return
     }
 
-    if (free && realAmount * Math.pow(10, free.precision) > free.free) {
+    const realAmount = floatAmount * Math.pow(10, free.precision)
+    if (free && realAmount > free.free) {
       setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_TOO_MUCH_ERROR'))
       return
     }
