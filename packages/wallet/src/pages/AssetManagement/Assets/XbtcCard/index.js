@@ -8,7 +8,7 @@ import $t from '../../../../locale'
 import AssetView from '../components/AssetView'
 import { AssetLine, DetailWrapper } from '../components/common'
 import { PrimaryButton, DefaultButton } from '@chainx/ui'
-import TransferDialog from '../TransferDialog'
+import TransferDialog from '../../TransferDialog'
 
 export default function() {
   const meta = useSelector(xbtcMetaSelector)

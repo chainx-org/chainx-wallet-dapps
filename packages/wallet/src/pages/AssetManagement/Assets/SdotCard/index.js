@@ -10,7 +10,7 @@ import { AssetLine, DetailWrapper } from '../components/common'
 import InfoView from '../components/InfoView'
 import $t from '../../../../locale'
 import AssetView from '../components/AssetView'
-import TransferDialog from '../TransferDialog'
+import TransferDialog from '../../TransferDialog'
 
 export default function() {
   const meta = useSelector(sdotMetaSelector)

@@ -7,21 +7,22 @@ import {
   TextInput
 } from '@chainx/ui'
 import styled from 'styled-components'
-import $t from '../../../locale'
-import { toPrecision } from '../../../utils'
+import $t from '../../locale'
+import { toPrecision } from '../../utils'
 import { useDispatch, useSelector } from 'react-redux'
-import { xbtcFreeSelector } from './XbtcCard/selectors'
-import { getChainx } from '../../../services/chainx'
-import { addressSelector } from '../../../reducers/addressSlice'
+import { xbtcFreeSelector } from './Assets/XbtcCard/selectors'
+import { getChainx } from '../../services/chainx'
+import { addressSelector } from '../../reducers/addressSlice'
 import BigNumber from 'bignumber.js'
 import {
   addSnack,
   generateId,
   removeSnack,
   typeEnum
-} from '../../../reducers/snackSlice'
-import { exFailed, exSuccess } from '../../../utils/constants'
-import { sdotFreeSelector } from './selectors'
+} from '../../reducers/snackSlice'
+import { exFailed, exSuccess } from '../../utils/constants'
+import { sdotFreeSelector } from './Assets/selectors'
+import { pcxFreeSelector } from './PcxCard/selectors'
 
 const StyledDialog = styled(Dialog)`
   div.wrapper {
@@ -77,11 +78,18 @@ export default function({ handleClose, token }) {
     sdotFreeSelector
   )
 
-  let free = xbtcFree
-  let precision = xbtcPrecision
+  const { free: pcxFree, precision: pcxPrecision } = useSelector(
+    pcxFreeSelector
+  )
+
+  let free = pcxFree
+  let precision = pcxPrecision
   if (token === 'SDOT') {
     free = sdotFree
     precision = sdotPrecision
+  } else if (token === 'BTC') {
+    free = xbtcFree
+    precision = xbtcPrecision
   }
 
   const [memo, setMemo] = useState('')
@@ -106,8 +114,6 @@ export default function({ handleClose, token }) {
     const realAmount = BigNumber(amount)
       .multipliedBy(Math.pow(10, precision))
       .toNumber()
-    console.log('realAmount', realAmount)
-    console.log('free', free)
     if (realAmount > free) {
       setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_TOO_MUCH_ERROR'))
       return

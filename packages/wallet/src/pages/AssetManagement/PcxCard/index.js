@@ -13,8 +13,7 @@ import Logo from './Logo'
 import AccountInfo from './AccountInfo'
 import backgroundImg from './background.svg'
 import { DefaultButton } from '@chainx/ui'
-import TransferDialog from './TransferDialog'
-import { SignDialog } from '../../../components'
+import TransferDialog from '../TransferDialog'
 
 const InnerWrapper = styled.div`
   position: relative;
@@ -61,8 +60,6 @@ export default function() {
   const pcxDetails = useSelector(pcxDetailsSelector)
   const dispatch = useDispatch()
   const [transferOpen, setTransferOpen] = useState(false)
-  const [signOpen, setSignOpen] = useState(false)
-  const [extrinsic, setExtrinsic] = useState(null)
 
   useEffect(() => {
     dispatch(fetchAccountAssets(address))
@@ -74,10 +71,6 @@ export default function() {
 
   const handleTransferClose = extrinsic => {
     setTransferOpen(false)
-    if (extrinsic) {
-      setExtrinsic(extrinsic)
-      setSignOpen(true)
-    }
   }
 
   return (
@@ -131,16 +124,8 @@ export default function() {
         </section>
         <CornerBackground />
         {transferOpen && (
-          <TransferDialog
-            open={transferOpen}
-            handleClose={handleTransferClose}
-          />
+          <TransferDialog token="PCX" handleClose={handleTransferClose} />
         )}
-        <SignDialog
-          open={signOpen}
-          switch={setSignOpen}
-          extrinsic={extrinsic}
-        />
       </InnerWrapper>
     </Card>
   )
