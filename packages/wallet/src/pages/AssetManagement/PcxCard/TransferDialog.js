@@ -76,7 +76,7 @@ export default function({ open, handleClose }) {
       setDisabled(true)
 
       window.chainxProvider
-        .call(accountAddress, 'xAssets', 'transfer', [
+        .signExtrinsic(accountAddress, 'xAssets', 'transfer', [
           address,
           'PCX',
           realAmount,

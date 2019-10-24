@@ -120,7 +120,7 @@ export default function({ handleClose, token }) {
 
     setDisabled(true)
     window.chainxProvider
-      .call(accountAddress, 'xAssets', 'transfer', [
+      .signExtrinsic(accountAddress, 'xAssets', 'transfer', [
         address,
         token,
         realAmount,
