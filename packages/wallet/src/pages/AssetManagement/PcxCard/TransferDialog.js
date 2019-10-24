@@ -9,10 +9,11 @@ import {
 } from '@chainx/ui'
 import $t from '../../../locale'
 import { pcxFreeSelector } from './selectors'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { toPrecision } from '../../../utils'
 import { getChainx } from '../../../services/chainx'
 import { addressSelector } from '../../../reducers/addressSlice'
+import { addSnack, removeSnack, generateId } from '../../../reducers/snackSlice'
 
 const StyledDialog = styled(Dialog)``
 
@@ -40,6 +41,7 @@ export default function({ open, handleClose }) {
   const [memo, setMemo] = useState('')
   const [addressErrMsg, setAddressErrMsg] = useState('')
   const [amountErrMsg, setAmountErrMsg] = useState('')
+  const dispatch = useDispatch()
 
   const free = useSelector(pcxFreeSelector)
   const chainx = getChainx()
@@ -72,10 +74,43 @@ export default function({ open, handleClose }) {
           memo
         ])
         .then(hex => {
-          console.log(hex)
-          console.log('will send this extrinsic')
-          // TODO: send the extrinsic
-          // window.chainxProvider.sendExtrinsic(hex, console.log)
+          window.chainxProvider.sendExtrinsic(hex, ({ err, status }) => {
+            console.log('err', err)
+            console.log('status', status)
+            // TODO: 处理err
+            if (status.status !== 'Finalized') {
+              return
+            }
+
+            if (status.result === 'ExtrinsicSuccess') {
+              const id = generateId()
+              dispatch(
+                addSnack({
+                  id,
+                  type: 'success',
+                  title: '转账成功',
+                  message: `转账数量 ${amount} PCX`
+                })
+              )
+              handleClose()
+              setTimeout(() => {
+                dispatch(removeSnack({ id }))
+              }, 5000)
+            } else if (status.result === 'ExtrinsicFailed') {
+              const id = generateId()
+              dispatch(
+                addSnack({
+                  id,
+                  type: 'error',
+                  title: '转账失败',
+                  message: `交易hash ${status.txHash}`
+                })
+              )
+              setTimeout(() => {
+                dispatch(removeSnack({ id }))
+              }, 5000)
+            }
+          })
         })
       return
     }

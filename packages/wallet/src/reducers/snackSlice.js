@@ -10,19 +10,20 @@ const snackSlice = createSlice({
     snacks: []
   },
   reducers: {
-    addSnack(
-      state,
-      {
-        payload: { type, title, message }
-      }
-    ) {
-      debugger
-      if (!types.includes(type)) {
-        console.error('invalid snack type')
-        return
-      }
+    addSnack: {
+      reducer(
+        state,
+        {
+          payload: { id, type, title, message }
+        }
+      ) {
+        if (!types.includes(type)) {
+          console.error('invalid snack type')
+          return
+        }
 
-      state.snacks.push({ id: idCounter++, type, title, message })
+        state.snacks.push({ id, type, title, message })
+      }
     },
     removeSnack(state, action) {
       const index = state.snacks.findIndex(
@@ -34,6 +35,10 @@ const snackSlice = createSlice({
     }
   }
 })
+
+export const generateId = () => {
+  return idCounter++
+}
 
 export const snacksSelector = state => state.snack.snacks
 

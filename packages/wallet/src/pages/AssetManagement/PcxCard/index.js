@@ -130,7 +130,12 @@ export default function() {
           )}
         </section>
         <CornerBackground />
-        <TransferDialog open={transferOpen} handleClose={handleTransferClose} />
+        {transferOpen && (
+          <TransferDialog
+            open={transferOpen}
+            handleClose={handleTransferClose}
+          />
+        )}
         <SignDialog
           open={signOpen}
           switch={setSignOpen}
