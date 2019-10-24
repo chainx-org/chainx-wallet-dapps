@@ -13,7 +13,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toPrecision } from '../../../utils'
 import { getChainx } from '../../../services/chainx'
 import { addressSelector } from '../../../reducers/addressSlice'
-import { addSnack, removeSnack, generateId } from '../../../reducers/snackSlice'
+import {
+  typeEnum,
+  addSnack,
+  removeSnack,
+  generateId
+} from '../../../reducers/snackSlice'
+import { exSuccess, exFailed } from '../../../utils/constants'
 
 const StyledDialog = styled(Dialog)``
 
@@ -42,6 +48,7 @@ export default function({ open, handleClose }) {
   const [addressErrMsg, setAddressErrMsg] = useState('')
   const [amountErrMsg, setAmountErrMsg] = useState('')
   const dispatch = useDispatch()
+  const [disabled, setDisabled] = useState(false)
 
   const free = useSelector(pcxFreeSelector)
   const chainx = getChainx()
@@ -66,6 +73,8 @@ export default function({ open, handleClose }) {
     }
 
     if (window.chainxProvider) {
+      setDisabled(true)
+
       window.chainxProvider
         .call(accountAddress, 'xAssets', 'transfer', [
           address,
@@ -75,41 +84,33 @@ export default function({ open, handleClose }) {
         ])
         .then(hex => {
           window.chainxProvider.sendExtrinsic(hex, ({ err, status }) => {
-            console.log('err', err)
-            console.log('status', status)
             // TODO: 处理err
             if (status.status !== 'Finalized') {
               return
             }
 
-            if (status.result === 'ExtrinsicSuccess') {
-              const id = generateId()
-              dispatch(
-                addSnack({
-                  id,
-                  type: 'success',
-                  title: '转账成功',
-                  message: `转账数量 ${amount} PCX`
-                })
-              )
-              handleClose()
-              setTimeout(() => {
-                dispatch(removeSnack({ id }))
-              }, 5000)
-            } else if (status.result === 'ExtrinsicFailed') {
-              const id = generateId()
-              dispatch(
-                addSnack({
-                  id,
-                  type: 'error',
-                  title: '转账失败',
-                  message: `交易hash ${status.txHash}`
-                })
-              )
-              setTimeout(() => {
-                dispatch(removeSnack({ id }))
-              }, 5000)
+            if (![exSuccess, exFailed].includes(status.result)) {
+              console.error(`Unkonwn extrinsic result: ${status.result}`)
+              return
             }
+
+            let id = generateId()
+            let type = typeEnum.SUCCESS
+            let title = '转账成功'
+            let message = `转账数量 ${amount} PCX`
+
+            if (status.result === 'ExtrinsicSuccess') {
+              handleClose()
+            } else if (status.result === 'ExtrinsicFailed') {
+              type = typeEnum.ERROR
+              title = '转账失败'
+              message = `交易hash ${status.txHash}`
+              setDisabled(false)
+            }
+            dispatch(addSnack({ id, type, title, message }))
+            setTimeout(() => {
+              dispatch(removeSnack({ id }))
+            }, 5000)
           })
         })
       return
@@ -173,7 +174,11 @@ export default function({ open, handleClose }) {
         </div>
 
         <div style={{ marginTop: 16 }}>
-          <PrimaryButton size="fullWidth" onClick={() => sign()}>
+          <PrimaryButton
+            disabled={disabled}
+            size="fullWidth"
+            onClick={() => sign()}
+          >
             {$t('COMMON_CONFIRM')}
           </PrimaryButton>
         </div>
