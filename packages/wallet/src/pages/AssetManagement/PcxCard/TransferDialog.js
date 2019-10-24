@@ -125,6 +125,7 @@ export default function({ open, handleClose }) {
             }, 5000)
           })
         })
+        .catch(() => setDisabled(false))
       return
     }
 

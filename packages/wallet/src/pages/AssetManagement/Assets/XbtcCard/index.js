@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import xbtcLogo from '../../../../static/xbtc.svg'
 import { useSelector } from 'react-redux'
 import { xbtcAssetSelector, xbtcMetaSelector } from '../selectors'
@@ -8,11 +8,15 @@ import $t from '../../../../locale'
 import AssetView from '../components/AssetView'
 import { AssetLine, DetailWrapper } from '../components/common'
 import { PrimaryButton, DefaultButton } from '@chainx/ui'
+import TransferDialog from './TransferDialog'
 
 export default function() {
   const meta = useSelector(xbtcMetaSelector)
   const { details } = useSelector(xbtcAssetSelector)
   const showDetails = meta.precision && Object.keys(details).length > 0
+  const [transferOpen, setTransferOpen] = useState(false)
+
+  const handleTransferClose = () => setTransferOpen(false)
 
   const footer = (
     <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
@@ -29,7 +33,7 @@ export default function() {
         {$t('WITHDRAW')}
       </DefaultButton>
       <DefaultButton
-        onClick={() => console.log('click')}
+        onClick={() => setTransferOpen(true)}
         style={{ marginRight: 8 }}
       >
         {$t('TRANSFER')}
@@ -65,6 +69,7 @@ export default function() {
           </DetailWrapper>
         )}
       </div>
+      {transferOpen && <TransferDialog handleClose={handleTransferClose} />}
     </AssetCard>
   )
 }

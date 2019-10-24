@@ -1,0 +1,217 @@
+import React, { useState } from 'react'
+import {
+  AmountInput,
+  Dialog,
+  PrimaryButton,
+  SelectInput,
+  TextInput
+} from '@chainx/ui'
+import styled from 'styled-components'
+import $t from '../../../../locale'
+import { toPrecision } from '../../../../utils'
+import { useDispatch, useSelector } from 'react-redux'
+import { xbtcFreeSelector } from './selectors'
+import { getChainx } from '../../../../services/chainx'
+import { addressSelector } from '../../../../reducers/addressSlice'
+import BigNumber from 'bignumber.js'
+import {
+  addSnack,
+  generateId,
+  removeSnack,
+  typeEnum
+} from '../../../../reducers/snackSlice'
+import { exFailed, exSuccess } from '../../../../utils/constants'
+
+const StyledDialog = styled(Dialog)`
+  div.wrapper {
+    padding: 16px;
+    & > div:not(:first-of-type) {
+      margin-top: 16px;
+    }
+
+    & > div.amount {
+      display: flex;
+      align-items: center;
+
+      & > div:first-of-type {
+        width: 50%;
+      }
+
+      & > div:last-of-type {
+        margin-left: 16px;
+      }
+    }
+  }
+`
+
+const Label = styled.label`
+  opacity: 0.32;
+  font-size: 14px;
+  color: #000000;
+  letter-spacing: 0.12px;
+  line-height: 20px;
+`
+
+const Value = styled.span`
+  opacity: 0.72;
+  font-size: 14px;
+  color: #000000;
+  letter-spacing: 0.12px;
+  line-height: 20px;
+`
+
+export default function({ handleClose }) {
+  const accountAddress = useSelector(addressSelector)
+
+  const [address, setAddress] = useState('')
+  const [addressErrMsg, setAddressErrMsg] = useState('')
+
+  const [amount, setAmount] = useState('')
+  const [amountErrMsg, setAmountErrMsg] = useState('')
+
+  const { free, precision } = useSelector(xbtcFreeSelector)
+
+  const [memo, setMemo] = useState('')
+  const [disabled, setDisabled] = useState(false)
+
+  const dispatch = useDispatch()
+
+  const chainx = getChainx()
+  const sign = () => {
+    const isAddressValid = chainx.account.isAddressValid(address)
+    if (!isAddressValid) {
+      setAddressErrMsg($t('ASSET_TRANSFER_ADDR_ERROR'))
+      return
+    }
+
+    if (isNaN(parseFloat(amount))) {
+      setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_ERROR'))
+      return
+    }
+    const realAmount = BigNumber(amount)
+      .multipliedBy(Math.pow(10, precision))
+      .toNumber()
+    console.log('realAmount', realAmount)
+    console.log('free', free)
+    if (realAmount > free) {
+      setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_TOO_MUCH_ERROR'))
+      return
+    }
+
+    if (!window.chainxProvider) {
+      // TODO: 考虑没有安装插件的情况下怎么与用户进行交互
+      return
+    }
+
+    setDisabled(true)
+    window.chainxProvider
+      .call(accountAddress, 'xAssets', 'transfer', [
+        address,
+        'BTC',
+        realAmount,
+        memo
+      ])
+      .then(hex => {
+        window.chainxProvider.sendExtrinsic(hex, ({ err, status }) => {
+          let id = generateId()
+          if (err) {
+            dispatch(
+              addSnack({
+                id,
+                type: typeEnum.ERROR,
+                title: '错误',
+                message: '提交交易出错'
+              })
+            )
+            setDisabled(false)
+            return
+          }
+
+          if (status.status !== 'Finalized') {
+            return
+          }
+
+          if (![exSuccess, exFailed].includes(status.result)) {
+            console.error(`Unkonwn extrinsic result: ${status.result}`)
+            setDisabled(false)
+            return
+          }
+
+          let type = typeEnum.SUCCESS
+          let title = '转账成功'
+          let message = `转账数量 ${amount} X-BTC`
+
+          if (status.result === 'ExtrinsicSuccess') {
+            handleClose()
+          } else if (status.result === 'ExtrinsicFailed') {
+            type = typeEnum.ERROR
+            title = '转账失败'
+            message = `交易hash ${status.txHash}`
+            setDisabled(false)
+          }
+          dispatch(addSnack({ id, type, title, message }))
+          setTimeout(() => {
+            dispatch(removeSnack({ id }))
+          }, 5000)
+        })
+      })
+      .catch(e => {
+        setDisabled(false)
+      })
+  }
+
+  return (
+    <StyledDialog title="Transfer(X-BTC)" open handleClose={handleClose}>
+      <div className="wrapper">
+        <div>
+          <SelectInput
+            value={address}
+            placeholder="ChainX 接收地址"
+            onChange={value => {
+              setAddressErrMsg('')
+              setAddress(value)
+            }}
+            error={!!addressErrMsg}
+            errorText={addressErrMsg}
+          />
+        </div>
+
+        <div className="amount">
+          <div>
+            <AmountInput
+              value={amount}
+              onChange={value => {
+                setAmountErrMsg('')
+                setAmount(value)
+              }}
+              placeholder={$t('ASSET_TRANSFER_AMOUNT')}
+              precision={precision}
+              error={!!amountErrMsg}
+              errorText={amountErrMsg}
+            />
+          </div>
+          {precision ? (
+            <div>
+              <Label>{$t('ASSET_BALANCE')}</Label>
+              <Value>{toPrecision(free, precision)} X-BTC</Value>
+            </div>
+          ) : null}
+        </div>
+
+        <div>
+          <TextInput
+            value={memo}
+            onChange={setMemo}
+            placeholder={$t('COMMON_MEMO')}
+          />
+        </div>
+
+        <div>
+          <PrimaryButton disabled={disabled} size="fullWidth" onClick={sign}>
+            {$t('COMMON_CONFIRM')}
+          </PrimaryButton>
+        </div>
+      </div>
+    </StyledDialog>
+  )
+}
