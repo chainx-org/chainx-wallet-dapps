@@ -14,12 +14,13 @@ import { toPrecision } from '../../../utils'
 import { getChainx } from '../../../services/chainx'
 import { addressSelector } from '../../../reducers/addressSlice'
 import {
-  typeEnum,
   addSnack,
+  generateId,
   removeSnack,
-  generateId
+  typeEnum
 } from '../../../reducers/snackSlice'
-import { exSuccess, exFailed } from '../../../utils/constants'
+import { exFailed, exSuccess } from '../../../utils/constants'
+import BigNumber from 'bignumber.js'
 
 const StyledDialog = styled(Dialog)``
 
@@ -60,13 +61,15 @@ export default function({ open, handleClose }) {
       return
     }
 
-    const floatAmount = parseFloat(amount)
-    if (isNaN(floatAmount)) {
+    if (isNaN(parseFloat(amount))) {
       setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_ERROR'))
       return
     }
 
-    const realAmount = floatAmount * Math.pow(10, free.precision)
+    const realAmount = BigNumber(amount)
+      .multipliedBy(Math.pow(10, free.precision))
+      .toNumber()
+
     if (free && realAmount > free.free) {
       setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_TOO_MUCH_ERROR'))
       return
