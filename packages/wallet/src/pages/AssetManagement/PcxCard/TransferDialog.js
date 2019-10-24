@@ -84,7 +84,20 @@ export default function({ open, handleClose }) {
         ])
         .then(hex => {
           window.chainxProvider.sendExtrinsic(hex, ({ err, status }) => {
-            // TODO: 处理err
+            let id = generateId()
+            if (err) {
+              dispatch(
+                addSnack({
+                  id,
+                  type: typeEnum.ERROR,
+                  title: '错误',
+                  message: '提交交易出错'
+                })
+              )
+              setDisabled(false)
+              return
+            }
+
             if (status.status !== 'Finalized') {
               return
             }
@@ -94,7 +107,6 @@ export default function({ open, handleClose }) {
               return
             }
 
-            let id = generateId()
             let type = typeEnum.SUCCESS
             let title = '转账成功'
             let message = `转账数量 ${amount} PCX`

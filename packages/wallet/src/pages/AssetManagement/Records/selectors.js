@@ -31,7 +31,7 @@ export const normalizedScrollTransfers = createSelector(
     return scrollTransfers.items.map(item => {
       const accountId = chainx.account.decodeAddress(address, false)
       let direction = $t('ASSET_TRANSFER_OUT')
-      if (accountId === ensure0xPrefix(item.payee)) {
+      if (accountId === ensure0xPrefix(item.payee || '')) {
         direction = $t('ASSET_TRANSFER_IN')
       }
 
