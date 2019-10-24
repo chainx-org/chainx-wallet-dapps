@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 
-import SdotTransfer from './SdotTransfer'
 import { PrimaryButton, DefaultButton } from '@chainx/ui'
 
 import sdotLogo from '../../../../static/sdot.svg'
@@ -11,12 +10,15 @@ import { AssetLine, DetailWrapper } from '../components/common'
 import InfoView from '../components/InfoView'
 import $t from '../../../../locale'
 import AssetView from '../components/AssetView'
+import TransferDialog from '../TransferDialog'
 
 export default function() {
   const meta = useSelector(sdotMetaSelector)
   const { details } = useSelector(sdotAssetSelector)
   const showDetails = meta.precision && Object.keys(details).length > 0
   const [transferOpen, setTransferOpen] = useState(false)
+
+  const handleTransferClose = () => setTransferOpen(false)
 
   const footer = (
     <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
@@ -57,11 +59,10 @@ export default function() {
             </AssetLine>
           </DetailWrapper>
         )}
-        <SdotTransfer
-          open={transferOpen}
-          handleClose={() => setTransferOpen(false)}
-        />
       </div>
+      {transferOpen && (
+        <TransferDialog handleClose={handleTransferClose} token="SDOT" />
+      )}
     </AssetCard>
   )
 }

@@ -1,5 +1,6 @@
 import { createSelector } from 'redux-starter-kit'
 import { token } from '../../../utils/constants'
+import { sdotPrecisionSelector } from '../../selectors/assets'
 
 export const assetsInfoSelector = state => {
   return state.assets.assetsInfo
@@ -67,5 +68,15 @@ export const sdotAssetSelector = createSelector(
   assetsSelector,
   assets => {
     return normalizeAsset(assets, token.SDOT)
+  }
+)
+
+export const sdotFreeSelector = createSelector(
+  sdotPrecisionSelector,
+  sdotAssetSelector,
+  (precision, asset) => {
+    return precision !== null && asset
+      ? { free: asset.details.free, precision }
+      : {}
   }
 )

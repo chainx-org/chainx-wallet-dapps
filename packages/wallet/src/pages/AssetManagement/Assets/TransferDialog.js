@@ -7,20 +7,21 @@ import {
   TextInput
 } from '@chainx/ui'
 import styled from 'styled-components'
-import $t from '../../../../locale'
-import { toPrecision } from '../../../../utils'
+import $t from '../../../locale'
+import { toPrecision } from '../../../utils'
 import { useDispatch, useSelector } from 'react-redux'
-import { xbtcFreeSelector } from './selectors'
-import { getChainx } from '../../../../services/chainx'
-import { addressSelector } from '../../../../reducers/addressSlice'
+import { xbtcFreeSelector } from './XbtcCard/selectors'
+import { getChainx } from '../../../services/chainx'
+import { addressSelector } from '../../../reducers/addressSlice'
 import BigNumber from 'bignumber.js'
 import {
   addSnack,
   generateId,
   removeSnack,
   typeEnum
-} from '../../../../reducers/snackSlice'
-import { exFailed, exSuccess } from '../../../../utils/constants'
+} from '../../../reducers/snackSlice'
+import { exFailed, exSuccess } from '../../../utils/constants'
+import { sdotFreeSelector } from './selectors'
 
 const StyledDialog = styled(Dialog)`
   div.wrapper {
@@ -60,7 +61,7 @@ const Value = styled.span`
   line-height: 20px;
 `
 
-export default function({ handleClose }) {
+export default function({ handleClose, token }) {
   const accountAddress = useSelector(addressSelector)
 
   const [address, setAddress] = useState('')
@@ -69,12 +70,26 @@ export default function({ handleClose }) {
   const [amount, setAmount] = useState('')
   const [amountErrMsg, setAmountErrMsg] = useState('')
 
-  const { free, precision } = useSelector(xbtcFreeSelector)
+  const { free: xbtcFree, precision: xbtcPrecision } = useSelector(
+    xbtcFreeSelector
+  )
+  const { free: sdotFree, precision: sdotPrecision } = useSelector(
+    sdotFreeSelector
+  )
+
+  let free = xbtcFree
+  let precision = xbtcPrecision
+  if (token === 'SDOT') {
+    free = sdotFree
+    precision = sdotPrecision
+  }
 
   const [memo, setMemo] = useState('')
   const [disabled, setDisabled] = useState(false)
 
   const dispatch = useDispatch()
+
+  const tokenName = token === 'BTC' ? 'X-BTC' : token
 
   const chainx = getChainx()
   const sign = () => {
@@ -107,7 +122,7 @@ export default function({ handleClose }) {
     window.chainxProvider
       .call(accountAddress, 'xAssets', 'transfer', [
         address,
-        'BTC',
+        token,
         realAmount,
         memo
       ])
@@ -161,7 +176,11 @@ export default function({ handleClose }) {
   }
 
   return (
-    <StyledDialog title="Transfer(X-BTC)" open handleClose={handleClose}>
+    <StyledDialog
+      title={`Transfer(${tokenName})`}
+      open
+      handleClose={handleClose}
+    >
       <div className="wrapper">
         <div>
           <SelectInput
@@ -193,7 +212,9 @@ export default function({ handleClose }) {
           {precision ? (
             <div>
               <Label>{$t('ASSET_BALANCE')}</Label>
-              <Value>{toPrecision(free, precision)} X-BTC</Value>
+              <Value>
+                {toPrecision(free, precision)} {tokenName}
+              </Value>
             </div>
           ) : null}
         </div>
