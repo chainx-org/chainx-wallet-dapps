@@ -125,60 +125,62 @@ export default function({ handleClose, token }) {
     }
 
     setDisabled(true)
-    window.chainxProvider
-      .signExtrinsic(accountAddress, 'xAssets', 'transfer', [
-        address,
-        token,
-        realAmount,
-        memo
-      ])
-      .then(hex => {
-        window.chainxProvider.sendExtrinsic(hex, ({ err, status }) => {
-          let id = generateId()
-          if (err) {
-            dispatch(
-              addSnack({
-                id,
-                type: typeEnum.ERROR,
-                title: '错误',
-                message: '提交交易出错'
-              })
-            )
-            setDisabled(false)
-            return
-          }
+    window.chainxProvider.signAndSendExtrinsic(
+      accountAddress,
+      'xAssets',
+      'transfer',
+      [address, token, realAmount, memo],
+      ({ err, status, reject }) => {
+        if (reject) {
+          console.log('transaction sign and send request is rejected.')
+          return
+        }
 
-          if (status.status !== 'Finalized') {
-            return
-          }
-
-          if (![exSuccess, exFailed].includes(status.result)) {
-            console.error(`Unkonwn extrinsic result: ${status.result}`)
-            setDisabled(false)
-            return
-          }
-
-          let type = typeEnum.SUCCESS
-          let title = '转账成功'
-          let message = `转账数量 ${amount} X-BTC`
-
-          if (status.result === 'ExtrinsicSuccess') {
-            handleClose()
-          } else if (status.result === 'ExtrinsicFailed') {
-            type = typeEnum.ERROR
-            title = '转账失败'
-            message = `交易hash ${status.txHash}`
-            setDisabled(false)
-          }
-          dispatch(addSnack({ id, type, title, message }))
+        let id = generateId()
+        if (err) {
+          dispatch(
+            addSnack({
+              id,
+              type: typeEnum.ERROR,
+              title: '错误',
+              message: '提交交易出错'
+            })
+          )
+          setDisabled(false)
           setTimeout(() => {
             dispatch(removeSnack({ id }))
           }, 5000)
-        })
-      })
-      .catch(e => {
-        setDisabled(false)
-      })
+          return
+        }
+
+        if (status.status !== 'Finalized') {
+          return
+        }
+
+        if (![exSuccess, exFailed].includes(status.result)) {
+          console.error(`Unkonwn extrinsic result: ${status.result}`)
+          setDisabled(false)
+          return
+        }
+
+        let type = typeEnum.SUCCESS
+        let title = '转账成功'
+        let message = `转账数量 ${amount} X-BTC`
+
+        if (status.result === 'ExtrinsicSuccess') {
+          handleClose()
+        } else if (status.result === 'ExtrinsicFailed') {
+          type = typeEnum.ERROR
+          title = '转账失败'
+          message = `交易hash ${status.txHash}`
+          setDisabled(false)
+        }
+        dispatch(addSnack({ id, type, title, message }))
+        setTimeout(() => {
+          dispatch(removeSnack({ id }))
+        }, 5000)
+      }
+    )
   }
 
   return (
