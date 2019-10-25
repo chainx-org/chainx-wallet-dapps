@@ -17,7 +17,7 @@ import BigNumber from 'bignumber.js'
 import {
   addSnack,
   generateId,
-  removeSnack,
+  removeSnackInSeconds,
   typeEnum
 } from '../../reducers/snackSlice'
 import { exFailed, exSuccess } from '../../utils/constants'
@@ -147,9 +147,7 @@ export default function({ handleClose, token }) {
             })
           )
           setDisabled(false)
-          setTimeout(() => {
-            dispatch(removeSnack({ id }))
-          }, 5000)
+          removeSnackInSeconds(dispatch, id, 5)
           return
         }
 
@@ -176,9 +174,7 @@ export default function({ handleClose, token }) {
           setDisabled(false)
         }
         dispatch(addSnack({ id, type, title, message }))
-        setTimeout(() => {
-          dispatch(removeSnack({ id }))
-        }, 5000)
+        removeSnackInSeconds(dispatch, id, 5)
       }
     )
   }
