@@ -163,7 +163,7 @@ export default function({ handleClose, token }) {
 
         let type = typeEnum.SUCCESS
         let title = '转账成功'
-        let message = `转账数量 ${amount} X-BTC`
+        let message = `转账数量 ${amount} ${tokenName}`
 
         if (status.result === 'ExtrinsicSuccess') {
           handleClose()
