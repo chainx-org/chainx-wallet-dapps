@@ -8,11 +8,17 @@ import {
   loadedSelector
 } from '../../../reducers/transactionSlice'
 import { normalizedScrollTransfers } from './selectors'
+import { Empty } from '../../../components'
 
 const Wrapper = styled.ul`
+  & > div {
+    margin-top: 30px;
+  }
+
   & > li {
-    margin: 0 -16px;
-    border-top: 1px solid #eee;
+    &:not(:first-of-type) {
+      border-top: 1px solid #eee;
+    }
     padding: 10px 16px;
     header,
     main {
@@ -54,22 +60,30 @@ export default function() {
     }
   }, [dispatch, accountId, loaded])
 
+  const transfersElement = transfers.map((transfer, index) => {
+    return (
+      <li key={index}>
+        <header>
+          <span>{transfer.token}</span>
+          <span>{transfer.time}</span>
+        </header>
+        <main>
+          <span>{transfer.value}</span>
+          <span>{transfer.direction}</span>
+        </main>
+      </li>
+    )
+  })
+
   return (
     <Wrapper>
-      {transfers.map((transfer, index) => {
-        return (
-          <li key={index}>
-            <header>
-              <span>{transfer.token}</span>
-              <span>{transfer.time}</span>
-            </header>
-            <main>
-              <span>{transfer.value}</span>
-              <span>{transfer.direction}</span>
-            </main>
-          </li>
-        )
-      })}
+      {(transfers || []).length > 0 ? (
+        transfersElement
+      ) : (
+        <div>
+          <Empty text="暂无转账记录" />
+        </div>
+      )}
     </Wrapper>
   )
 }

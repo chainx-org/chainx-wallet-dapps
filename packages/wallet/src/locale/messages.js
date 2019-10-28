@@ -82,6 +82,18 @@ const asset = {
   ASSET_TRANSFER_AMOUNT_TOO_MUCH_ERROR: {
     en: 'Overflow the balance',
     zh: '超出可用余额'
+  },
+  ASSET_TRANSFER_RECORD: {
+    en: 'Transfers',
+    zh: '转账记录'
+  },
+  ASSET_CROSS_CHAIN_RECORD: {
+    en: '跨链记录',
+    zh: '跨链记录'
+  },
+  ASSET_CONTACT: {
+    en: 'Contact',
+    zh: '联系地址'
   }
 }
 

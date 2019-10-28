@@ -3,6 +3,7 @@ import Card from '../../../components/Card'
 import styled from 'styled-components'
 import TransferRecords from './TransferRecords'
 import CrossChainRecords from './CrossChainRecords'
+import $t from '../../../locale'
 
 const Wrapper = styled(Card)`
   & > header {
@@ -25,6 +26,11 @@ const Wrapper = styled(Card)`
       }
     }
   }
+
+  & > main {
+    margin: 0 -16px;
+    border-top: 1px solid #eee;
+  }
 `
 
 export default function() {
@@ -38,19 +44,19 @@ export default function() {
             onClick={() => setRecordType(1)}
             className={recordType === 1 ? 'active' : null}
           >
-            转账记录
+            {$t('ASSET_TRANSFER_RECORD')}
           </li>
           <li
             onClick={() => setRecordType(2)}
             className={recordType === 2 ? 'active' : null}
           >
-            跨链记录
+            {$t('ASSET_CROSS_CHAIN_RECORD')}
           </li>
           <li
             onClick={() => setRecordType(3)}
             className={recordType === 3 ? 'active' : null}
           >
-            联系地址
+            {$t('ASSET_CONTACT')}
           </li>
         </ul>
       </header>
