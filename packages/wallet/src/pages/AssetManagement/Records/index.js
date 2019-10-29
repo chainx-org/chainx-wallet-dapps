@@ -54,12 +54,12 @@ export default function() {
           >
             {$t('ASSET_CROSS_CHAIN_RECORD')}
           </li>
-          <li
-            onClick={() => setRecordType(3)}
-            className={recordType === 3 ? 'active' : null}
-          >
-            {$t('ASSET_CONTACT')}
-          </li>
+          {/*<li*/}
+          {/*  onClick={() => setRecordType(3)}*/}
+          {/*  className={recordType === 3 ? 'active' : null}*/}
+          {/*>*/}
+          {/*  {$t('ASSET_CONTACT')}*/}
+          {/*</li>*/}
         </ul>
       </header>
       <main>
