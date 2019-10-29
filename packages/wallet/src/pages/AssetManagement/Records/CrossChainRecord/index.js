@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchDeposits } from '../../../../reducers/crosschainSlice'
-import { addressSelector } from '../../../../reducers/addressSlice'
-import { getChainx } from '../../../../services/chainx'
 import styled from 'styled-components'
 import DepositList from './DepositList'
 import WithdrawalList from './WithdrawalList'
+import LockList from './LockList'
 
 const Wrapper = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
   & > header {
     padding: 12px 16px;
     border-bottom: 1px solid #eee;
@@ -32,19 +32,14 @@ const Wrapper = styled.div`
       }
     }
   }
+
+  & > main {
+    flex: 1;
+    overflow-y: auto;
+  }
 `
 
 export default function() {
-  const dispatch = useDispatch()
-  const address = useSelector(addressSelector)
-
-  const chainx = getChainx()
-  const accountId = chainx.account.decodeAddress(address, false)
-
-  useEffect(() => {
-    dispatch(fetchDeposits(accountId))
-  }, [dispatch, accountId])
-
   const [option, setOption] = useState('deposit')
 
   return (
@@ -74,6 +69,7 @@ export default function() {
       <main>
         {option === 'deposit' ? <DepositList /> : null}
         {option === 'withdraw' ? <WithdrawalList /> : null}
+        {option === 'lock' ? <LockList /> : null}
       </main>
     </Wrapper>
   )

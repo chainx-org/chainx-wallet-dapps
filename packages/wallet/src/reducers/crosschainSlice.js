@@ -5,7 +5,8 @@ const crossChainSlice = createSlice({
   slice: 'asset',
   initialState: {
     deposits: [],
-    withdrawals: []
+    withdrawals: [],
+    locks: []
   },
   reducers: {
     setDeposits: {
@@ -17,12 +18,18 @@ const crossChainSlice = createSlice({
       reducer(state, action) {
         state.withdrawals = action.payload
       }
+    },
+    setLocks: {
+      reducer(state, action) {
+        state.locks = action.payload
+      }
     }
   }
 })
 
 export const depositsSelector = state => state.crossChain.deposits
 export const withdrawalsSelector = state => state.crossChain.withdrawals
+export const locksSelector = state => state.crossChain.locks
 
 export const fetchDeposits = accountId => async dispatch => {
   const resp = await window.fetch(
@@ -44,6 +51,16 @@ export const fetchWithdrawals = accountId => async dispatch => {
   dispatch(setWithdrawals(items))
 }
 
-export const { setDeposits, setWithdrawals } = crossChainSlice.actions
+export const fetchLocks = accountId => async dispatch => {
+  const resp = await window.fetch(
+    `https://api.chainx.org/btc/lock/records?accountid=${remove0xPrefix(
+      accountId
+    )}&page=0&page_size=100`
+  )
+  const { items } = await resp.json()
+  dispatch(setLocks(items))
+}
+
+export const { setDeposits, setWithdrawals, setLocks } = crossChainSlice.actions
 
 export default crossChainSlice.reducer

@@ -28,7 +28,10 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     & > section {
-      flex: 1;
+      height: 100%;
+
+      display: flex;
+      flex-direction: column;
     }
   }
 `
