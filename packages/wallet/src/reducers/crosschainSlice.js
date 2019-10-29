@@ -22,6 +22,7 @@ const crossChainSlice = createSlice({
 })
 
 export const depositsSelector = state => state.crossChain.deposits
+export const withdrawalsSelector = state => state.crossChain.withdrawals
 
 export const fetchDeposits = accountId => async dispatch => {
   const resp = await window.fetch(
@@ -31,6 +32,16 @@ export const fetchDeposits = accountId => async dispatch => {
   )
   const { items } = await resp.json()
   dispatch(setDeposits(items))
+}
+
+export const fetchWithdrawals = accountId => async dispatch => {
+  const resp = await window.fetch(
+    `https://api.chainx.org/account/${remove0xPrefix(
+      accountId
+    )}/withdrawals?chain=1&&token=BTC&page=0&page_size=100`
+  )
+  const { items } = await resp.json()
+  dispatch(setWithdrawals(items))
 }
 
 export const { setDeposits, setWithdrawals } = crossChainSlice.actions

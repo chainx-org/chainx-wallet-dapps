@@ -6,6 +6,7 @@ import { addressSelector } from '../../../../reducers/addressSlice'
 import { getChainx } from '../../../../services/chainx'
 import styled from 'styled-components'
 import DepositList from './DepositList'
+import WithdrawalList from './WithdrawalList'
 
 const Wrapper = styled.div`
   & > header {
@@ -70,7 +71,10 @@ export default function() {
           </li>
         </ul>
       </header>
-      <main>{option === 'deposit' ? <DepositList /> : null}</main>
+      <main>
+        {option === 'deposit' ? <DepositList /> : null}
+        {option === 'withdraw' ? <WithdrawalList /> : null}
+      </main>
     </Wrapper>
   )
 }

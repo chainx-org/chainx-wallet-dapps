@@ -80,7 +80,7 @@ function saveState(state) {
 const persistedState = loadState()
 if (!persistedState.address) {
   persistedState.address = {
-    address: '5U9BrkPnfYnQLVbdMNnT1xjN2BzwujeBYnqBBs52xULeY4hf',
+    address: '5SvTvdi8CJexSdjHsMWLo9Pj99LwjGA8Nz88UAjpQAaZU6NP',
     extensionAccounts: [],
     isFromExtension: false,
     name: '体验账户'
