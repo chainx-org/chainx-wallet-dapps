@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Card from '../../../components/Card'
 import styled from 'styled-components'
 import TransferRecords from './TransferRecords'
-import CrossChainRecords from './CrossChainRecords'
+import CrossChainRecords from './CrossChainRecord'
 import $t from '../../../locale'
 
 const Wrapper = styled(Card)`

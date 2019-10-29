@@ -14,3 +14,11 @@ export function ensure0xPrefix(str = '') {
 
   return `0x${str}`
 }
+
+export function remove0xPrefix(str = '') {
+  if (str.startsWith('0x')) {
+    return str.substring(2)
+  }
+
+  return str
+}

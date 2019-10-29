@@ -37,6 +37,7 @@ const Wrapper = styled.ul`
       margin-top: 4px;
       opacity: 0.72;
       font-size: 12px;
+      font-weight: 500;
       color: #000000;
       letter-spacing: 0.2px;
       line-height: 16px;
