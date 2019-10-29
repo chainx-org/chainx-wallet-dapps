@@ -30,12 +30,30 @@ const Wrapper = styled.ul`
     }
 
     h4 {
+      display: flex;
+      justify-content: space-between;
+
       margin: 0;
-      opacity: 0.72;
       font-size: 13px;
       color: #000000;
       letter-spacing: 0.2px;
       line-height: 18px;
+
+      span {
+        opacity: 0.72;
+      }
+
+      span.extension {
+        background: #f6c94a;
+        border: 1px solid rgba(0, 0, 0, 0.04);
+        border-radius: 10px;
+
+        padding: 0 15px;
+
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 16px;
+      }
     }
     p {
       margin-top: 8px;
@@ -77,7 +95,10 @@ export default function() {
             onClick={() => selectAccount(account.name, account.address, true)}
             key={account.address}
           >
-            <h4>{account.name}</h4>
+            <h4>
+              <span>{account.name}</span>
+              <span className="extension">插件账户</span>
+            </h4>
             <p>{account.address}</p>
           </li>
         )
