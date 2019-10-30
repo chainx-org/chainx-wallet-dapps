@@ -9,19 +9,22 @@ import AssetView from '../components/AssetView'
 import { AssetLine, DetailWrapper } from '../components/common'
 import { PrimaryButton, DefaultButton } from '@chainx/ui'
 import TransferDialog from '../../TransferDialog'
+import DepositDialog from './DepositDialog'
 
 export default function() {
   const meta = useSelector(xbtcMetaSelector)
   const { details } = useSelector(xbtcAssetSelector)
   const showDetails = meta.precision && Object.keys(details).length > 0
   const [transferOpen, setTransferOpen] = useState(false)
+  const [depositOpen, setDepositOpen] = useState(true)
 
   const handleTransferClose = () => setTransferOpen(false)
+  const handleDepositClose = () => setDepositOpen(false)
 
   const footer = (
     <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
       <PrimaryButton
-        onClick={() => console.log('click')}
+        onClick={() => setDepositOpen(true)}
         style={{ marginRight: 8 }}
       >
         {$t('DEPOSIT')}
@@ -72,6 +75,7 @@ export default function() {
       {transferOpen && (
         <TransferDialog handleClose={handleTransferClose} token="BTC" />
       )}
+      {depositOpen && <DepositDialog handleClose={handleDepositClose} />}
     </AssetCard>
   )
 }

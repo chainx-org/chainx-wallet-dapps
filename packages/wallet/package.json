@@ -4,9 +4,12 @@
   "private": true,
   "dependencies": {
     "@chainx/ui": "^0.0.8",
+    "@polkadot/util": "^1.6.1",
     "bignumber.js": "^9.0.0",
     "camelcase": "^5.3.1",
     "chainx.js": "^2.21.0",
+    "classnames": "^2.2.6",
+    "clipboard": "^2.0.4",
     "lodash.chunk": "^4.2.0",
     "lodash.throttle": "^4.1.1",
     "moment": "^2.24.0",
@@ -17,7 +20,8 @@
     "react-scripts": "3.1.2",
     "redux": "^4.0.4",
     "redux-starter-kit": "^0.7.0",
-    "styled-components": "^4.4.0"
+    "styled-components": "^4.4.0",
+    "uniqid": "^5.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
