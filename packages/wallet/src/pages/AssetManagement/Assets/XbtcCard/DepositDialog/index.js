@@ -1,11 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Dialog } from '@chainx/ui'
 import styled from 'styled-components'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addressSelector } from '../../../../../reducers/addressSlice'
 import { u8aToHex } from '@polkadot/util'
 import { ClipBoard } from '../../../../../components'
 import infoIcon from '../../../../../static/explan.svg'
+import {
+  fetchTrusteeSessionInfo,
+  hotAddressSelector
+} from '../../../../../reducers/trustSlice'
+import bitpie from './bitpie.png'
+import mathWallet from './MathWallet.png'
+import bitX from './BitX.png'
+import coinbin from './coinbin.png'
+import wookong from './WOOKONG.png'
+import trezor from './trezor.png'
+import bitPortal from './bitportal.io.png'
+import ReactTooltip from 'react-tooltip'
 
 const StyledDialog = styled(Dialog)`
   main.content {
@@ -19,6 +31,8 @@ const StyledDialog = styled(Dialog)`
       padding: 14px 12px;
 
       h3 {
+        display: flex;
+        justify-content: space-between;
         margin: 0 0 8px;
         opacity: 0.72;
         font-size: 13px;
@@ -27,6 +41,16 @@ const StyledDialog = styled(Dialog)`
         line-height: 18px;
         span.title {
           font-weight: 500;
+        }
+
+        span.addr {
+          opacity: 0.32;
+          font-size: 13px;
+          font-weight: 400;
+          color: #000000;
+          letter-spacing: 0.2px;
+          text-align: right;
+          line-height: 18px;
         }
       }
 
@@ -58,6 +82,27 @@ const StyledDialog = styled(Dialog)`
         color: #000000;
         letter-spacing: 0.2px;
         line-height: 16px;
+      }
+    }
+
+    p.wallet {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 12px;
+      opacity: 1;
+      font-size: 14px;
+      color: #3f3f3f;
+      text-align: justify;
+      line-height: 20px;
+      a {
+        text-decoration: none;
+        font-size: 14px;
+        color: #087fc2;
+        text-align: justify;
+        line-height: 20px;
+      }
+      img {
+        max-height: 400px;
       }
     }
   }
@@ -97,6 +142,51 @@ export default function({ handleClose }) {
     ''
   )
 
+  const trusteeHotAddress = useSelector(hotAddressSelector)
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchTrusteeSessionInfo())
+  }, [dispatch])
+
+  const wallets = [
+    {
+      text: 'Bitpie',
+      img: bitpie,
+      url: 'https://bitpie.com/'
+    },
+    {
+      text: 'MathWallet',
+      img: mathWallet,
+      url: 'https://www.myetherwallet.com/'
+    },
+    {
+      text: 'BitPortal',
+      img: bitPortal,
+      url: 'https://www.bitportal.io/zh/'
+    },
+    {
+      text: 'WOOKONG',
+      img: wookong,
+      url: 'https://wookong.nbltrust.com/'
+    },
+    {
+      text: 'BitX',
+      img: bitX,
+      url: 'https://github.com/chainx-org/BitX/releases'
+    },
+    {
+      text: 'Trezor',
+      img: trezor,
+      url: 'https://trezor.io/'
+    },
+    {
+      text: 'Coinb.in',
+      img: coinbin,
+      url: 'https://coinb.in/#newTransaction'
+    }
+  ]
+
   return (
     <StyledDialog open title={'跨链充值'} handleClose={handleClose}>
       <main className="content">
@@ -134,6 +224,28 @@ export default function({ handleClose }) {
             <span>类似 imToken 钱包的 memo 不是 OP_RETURN。</span>
           </li>
         </ul>
+        <section className="code">
+          <h3 style={{ marginBottom: 0 }}>
+            <span className="title">信托热多签地址</span>
+            <ClipBoard className={'addr'}>{trusteeHotAddress}</ClipBoard>
+          </h3>
+        </section>
+        <p className={'wallet'}>
+          <span>目前支持发送 OP_RETURN 的钱包有：</span>
+          {wallets.map((wallet, index) => {
+            return (
+              <span key={index}>
+                <a href={wallet.url} data-tip data-for={wallet.text}>
+                  {wallet.text}
+                </a>
+                、
+                <ReactTooltip id={wallet.text}>
+                  <img src={wallet.img} alt="" />
+                </ReactTooltip>
+              </span>
+            )
+          })}
+        </p>
       </main>
     </StyledDialog>
   )

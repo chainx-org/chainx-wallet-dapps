@@ -1,36 +1,46 @@
 import { createSlice } from 'redux-starter-kit'
 import { getChainx } from '../services/chainx'
 
+const bitcoin = 'Bitcoin'
+
 const trustSlice = createSlice({
   slice: 'trust',
   initialState: {
-    withdrawals: []
+    withdrawals: [],
+    trusteeSessionInfo: null
   },
   reducers: {
     setWithdrawals: {
       reducer(state, action) {
         state.withdrawals = action.payload
       }
+    },
+    setTrusteeSessionInfo: {
+      reducer(state, action) {
+        state.trusteeSessionInfo = action.payload
+      }
     }
   }
 })
 
-async function getAsset() {
-  const chainx = getChainx()
-  await chainx.isRpcReady()
-  const { asset } = chainx
+export const hotAddressSelector = state =>
+  state.trust.trusteeSessionInfo &&
+  state.trust.trusteeSessionInfo.hotEntity.addr
+export const withdrawalsSelector = state => state.trust.withdrawals
 
-  return asset
-}
-
-const { setWithdrawals } = trustSlice.actions
+const { setWithdrawals, setTrusteeSessionInfo } = trustSlice.actions
 
 export const fetchWithdrawals = () => async dispatch => {
-  const asset = await getAsset()
-  const { data } = await asset.getWithdrawalList('Bitcoin', 0, 1000)
+  const { asset } = await getChainx()
+  const { data } = await asset.getWithdrawalList(bitcoin, 0, 1000)
   dispatch(setWithdrawals(data))
 }
 
-export const withdrawalsSelector = state => state.trust.withdrawals
+export const fetchTrusteeSessionInfo = () => async dispatch => {
+  const { trustee } = await getChainx()
+  const resp = await trustee.getTrusteeSessionInfo(bitcoin)
+
+  dispatch(setTrusteeSessionInfo(resp))
+}
 
 export default trustSlice.reducer

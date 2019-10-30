@@ -9,7 +9,7 @@ const Wrapper = styled.span`
   word-wrap: break-word;
 
   i {
-    margin-left: 2px;
+    margin-left: 4px;
     img {
       width: 11px;
       cursor: pointer;
