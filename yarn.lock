@@ -988,10 +988,10 @@
     bitcoinjs-lib "^4.0.2"
     bn.js "^4.11.8"
 
-"@chainx/ui@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@chainx/ui/-/ui-0.0.8.tgz#7183182930bebcf25dcd0fecb737e0ed9cc7ee64"
-  integrity sha512-+62C8e7bK4/wKYjenx1+QUL82O9RnNJ0d/IzFjsWTWU+i2FGEG8QTqoP1Xp6Ej64fXi7D/aRb/HxkNoC6UJzvA==
+"@chainx/ui@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@chainx/ui/-/ui-0.0.9.tgz#ffa6b2200e22ebdccf4a5bd82a38eab1887cfe01"
+  integrity sha512-JvJTNoAv6XXOr/qUGYmoRX7avb/u20ni6wtdtmneY3tftVOTp/oln+Ce5Q56YWMf1QTE+4VqrE0q14qu99wGVQ==
   dependencies:
     "@material-ui/core" "^4.4.0"
     "@material-ui/icons" "^4.2.1"

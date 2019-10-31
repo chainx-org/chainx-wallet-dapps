@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
-import { Dialog } from '@chainx/ui'
+import React, { useEffect, useState } from 'react'
+import { Dialog, SelectInput } from '@chainx/ui'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { addressSelector } from '../../../../../reducers/addressSlice'
 import { u8aToHex } from '@polkadot/util'
-import { ClipBoard } from '../../../../../components'
+import { ClipBoard, CheckBox } from '../../../../../components'
 import infoIcon from '../../../../../static/explan.svg'
 import {
   fetchTrusteeSessionInfo,
@@ -18,6 +18,7 @@ import wookong from './WOOKONG.png'
 import trezor from './trezor.png'
 import bitPortal from './bitportal.io.png'
 import ReactTooltip from 'react-tooltip'
+import { intentionsSelector } from '../../../../../reducers/intentionSlice'
 
 const StyledDialog = styled(Dialog)`
   main.content {
@@ -52,9 +53,19 @@ const StyledDialog = styled(Dialog)`
           text-align: right;
           line-height: 18px;
         }
+
+        .channel span {
+          opacity: 0.56;
+          font-size: 13px;
+          color: #000000;
+          letter-spacing: 0.2px;
+          text-align: right;
+          line-height: 18px;
+        }
       }
 
       .hex {
+        margin-top: 8px;
         opacity: 0.32;
         font-size: 13px;
         color: #000000;
@@ -63,7 +74,7 @@ const StyledDialog = styled(Dialog)`
       }
     }
 
-    ul {
+    ul.info {
       margin-top: 12px;
       li {
         display: flex;
@@ -85,7 +96,7 @@ const StyledDialog = styled(Dialog)`
       }
     }
 
-    p.wallet {
+    div.wallet {
       display: flex;
       flex-wrap: wrap;
       margin-top: 12px;
@@ -116,6 +127,7 @@ const StyledDialog = styled(Dialog)`
     line-height: 20px;
     span.step {
       color: #ecb417;
+      margin-right: 8px;
     }
     &.step-2 {
       margin-top: 16px;
@@ -136,13 +148,16 @@ const StyledDialog = styled(Dialog)`
 `
 
 export default function({ handleClose }) {
+  const [checked, setChecked] = useState(false)
   const address = useSelector(addressSelector)
-  const addressHex = u8aToHex(new TextEncoder('utf-8').encode(address)).replace(
-    /^0x/,
-    ''
-  )
 
   const trusteeHotAddress = useSelector(hotAddressSelector)
+  const intentions = useSelector(intentionsSelector)
+  const intentionNames = intentions.map(intention => intention.name)
+  const channelOptions = intentionNames.map(name => ({
+    value: name,
+    lable: name
+  }))
 
   const dispatch = useDispatch()
   useEffect(() => {
@@ -187,6 +202,11 @@ export default function({ handleClose }) {
     }
   ]
 
+  const [channel, setChannel] = useState('')
+  const addressHex = u8aToHex(
+    new TextEncoder('utf-8').encode(`${address}${channel ? '@' + channel : ''}`)
+  ).replace(/^0x/, '')
+
   return (
     <StyledDialog open title={'跨链充值'} handleClose={handleClose}>
       <main className="content">
@@ -200,7 +220,22 @@ export default function({ handleClose }) {
         <section className="code">
           <h3>
             <span className="title">OP_RETURN</span>
+            <CheckBox
+              checked={checked}
+              onClick={() => setChecked(!checked)}
+              className="channel"
+            >
+              添加渠道 (选填)
+            </CheckBox>
           </h3>
+          {checked ? (
+            <SelectInput
+              value={channel}
+              onChange={setChannel}
+              style={{ marginBottom: 8 }}
+              options={channelOptions}
+            />
+          ) : null}
           <ClipBoard className="hex">{addressHex}</ClipBoard>
         </section>
         <h1 className="step-2">
@@ -210,7 +245,7 @@ export default function({ handleClose }) {
         <p className="input">
           使用支持 OP_RETURN 的钱包向信托热多签地址充值，并输入 OP_RETURN 信息。
         </p>
-        <ul>
+        <ul className={'info'}>
           <li>
             <img src={infoIcon} alt="info" />
             <span>充值金额必须 >=0.001 BTC；</span>
@@ -230,7 +265,7 @@ export default function({ handleClose }) {
             <ClipBoard className={'addr'}>{trusteeHotAddress}</ClipBoard>
           </h3>
         </section>
-        <p className={'wallet'}>
+        <div className={'wallet'}>
           <span>目前支持发送 OP_RETURN 的钱包有：</span>
           {wallets.map((wallet, index) => {
             return (
@@ -245,7 +280,7 @@ export default function({ handleClose }) {
               </span>
             )
           })}
-        </p>
+        </div>
       </main>
     </StyledDialog>
   )
