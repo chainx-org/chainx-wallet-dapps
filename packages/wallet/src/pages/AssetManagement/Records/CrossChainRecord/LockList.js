@@ -54,8 +54,6 @@ export default function() {
   const locks = useSelector(locksSelector)
   const precision = useSelector(lbtcPrecisionSelector)
 
-  console.log('locks', locks)
-
   const chainx = getChainx()
   const accountId = chainx.account.decodeAddress(address, false)
 
