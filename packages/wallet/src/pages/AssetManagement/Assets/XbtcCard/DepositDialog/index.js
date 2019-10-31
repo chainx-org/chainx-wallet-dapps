@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Dialog, SelectInput } from '@chainx/ui'
+import { Dialog } from '@chainx/ui'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { addressSelector } from '../../../../../reducers/addressSlice'
@@ -10,9 +10,8 @@ import {
   fetchTrusteeSessionInfo,
   hotAddressSelector
 } from '../../../../../reducers/trustSlice'
-import ReactTooltip from 'react-tooltip'
-import { intentionsSelector } from '../../../../../reducers/intentionSlice'
-import wallets from './wallets'
+import OpReturnWallet from '../../components/OpReturnWallet'
+import IntentionSelect from '../../components/IntentionSelect'
 
 const StyledDialog = styled(Dialog)`
   main.content {
@@ -89,27 +88,6 @@ const StyledDialog = styled(Dialog)`
         line-height: 16px;
       }
     }
-
-    div.wallet {
-      display: flex;
-      flex-wrap: wrap;
-      margin-top: 12px;
-      opacity: 1;
-      font-size: 14px;
-      color: #3f3f3f;
-      text-align: justify;
-      line-height: 20px;
-      a {
-        text-decoration: none;
-        font-size: 14px;
-        color: #087fc2;
-        text-align: justify;
-        line-height: 20px;
-      }
-      img {
-        max-height: 400px;
-      }
-    }
   }
 
   h1 {
@@ -146,12 +124,6 @@ export default function({ handleClose }) {
   const address = useSelector(addressSelector)
 
   const trusteeHotAddress = useSelector(hotAddressSelector)
-  const intentions = useSelector(intentionsSelector)
-  const intentionNames = intentions.map(intention => intention.name)
-  const channelOptions = intentionNames.map(name => ({
-    value: name,
-    label: name
-  }))
 
   const dispatch = useDispatch()
   useEffect(() => {
@@ -185,11 +157,10 @@ export default function({ handleClose }) {
             </CheckBox>
           </h3>
           {checked ? (
-            <SelectInput
+            <IntentionSelect
               value={channel}
               onChange={setChannel}
               style={{ marginBottom: 8 }}
-              options={channelOptions}
             />
           ) : null}
           <ClipBoard className="hex">{addressHex}</ClipBoard>
@@ -221,22 +192,7 @@ export default function({ handleClose }) {
             <ClipBoard className={'addr'}>{trusteeHotAddress}</ClipBoard>
           </h3>
         </section>
-        <div className={'wallet'}>
-          <span>目前支持发送 OP_RETURN 的钱包有：</span>
-          {wallets.map((wallet, index) => {
-            return (
-              <span key={index}>
-                <a href={wallet.url} data-tip data-for={wallet.text}>
-                  {wallet.text}
-                </a>
-                、
-                <ReactTooltip id={wallet.text}>
-                  <img src={wallet.img} alt="" />
-                </ReactTooltip>
-              </span>
-            )
-          })}
-        </div>
+        <OpReturnWallet />
       </main>
     </StyledDialog>
   )
