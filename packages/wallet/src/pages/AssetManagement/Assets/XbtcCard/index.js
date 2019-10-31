@@ -16,7 +16,7 @@ export default function() {
   const { details } = useSelector(xbtcAssetSelector)
   const showDetails = meta.precision && Object.keys(details).length > 0
   const [transferOpen, setTransferOpen] = useState(false)
-  const [depositOpen, setDepositOpen] = useState(true)
+  const [depositOpen, setDepositOpen] = useState(false)
 
   const handleTransferClose = () => setTransferOpen(false)
   const handleDepositClose = () => setDepositOpen(false)

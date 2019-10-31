@@ -4,21 +4,15 @@ import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { addressSelector } from '../../../../../reducers/addressSlice'
 import { u8aToHex } from '@polkadot/util'
-import { ClipBoard, CheckBox } from '../../../../../components'
+import { CheckBox, ClipBoard } from '../../../../../components'
 import infoIcon from '../../../../../static/explan.svg'
 import {
   fetchTrusteeSessionInfo,
   hotAddressSelector
 } from '../../../../../reducers/trustSlice'
-import bitpie from './bitpie.png'
-import mathWallet from './MathWallet.png'
-import bitX from './BitX.png'
-import coinbin from './coinbin.png'
-import wookong from './WOOKONG.png'
-import trezor from './trezor.png'
-import bitPortal from './bitportal.io.png'
 import ReactTooltip from 'react-tooltip'
 import { intentionsSelector } from '../../../../../reducers/intentionSlice'
+import wallets from './wallets'
 
 const StyledDialog = styled(Dialog)`
   main.content {
@@ -156,51 +150,13 @@ export default function({ handleClose }) {
   const intentionNames = intentions.map(intention => intention.name)
   const channelOptions = intentionNames.map(name => ({
     value: name,
-    lable: name
+    label: name
   }))
 
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchTrusteeSessionInfo())
   }, [dispatch])
-
-  const wallets = [
-    {
-      text: 'Bitpie',
-      img: bitpie,
-      url: 'https://bitpie.com/'
-    },
-    {
-      text: 'MathWallet',
-      img: mathWallet,
-      url: 'https://www.myetherwallet.com/'
-    },
-    {
-      text: 'BitPortal',
-      img: bitPortal,
-      url: 'https://www.bitportal.io/zh/'
-    },
-    {
-      text: 'WOOKONG',
-      img: wookong,
-      url: 'https://wookong.nbltrust.com/'
-    },
-    {
-      text: 'BitX',
-      img: bitX,
-      url: 'https://github.com/chainx-org/BitX/releases'
-    },
-    {
-      text: 'Trezor',
-      img: trezor,
-      url: 'https://trezor.io/'
-    },
-    {
-      text: 'Coinb.in',
-      img: coinbin,
-      url: 'https://coinb.in/#newTransaction'
-    }
-  ]
 
   const [channel, setChannel] = useState('')
   const addressHex = u8aToHex(
