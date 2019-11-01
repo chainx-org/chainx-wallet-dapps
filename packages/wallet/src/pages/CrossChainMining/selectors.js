@@ -60,8 +60,8 @@ const generateSelector = function(
       }
 
       const circulation = intention.circulation / Math.pow(10, tokenPrecision)
-      const power = intention.power / Math.pow(10, tokenPrecision)
-      const vote = Number((circulation * power).toFixed(pcxPrecision))
+      const power = intention.power / Math.pow(10, pcxPrecision)
+      const vote = (circulation * power).toFixed(pcxPrecision)
       const jackpot = intention.jackpot / Math.pow(10, pcxPrecision)
       const balance = toPrecision(tokenBalance, tokenPrecision)
 
