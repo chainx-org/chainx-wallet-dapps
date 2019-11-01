@@ -14,7 +14,7 @@ export default function() {
   const meta = useSelector(lbtcMetaSelector)
   const { details } = useSelector(lbtcAssetSelector)
   const showDetails = meta.precision && Object.keys(details).length > 0
-  const [lockOpen, setLockOpen] = useState(true)
+  const [lockOpen, setLockOpen] = useState(false)
 
   const footer = (
     <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
