@@ -131,7 +131,7 @@ export default function({ handleClose }) {
     const valid = WAValidator.validate(btcAddress, 'BTC')
     if (!valid) {
       setBtcAddressErrMsg('地址格式错误')
-    } else if (['1', '3'].includes(btcAddress[0])) {
+    } else if (!['1', '3'].includes(btcAddress[0])) {
       setBtcAddressErrMsg('锁仓的BTC地址必须以1或3开头')
     }
   }

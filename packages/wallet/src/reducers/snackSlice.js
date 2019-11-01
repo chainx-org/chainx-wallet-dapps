@@ -49,7 +49,7 @@ export const generateId = () => {
 
 export const snacksSelector = state => state.snack.snacks
 
-export const removeSnackInSeconds = (dispatch, id, seconds) => {
+export const removeSnackInSeconds = (dispatch, id, seconds = 0) => {
   setTimeout(() => {
     dispatch(removeSnack({ id }))
   }, seconds * 1000)

@@ -7,7 +7,8 @@ const trustSlice = createSlice({
   slice: 'trust',
   initialState: {
     withdrawals: [],
-    trusteeSessionInfo: null
+    trusteeSessionInfo: null,
+    btcWithdrawLimit: null
   },
   reducers: {
     setWithdrawals: {
@@ -19,16 +20,27 @@ const trustSlice = createSlice({
       reducer(state, action) {
         state.trusteeSessionInfo = action.payload
       }
+    },
+    setBtcWithdrawLimit: {
+      reducer(state, action) {
+        state.btcWithdrawLimit = action.payload
+      }
     }
   }
 })
+
+export const btcWithdrawLimitSelector = state => state.trust.btcWithdrawLimit
 
 export const hotAddressSelector = state =>
   state.trust.trusteeSessionInfo &&
   state.trust.trusteeSessionInfo.hotEntity.addr
 export const withdrawalsSelector = state => state.trust.withdrawals
 
-const { setWithdrawals, setTrusteeSessionInfo } = trustSlice.actions
+const {
+  setWithdrawals,
+  setTrusteeSessionInfo,
+  setBtcWithdrawLimit
+} = trustSlice.actions
 
 export const fetchWithdrawals = () => async dispatch => {
   const { asset } = await getChainx()
@@ -41,6 +53,13 @@ export const fetchTrusteeSessionInfo = () => async dispatch => {
   const resp = await trustee.getTrusteeSessionInfo(bitcoin)
 
   dispatch(setTrusteeSessionInfo(resp))
+}
+
+export const fetchBtcWithdrawLimit = () => async dispatch => {
+  const { asset } = await getChainx()
+  const resp = await asset.getWithdrawalLimitByToken('BTC')
+
+  dispatch(setBtcWithdrawLimit(resp))
 }
 
 export default trustSlice.reducer

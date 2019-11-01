@@ -23,6 +23,7 @@ import {
 import { exFailed, exSuccess } from '../../utils/constants'
 import { sdotFreeSelector } from './Assets/selectors'
 import { pcxFreeSelector } from './PcxCard/selectors'
+import { Label, Value } from './components'
 
 const StyledDialog = styled(Dialog)`
   div.wrapper {
@@ -44,22 +45,6 @@ const StyledDialog = styled(Dialog)`
       }
     }
   }
-`
-
-const Label = styled.label`
-  opacity: 0.32;
-  font-size: 14px;
-  color: #000000;
-  letter-spacing: 0.12px;
-  line-height: 20px;
-`
-
-const Value = styled.span`
-  opacity: 0.72;
-  font-size: 14px;
-  color: #000000;
-  letter-spacing: 0.12px;
-  line-height: 20px;
 `
 
 export default function({ handleClose, token }) {

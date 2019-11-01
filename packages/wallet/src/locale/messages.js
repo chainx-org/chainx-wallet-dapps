@@ -104,7 +104,7 @@ const common = {
   },
   COMMON_MEMO: {
     en: 'Memo',
-    zh: '备注'
+    zh: '备注（64 字符以内）'
   }
 }
 

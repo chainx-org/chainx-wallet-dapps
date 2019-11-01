@@ -1,6 +1,6 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { snacksSelector } from './reducers/snackSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { removeSnackInSeconds, snacksSelector } from './reducers/snackSlice'
 import {
   SuccessSnackbar,
   DangerSnackbar,
@@ -9,6 +9,7 @@ import {
 } from '@chainx/ui'
 
 export default function() {
+  const dispatch = useDispatch()
   const snacks = useSelector(snacksSelector)
 
   return (
@@ -23,13 +24,19 @@ export default function() {
           Component = DangerSnackbar
         }
 
+        const message = (
+          <p style={{ margin: 0, wordBreak: 'break-all' }}>{snack.message}</p>
+        )
+
         return (
           <Component
             key={index}
             open={true}
-            handleClose={() => {}}
+            handleClose={() => {
+              removeSnackInSeconds(dispatch, snack.id)
+            }}
             title={snack.title}
-            message={snack.message}
+            message={message}
           />
         )
       })}
