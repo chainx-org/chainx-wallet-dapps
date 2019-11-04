@@ -1,6 +1,7 @@
 import Card from '../../../components/Card'
 import styled from 'styled-components'
 import React from 'react'
+import $t from '../../../locale'
 
 const CardWrapper = styled(Card)`
   & > header {
@@ -61,11 +62,36 @@ const Detail = styled.section`
 `
 
 export default function(props) {
+  const { intention } = props
+
   return (
     <CardWrapper>
       <header>{props.header}</header>
       <hr />
-      <Detail>{props.detail}</Detail>
+      <Detail>
+        <ul>
+          <li>
+            <header>{$t('PSEDU_CIRCULATION')}</header>
+            <p>{intention.circulation}</p>
+          </li>
+          <li>
+            <header>{$t('PSEDU_POWER')}（PCX）</header>
+            <p>{intention.power}</p>
+          </li>
+          <li>
+            <header>{$t('PSEDU_EQUIVALENT')}（PCX）</header>
+            <p>{intention.vote}</p>
+          </li>
+          <li>
+            <header>{$t('PSEDU_JACKPOT')}（PCX）</header>
+            <p>{intention.jackpot}</p>
+          </li>
+          <li>
+            <header>{$t('PSEDU_BALANCE')}</header>
+            <p>{intention.balance}</p>
+          </li>
+        </ul>
+      </Detail>
     </CardWrapper>
   )
 }

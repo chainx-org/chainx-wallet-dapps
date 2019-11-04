@@ -1,22 +1,22 @@
 import { createSelector } from 'redux-starter-kit'
-import { token } from '../../../utils/constants'
 import {
   pseduNominationRecordsSelector,
-  xbtcIntentionSelector
+  sdotIntentionSelector
 } from '../selectors'
+import { token } from '../../../utils/constants'
 import { blockNumberSelector } from '../../../reducers/chainSlice'
 import { calcInterest } from '../common'
 
-const xbtcRecordSelector = createSelector(
+const sdotRecordSelector = createSelector(
   pseduNominationRecordsSelector,
   records => {
-    return records.find(record => (record.id = token.XBTC))
+    return records.find(record => (record.id = token.SDOT))
   }
 )
 
-export const xbtcInterestSelector = createSelector(
+export const sdotInterestSelector = createSelector(
   blockNumberSelector,
-  xbtcIntentionSelector,
-  xbtcRecordSelector,
+  sdotIntentionSelector,
+  sdotRecordSelector,
   calcInterest
 )
