@@ -20,10 +20,10 @@ import {
   removeSnackInSeconds,
   typeEnum
 } from '../../reducers/snackSlice'
-import { exFailed, exSuccess } from '../../utils/constants'
 import { sdotFreeSelector } from './Assets/selectors'
 import { pcxFreeSelector } from './PcxCard/selectors'
 import { Label, Value } from './components'
+import { signAndSendExtrinsic } from '../../utils/chainxProvider'
 
 const StyledDialog = styled(Dialog)`
   div.wrapper {
@@ -110,58 +110,29 @@ export default function({ handleClose, token }) {
     }
 
     setDisabled(true)
-    window.chainxProvider.signAndSendExtrinsic(
-      accountAddress,
-      'xAssets',
-      'transfer',
-      [address, token, realAmount, memo],
-      ({ err, status, reject }) => {
-        if (reject) {
-          console.log('transaction sign and send request is rejected.')
-          return
-        }
-
-        let id = generateId()
-        if (err) {
-          dispatch(
-            addSnack({
-              id,
-              type: typeEnum.ERROR,
-              title: '错误',
-              message: '提交交易出错'
-            })
-          )
-          setDisabled(false)
-          removeSnackInSeconds(dispatch, id, 5)
-          return
-        }
-
-        if (status.status !== 'Finalized') {
-          return
-        }
-
-        if (![exSuccess, exFailed].includes(status.result)) {
-          console.error(`Unkonwn extrinsic result: ${status.result}`)
-          setDisabled(false)
-          return
-        }
-
+    signAndSendExtrinsic(accountAddress, 'xAssets', 'transfer', [
+      address,
+      token,
+      realAmount,
+      memo
+    ])
+      .then(status => {
         let type = typeEnum.SUCCESS
-        let title = '转账成功'
+        let title =
+          status.result === 'ExtrinsicSuccess' ? '转账成功' : '转账失败'
         let message = `转账数量 ${amount} ${tokenName}`
 
-        if (status.result === 'ExtrinsicSuccess') {
-          handleClose()
-        } else if (status.result === 'ExtrinsicFailed') {
+        if (status.result === 'ExtrinsicFailed') {
           type = typeEnum.ERROR
-          title = '转账失败'
           message = `交易hash ${status.txHash}`
-          setDisabled(false)
         }
+
+        handleClose()
+        let id = generateId()
         dispatch(addSnack({ id, type, title, message }))
         removeSnackInSeconds(dispatch, id, 5)
-      }
-    )
+      })
+      .catch(() => setDisabled(false))
   }
 
   return (
