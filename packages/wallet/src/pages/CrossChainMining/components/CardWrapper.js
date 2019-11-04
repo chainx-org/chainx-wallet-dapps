@@ -5,6 +5,9 @@ import React from 'react'
 const CardWrapper = styled(Card)`
   & > header {
     margin: 3px 0 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   & > hr {
