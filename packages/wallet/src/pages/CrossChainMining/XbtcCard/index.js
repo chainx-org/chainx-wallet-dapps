@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Logo from '../components/Logo'
 import icon from '../../../static/xbtc.svg'
 import CardWrapper from '../components/CardWrapper'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { normalizedXbtcSelector } from '../selectors'
 import $t from '../../../locale'
 import { xbtcInterestSelector } from './selectors'
@@ -10,6 +10,17 @@ import { pcxPrecisionSelector } from '../../selectors/assets'
 import { toPrecision } from '../../../utils'
 import styled from 'styled-components'
 import { PrimaryButton } from '@chainx/ui'
+import {
+  addressSelector,
+  isExtensionSelector
+} from '../../../reducers/addressSlice'
+import {
+  addSnack,
+  generateId,
+  removeSnackInSeconds,
+  typeEnum
+} from '../../../reducers/snackSlice'
+import { exFailed, exSuccess } from '../../../utils/constants'
 
 const Interest = styled.section`
   display: flex;
@@ -41,15 +52,85 @@ const Interest = styled.section`
 `
 
 export default function() {
+  const accountAddress = useSelector(addressSelector)
+  const isFromExtension = useSelector(isExtensionSelector)
   const xbtc = useSelector(normalizedXbtcSelector)
   const interest = useSelector(xbtcInterestSelector)
   const precision = useSelector(pcxPrecisionSelector)
+
   const showInterest =
     typeof interest === 'number' && typeof precision === 'number'
+  const [disabled, setDisabled] = useState(true)
+  const dispatch = useDispatch()
 
-  let disabled = false
-  if (showInterest && precision <= 0) {
-    disabled = true
+  const hasInterest = showInterest && interest > 0
+
+  function claim(token) {
+    if (!isFromExtension) {
+      console.error('not extension account')
+      return
+    }
+
+    if (showInterest && interest <= 0) {
+      return
+    }
+
+    if (!window.chainxProvider) {
+      // TODO: 考虑没有安装插件的情况下怎么与用户进行交互
+      return
+    }
+
+    setDisabled(true)
+    window.chainxProvider.signAndSendExtrinsic(
+      accountAddress,
+      'xTokens',
+      'claim',
+      [token],
+      ({ err, status, reject }) => {
+        if (reject) {
+          console.log('transaction sign and send request is rejected.')
+          return
+        }
+
+        let id = generateId()
+        if (err) {
+          dispatch(
+            addSnack({
+              id,
+              type: typeEnum.ERROR,
+              title: '错误',
+              message: '提交交易出错'
+            })
+          )
+          setDisabled(false)
+          removeSnackInSeconds(dispatch, id, 5)
+          return
+        }
+
+        if (status.status !== 'Finalized') {
+          return
+        }
+
+        if (![exSuccess, exFailed].includes(status.result)) {
+          console.error(`Unkonwn extrinsic result: ${status.result}`)
+          setDisabled(false)
+          return
+        }
+
+        let type = typeEnum.SUCCESS
+        let title = '提息成功'
+        let message = `交易hash ${status.txHash}`
+
+        if (status.result === 'ExtrinsicFailed') {
+          type = typeEnum.ERROR
+          title = '提息失败'
+          message = `交易hash ${status.txHash}`
+          setDisabled(false)
+        }
+        dispatch(addSnack({ id, type, title, message }))
+        removeSnackInSeconds(dispatch, id, 5)
+      }
+    )
   }
 
   const header = (
@@ -59,7 +140,11 @@ export default function() {
         <Interest>
           <label>代提利息</label>
           <span>{toPrecision(interest, precision)} PCX</span>
-          <PrimaryButton disabled={disabled} size="small">
+          <PrimaryButton
+            disabled={!hasInterest || disabled}
+            size="small"
+            onClick={() => claim('BTC')}
+          >
             提息
           </PrimaryButton>
         </Interest>

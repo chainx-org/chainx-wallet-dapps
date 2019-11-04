@@ -26,3 +26,5 @@ export function remove0xPrefix(str = '') {
 
   return str
 }
+
+export const noneFunc = () => {}

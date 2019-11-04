@@ -19,7 +19,7 @@ export const xbtcInterestSelector = createSelector(
   xbtcRecordSelector,
   (blockNumber, intention, record) => {
     if (!record || !intention) {
-      return
+      return 0
     }
 
     // 用户最新总票龄  = （链最新高度 - 用户总票龄更新高度）*用户投票金额 +用户总票龄

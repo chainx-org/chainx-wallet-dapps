@@ -39,4 +39,6 @@ export const accountSelector = createSelector(
 export const extensionAccountsSelector = state =>
   state.address.extensionAccounts
 
+export const isExtensionSelector = state => state.address.isFromExtension
+
 export default addressSlice.reducer
