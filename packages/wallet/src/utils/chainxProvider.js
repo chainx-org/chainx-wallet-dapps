@@ -14,8 +14,8 @@ export function signAndSendExtrinsic(address, module, call, args = []) {
       module,
       call,
       args,
-      ({ err, status, reject: useReject }) => {
-        if (useReject) {
+      ({ err, status, reject: userReject }) => {
+        if (userReject) {
           console.log('transaction sign and send request is rejected.')
           reject()
           return

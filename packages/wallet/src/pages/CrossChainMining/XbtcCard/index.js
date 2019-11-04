@@ -20,7 +20,7 @@ import {
   removeSnackInSeconds,
   typeEnum
 } from '../../../reducers/snackSlice'
-import { exFailed, exSuccess } from '../../../utils/constants'
+import { signAndSendExtrinsic } from '../../../utils/chainxProvider'
 
 const Interest = styled.section`
   display: flex;
@@ -81,56 +81,23 @@ export default function() {
     }
 
     setDisabled(true)
-    window.chainxProvider.signAndSendExtrinsic(
-      accountAddress,
-      'xTokens',
-      'claim',
-      [token],
-      ({ err, status, reject }) => {
-        if (reject) {
-          console.log('transaction sign and send request is rejected.')
-          return
-        }
-
-        let id = generateId()
-        if (err) {
-          dispatch(
-            addSnack({
-              id,
-              type: typeEnum.ERROR,
-              title: '错误',
-              message: '提交交易出错'
-            })
-          )
-          setDisabled(false)
-          removeSnackInSeconds(dispatch, id, 5)
-          return
-        }
-
-        if (status.status !== 'Finalized') {
-          return
-        }
-
-        if (![exSuccess, exFailed].includes(status.result)) {
-          console.error(`Unkonwn extrinsic result: ${status.result}`)
-          setDisabled(false)
-          return
-        }
-
+    signAndSendExtrinsic(accountAddress, 'xTokens', 'claim', [token])
+      .then(status => {
         let type = typeEnum.SUCCESS
-        let title = '提息成功'
+        let title =
+          status.result === 'ExtrinsicSuccess' ? '提息成功' : '提息失败'
         let message = `交易hash ${status.txHash}`
 
         if (status.result === 'ExtrinsicFailed') {
           type = typeEnum.ERROR
-          title = '提息失败'
-          message = `交易hash ${status.txHash}`
-          setDisabled(false)
         }
+
+        setDisabled(false)
+        let id = generateId()
         dispatch(addSnack({ id, type, title, message }))
         removeSnackInSeconds(dispatch, id, 5)
-      }
-    )
+      })
+      .catch(() => setDisabled(false))
   }
 
   const header = (
