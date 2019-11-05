@@ -24,8 +24,8 @@ const Wrapper = styled.ul`
         color: #2caa84;
       }
     }
-    &:last-of-type {
-      margin-left: 16px;
+    &:not(:last-of-type) {
+      margin-right: 16px;
     }
   }
 `
