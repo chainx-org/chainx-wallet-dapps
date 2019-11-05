@@ -26,7 +26,7 @@ export default function({ token }) {
   const accountAddress = useSelector(addressSelector)
   const isFromExtension = useSelector(isExtensionSelector)
 
-  const [disabled, setDisabled] = useState(true)
+  const [disabled, setDisabled] = useState(false)
 
   const xbtcInterest = useSelector(xbtcInterestSelector)
   const sdotInterest = useSelector(sdotInterestSelector)
