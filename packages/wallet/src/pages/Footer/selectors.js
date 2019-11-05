@@ -9,7 +9,7 @@ const head = state => state.chain.head
 export const blockTimeSelector = createSelector(
   head,
   head => {
-    if (!head) {
+    if (!head || !head.now) {
       return null
     }
 
@@ -22,7 +22,7 @@ export const producerSelector = createSelector(
   head,
   intentionsSelector,
   (head, intentions) => {
-    if (!head || intentions.length <= 0) {
+    if (!head || !head.producer || intentions.length <= 0) {
       return null
     }
 

@@ -37,10 +37,12 @@ export default function() {
 
   return (
     <Wrapper>
-      <li>
-        <label>{$t('FOOTER_BLOCK_TIME')}</label>
-        <span>{blockTime}</span>
-      </li>
+      {blockTime && (
+        <li>
+          <label>{$t('FOOTER_BLOCK_TIME')}</label>
+          <span>{blockTime}</span>
+        </li>
+      )}
       <li>
         <label>{$t('FOOTER_BLOCK_NUMBER')}</label>
         <span>{blockNumber}</span>
