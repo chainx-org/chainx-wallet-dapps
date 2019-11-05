@@ -9,6 +9,7 @@ import {
   fetchPseduNominationRecords
 } from '../../reducers/intentionSlice'
 import { fetchAssetsInfo } from '../../reducers/assetSlice'
+import { addressSelector } from '../../reducers/addressSlice'
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,7 +21,7 @@ const Wrapper = styled.div`
 `
 
 export default function() {
-  const { address } = useSelector(state => state.address)
+  const address = useSelector(addressSelector)
   const dispatch = useDispatch()
 
   useEffect(() => {

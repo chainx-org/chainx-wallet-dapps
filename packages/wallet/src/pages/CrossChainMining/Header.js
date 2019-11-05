@@ -21,6 +21,7 @@ import {
   typeEnum
 } from '../../reducers/snackSlice'
 import { pcxPrecisionSelector } from '../selectors/assets'
+import { fetchPseduNominationRecords } from '../../reducers/intentionSlice'
 
 export default function({ token }) {
   const accountAddress = useSelector(addressSelector)
@@ -77,6 +78,7 @@ export default function({ token }) {
           type = typeEnum.ERROR
         }
 
+        dispatch(fetchPseduNominationRecords(accountAddress))
         setDisabled(false)
         let id = generateId()
         dispatch(addSnack({ id, type, title, message }))
