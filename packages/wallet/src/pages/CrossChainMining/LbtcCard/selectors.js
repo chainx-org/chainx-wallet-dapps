@@ -10,7 +10,7 @@ import { calcInterest } from '../common'
 const lbtcRecordSelector = createSelector(
   pseduNominationRecordsSelector,
   records => {
-    return records.find(record => (record.id = token.LBTC))
+    return records.find(record => record.id === token.LBTC)
   }
 )
 

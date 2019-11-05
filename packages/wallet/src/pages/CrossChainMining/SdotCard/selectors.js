@@ -10,7 +10,7 @@ import { calcInterest } from '../common'
 const sdotRecordSelector = createSelector(
   pseduNominationRecordsSelector,
   records => {
-    return records.find(record => (record.id = token.SDOT))
+    return records.find(record => token.SDOT === record.id)
   }
 )
 

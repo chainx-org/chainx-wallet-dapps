@@ -10,7 +10,7 @@ import { calcInterest } from '../common'
 const xbtcRecordSelector = createSelector(
   pseduNominationRecordsSelector,
   records => {
-    return records.find(record => (record.id = token.XBTC))
+    return records.find(record => record.id === token.XBTC)
   }
 )
 
