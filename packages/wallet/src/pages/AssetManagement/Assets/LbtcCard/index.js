@@ -25,6 +25,7 @@ export default function() {
         {$t('LOCK')}
       </PrimaryButton>
       <DefaultButton
+        disabled={true}
         onClick={() => console.log('click')}
         style={{ marginRight: 8 }}
       >
