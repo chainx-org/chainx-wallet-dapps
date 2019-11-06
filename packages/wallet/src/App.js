@@ -13,12 +13,17 @@ import Staking from './pages/Staking'
 import Trust from './pages/Trust'
 import { getChainx } from './services/chainx'
 import { setHead } from './reducers/chainSlice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchAccountAssets } from './reducers/assetSlice'
+import { addressSelector } from './reducers/addressSlice'
 
 function App() {
+  const address = useSelector(addressSelector)
   const dispatch = useDispatch()
 
   useEffect(() => {
+    dispatch(fetchAccountAssets(address))
+
     const subscriber = getChainx()
       .chain.subscribeNewHead()
       .subscribe(head => {
@@ -26,7 +31,7 @@ function App() {
       })
 
     return subscriber.unsubscribe
-  }, [dispatch])
+  }, [dispatch, address])
 
   return (
     <Router>

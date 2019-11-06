@@ -6,7 +6,10 @@ import sdotIcon from '../../static/sdot.svg'
 import Interest from './components/Interest'
 import { token as tokens } from '../../utils/constants'
 import { useDispatch, useSelector } from 'react-redux'
-import { xbtcInterestSelector } from './XbtcCard/selectors'
+import {
+  xbtcClaimInfoSelector,
+  xbtcInterestSelector
+} from './XbtcCard/selectors'
 import { sdotInterestSelector } from './SdotCard/selectors'
 import { lbtcInterestSelector } from './LbtcCard/selectors'
 import {
@@ -32,6 +35,9 @@ export default function({ token }) {
   const xbtcInterest = useSelector(xbtcInterestSelector)
   const sdotInterest = useSelector(sdotInterestSelector)
   const lbtcInterest = useSelector(lbtcInterestSelector)
+
+  const xbtcClaimInfo = useSelector(xbtcClaimInfoSelector)
+  console.log('xbtcClaimInfo', xbtcClaimInfo)
 
   const precision = useSelector(pcxPrecisionSelector)
 
