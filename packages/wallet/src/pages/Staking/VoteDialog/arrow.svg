@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="16px" viewBox="0 0 20 16" version="1.1" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>arrow</title>
+    <desc>Created with Sketch.</desc>
+    <g id="组件" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="change" transform="translate(-240.000000, -24.000000)">
+            <g id="Group">
+                <g id="arrow" transform="translate(237.000000, 20.000000)">
+                    <g id="24px-(7)">
+                        <g id="Bounding_Box">
+                            <rect id="矩形" x="0" y="0" width="24" height="24"></rect>
+                            <rect id="矩形" x="0" y="0" width="24" height="24"></rect>
+                        </g>
+                        <g id="Master" transform="translate(3.000000, 4.000000)" fill="#F6C94A">
+                            <g id="分组">
+                                <path d="M18.85,7.33714286 L13.8,0.88 C13.375,0.331428571 12.6875,0 11.95,0 C10.0875,0 9.0125,1.92 10.0875,3.30285714 L13.75,8 L10.0875,12.6971429 C9,14.08 10.0875,16 11.95,16 C12.6875,16 13.3875,15.6685714 13.8125,15.12 L18.8625,8.66285714 C19.1625,8.26285714 19.1625,7.73714286 18.85,7.33714286 Z"
+                                      id="路径"></path>
+                                <path d="M10.1,7.33714286 L5.0625,0.88 C4.625,0.331428571 3.9375,0 3.2,0 C1.3375,0 0.25,1.92 1.3375,3.30285714 L5,8 L1.3375,12.6971429 C0.25,14.08 1.3375,16 3.2,16 C3.9375,16 4.6375,15.6685714 5.0625,15.12 L10.1125,8.66285714 C10.4125,8.26285714 10.4125,7.73714286 10.1,7.33714286 Z"
+                                      id="路径"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

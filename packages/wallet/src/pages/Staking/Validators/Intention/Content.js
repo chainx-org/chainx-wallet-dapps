@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import defaultLogo from './svg/default-logo.svg'
 import { pcxPrecisionSelector } from '../../../selectors/assets'
@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import { toPrecision } from '../../../../utils'
 import $t from '../../../../locale'
 import { DefaultButton } from '@chainx/ui'
+import VoteDialog from '../../VoteDialog'
 
 const Wrapper = styled.div`
   display: flex;
@@ -78,6 +79,7 @@ const Wrapper = styled.div`
 export default function(props) {
   const { name, hasLogo, logo, selfVote, totalNomination } = props.intention
   const precision = useSelector(pcxPrecisionSelector)
+  const [voteOpen, setVoteOpen] = useState(false)
 
   return (
     <Wrapper>
@@ -103,12 +105,18 @@ export default function(props) {
       </div>
       <div className="operation">
         <DefaultButton
-          onClick={() => console.log('click')}
+          onClick={() => setVoteOpen(true)}
           style={{ padding: 0, fontSize: 12, opacity: 0.72, color: '#000' }}
         >
           {$t('STAKING_VOTE')}
         </DefaultButton>
       </div>
+      {voteOpen && (
+        <VoteDialog
+          handleClose={() => setVoteOpen(false)}
+          intention={props.intention}
+        />
+      )}
     </Wrapper>
   )
 }
