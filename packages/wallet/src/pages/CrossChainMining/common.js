@@ -24,3 +24,26 @@ export function calcInterest(blockNumber, intention, record) {
 
   return parseInt(interest)
 }
+
+export function getClaimInfo(head, pcx, record, interest) {
+  if (!head || !pcx || !record || !interest) {
+    return
+  }
+
+  const { number: blockNumber } = head
+
+  const hasEnoughStaking = pcx.reservedStaking > (interest * 100) / 9
+  const reachClaimHeight = blockNumber > record.nextClaim
+  const canClaim = interest > 0 && hasEnoughStaking && reachClaimHeight
+  let needStakingPcx = 0
+  if (!hasEnoughStaking) {
+    needStakingPcx = (interest * 100) / 9 - pcx.reservedStaking
+  }
+  return {
+    canClaim,
+    hasEnoughStaking,
+    reachClaimHeight,
+    nextClaim: record.nextClaim,
+    needStakingPcx
+  }
+}

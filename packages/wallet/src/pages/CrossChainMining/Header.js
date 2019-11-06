@@ -10,8 +10,14 @@ import {
   xbtcClaimInfoSelector,
   xbtcInterestSelector
 } from './XbtcCard/selectors'
-import { sdotInterestSelector } from './SdotCard/selectors'
-import { lbtcInterestSelector } from './LbtcCard/selectors'
+import {
+  sdotClaimInfoSelector,
+  sdotInterestSelector
+} from './SdotCard/selectors'
+import {
+  lbtcClaimInfoSelector,
+  lbtcInterestSelector
+} from './LbtcCard/selectors'
 import {
   addressSelector,
   isExtensionSelector
@@ -37,7 +43,8 @@ export default function({ token }) {
   const lbtcInterest = useSelector(lbtcInterestSelector)
 
   const xbtcClaimInfo = useSelector(xbtcClaimInfoSelector)
-  console.log('xbtcClaimInfo', xbtcClaimInfo)
+  const sdotClaimInfo = useSelector(sdotClaimInfoSelector)
+  const lbtcClaimInfo = useSelector(lbtcClaimInfoSelector)
 
   const precision = useSelector(pcxPrecisionSelector)
 
@@ -45,17 +52,19 @@ export default function({ token }) {
 
   let interest = xbtcInterest
   let icon = xbtcIcon
+  let claimInfo = xbtcClaimInfo
   if (token === tokens.SDOT) {
     interest = sdotInterest
     icon = sdotIcon
+    claimInfo = sdotClaimInfo
   } else if (token === tokens.LBTC) {
     interest = lbtcInterest
     icon = lbtcIcon
+    claimInfo = lbtcClaimInfo
   }
 
   const showInterest =
     typeof interest === 'number' && typeof precision === 'number'
-  const hasInterest = showInterest && interest > 0
 
   function claim(token) {
     if (!isFromExtension) {
@@ -98,10 +107,11 @@ export default function({ token }) {
       <Logo icon={icon} name={token === tokens.XBTC ? 'X-BTC' : token} />
       {showInterest && (
         <Interest
-          disabled={!hasInterest || disabled}
+          disabled={disabled}
           interest={interest}
           precision={precision}
           claim={() => claim(token)}
+          claimInfo={claimInfo}
           token={token}
         />
       )}

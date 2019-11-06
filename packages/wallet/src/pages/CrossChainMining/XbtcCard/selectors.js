@@ -5,7 +5,7 @@ import {
   xbtcIntentionSelector
 } from '../selectors'
 import { blockNumberSelector, headSelector } from '../../../reducers/chainSlice'
-import { calcInterest } from '../common'
+import { calcInterest, getClaimInfo } from '../common'
 import { pcxAssetSelector } from '../../AssetManagement/PcxCard/selectors'
 
 const xbtcRecordSelector = createSelector(
@@ -27,26 +27,5 @@ export const xbtcClaimInfoSelector = createSelector(
   pcxAssetSelector,
   xbtcRecordSelector,
   xbtcInterestSelector,
-  (head, pcx, record, interest) => {
-    if (!head || !pcx || !record || !interest) {
-      return
-    }
-
-    const { number: blockNumber } = head
-
-    const hasEnoughStaking = pcx.reservedStaking > (interest * 100) / 9
-    const reachClaimHeight = blockNumber > record.nextClaim
-    const canClaim = interest > 0 && hasEnoughStaking && reachClaimHeight
-    let needStakingPcx = 0
-    if (!hasEnoughStaking) {
-      needStakingPcx = (interest * 100) / 9 - pcx.reservedStaking
-    }
-    return {
-      canClaim,
-      hasEnoughStaking,
-      reachClaimHeight,
-      nextClaim: record.nextClaim,
-      needStakingPcx
-    }
-  }
+  getClaimInfo
 )

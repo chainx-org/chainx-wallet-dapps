@@ -4,8 +4,9 @@ import {
   pseduNominationRecordsSelector
 } from '../selectors'
 import { token } from '../../../utils/constants'
-import { blockNumberSelector } from '../../../reducers/chainSlice'
-import { calcInterest } from '../common'
+import { blockNumberSelector, headSelector } from '../../../reducers/chainSlice'
+import { calcInterest, getClaimInfo } from '../common'
+import { pcxAssetSelector } from '../../AssetManagement/PcxCard/selectors'
 
 const lbtcRecordSelector = createSelector(
   pseduNominationRecordsSelector,
@@ -19,4 +20,11 @@ export const lbtcInterestSelector = createSelector(
   lbtcIntentionSelector,
   lbtcRecordSelector,
   calcInterest
+)
+
+export const lbtcClaimInfoSelector = createSelector(
+  headSelector,
+  pcxAssetSelector,
+  lbtcRecordSelector,
+  getClaimInfo
 )
