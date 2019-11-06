@@ -10,15 +10,16 @@ const Wrapper = styled(Card)`
     ul {
       display: flex;
       & > li {
+        opacity: 0.32;
         font-size: 14px;
         font-weight: 500;
-        color: rgba(0, 0, 0, 0.32);
         letter-spacing: 0.12px;
         line-height: 20px;
         cursor: pointer;
         padding-bottom: 16px;
         &.active {
           border-bottom: 3px solid #f6c94a;
+          opacity: 0.72;
         }
         &:not(:first-of-type) {
           margin-left: 24px;
