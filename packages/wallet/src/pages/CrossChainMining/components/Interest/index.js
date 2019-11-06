@@ -92,7 +92,7 @@ export default function(props) {
 
   return (
     <Wrapper>
-      <label>代提利息</label>
+      <label>待提利息</label>
       <span>
         <span className="interest">{toPrecision(interest, precision)} PCX</span>
         {interest > 0 && !canClaim ? (
