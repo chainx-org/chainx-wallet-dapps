@@ -104,7 +104,7 @@ export default function(props) {
       <div className="operation">
         <DefaultButton
           onClick={() => console.log('click')}
-          style={{ padding: 0 }}
+          style={{ padding: 0, fontSize: 12, opacity: 0.72, color: '#000' }}
         >
           {$t('STAKING_VOTE')}
         </DefaultButton>
