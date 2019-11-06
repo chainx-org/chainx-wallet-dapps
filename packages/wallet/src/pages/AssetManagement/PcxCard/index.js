@@ -19,7 +19,6 @@ const InnerWrapper = styled.div`
   position: relative;
   opacity: 0.8;
   background-image: linear-gradient(90deg, #ffe981 0%, #f6ca4a 100%);
-  border: 1px solid rgba(0, 0, 0, 0.04);
   border-radius: 10px;
   padding: 16px;
   min-height: 222px;
