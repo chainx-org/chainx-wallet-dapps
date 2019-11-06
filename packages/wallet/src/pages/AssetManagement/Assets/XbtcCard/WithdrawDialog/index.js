@@ -78,10 +78,10 @@ export default function({ handleClose }) {
       return
     }
 
-    // if (amount * Math.pow(10, precision) > free) {
-    //   setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_ERROR'))
-    //   return
-    // }
+    if (amount * Math.pow(10, precision) > free) {
+      setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_ERROR'))
+      return
+    }
 
     if (!window.chainxProvider) {
       // TODO: 考虑没有安装插件的情况下怎么与用户进行交互
