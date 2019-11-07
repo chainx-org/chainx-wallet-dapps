@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import {
   totalInterestSelector,
@@ -6,11 +6,26 @@ import {
   totalRevocationBalanceSelector
 } from './selectors'
 import { useSelector } from 'react-redux'
+import normalIcon from './normal.svg'
+import openIcon from './open.svg'
+import NominationBoard from './NominationBoard'
+
+const Wrapper = styled.div`
+  display: flex;
+
+  position: relative;
+  & > img {
+    cursor: pointer;
+    margin-left: 8px;
+  }
+`
 
 const Ul = styled.ul`
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
+  user-select: none;
+  cursor: pointer;
 
   & > li {
     display: inline-flex;
@@ -46,21 +61,30 @@ export default function() {
   const totalNomination = useSelector(totalNominationBalanceSelector)
   const totalRevocation = useSelector(totalRevocationBalanceSelector)
   const totalInterest = useSelector(totalInterestSelector)
+  const [open, setOpen] = useState(true)
 
   return (
-    <Ul>
-      <li>
-        <label>待解冻</label>
-        <span>{totalRevocation}</span>
-      </li>
-      <li>
-        <label>我的投票</label>
-        <span>{totalNomination}</span>
-      </li>
-      <li>
-        <label>待领利息</label>
-        <span>{totalInterest}</span>
-      </li>
-    </Ul>
+    <Wrapper>
+      <Ul onClick={() => setOpen(!open)}>
+        <li>
+          <label>待解冻</label>
+          <span>{totalRevocation}</span>
+        </li>
+        <li>
+          <label>我的投票</label>
+          <span>{totalNomination}</span>
+        </li>
+        <li>
+          <label>待领利息</label>
+          <span>{totalInterest}</span>
+        </li>
+      </Ul>
+      <img
+        src={open ? openIcon : normalIcon}
+        alt="open"
+        onClick={() => setOpen(!open)}
+      />
+      {open ? <NominationBoard /> : null}
+    </Wrapper>
   )
 }

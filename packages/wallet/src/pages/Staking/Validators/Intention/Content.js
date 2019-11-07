@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import defaultLogo from './svg/default-logo.svg'
+import defaultLogo from '../../svg/default-logo.svg'
 import { pcxPrecisionSelector } from '../../../selectors/assets'
 import { useSelector } from 'react-redux'
 import { toPrecision } from '../../../../utils'
