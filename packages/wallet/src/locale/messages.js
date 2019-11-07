@@ -162,6 +162,10 @@ const staking = {
   STAKING_VOTE: {
     en: 'Vote',
     zh: '投票'
+  },
+  STAKING_VOTE_AMOUNT: {
+    en: 'Vote amount',
+    zh: '投票数量'
   }
 }
 

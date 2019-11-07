@@ -4,15 +4,23 @@ import { AmountInput, PrimaryButton, TextInput } from '@chainx/ui'
 import $t from '../../../locale'
 import { Label, Value } from '../../AssetManagement/components'
 import { toPrecision } from '../../../utils'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { pcxFreeSelector } from '../../AssetManagement/PcxCard/selectors'
 import { nominationRecordsSelector } from '../../../reducers/intentionSlice'
 import arrow from './arrow.svg'
+import { signAndSendExtrinsic } from '../../../utils/chainxProvider'
+import { addressSelector } from '../../../reducers/addressSlice'
+import BigNumber from 'bignumber.js'
+import {
+  addSnack,
+  generateId,
+  removeSnackInSeconds,
+  typeEnum
+} from '../../../reducers/snackSlice'
 
 export default function({ handleClose, intention }) {
+  const accountAddress = useSelector(addressSelector)
   const nominationRecords = useSelector(nominationRecordsSelector)
-  console.log('nominationRecords', nominationRecords)
-  console.log('intention', intention)
 
   const record = (nominationRecords || []).find(
     record => record.intention === intention.account
@@ -24,13 +32,13 @@ export default function({ handleClose, intention }) {
 
   const [amount, setAmount] = useState('')
   const [amountErrMsg, setAmountErrMsg] = useState('')
+  const dispatch = useDispatch()
 
   const [memo, setMemo] = useState('')
 
   const { free, precision } = useSelector(pcxFreeSelector)
 
   const [disabled, setDisabled] = useState(false)
-  console.log(setDisabled)
 
   const hasAmount = !amountErrMsg && amount
 
@@ -40,7 +48,11 @@ export default function({ handleClose, intention }) {
       return
     }
 
-    if (amount * Math.pow(10, precision) > free) {
+    const realAmount = BigNumber(amount)
+      .multipliedBy(Math.pow(10, precision))
+      .toNumber()
+
+    if (realAmount > free) {
       setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_ERROR'))
       return
     }
@@ -49,6 +61,30 @@ export default function({ handleClose, intention }) {
       // TODO: 考虑没有安装插件的情况下怎么与用户进行交互
       return
     }
+
+    setDisabled(true)
+    signAndSendExtrinsic(accountAddress, 'xStaking', 'nominate', [
+      intention.account,
+      realAmount,
+      memo
+    ])
+      .then(status => {
+        let type = typeEnum.SUCCESS
+        let title =
+          status.result === 'ExtrinsicSuccess' ? '投票成功' : '投票失败'
+        let message = `投票数量 ${amount} PCX`
+
+        if (status.result === 'ExtrinsicFailed') {
+          type = typeEnum.ERROR
+          message = `交易hash ${status.txHash}`
+        }
+
+        handleClose()
+        let id = generateId()
+        dispatch(addSnack({ id, type, title, message }))
+        removeSnackInSeconds(dispatch, id, 5)
+      })
+      .catch(() => setDisabled(false))
   }
 
   return (
@@ -62,7 +98,7 @@ export default function({ handleClose, intention }) {
                 setAmountErrMsg('')
                 setAmount(value)
               }}
-              placeholder={$t('ASSET_TRANSFER_AMOUNT')}
+              placeholder={$t('STAKING_VOTE_AMOUNT')}
               precision={precision}
               error={!!amountErrMsg}
               errorText={amountErrMsg}
