@@ -8,15 +8,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { pcxFreeSelector } from '../../AssetManagement/PcxCard/selectors'
 import { nominationRecordsSelector } from '../../../reducers/intentionSlice'
 import arrow from './arrow.svg'
-import { signAndSendExtrinsic } from '../../../utils/chainxProvider'
+import { showSnack, signAndSendExtrinsic } from '../../../utils/chainxProvider'
 import { addressSelector } from '../../../reducers/addressSlice'
 import BigNumber from 'bignumber.js'
-import {
-  addSnack,
-  generateId,
-  removeSnackInSeconds,
-  typeEnum
-} from '../../../reducers/snackSlice'
 
 export default function({ handleClose, intention }) {
   const accountAddress = useSelector(addressSelector)
@@ -69,21 +63,16 @@ export default function({ handleClose, intention }) {
       memo
     ])
       .then(status => {
-        let type = typeEnum.SUCCESS
-        let title =
-          status.result === 'ExtrinsicSuccess' ? '投票成功' : '投票失败'
-        let message = `投票数量 ${amount} PCX`
-
-        if (status.result === 'ExtrinsicFailed') {
-          type = typeEnum.ERROR
-          message = `交易hash ${status.txHash}`
+        const messages = {
+          successTitle: '投票成功',
+          failTitle: '投票失败',
+          successMessage: `投票数量 ${amount} PCX`,
+          failMessage: `交易hash ${status.txHash}`
         }
 
-        handleClose()
-        let id = generateId()
-        dispatch(addSnack({ id, type, title, message }))
-        removeSnackInSeconds(dispatch, id, 5)
+        return showSnack(status, messages, dispatch)
       })
+      .then(handleClose)
       .catch(() => setDisabled(false))
   }
 

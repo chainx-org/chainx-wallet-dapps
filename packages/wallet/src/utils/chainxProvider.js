@@ -51,3 +51,29 @@ export function signAndSendExtrinsic(address, module, call, args = []) {
     )
   })
 }
+
+export function showSnack(status, messages, dispatch) {
+  const { successTitle, failTitle, successMessage, failMessage } = messages
+
+  let type = typeEnum.SUCCESS
+  let title = successTitle
+  let message = successMessage
+
+  if (status.result === 'ExtrinsicFailed') {
+    type = typeEnum.ERROR
+    title = failTitle
+    message = failMessage
+  }
+
+  return new Promise((resolve, reject) => {
+    let id = generateId()
+    dispatch(addSnack({ id, type, title, message }))
+    removeSnackInSeconds(dispatch, id, 5)
+
+    if (status.result === 'ExtrinsicSuccess') {
+      resolve()
+    } else {
+      reject()
+    }
+  })
+}

@@ -14,16 +14,10 @@ import { xbtcFreeSelector } from './Assets/XbtcCard/selectors'
 import { getChainx } from '../../services/chainx'
 import { addressSelector } from '../../reducers/addressSlice'
 import BigNumber from 'bignumber.js'
-import {
-  addSnack,
-  generateId,
-  removeSnackInSeconds,
-  typeEnum
-} from '../../reducers/snackSlice'
 import { sdotFreeSelector } from './Assets/selectors'
 import { pcxFreeSelector } from './PcxCard/selectors'
 import { Label, Value } from './components'
-import { signAndSendExtrinsic } from '../../utils/chainxProvider'
+import { showSnack, signAndSendExtrinsic } from '../../utils/chainxProvider'
 
 const StyledDialog = styled(Dialog)`
   div.wrapper {
@@ -117,21 +111,16 @@ export default function({ handleClose, token }) {
       memo
     ])
       .then(status => {
-        let type = typeEnum.SUCCESS
-        let title =
-          status.result === 'ExtrinsicSuccess' ? '转账成功' : '转账失败'
-        let message = `转账数量 ${amount} ${tokenName}`
-
-        if (status.result === 'ExtrinsicFailed') {
-          type = typeEnum.ERROR
-          message = `交易hash ${status.txHash}`
+        const messages = {
+          successTitle: '转账成功',
+          failTitle: '转账失败',
+          successMessage: `转账数量 ${amount} ${tokenName}`,
+          failMessage: `交易hash ${status.txHash}`
         }
 
-        handleClose()
-        let id = generateId()
-        dispatch(addSnack({ id, type, title, message }))
-        removeSnackInSeconds(dispatch, id, 5)
+        return showSnack(status, messages, dispatch)
       })
+      .then(handleClose)
       .catch(() => setDisabled(false))
   }
 
