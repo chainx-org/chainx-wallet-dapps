@@ -5,7 +5,7 @@ import {
 } from '../selectors'
 import { token } from '../../../utils/constants'
 import { blockNumberSelector, headSelector } from '../../../reducers/chainSlice'
-import { calcInterest, getClaimInfo } from '../common'
+import { calcPseduIntentionInterest, getClaimInfo } from '../common'
 import { pcxAssetSelector } from '../../AssetManagement/PcxCard/selectors'
 
 const sdotRecordSelector = createSelector(
@@ -19,7 +19,7 @@ export const sdotInterestSelector = createSelector(
   blockNumberSelector,
   sdotIntentionSelector,
   sdotRecordSelector,
-  calcInterest
+  calcPseduIntentionInterest
 )
 
 export const sdotClaimInfoSelector = createSelector(

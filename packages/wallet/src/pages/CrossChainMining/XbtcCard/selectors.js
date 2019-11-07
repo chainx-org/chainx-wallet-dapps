@@ -5,7 +5,7 @@ import {
   xbtcIntentionSelector
 } from '../selectors'
 import { blockNumberSelector, headSelector } from '../../../reducers/chainSlice'
-import { calcInterest, getClaimInfo } from '../common'
+import { calcPseduIntentionInterest, getClaimInfo } from '../common'
 import { pcxAssetSelector } from '../../AssetManagement/PcxCard/selectors'
 
 const xbtcRecordSelector = createSelector(
@@ -19,7 +19,7 @@ export const xbtcInterestSelector = createSelector(
   blockNumberSelector,
   xbtcIntentionSelector,
   xbtcRecordSelector,
-  calcInterest
+  calcPseduIntentionInterest
 )
 
 export const xbtcClaimInfoSelector = createSelector(

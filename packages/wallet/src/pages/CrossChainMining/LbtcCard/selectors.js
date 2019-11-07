@@ -5,7 +5,7 @@ import {
 } from '../selectors'
 import { token } from '../../../utils/constants'
 import { blockNumberSelector, headSelector } from '../../../reducers/chainSlice'
-import { calcInterest, getClaimInfo } from '../common'
+import { calcPseduIntentionInterest, getClaimInfo } from '../common'
 import { pcxAssetSelector } from '../../AssetManagement/PcxCard/selectors'
 
 const lbtcRecordSelector = createSelector(
@@ -19,7 +19,7 @@ export const lbtcInterestSelector = createSelector(
   blockNumberSelector,
   lbtcIntentionSelector,
   lbtcRecordSelector,
-  calcInterest
+  calcPseduIntentionInterest
 )
 
 export const lbtcClaimInfoSelector = createSelector(
