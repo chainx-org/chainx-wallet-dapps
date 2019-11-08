@@ -11,6 +11,7 @@ import {
   nominationRecordsSelector
 } from '../../../reducers/intentionSlice'
 import arrow from './arrow.svg'
+import darkArrow from './dark-arrow.svg'
 import { showSnack, signAndSendExtrinsic } from '../../../utils/chainxProvider'
 import { addressSelector } from '../../../reducers/addressSlice'
 import BigNumber from 'bignumber.js'
@@ -122,7 +123,7 @@ export default function({ handleClose, intention }) {
             <h4>当前票数</h4>
             <p>{toPrecision(nomination, precision)} PCX</p>
           </section>
-          <img src={arrow} alt="arrow" />
+          <img src={hasAmount ? arrow : darkArrow} alt="arrow" />
           <section className="after">
             <h4>修改后票数</h4>
             <p>
