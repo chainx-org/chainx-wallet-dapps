@@ -13,7 +13,12 @@ import { addressSelector } from '../../../reducers/addressSlice'
 import { fetchNominationRecords } from '../../../reducers/intentionSlice'
 import { fetchAccountAssets } from '../../../reducers/assetSlice'
 
-export default function({ handleClose, nomination, intention }) {
+export default function({
+  handleClose,
+  nomination,
+  intention,
+  revocations = []
+}) {
   const accountAddress = useSelector(addressSelector)
 
   const [amount, setAmount] = useState('')
@@ -115,6 +120,9 @@ export default function({ handleClose, nomination, intention }) {
 
         <ul className="warning">
           <li>赎回锁定期3天</li>
+          {revocations.length >= 7 ? (
+            <li>同时赎回不能超过 10 笔（当前 7 笔）</li>
+          ) : null}
         </ul>
 
         <div>

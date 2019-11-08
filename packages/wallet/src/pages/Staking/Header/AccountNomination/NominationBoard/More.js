@@ -47,7 +47,7 @@ export default function({ intention, record = {} }) {
   const [showMore, setShowMore] = useState(false)
   const [unNominateOpen, setUnNominateOpen] = useState(false)
 
-  const { nomination } = record.info || {}
+  const { nomination, revocations = [] } = record.info || {}
 
   return (
     <Wrapper>
@@ -67,6 +67,7 @@ export default function({ intention, record = {} }) {
         <UnNominateDialog
           intention={intention}
           nomination={nomination}
+          revocations={revocations}
           handleClose={() => setUnNominateOpen(false)}
         />
       ) : null}
