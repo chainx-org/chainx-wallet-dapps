@@ -12,6 +12,7 @@ import {
   signAndSendExtrinsic
 } from '../../../../../utils/chainxProvider'
 import { fetchNominationRecords } from '../../../../../reducers/intentionSlice'
+import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
 
 const Wrapper = styled.div`
   display: flex;
@@ -120,6 +121,7 @@ export default function() {
       .then(() => {
         setClaimingTarget('')
         dispatch(fetchNominationRecords(accountAddress))
+        dispatch(fetchAccountAssets(accountAddress))
       })
       .catch(() => setClaimingTarget(''))
   }

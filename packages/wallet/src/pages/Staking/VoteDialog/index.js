@@ -6,11 +6,15 @@ import { Label, Value } from '../../AssetManagement/components'
 import { toPrecision } from '../../../utils'
 import { useDispatch, useSelector } from 'react-redux'
 import { pcxFreeSelector } from '../../AssetManagement/PcxCard/selectors'
-import { nominationRecordsSelector } from '../../../reducers/intentionSlice'
+import {
+  fetchNominationRecords,
+  nominationRecordsSelector
+} from '../../../reducers/intentionSlice'
 import arrow from './arrow.svg'
 import { showSnack, signAndSendExtrinsic } from '../../../utils/chainxProvider'
 import { addressSelector } from '../../../reducers/addressSlice'
 import BigNumber from 'bignumber.js'
+import { fetchAccountAssets } from '../../../reducers/assetSlice'
 
 export default function({ handleClose, intention }) {
   const accountAddress = useSelector(addressSelector)
@@ -72,7 +76,11 @@ export default function({ handleClose, intention }) {
 
         return showSnack(status, messages, dispatch)
       })
-      .then(handleClose)
+      .then(() => {
+        handleClose()
+        dispatch(fetchNominationRecords(accountAddress))
+        dispatch(fetchAccountAssets(accountAddress))
+      })
       .catch(() => setDisabled(false))
   }
 
