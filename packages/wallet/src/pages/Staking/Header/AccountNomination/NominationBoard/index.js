@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { detailedRecordsSelector } from './selectors'
 import defaultLogo from '../../../svg/default-logo.svg'
-import { PrimaryButton } from '@chainx/ui'
+import { PrimaryButton, DefaultButton } from '@chainx/ui'
 import { toPrecision } from '../../../../../utils'
 import { pcxPrecisionSelector } from '../../../../selectors/assets'
 import { addressSelector } from '../../../../../reducers/addressSlice'
@@ -13,6 +13,7 @@ import {
 } from '../../../../../utils/chainxProvider'
 import { fetchNominationRecords } from '../../../../../reducers/intentionSlice'
 import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
+import VoteDialog from '../../../VoteDialog'
 
 const Wrapper = styled.div`
   display: flex;
@@ -100,6 +101,9 @@ export default function() {
   const [claimingTarget, setClaimingTarget] = useState('')
   const dispatch = useDispatch()
 
+  const [voteOpen, setVoteOpen] = useState(false)
+  const [intention, setIntention] = useState(null)
+
   const claim = target => {
     if (!window.chainxProvider) {
       // TODO: 考虑没有安装插件的情况下怎么与用户进行交互
@@ -146,6 +150,16 @@ export default function() {
                   <span>{name}</span>
                 </div>
                 <div className="operations">
+                  <DefaultButton
+                    size="small"
+                    style={{ marginRight: 8 }}
+                    onClick={() => {
+                      setIntention(record.intention)
+                      setVoteOpen(true)
+                    }}
+                  >
+                    投票
+                  </DefaultButton>
                   <PrimaryButton
                     disabled={interest <= 0 || claimingTarget === account}
                     size="small"
@@ -177,6 +191,14 @@ export default function() {
           )
         })}
       </ul>
+      {voteOpen && (
+        <VoteDialog
+          handleClose={() => {
+            setVoteOpen(false)
+          }}
+          intention={intention}
+        />
+      )}
     </Wrapper>
   )
 }
