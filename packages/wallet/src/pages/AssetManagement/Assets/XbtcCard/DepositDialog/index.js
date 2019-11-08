@@ -11,7 +11,7 @@ import {
   hotAddressSelector
 } from '../../../../../reducers/trustSlice'
 import OpReturnWallet from '../../components/OpReturnWallet'
-import IntentionSelect from '../../components/IntentionSelect'
+import IntentionSelect from '../../../../../components/IntentionSelect'
 
 const StyledDialog = styled(Dialog)`
   main.content {

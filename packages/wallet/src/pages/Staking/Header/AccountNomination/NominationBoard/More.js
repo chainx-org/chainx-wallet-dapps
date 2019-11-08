@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import moreIcon from './more.svg'
 import styled from 'styled-components'
 import UnNominateDialog from '../../../UnNominateDialog'
+import SwitchDialog from '../../../SwitchDialog'
 
 const Wrapper = styled.div`
   display: inline-flex;
@@ -46,6 +47,7 @@ const Wrapper = styled.div`
 export default function({ intention, record = {} }) {
   const [showMore, setShowMore] = useState(false)
   const [unNominateOpen, setUnNominateOpen] = useState(false)
+  const [switchOpen, setSwitchOpen] = useState(false)
 
   const { nomination, revocations = [] } = record.info || {}
 
@@ -61,7 +63,14 @@ export default function({ intention, record = {} }) {
         >
           赎回投票
         </li>
-        <li>切换投票</li>
+        <li
+          onClick={() => {
+            setSwitchOpen(true)
+            setShowMore(false)
+          }}
+        >
+          切换投票
+        </li>
       </ul>
       {unNominateOpen ? (
         <UnNominateDialog
@@ -70,6 +79,9 @@ export default function({ intention, record = {} }) {
           revocations={revocations}
           handleClose={() => setUnNominateOpen(false)}
         />
+      ) : null}
+      {switchOpen ? (
+        <SwitchDialog handleClose={() => setSwitchOpen(false)} />
       ) : null}
     </Wrapper>
   )
