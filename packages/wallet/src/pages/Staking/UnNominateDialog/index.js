@@ -1,49 +1,33 @@
 import React, { useState } from 'react'
 import StyledDialog from './StyledDialog'
 import { AmountInput, PrimaryButton, TextInput } from '@chainx/ui'
-import $t from '../../../locale'
-import { Label, Value } from '../../AssetManagement/components'
-import { toPrecision } from '../../../utils'
 import { useDispatch, useSelector } from 'react-redux'
-import { pcxFreeSelector } from '../../AssetManagement/PcxCard/selectors'
-import {
-  fetchNominationRecords,
-  nominationRecordsSelector
-} from '../../../reducers/intentionSlice'
+import { pcxPrecisionSelector } from '../../selectors/assets'
+import $t from '../../../locale'
+import { toPrecision } from '../../../utils'
 import arrow from '../svg/arrow.svg'
 import darkArrow from '../svg/dark-arrow.svg'
+import BigNumber from 'bignumber.js'
 import { showSnack, signAndSendExtrinsic } from '../../../utils/chainxProvider'
 import { addressSelector } from '../../../reducers/addressSlice'
-import BigNumber from 'bignumber.js'
+import { fetchNominationRecords } from '../../../reducers/intentionSlice'
 import { fetchAccountAssets } from '../../../reducers/assetSlice'
 
-export default function({ handleClose, intention }) {
+export default function({ handleClose, nomination, intention }) {
   const accountAddress = useSelector(addressSelector)
-  const nominationRecords = useSelector(nominationRecordsSelector)
-
-  const record = (nominationRecords || []).find(
-    record => record.intention === intention.account
-  )
-  let nomination = 0
-  if (record) {
-    nomination = record.info.nomination
-  }
 
   const [amount, setAmount] = useState('')
   const [amountErrMsg, setAmountErrMsg] = useState('')
-  const dispatch = useDispatch()
+  const precision = useSelector(pcxPrecisionSelector)
 
   const [memo, setMemo] = useState('')
-
-  const { free, precision } = useSelector(pcxFreeSelector)
-
   const [disabled, setDisabled] = useState(false)
-
   const hasAmount = !amountErrMsg && amount
+  const dispatch = useDispatch()
 
-  const sign = () => {
-    if (!amount) {
-      setAmountErrMsg('必填')
+  const unNominate = () => {
+    if (isNaN(parseFloat(amount))) {
+      setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_ERROR'))
       return
     }
 
@@ -51,8 +35,8 @@ export default function({ handleClose, intention }) {
       .multipliedBy(Math.pow(10, precision))
       .toNumber()
 
-    if (realAmount > free) {
-      setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_ERROR'))
+    if (realAmount > nomination) {
+      setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_TOO_MUCH_ERROR'))
       return
     }
 
@@ -62,16 +46,16 @@ export default function({ handleClose, intention }) {
     }
 
     setDisabled(true)
-    signAndSendExtrinsic(accountAddress, 'xStaking', 'nominate', [
+    signAndSendExtrinsic(accountAddress, 'xStaking', 'unnominate', [
       intention.account,
       realAmount,
       memo
     ])
       .then(status => {
         const messages = {
-          successTitle: '投票成功',
-          failTitle: '投票失败',
-          successMessage: `投票数量 ${amount} PCX`,
+          successTitle: '赎回成功',
+          failTitle: '赎回失败',
+          successMessage: `赎回数量 ${amount} PCX，锁定期3天`,
           failMessage: `交易hash ${status.txHash}`
         }
 
@@ -86,28 +70,20 @@ export default function({ handleClose, intention }) {
   }
 
   return (
-    <StyledDialog open title={'投票'} handleClose={handleClose}>
+    <StyledDialog open title={'赎回投票'} handleClose={handleClose}>
       <main className="content">
         <div className="amount">
-          <div>
-            <AmountInput
-              value={amount}
-              onChange={value => {
-                setAmountErrMsg('')
-                setAmount(value)
-              }}
-              placeholder={$t('STAKING_VOTE_AMOUNT')}
-              precision={precision}
-              error={!!amountErrMsg}
-              errorText={amountErrMsg}
-            />
-          </div>
-          {precision ? (
-            <div>
-              <Label>{$t('ASSET_BALANCE')}</Label>
-              <Value>{toPrecision(free, precision)} PCX</Value>
-            </div>
-          ) : null}
+          <AmountInput
+            value={amount}
+            onChange={value => {
+              setAmountErrMsg('')
+              setAmount(value)
+            }}
+            placeholder={'数量'}
+            precision={precision}
+            error={!!amountErrMsg}
+            errorText={amountErrMsg}
+          />
         </div>
 
         <div>
@@ -130,15 +106,23 @@ export default function({ handleClose, intention }) {
               {!hasAmount
                 ? '-'
                 : `${toPrecision(
-                    nomination + amount * Math.pow(10, precision),
+                    nomination - amount * Math.pow(10, precision),
                     precision
                   )} PCX`}
             </p>
           </section>
         </div>
 
+        <ul className="warning">
+          <li>赎回锁定期3天</li>
+        </ul>
+
         <div>
-          <PrimaryButton disabled={disabled} size="fullWidth" onClick={sign}>
+          <PrimaryButton
+            disabled={disabled}
+            size="fullWidth"
+            onClick={unNominate}
+          >
             {$t('COMMON_CONFIRM')}
           </PrimaryButton>
         </div>

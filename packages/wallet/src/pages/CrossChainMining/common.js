@@ -48,15 +48,12 @@ export function getClaimInfo(head, pcx, record, interest) {
   }
 }
 
-export function calcIntentionInterest(record, intentions = [], blockNumber) {
-  const intention = intentions.find(
-    intention => intention.account === record.intention
-  )
-  if (!intention) {
+export function calcInterest(record, intention, blockNumber) {
+  if (!intention || !blockNumber) {
     return 0
   }
 
-  // // 用户最新总票龄  = （链最新高度 - 用户总票龄更新高度）*用户投票金额 +用户总票龄
+  // 用户最新总票龄  = （链最新高度 - 用户总票龄更新高度）*用户投票金额 +用户总票龄
   const myWeight =
     (blockNumber - record.info.lastVoteWeightUpdate) * record.info.nomination +
     Number(record.info.lastVoteWeight)
@@ -68,4 +65,11 @@ export function calcIntentionInterest(record, intentions = [], blockNumber) {
 
   // 待领利息 = 用户最新总票龄 / 节点最新总票龄 * 节点奖池金额
   return (myWeight / nodeVoteWeight) * intention.jackpot
+}
+
+export function calcIntentionInterest(record, intentions = [], blockNumber) {
+  const intention = intentions.find(
+    intention => intention.account === record.intention
+  )
+  return calcInterest(record, intention, blockNumber)
 }

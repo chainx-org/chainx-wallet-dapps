@@ -4,7 +4,7 @@ import {
   normalizedIntentionsSelector
 } from '../../../../../reducers/intentionSlice'
 import { blockNumberSelector } from '../../../../../reducers/chainSlice'
-import { calcIntentionInterest } from '../../../../CrossChainMining/common'
+import { calcInterest } from '../../../../CrossChainMining/common'
 
 export const detailedRecordsSelector = createSelector(
   nominationRecordsSelector,
@@ -16,7 +16,7 @@ export const detailedRecordsSelector = createSelector(
         intention => intention.account === record.intention
       )
 
-      const interest = calcIntentionInterest(record, intentions, blockNumber)
+      const interest = calcInterest(record, intention, blockNumber)
 
       return {
         ...record,

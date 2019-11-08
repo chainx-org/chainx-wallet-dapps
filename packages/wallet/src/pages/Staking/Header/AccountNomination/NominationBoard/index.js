@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { detailedRecordsSelector } from './selectors'
 import defaultLogo from '../../../svg/default-logo.svg'
-import { PrimaryButton, DefaultButton } from '@chainx/ui'
+import { DefaultButton, PrimaryButton } from '@chainx/ui'
 import { toPrecision } from '../../../../../utils'
 import { pcxPrecisionSelector } from '../../../../selectors/assets'
 import { addressSelector } from '../../../../../reducers/addressSlice'
@@ -14,6 +14,7 @@ import {
 import { fetchNominationRecords } from '../../../../../reducers/intentionSlice'
 import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
 import VoteDialog from '../../../VoteDialog'
+import More from './More'
 
 const Wrapper = styled.div`
   display: flex;
@@ -54,6 +55,10 @@ const Wrapper = styled.div`
             letter-spacing: 0.12px;
             line-height: 24px;
           }
+        }
+
+        div.operations {
+          display: flex;
         }
       }
 
@@ -163,10 +168,12 @@ export default function() {
                   <PrimaryButton
                     disabled={interest <= 0 || claimingTarget === account}
                     size="small"
+                    style={{ marginRight: 8 }}
                     onClick={() => claim(account)}
                   >
                     提息
                   </PrimaryButton>
+                  <More intention={record.intention} record={record} />
                 </div>
               </header>
               <ul>
