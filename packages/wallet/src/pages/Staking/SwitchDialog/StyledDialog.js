@@ -9,6 +9,9 @@ export default styled(Dialog)`
       &.intention {
         display: flex;
         justify-content: space-between;
+        & > div {
+          width: 50%;
+        }
       }
 
       &.info {

@@ -81,7 +81,11 @@ export default function({ intention, record = {} }) {
         />
       ) : null}
       {switchOpen ? (
-        <SwitchDialog handleClose={() => setSwitchOpen(false)} />
+        <SwitchDialog
+          intention={intention}
+          nomination={nomination}
+          handleClose={() => setSwitchOpen(false)}
+        />
       ) : null}
     </Wrapper>
   )
