@@ -61,7 +61,7 @@ export default function() {
   const totalNomination = useSelector(totalNominationBalanceSelector)
   const totalRevocation = useSelector(totalRevocationBalanceSelector)
   const totalInterest = useSelector(totalInterestSelector)
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
 
   return (
     <Wrapper>
