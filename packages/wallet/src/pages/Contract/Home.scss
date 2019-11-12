@@ -1,0 +1,43 @@
+@import './Contracts.scss';
+
+.no-data {
+  margin-top: 16px;
+  width: 100%;
+  min-height: 325px;
+  background: #FFFFFF;
+  border: 1px solid #DCE0E2;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home, .code {
+  display: flex;
+  flex-direction: column;
+  width: 1248px;
+  padding-left: 20px;
+  padding-right: 20px;
+  .button-area {
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+    :last-child {
+      margin-left: 16px;
+    }
+  }
+}
+
+.wide-button {
+  width: 240px;
+  height: 40px;
+  border-radius: 20px !important;
+  font-size: 13px !important;
+}
+
+.small-button {
+  width: 120px;
+  height: 40px;
+  border-radius: 20px !important;
+  font-size: 13px !important;
+}

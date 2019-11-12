@@ -49,6 +49,21 @@ export const generateId = () => {
 
 export const snacksSelector = state => state.snack.snacks
 
+export const addAutoCloseSnack = (dispatch, data, seconds = 5) => {
+  dispatch(addSnack(data))
+  removeSnackInSeconds(dispatch, data.id, seconds)
+}
+
+export const addAutoCloseSnackWithParams = (dispatch, type, title, message) => {
+  const data = {}
+  const id = generateId()
+  data.id = id
+  data.type = type
+  data.title = title
+  data.message = message || ''
+  addAutoCloseSnack(dispatch, data)
+}
+
 export const removeSnackInSeconds = (dispatch, id, seconds = 0) => {
   setTimeout(() => {
     dispatch(removeSnack({ id }))

@@ -10,6 +10,7 @@ import nodeReducer from './nodeSlice'
 import transactionReducer from './transactionSlice'
 import snackReducer from './snackSlice'
 import crossChainReducer from './crosschainSlice'
+import localReducer from './localSlice'
 
 export default combineReducers({
   test: testReducer,
@@ -22,5 +23,6 @@ export default combineReducers({
   node: nodeReducer,
   transaction: transactionReducer,
   snack: snackReducer,
-  crossChain: crossChainReducer
+  crossChain: crossChainReducer,
+  local: localReducer
 })

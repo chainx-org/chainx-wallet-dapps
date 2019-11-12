@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>合约部署</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="0%" y1="27.0704247%" x2="100%" y2="76.5409837%" id="linearGradient-1">
+            <stop stop-color="#949494" offset="0%"></stop>
+            <stop stop-color="#2D2D2D" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="0%" y1="27.0704247%" x2="100%" y2="76.5409837%" id="linearGradient-2">
+            <stop stop-color="#949494" offset="0%"></stop>
+            <stop stop-color="#2D2D2D" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="组件" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="daohang1" transform="translate(-16.000000, -12.000000)">
+            <g id="合约部署" transform="translate(16.000000, 12.000000)">
+                <g id="分组">
+                    <polygon id="Fill-1" fill="url(#linearGradient-1)" points="15.9999158 -2.10526316e-05 8.63170526 4.21050526 8.63170526 12.6315579 15.9999158 16.8420842 23.3683368 12.6315579 23.3683368 4.21050526"></polygon>
+                    <polygon id="Fill-2" fill="url(#linearGradient-2)" points="0 19.3683579 0 27.7896211 7.36842105 31.9999368 14.7368421 27.7896211 14.7368421 19.3683579 7.36842105 15.1578316"></polygon>
+                    <polygon id="Fill-3" fill="url(#linearGradient-2)" points="17.2631368 19.3683579 17.2631368 27.7896211 24.6315579 31.9999368 31.9999789 27.7896211 31.9999789 19.3683579 24.6315579 15.1578316"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
