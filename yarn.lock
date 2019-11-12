@@ -997,10 +997,10 @@
     bitcoinjs-lib "^4.0.2"
     bn.js "^4.11.8"
 
-"@chainx/ui@^0.0.11":
-  version "0.0.11"
-  resolved "https://registry.yarnpkg.com/@chainx/ui/-/ui-0.0.11.tgz#f7c13808b9478368589cf5bea4fbebd3d717f4b6"
-  integrity sha512-x5byFeNWErCyDjkO/f0RRJF9cRXHvyoWwZvagAxPS8+EA6psVf/YGJeZFyLrR1eQqh8PB2NCMMYdDeTn81RIUw==
+"@chainx/ui@^0.0.19":
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/@chainx/ui/-/ui-0.0.19.tgz#6db75a2a432693694c979c16af17f8a7a74816b4"
+  integrity sha512-a1BlzUDiV5nZgUqG5tOGXV7maZu3LZRaqM6hbqrO299m7bXyIrqCoNeVi0kXlDMHFcVRf5Olmd/cVLXR15RoIQ==
   dependencies:
     "@material-ui/core" "^4.4.0"
     "@material-ui/icons" "^4.2.1"
@@ -1008,6 +1008,7 @@
     classnames "^2.2.6"
     dayjs "^1.8.16"
     downshift "^3.3.4"
+    material-ui-flat-pagination "^4.0.0"
 
 "@chainx/util-crypto@^2.22.2":
   version "2.22.2"
@@ -7102,6 +7103,13 @@ map-visit@^1.0.0:
   integrity sha1-7Nyo8TFE5mDxtb1B8S80edmN+48=
   dependencies:
     object-visit "^1.0.0"
+
+material-ui-flat-pagination@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/material-ui-flat-pagination/-/material-ui-flat-pagination-4.0.0.tgz#f8f0eeb5c5fcd89d3de0c3aee10c4166a792850c"
+  integrity sha512-608eOWR1dy0eREG62tbdJhNmiNK6RyhtuQ3rC8SLWPvme4gmOf5n1FHZCsdcGAqXhAVZNyOjQ4rMPTFfxkzKSg==
+  dependencies:
+    classnames "^2.2.6"
 
 md5.js@^1.3.4:
   version "1.3.5"
