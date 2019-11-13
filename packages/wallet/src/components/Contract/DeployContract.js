@@ -134,7 +134,7 @@ export default function({
     store.set('CONTRACT_' + address, contract)
     setShowDeploy(false)
     setUpdate(new Date())
-    props.history.push('/')
+    props.history.push('/contract')
   }
 
   const title = isnew ? 'Deploy a new contract' : 'Add an existing contract'

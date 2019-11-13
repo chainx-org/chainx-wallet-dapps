@@ -25,12 +25,13 @@ const Alice =
 const enableExtension = true
 
 export async function call(abi, address, method, gas, params) {
+  const account = await window.chainxProvider.enable()
   const chainx = getChainx()
   const parseAbi = new Abi(abi)
 
   try {
     const obj = {
-      origin: Alice.address(),
+      origin: account.address,
       dest: address,
       gasLimit: gas,
       inputData: parseAbi.messages[stringCamelCase(method)](...params)
@@ -45,6 +46,8 @@ export async function call(abi, address, method, gas, params) {
       const data = createType(returnType, u8aToU8a(sliceData)).toJSON()
       // const data = createType(returnType, u8aToU8a(result.data)).toJSON()
       return { status: true, result: data.toString() }
+    } else {
+      return { status: false, result: 'status is error' }
     }
   } catch (error) {
     console.log(error)
@@ -64,18 +67,8 @@ export async function send(abi, address, method, params, value, gas, cb) {
       parseAbi.messages[stringCamelCase(method)](...params)
     ]
     if (enableExtension) {
-      contractApi(_method, args, resp => {
-        if (resp.reject) {
-          console.log('tx was rejected')
-          return
-        }
-        if (resp.err) {
-          console.log('error occurs ', resp.err)
-        } else {
-          console.log(resp.status)
-        }
-      })
-      return
+      contractApi(_method, args, cb)
+      return { status: true }
     }
 
     const ex = chainx.api.tx.xContracts[_method](...args)
