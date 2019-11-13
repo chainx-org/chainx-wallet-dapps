@@ -42,9 +42,9 @@ export async function call(abi, address, method, gas, params) {
     if (result.status === 0) {
       const returnType =
         parseAbi.messages[stringCamelCase(method)].type.displayName
-      const sliceData = '0x' + result.data.slice(4)
-      const data = createType(returnType, u8aToU8a(sliceData)).toJSON()
-      // const data = createType(returnType, u8aToU8a(result.data)).toJSON()
+      // const sliceData = '0x' + result.data.slice(4)
+      // const data = createType(returnType, u8aToU8a(sliceData)).toJSON()
+      const data = createType(returnType, u8aToU8a(result.data)).toJSON()
       return { status: true, result: data.toString() }
     } else {
       return { status: false, result: 'status is error' }
