@@ -4,6 +4,7 @@ import $t from '../../../locale'
 import { useDispatch, useSelector } from 'react-redux'
 import { setAccount } from '../../../reducers/addressSlice'
 import { extensionAccountsSelector } from '../../../reducers/addressSlice'
+import extensionIcon from './extension.svg'
 
 const Wrapper = styled.ul`
   position: absolute;
@@ -66,6 +67,30 @@ const Wrapper = styled.ul`
       overflow-x: hidden;
       text-overflow: ellipsis;
     }
+
+    &.extension {
+      display: flex;
+      flex-direction: row-reverse;
+      a {
+        background: #f6c94a;
+        border: 1px solid rgba(0, 0, 0, 0.04);
+        border-radius: 8px;
+
+        display: inline-flex;
+        padding: 6px;
+        align-items: center;
+        text-decoration: none;
+
+        span {
+          margin-left: 12px;
+          opacity: 0.72;
+          font-size: 14px;
+          color: #000000;
+          letter-spacing: 0.12px;
+          line-height: 20px;
+        }
+      }
+    }
   }
 `
 
@@ -78,6 +103,8 @@ export default function() {
 
   const demoAccountName = $t('HEADER_DEMO_ACCOUNT')
   const demoAccountAddress = '5TGy4d488i7pp3sjzi1gibqFUPLShddfk7qPY2S445ErhDGq'
+
+  const hasExtension = !!window.chainxProvider
 
   return (
     <Wrapper>
@@ -103,6 +130,18 @@ export default function() {
           </li>
         )
       })}
+      {hasExtension ? null : (
+        <li className="extension">
+          <a
+            href="https://chrome.google.com/webstore/detail/chainx-extension/dffjlgnecfafjfmkknpipapcbgajflge"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src={extensionIcon} alt="extension" />
+            <span>{$t('HEADER_GET_EXTENSION')}</span>
+          </a>
+        </li>
+      )}
     </Wrapper>
   )
 }

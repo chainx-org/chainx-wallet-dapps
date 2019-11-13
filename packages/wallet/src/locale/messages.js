@@ -191,6 +191,10 @@ const header = {
   HEADER_DEMO_ACCOUNT: {
     en: 'Demo Account',
     zh: '体验账户'
+  },
+  HEADER_GET_EXTENSION: {
+    en: 'Get ChainX Extension',
+    zh: '获取ChainX插件'
   }
 }
 
