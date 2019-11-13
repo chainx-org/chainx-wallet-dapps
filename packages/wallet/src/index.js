@@ -10,6 +10,7 @@ import { getChainx, setChainx } from './services/chainx'
 import { setAccount, setExtensionAccounts } from './reducers/addressSlice'
 import { setNode } from './reducers/nodeSlice'
 import SnackGallery from './SnackGallery'
+import { setNetwork } from './reducers/settingsSlice'
 
 const GlobalStyle = createGlobalStyle`
 html {
@@ -118,25 +119,43 @@ window.onload = () => {
     return
   }
 
-  window.chainxProvider.enable().then(account => {
-    if (!account) {
-      return
-    }
+  window.chainxProvider
+    .getNetwork()
+    .then(network => {
+      store.dispatch(setNetwork(network))
+    })
+    .then(window.chainxProvider.enable)
+    .then(account => {
+      if (!account) {
+        return
+      }
 
-    store.dispatch(setExtensionAccounts([account]))
-    const address = store.getState().address
-    if (address.isFromExtension && address.address !== account.address) {
-      store.dispatch(
-        setAccount({
-          name: account.name,
-          address: account.address,
-          isFromExtension: true
-        })
-      )
-    }
-  })
+      store.dispatch(setExtensionAccounts([account]))
+      const address = store.getState().address
+      if (address.isFromExtension && address.address !== account.address) {
+        store.dispatch(
+          setAccount({
+            name: account.name,
+            address: account.address,
+            isFromExtension: true
+          })
+        )
+      }
+    })
+    .then(window.chainxProvider.getCurrentNode)
+    .then(node => {
+      if (url !== node.url) {
+        store.dispatch(setNode(node))
+        setChainx(node.url)
+        window.location.reload()
+      } else {
+        setChainx(url)
+      }
+      nodeResolve()
+    })
 
-  window.chainxProvider.listenNetworkChange(info => {
+  window.chainxProvider.listenNetworkChange(({ from, to }) => {
+    store.dispatch(setNetwork(to))
     window.location.reload()
   })
 
@@ -152,17 +171,6 @@ window.onload = () => {
         })
       )
     }
-  })
-
-  window.chainxProvider.getCurrentNode().then(node => {
-    if (url !== node.url) {
-      store.dispatch(setNode(node))
-      setChainx(node.url)
-      window.location.reload()
-    } else {
-      setChainx(url)
-    }
-    nodeResolve()
   })
 
   window.chainxProvider.listenNodeChange(({ to }) => {
