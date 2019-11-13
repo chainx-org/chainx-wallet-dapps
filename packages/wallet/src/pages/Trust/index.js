@@ -1,18 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchWithdrawals } from '../../reducers/trustSlice'
 import { withdrawalsSelector } from '../../reducers/trustSlice'
+import AssetView from '../AssetManagement/Assets/components/AssetView'
 import Card from '../../components/Card'
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  TablePagination
-} from '@chainx/ui'
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@chainx/ui'
 
 const Wrapper = styled.div`
   display: flex;
@@ -21,10 +15,7 @@ const Wrapper = styled.div`
 
 export default function() {
   const dispatch = useDispatch()
-  const [currentPage, setPage] = useState(0)
   const withdrawals = useSelector(withdrawalsSelector)
-
-  console.log(withdrawals)
 
   useEffect(() => {
     dispatch(fetchWithdrawals())
@@ -44,35 +35,34 @@ export default function() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>我</TableCell>
-                <TableCell>你</TableCell>
-                <TableCell align="right">他</TableCell>
+                <TableCell>申请时间</TableCell>
+                <TableCell>编号</TableCell>
+                <TableCell>资产</TableCell>
+                <TableCell>金额</TableCell>
+                <TableCell>账户地址</TableCell>
+                <TableCell>原链地址</TableCell>
+                <TableCell>交易哈希</TableCell>
+                <TableCell>状态</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow>
-                <TableCell>呵呵</TableCell>
-                <TableCell>哈哈</TableCell>
-                <TableCell align="right">哈哈</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>呵呵</TableCell>
-                <TableCell>呵呵</TableCell>
-                <TableCell align="right">呵呵</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>呵呵</TableCell>
-                <TableCell>呵呵</TableCell>
-                <TableCell align="right">呵呵</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>呵呵</TableCell>
-                <TableCell>呵呵</TableCell>
-                <TableCell align="right">呵呵</TableCell>
-              </TableRow>
+              {withdrawals.map(data => (
+                <TableRow key={data.id}>
+                  <TableCell>{data.height}</TableCell>
+                  <TableCell>{data.id}</TableCell>
+                  <TableCell>X-BTC</TableCell>
+                  <TableCell>
+                    <AssetView value={data.balance} precision={8} />
+                  </TableCell>
+                  <TableCell>{data.accountid}</TableCell>
+                  <TableCell>{data.address}</TableCell>
+                  <TableCell>{data.txid}</TableCell>
+                  <TableCell>{}</TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
-          <TablePagination
+          {/* <TablePagination
             page={currentPage}
             pageSize={10}
             total={121}
@@ -80,7 +70,7 @@ export default function() {
               console.log(a)
               setPage(a)
             }}
-          ></TablePagination>
+          ></TablePagination> */}
         </div>
       </Card>
     </Wrapper>
