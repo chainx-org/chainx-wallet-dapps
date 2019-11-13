@@ -117,10 +117,22 @@ export default function(props) {
         params,
         value,
         gasLimit,
-        (error, _result) => {
-          if (error) {
-            console.log('error occurs ', error)
+        resp => {
+          if (resp.reject) {
+            console.log('tx was rejected')
+            addAutoCloseSnackWithParams(dispatch, typeEnum.ERROR, '交易被拒绝')
+            return
+          }
+          if (resp.err) {
+            console.log('error occurs ', resp.err)
+            addAutoCloseSnackWithParams(
+              dispatch,
+              typeEnum.ERROR,
+              '交易失败',
+              resp.err.message || resp.err.msg
+            )
           } else {
+            const _result = resp.status
             console.log(_result)
             if (_result.status === 'Broadcast') {
               addAutoCloseSnack(dispatch, {
