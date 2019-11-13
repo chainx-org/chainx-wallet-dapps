@@ -8,18 +8,6 @@ const Wrapper = styled.div`
   display: flex;
   div.left {
     flex: 1;
-    & > section:not(:first-of-type) {
-      display: flex;
-      margin-top: 16px;
-
-      & > section {
-        flex: 1;
-
-        &:not(:first-of-type) {
-          margin-left: 16px;
-        }
-      }
-    }
   }
 
   div.right {
