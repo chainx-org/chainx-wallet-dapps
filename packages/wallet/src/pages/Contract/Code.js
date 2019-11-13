@@ -38,7 +38,7 @@ function Code(props) {
       '请上传 ABI 文件'
     ]
     for (let i in paramsList) {
-      if (i === 0 ? isnew && !paramsList[i] : !paramsList[i]) {
+      if (i === '0' ? isnew && !paramsList[i] : !paramsList[i]) {
         addAutoCloseSnackWithParams(dispatch, typeEnum.ERROR, errMsgList[i])
         return
       }
