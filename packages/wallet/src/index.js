@@ -119,9 +119,25 @@ window.onload = () => {
   }
 
   window.chainxProvider.enable().then(account => {
-    if (account) {
-      store.dispatch(setExtensionAccounts([account]))
+    if (!account) {
+      return
     }
+
+    store.dispatch(setExtensionAccounts([account]))
+    const address = store.getState().address
+    if (address.isFromExtension && address.address !== account.address) {
+      store.dispatch(
+        setAccount({
+          name: account.name,
+          address: account.address,
+          isFromExtension: true
+        })
+      )
+    }
+  })
+
+  window.chainxProvider.listenNetworkChange(info => {
+    window.location.reload()
   })
 
   window.chainxProvider.listenAccountChange(({ to }) => {
