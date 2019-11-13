@@ -180,6 +180,17 @@ const trust = {
   }
 }
 
+const contract = {
+  CONTRACT: {
+    en: 'Contract',
+    zh: '合约'
+  },
+  CODE: {
+    en: 'Contract Code',
+    zh: '上传合约'
+  }
+}
+
 const footer = {
   FOOTER_BLOCK_TIME: {
     en: 'Block time',
@@ -210,5 +221,6 @@ export default {
   ...footer,
   ...trust,
   ...header,
-  ...common
+  ...common,
+  ...contract
 }

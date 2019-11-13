@@ -11,6 +11,8 @@ import AssetManagement from './pages/AssetManagement'
 import CrossChainMining from './pages/CrossChainMining'
 import Staking from './pages/Staking'
 import Trust from './pages/Trust'
+import Contract from './pages/Contract/Home'
+import ContractCode from './pages/Contract/Code'
 import { getChainx } from './services/chainx'
 import { setHead } from './reducers/chainSlice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -42,6 +44,8 @@ function App() {
           <Route exact path="/mining" component={CrossChainMining} />
           <Route exact path="/staking" component={Staking} />
           <Route exact path="/trust" component={Trust} />
+          <Route exact path="/contract" component={Contract} />
+          <Route exact path="/contract/code" component={ContractCode} />
           <Redirect to="/" />
         </Switch>
       </div>

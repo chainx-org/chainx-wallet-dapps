@@ -87,6 +87,16 @@ export default function() {
             {$t('TRUST')}
           </NavLink>
         </Nav>
+        <Nav>
+          <NavLink exact activeClassName="active" to="/contract">
+            {$t('CONTRACT')}
+          </NavLink>
+        </Nav>
+        <Nav>
+          <NavLink exact activeClassName="active" to="/contract/code">
+            {$t('CODE')}
+          </NavLink>
+        </Nav>
       </div>
       <div className="right">
         <Name />
