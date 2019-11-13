@@ -20,6 +20,9 @@ const settingsSlice = createSlice({
   }
 })
 
+export const localeSelector = state => state.settings.locale
+export const networkSelector = state => state.settings.network
+
 export const { setLocale, setNetwork } = settingsSlice.actions
 
 export default settingsSlice.reducer

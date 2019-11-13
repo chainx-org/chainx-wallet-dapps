@@ -1,9 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import $t from '../../locale'
-import logo from './logo.svg'
+import mainNetLogo from './logo.svg'
+import testNetLogoEn from './testnet-en.svg'
+import testNetLogoZh from './testnet-zh.svg'
 import { NavLink } from 'react-router-dom'
 import Name from './Name'
+import { useSelector } from 'react-redux'
+import { localeSelector, networkSelector } from '../../reducers/settingsSlice'
 
 const Wrapper = styled.header`
   display: flex;
@@ -51,6 +55,14 @@ const Nav = styled.span`
 `
 
 export default function() {
+  const locale = useSelector(localeSelector)
+  const network = useSelector(networkSelector)
+
+  let logo = mainNetLogo
+  if (network === 'testnet') {
+    logo = locale === 'zh' ? testNetLogoZh : testNetLogoEn
+  }
+
   return (
     <Wrapper>
       <div className="left">
