@@ -12,15 +12,20 @@ import { Abi } from '@chainx/api-contract'
 // Charlie: 0x072c02fa1409dc37e03a4ed01703d4a9e6bba9c228a49a00366e9630a97cba7c
 // Dave:    0x771f47d3caf8a2ee40b0719e1c1ecbc01d73ada220cf08df12a00453ab703738
 
-const chainx = getChainx()
+let chainx
+// window.chainxProvider && window.chainxProvider.getCurrentNode().then(async node => {
+//   chainx = await setChainx(node.url)
+// })
+
 const Alice =
   chainx &&
   chainx.account.from(
     '0x436861696e582d5361746f736869202020202020202020202020202020202020'
   )
-const enableExtension = false
+const enableExtension = true
 
 export async function call(abi, address, method, gas, params) {
+  const chainx = getChainx()
   const parseAbi = new Abi(abi)
 
   try {
@@ -48,6 +53,7 @@ export async function call(abi, address, method, gas, params) {
 }
 
 export async function send(abi, address, method, params, value, gas, cb) {
+  const chainx = getChainx()
   const parseAbi = new Abi(abi)
   const _method = 'call'
   try {
@@ -81,6 +87,7 @@ export async function send(abi, address, method, params, value, gas, cb) {
 }
 
 export async function isCodeHashExist(codeHash) {
+  const chainx = getChainx()
   const result = await chainx.api.query.xContracts.pristineCode(codeHash)
   if (result.length > 0) {
     return true
@@ -90,6 +97,7 @@ export async function isCodeHashExist(codeHash) {
 }
 
 export async function isContractExist(address) {
+  const chainx = getChainx()
   try {
     const result = await chainx.api.query.xContracts.contractInfoOf(address)
     if (result.isEmpty) {
