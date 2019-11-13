@@ -52,7 +52,7 @@ function Code(props) {
         dispatch,
         typeEnum.ERROR,
         'Parse ABI Error',
-        error.message
+        error.message || error.msg
       )
       return
     }

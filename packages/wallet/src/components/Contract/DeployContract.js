@@ -42,7 +42,7 @@ export default function({
         dispatch,
         typeEnum.ERROR,
         '交易失败',
-        resp.err.message
+        resp.err.message || resp.err.msg
       )
     } else {
       console.log(resp.status)
