@@ -94,6 +94,10 @@ const asset = {
   ASSET_CONTACT: {
     en: 'Contact',
     zh: '联系地址'
+  },
+  ASSET_CONVERT: {
+    en: 'Convert',
+    zh: '划转'
   }
 }
 

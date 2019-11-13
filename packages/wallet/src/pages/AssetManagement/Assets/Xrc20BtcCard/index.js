@@ -11,6 +11,7 @@ import { getChainx } from '../../../../services/chainx'
 import { AssetLine, DetailWrapper } from '../components/common'
 import $t from '../../../../locale'
 import AssetView from '../components/AssetView'
+import { PrimaryButton } from '@chainx/ui'
 
 export default function() {
   const meta = {
@@ -31,8 +32,24 @@ export default function() {
     dispatch(fetchXrcBtcBalance(accountId))
   }, [dispatch, accountId])
 
+  const footer = (
+    <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+      <PrimaryButton
+        onClick={() => console.log('click')}
+        style={{ marginRight: 8 }}
+      >
+        {$t('ASSET_CONVERT')}
+      </PrimaryButton>
+    </div>
+  )
+
   return (
-    <AssetCard meta={meta} logo={logo} details={{ free: balance }}>
+    <AssetCard
+      meta={meta}
+      logo={logo}
+      details={{ free: balance }}
+      footer={footer}
+    >
       <DetailWrapper>
         <AssetLine>
           <AssetView
