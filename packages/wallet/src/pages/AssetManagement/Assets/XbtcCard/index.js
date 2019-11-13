@@ -15,7 +15,6 @@ import WithdrawDialog from './WithdrawDialog'
 export default function() {
   const meta = useSelector(xbtcMetaSelector)
   const { details } = useSelector(xbtcAssetSelector)
-  console.log('details', details)
   const showDetails = meta.precision && Object.keys(details).length > 0
   const [transferOpen, setTransferOpen] = useState(false)
   const [depositOpen, setDepositOpen] = useState(false)

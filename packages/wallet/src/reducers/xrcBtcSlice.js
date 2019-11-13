@@ -3,30 +3,34 @@ import { getChainx } from '../services/chainx'
 
 const xrcbtcSlice = createSlice({
   slice: 'xrcbtc',
-  initialState: {},
+  initialState: {
+    balance: 0
+  },
   reducers: {
-    setTest: {
+    setBalance: {
       reducer(state, action) {
-        const { text } = action.payload
-        return text
+        state.balance = action.payload
       }
     }
   }
 })
 
-export const { setTest } = xrcbtcSlice.actions
+export const { setBalance } = xrcbtcSlice.actions
 
 export const fetchXrcBtcBalance = accountId => async dispatch => {
   const chainx = getChainx()
 
-  const result = await chainx.api.rpc.chainx.contractXRC20Call({
+  const { data, status } = await chainx.api.rpc.chainx.contractXRC20Call({
     token: 'BTC',
     selector: 'BalanceOf',
-    inputData:
-      '0x88dc3417d5058ec4b4503e0c12ea1a0a89be200fe98922423d4334014fa6b0ee'
+    inputData: accountId
   })
 
-  console.log('result', result)
+  if (status === 0) {
+    dispatch(setBalance(data))
+  }
 }
+
+export const xrcBtcBalanceSelector = state => state.xrcbtc.balance
 
 export default xrcbtcSlice.reducer
