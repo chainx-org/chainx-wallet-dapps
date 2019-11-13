@@ -1,5 +1,6 @@
 import { createSlice } from 'redux-starter-kit'
 import { remove0xPrefix } from '../utils'
+import { getApi } from '../services/api'
 
 const crossChainSlice = createSlice({
   slice: 'asset',
@@ -33,7 +34,7 @@ export const locksSelector = state => state.crossChain.locks
 
 export const fetchDeposits = accountId => async dispatch => {
   const resp = await window.fetch(
-    `https://api.chainx.org/account/${remove0xPrefix(
+    `${getApi()}account/${remove0xPrefix(
       accountId
     )}/deposits?chain=1&&token=BTC&page=0&page_size=100`
   )
@@ -43,7 +44,7 @@ export const fetchDeposits = accountId => async dispatch => {
 
 export const fetchWithdrawals = accountId => async dispatch => {
   const resp = await window.fetch(
-    `https://api.chainx.org/account/${remove0xPrefix(
+    `${getApi()}account/${remove0xPrefix(
       accountId
     )}/withdrawals?chain=1&&token=BTC&page=0&page_size=100`
   )
@@ -53,7 +54,7 @@ export const fetchWithdrawals = accountId => async dispatch => {
 
 export const fetchLocks = accountId => async dispatch => {
   const resp = await window.fetch(
-    `https://api.chainx.org/btc/lock/records?accountid=${remove0xPrefix(
+    `${getApi()}btc/lock/records?accountid=${remove0xPrefix(
       accountId
     )}&page=0&page_size=100`
   )

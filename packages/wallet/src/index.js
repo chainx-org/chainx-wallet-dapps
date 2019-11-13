@@ -11,6 +11,7 @@ import { setAccount, setExtensionAccounts } from './reducers/addressSlice'
 import { setNode } from './reducers/nodeSlice'
 import SnackGallery from './SnackGallery'
 import { setNetwork } from './reducers/settingsSlice'
+import { mainNetApi, setApi, testNetApi } from './services/api'
 
 const GlobalStyle = createGlobalStyle`
 html {
@@ -123,6 +124,7 @@ window.onload = () => {
     .getNetwork()
     .then(network => {
       store.dispatch(setNetwork(network))
+      setApi(network === 'testnet' ? testNetApi : mainNetApi)
     })
     .then(window.chainxProvider.enable)
     .then(account => {
