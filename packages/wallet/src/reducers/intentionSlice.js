@@ -1,5 +1,6 @@
 import { createSlice, createSelector } from 'redux-starter-kit'
 import { getChainx } from '../services/chainx'
+import { getApi } from '../services/api'
 
 const intentionSlice = createSlice({
   slice: 'intentions',
@@ -97,13 +98,13 @@ export const fetchPseduNominationRecords = address => async dispatch => {
 }
 
 export const fetchSenators = () => async dispatch => {
-  const resp = await window.fetch('https://api.chainx.org/congress/members')
+  const resp = await window.fetch(`${getApi()}congress/members`)
   const senators = await resp.json()
   dispatch(setSenators(senators))
 }
 
 export const fetchLogos = () => async dispatch => {
-  const resp = await window.fetch('https://api.chainx.org/intention_logos')
+  const resp = await window.fetch(`${getApi()}intention_logos`)
   const logos = await resp.json()
   dispatch(
     setLogos(

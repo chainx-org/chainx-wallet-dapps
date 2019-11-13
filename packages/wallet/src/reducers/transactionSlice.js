@@ -1,4 +1,5 @@
 import { createSlice } from 'redux-starter-kit'
+import { getApi } from '../services/api'
 
 const transactionSlice = createSlice({
   slice: 'asset',
@@ -36,7 +37,7 @@ export const {
 
 export const fetchTransfers = (accountId, page = 0) => async dispatch => {
   const resp = await window.fetch(
-    `https://api.chainx.org/account/${accountId}/transfers?page=${page}`
+    `${getApi()}account/${accountId}/transfers?page=${page}`
   )
   const data = await resp.json()
   if (!page || page <= 0) {
