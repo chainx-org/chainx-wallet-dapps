@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import AssetCard from '../components/AssetCard'
 import logo from './xrc20-btc.svg'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,6 +12,7 @@ import { AssetLine, DetailWrapper } from '../components/common'
 import $t from '../../../../locale'
 import AssetView from '../components/AssetView'
 import { PrimaryButton } from '@chainx/ui'
+import ConvertDialog from './ConvertDialog'
 
 export default function() {
   const meta = {
@@ -25,6 +26,7 @@ export default function() {
   const address = useSelector(addressSelector)
   const chainx = getChainx()
   const accountId = chainx.account.decodeAddress(address)
+  const [dialogOpen, setDialogOpen] = useState(true)
 
   const dispatch = useDispatch()
 
@@ -35,7 +37,7 @@ export default function() {
   const footer = (
     <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
       <PrimaryButton
-        onClick={() => console.log('click')}
+        onClick={() => setDialogOpen(true)}
         style={{ marginRight: 8 }}
       >
         {$t('ASSET_CONVERT')}
@@ -59,6 +61,7 @@ export default function() {
           />
         </AssetLine>
       </DetailWrapper>
+      {dialogOpen && <ConvertDialog handleClose={() => setDialogOpen(false)} />}
     </AssetCard>
   )
 }
