@@ -108,7 +108,7 @@ export async function isContractExist(address) {
 export async function uploadContract(file, gas, cb) {
   const method = 'putCode'
   let codehash = '0x'
-  blake2AsU8a(file.data).map(i => {
+  blake2AsU8a(file.data).forEach(i => {
     codehash += ('0' + i.toString(16)).slice(-2)
   })
   const isExist = await isCodeHashExist(codehash)
