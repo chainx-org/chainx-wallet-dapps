@@ -2,11 +2,7 @@ import React, { useEffect, useState } from 'react'
 import AssetCard from '../components/AssetCard'
 import logo from './xrc20-btc.svg'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  fetchXrcBtcBalance,
-  fetchXrcBtcInfo,
-  xrcBtcBalanceSelector
-} from '../../../../reducers/xrcBtcSlice'
+import { xrcBtcBalanceSelector } from '../../../../reducers/xrcBtcSlice'
 import { addressSelector } from '../../../../reducers/addressSlice'
 import { getChainx } from '../../../../services/chainx'
 import { AssetLine, DetailWrapper } from '../components/common'
@@ -27,13 +23,13 @@ export default function() {
   const address = useSelector(addressSelector)
   const chainx = getChainx()
   const accountId = chainx.account.decodeAddress(address)
-  const [dialogOpen, setDialogOpen] = useState(true)
+  const [dialogOpen, setDialogOpen] = useState(false)
 
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(fetchXrcBtcBalance(accountId))
-    dispatch(fetchXrcBtcInfo())
+    // dispatch(fetchXrcBtcBalance(accountId))
+    // dispatch(fetchXrcBtcInfo())
   }, [dispatch, accountId])
 
   const footer = (
