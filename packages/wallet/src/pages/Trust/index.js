@@ -5,11 +5,19 @@ import { fetchWithdrawals } from '../../reducers/trustSlice'
 import { withdrawalsSelector } from '../../reducers/trustSlice'
 import AssetView from '../AssetManagement/Assets/components/AssetView'
 import Card from '../../components/Card'
+import Empty from '../../components/Empty'
 
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@chainx/ui'
 
 const Wrapper = styled.div`
   display: flex;
+  flex-direction: column;
+`
+
+const EmptyWrapper = styled.div`
+  width: 100%;
+  margin-top: 80px;
+  margin-bottom: 80px;
   flex-direction: column;
 `
 
@@ -62,6 +70,11 @@ export default function() {
               ))}
             </TableBody>
           </Table>
+          {withdrawals.length ? null : (
+            <EmptyWrapper>
+              <Empty text="暂无提现记录" />
+            </EmptyWrapper>
+          )}
           {/* <TablePagination
             page={currentPage}
             pageSize={10}
