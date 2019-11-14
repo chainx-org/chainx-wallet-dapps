@@ -18,6 +18,7 @@ import { setHead } from './reducers/chainSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAccountAssets } from './reducers/assetSlice'
 import { addressSelector } from './reducers/addressSlice'
+import { fetchPseduNominationRecords } from './reducers/intentionSlice'
 
 function App() {
   const address = useSelector(addressSelector)
@@ -25,6 +26,7 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchAccountAssets(address))
+    dispatch(fetchPseduNominationRecords(address))
 
     const subscriber = getChainx()
       .chain.subscribeNewHead()
