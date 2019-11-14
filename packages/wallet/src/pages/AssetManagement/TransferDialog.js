@@ -18,6 +18,7 @@ import { sdotFreeSelector } from './Assets/selectors'
 import { pcxFreeSelector } from './PcxCard/selectors'
 import { Label, Value } from './components'
 import { showSnack, signAndSendExtrinsic } from '../../utils/chainxProvider'
+import { fetchAccountAssets } from '../../reducers/assetSlice'
 
 const StyledDialog = styled(Dialog)`
   div.wrapper {
@@ -120,7 +121,10 @@ export default function({ handleClose, token }) {
 
         return showSnack(status, messages, dispatch)
       })
-      .then(handleClose)
+      .then(() => {
+        handleClose()
+        dispatch(fetchAccountAssets(accountAddress))
+      })
       .catch(() => setDisabled(false))
   }
 
