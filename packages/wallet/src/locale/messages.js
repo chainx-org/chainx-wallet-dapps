@@ -109,6 +109,10 @@ const common = {
   COMMON_MEMO: {
     en: 'Memo',
     zh: '备注（64 字符以内）'
+  },
+  COMMON_ASSET_TOO_LOW_ERROR: {
+    en: 'Balance too low',
+    zh: '金额过低'
   }
 }
 

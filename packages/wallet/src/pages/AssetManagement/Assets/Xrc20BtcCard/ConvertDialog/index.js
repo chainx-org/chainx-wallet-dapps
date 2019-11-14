@@ -7,6 +7,7 @@ import { toPrecision } from '../../../../../utils'
 import { useSelector } from 'react-redux'
 import { xbtcBalanceSelector } from '../../../../CrossChainMining/selectors'
 import { xrcBtcBalanceSelector } from '../../../../../reducers/xrcBtcSlice'
+import BigNumber from 'bignumber.js'
 
 export default function({ handleClose }) {
   const options = ['X-BTC', 'XRC20-BTC'].map(token => ({
@@ -30,6 +31,26 @@ export default function({ handleClose }) {
 
   const precision = 8
   const free = from === 'X-BTC' ? xbtcBalance : xrcBtcBalance
+
+  const convert = () => {
+    if (isNaN(parseFloat(amount))) {
+      setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_ERROR'))
+      return
+    }
+
+    const realAmount = BigNumber(amount)
+      .multipliedBy(Math.pow(10, precision))
+      .toNumber()
+    if (realAmount > free) {
+      setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_TOO_MUCH_ERROR'))
+      return
+    }
+
+    if (realAmount <= 0) {
+      setAmountErrMsg($t('COMMON_ASSET_TOO_LOW_ERROR'))
+      return
+    }
+  }
 
   return (
     <StyledDialog open title={'划转'} handleClose={handleClose}>
@@ -78,11 +99,7 @@ export default function({ handleClose }) {
         </div>
 
         <div>
-          <PrimaryButton
-            disabled={disabled}
-            size="fullWidth"
-            onClick={() => console.log('click')}
-          >
+          <PrimaryButton disabled={disabled} size="fullWidth" onClick={convert}>
             {$t('COMMON_CONFIRM')}
           </PrimaryButton>
         </div>
