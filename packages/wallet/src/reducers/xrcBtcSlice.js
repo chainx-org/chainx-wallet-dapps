@@ -21,7 +21,7 @@ const xrcbtcSlice = createSlice({
   }
 })
 
-export const { setBalance } = xrcbtcSlice.actions
+export const { setBalance, setInfo } = xrcbtcSlice.actions
 
 export const fetchXrcBtcBalance = accountId => async dispatch => {
   const chainx = getChainx()
@@ -41,9 +41,11 @@ export const fetchXrcBtcInfo = () => async dispatch => {
   const chainx = getChainx()
 
   const info = await chainx.api.rpc.chainx.contractXRCTokenInfo()
-  console.log('info', info)
+  dispatch(setInfo(info))
 }
 
 export const xrcBtcBalanceSelector = state => state.xrcbtc.balance
+export const xrcBtcXrc20InfoSelector = state =>
+  state.xrcbtc.info && state.xrcbtc.info.BTC.XRC20
 
 export default xrcbtcSlice.reducer
