@@ -43,7 +43,7 @@ function Home(props) {
           </PrimaryButton>
         )}
         <DefaultButton
-          className="wide-button"
+          className="wide-button last-button"
           onClick={() => clickDeploy(false)}
         >
           Add existing contract

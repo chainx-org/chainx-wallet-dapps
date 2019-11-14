@@ -150,7 +150,7 @@ function Code(props) {
           Upload WASM
         </PrimaryButton>
         <DefaultButton
-          className="wide-button"
+          className="wide-button last-button"
           onClick={() => clickUpload(false)}
         >
           Add existing code hash

@@ -22,14 +22,14 @@
     margin-top: 16px;
     display: flex;
     justify-content: flex-end;
-    :last-child {
+    .last-button {
       margin-left: 16px;
     }
   }
 }
 
 .wide-button {
-  width: 250px;
+  width: 240px;
   height: 40px;
   border-radius: 20px !important;
   font-size: 13px !important;
