@@ -1,5 +1,6 @@
 import { getChainx } from '../services/chainx'
 import { compactAddLength, stringCamelCase, u8aToU8a } from '@chainx/util'
+import { blake2AsU8a } from '@chainx/util-crypto'
 import { createType } from '@chainx/types'
 import { Abi } from '@chainx/api-contract'
 
@@ -106,6 +107,21 @@ export async function isContractExist(address) {
 
 export async function uploadContract(file, gas, cb) {
   const method = 'putCode'
+  let codehash = '0x'
+  blake2AsU8a(file.data).map(i => {
+    codehash += ('0' + i.toString(16)).slice(-2)
+  })
+  const isExist = await isCodeHashExist(codehash)
+  if (isExist) {
+    cb({
+      err: {
+        message:
+          'codehash exist, please add existing codehash, using: ' + codehash
+      },
+      status: ''
+    })
+    return
+  }
   const args = [gas, compactAddLength(file.data)]
   if (enableExtension) {
     contractApi(method, args, cb)
