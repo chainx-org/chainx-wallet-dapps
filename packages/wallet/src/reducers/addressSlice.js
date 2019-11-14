@@ -16,7 +16,6 @@ const addressSlice = createSlice({
         state.name = action.payload.name
         state.address = action.payload.address
         state.isFromExtension = action.payload.isFromExtension
-        window.location.reload()
       }
     },
     setExtensionAccounts: {

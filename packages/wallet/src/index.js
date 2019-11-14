@@ -12,6 +12,7 @@ import { setNode } from './reducers/nodeSlice'
 import SnackGallery from './SnackGallery'
 import { setNetwork } from './reducers/settingsSlice'
 import { mainNetApi, setApi, testNetApi } from './services/api'
+import $t from './locale'
 
 const GlobalStyle = createGlobalStyle`
 html {
@@ -102,9 +103,9 @@ export const store = configureStore({
 })
 
 store.subscribe(() => {
-  const address = store.getState().address
-  const node = store.getState().node
-  saveState({ address, node })
+  const { address, node, settings } = store.getState()
+
+  saveState({ address, node, settings })
 })
 
 let nodeResolve
@@ -129,10 +130,21 @@ window.onload = () => {
     .then(window.chainxProvider.enable)
     .then(account => {
       if (!account) {
+        store.dispatch(setExtensionAccounts([]))
+        store.dispatch(
+          setAccount({
+            name: $t('HEADER_DEMO_ACCOUNT'),
+            address: '5TGy4d488i7pp3sjzi1gibqFUPLShddfk7qPY2S445ErhDGq',
+            isFromExtension: false
+          })
+        )
         return
       }
 
-      store.dispatch(setExtensionAccounts([account]))
+      const settings = store.getState().settings
+      store.dispatch(
+        setExtensionAccounts([{ ...account, network: settings.network }])
+      )
       const address = store.getState().address
       if (address.isFromExtension && address.address !== account.address) {
         store.dispatch(
@@ -172,6 +184,8 @@ window.onload = () => {
           isFromExtension: true
         })
       )
+
+      window.location.reload()
     }
   })
 
