@@ -6,7 +6,7 @@ import InputWithLabel from './InputWithLabel'
 export default function({ upload, setShowUpload, isnew = true }) {
   const [file, setFile] = useState({})
   const [contractAbi, setContractAbi] = useState({})
-  const [gas, setGas] = useState(500000)
+  const [gas, setGas] = useState(20000000)
   const [name, setName] = useState('')
   const [codeHash, setCodeHash] = useState('')
 

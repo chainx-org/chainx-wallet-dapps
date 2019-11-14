@@ -25,7 +25,7 @@ export default function({
       Array.from(abi.parseAbi.abi.contract.constructors[0].args.length).fill('')
   )
   const [endowment, setEndowment] = useState(0)
-  const [gas, setGas] = useState(500000)
+  const [gas, setGas] = useState(5000000)
   const [file, setFile] = useState({})
 
   const dispatch = useDispatch()
