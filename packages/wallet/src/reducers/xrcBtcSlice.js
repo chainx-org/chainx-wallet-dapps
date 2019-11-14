@@ -40,7 +40,7 @@ export const fetchXrcBtcBalance = accountId => async dispatch => {
 export const fetchXrcBtcInfo = () => async dispatch => {
   const chainx = getChainx()
 
-  const info = await chainx.api.rpc.chainx.contractXRC20Info()
+  const info = await chainx.api.rpc.chainx.contractXRCTokenInfo()
   console.log('info', info)
 }
 

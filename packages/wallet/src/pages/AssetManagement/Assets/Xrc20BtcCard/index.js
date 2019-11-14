@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react'
 import AssetCard from '../components/AssetCard'
 import logo from './xrc20-btc.svg'
 import { useDispatch, useSelector } from 'react-redux'
-import { xrcBtcBalanceSelector } from '../../../../reducers/xrcBtcSlice'
+import {
+  fetchXrcBtcBalance,
+  xrcBtcBalanceSelector
+} from '../../../../reducers/xrcBtcSlice'
 import { addressSelector } from '../../../../reducers/addressSlice'
 import { getChainx } from '../../../../services/chainx'
 import { AssetLine, DetailWrapper } from '../components/common'
@@ -28,7 +31,7 @@ export default function() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    // dispatch(fetchXrcBtcBalance(accountId))
+    dispatch(fetchXrcBtcBalance(accountId))
     // dispatch(fetchXrcBtcInfo())
   }, [dispatch, accountId])
 

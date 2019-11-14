@@ -4,24 +4,34 @@ import { SelectInput, TextInput, AmountInput, PrimaryButton } from '@chainx/ui'
 import $t from '../../../../../locale'
 import { Label, Value } from '../../../components'
 import { toPrecision } from '../../../../../utils'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { xbtcBalanceSelector } from '../../../../CrossChainMining/selectors'
-import { xrcBtcBalanceSelector } from '../../../../../reducers/xrcBtcSlice'
+import {
+  fetchXrcBtcBalance,
+  xrcBtcBalanceSelector
+} from '../../../../../reducers/xrcBtcSlice'
 import BigNumber from 'bignumber.js'
+import {
+  showSnack,
+  signAndSendExtrinsic
+} from '../../../../../utils/chainxProvider'
+import { addressSelector } from '../../../../../reducers/addressSlice'
+import { getChainx } from '../../../../../services/chainx'
+import { token } from '../../../../../utils/constants'
 
 export default function({ handleClose }) {
-  const options = ['X-BTC', 'XRC20-BTC'].map(token => ({
+  const accountAddress = useSelector(addressSelector)
+  const accountId = getChainx().account.decodeAddress(accountAddress)
+
+  const options = [token.XBTC, 'XRC20-BTC'].map(token => ({
     value: token,
     label: token
   }))
 
   const xbtcBalance = useSelector(xbtcBalanceSelector)
-  console.log('xbtcBalance', xbtcBalance)
-
   const xrcBtcBalance = useSelector(xrcBtcBalanceSelector)
-  console.log('xrcBtcBalance', xrcBtcBalance)
 
-  const [from, setFrom] = useState('X-BTC')
+  const [from, setFrom] = useState(token.XBTC)
   const [to, setTo] = useState('XRC20-BTC')
 
   const [amount, setAmount] = useState('')
@@ -31,6 +41,8 @@ export default function({ handleClose }) {
 
   const precision = 8
   const free = from === 'X-BTC' ? xbtcBalance : xrcBtcBalance
+
+  const dispatch = useDispatch()
 
   const convert = () => {
     if (isNaN(parseFloat(amount))) {
@@ -50,6 +62,28 @@ export default function({ handleClose }) {
       setAmountErrMsg($t('COMMON_ASSET_TOO_LOW_ERROR'))
       return
     }
+
+    setDisabled(true)
+    signAndSendExtrinsic(accountAddress, 'xContracts', 'convertToXrc20', [
+      'BTC',
+      realAmount,
+      500000
+    ])
+      .then(status => {
+        const messages = {
+          successTitle: '划转成功',
+          failTitle: '划转失败',
+          successMessage: `转账数量 ${amount} ${from}`,
+          failMessage: `交易hash ${status.txHash}`
+        }
+
+        return showSnack(status, messages, dispatch)
+      })
+      .then(() => {
+        handleClose()
+        dispatch(fetchXrcBtcBalance(accountId))
+      })
+      .catch(() => setDisabled(false))
   }
 
   return (
