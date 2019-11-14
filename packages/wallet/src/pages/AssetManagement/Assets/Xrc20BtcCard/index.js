@@ -4,6 +4,7 @@ import logo from './xrc20-btc.svg'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   fetchXrcBtcBalance,
+  fetchXrcBtcInfo,
   xrcBtcBalanceSelector
 } from '../../../../reducers/xrcBtcSlice'
 import { addressSelector } from '../../../../reducers/addressSlice'
@@ -32,6 +33,7 @@ export default function() {
 
   useEffect(() => {
     dispatch(fetchXrcBtcBalance(accountId))
+    dispatch(fetchXrcBtcInfo())
   }, [dispatch, accountId])
 
   const footer = (
