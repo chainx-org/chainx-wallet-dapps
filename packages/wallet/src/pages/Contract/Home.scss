@@ -12,14 +12,16 @@
   align-items: center;
 }
 
-.home, .code {
+.contract-home, .contract-code {
   display: flex;
   flex-direction: column;
   width: 1248px;
   padding-left: 20px;
   padding-right: 20px;
+  background: #F2F3F4;
   .button-area {
-    margin-top: 16px;
+    // margin-top: 16px;
+    margin-top: -8px;
     display: flex;
     justify-content: flex-end;
     .last-button {
