@@ -14,15 +14,12 @@ import {
 import BigNumber from 'bignumber.js'
 import { default as WAValidator } from 'wallet-address-validator'
 import { addressSelector } from '../../../../../reducers/addressSlice'
-import {
-  addSnack,
-  generateId,
-  removeSnackInSeconds,
-  typeEnum
-} from '../../../../../reducers/snackSlice'
-import { exFailed, exSuccess } from '../../../../../utils/constants'
 import { networkSelector } from '../../../../../reducers/settingsSlice'
 import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
+import {
+  showSnack,
+  signAndSendExtrinsic
+} from '../../../../../utils/chainxProvider'
 
 export default function({ handleClose }) {
   const network = useSelector(networkSelector)
@@ -85,7 +82,11 @@ export default function({ handleClose }) {
       return
     }
 
-    if (amount * Math.pow(10, precision) > free) {
+    const realAmount = BigNumber(amount)
+      .multipliedBy(Math.pow(10, precision))
+      .toNumber()
+
+    if (realAmount > free) {
       setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_ERROR'))
       return
     }
@@ -96,63 +97,28 @@ export default function({ handleClose }) {
     }
 
     setDisabled(true)
-
-    const realAmount = BigNumber(amount)
-      .multipliedBy(Math.pow(10, precision))
-      .toNumber()
-    window.chainxProvider.signAndSendExtrinsic(
-      accountAddress,
-      'xAssetsProcess',
-      'withdraw',
-      ['BTC', realAmount, address, memo ? memo.trim() : null],
-      ({ err, status, reject }) => {
-        if (reject) {
-          console.log('transaction sign and send request is rejected.')
-          return
+    signAndSendExtrinsic(accountAddress, 'xAssetsProcess', 'withdraw', [
+      'BTC',
+      realAmount,
+      address,
+      memo ? memo.trim() : null
+    ])
+      .then(status => {
+        debugger
+        const messages = {
+          successTitle: '提现成功',
+          failTitle: '提现失败',
+          successMessage: `提现数量 ${amount} BTC`,
+          failMessage: `交易hash ${status.txHash}`
         }
 
-        let id = generateId()
-        if (err) {
-          dispatch(
-            addSnack({
-              id,
-              type: typeEnum.ERROR,
-              title: '错误',
-              message: '提交交易出错'
-            })
-          )
-          setDisabled(false)
-          removeSnackInSeconds(dispatch, id, 5)
-          return
-        }
-
-        if (status.status !== 'Finalized') {
-          return
-        }
-
-        if (![exSuccess, exFailed].includes(status.result)) {
-          console.error(`Unkonwn extrinsic result: ${status.result}`)
-          setDisabled(false)
-          return
-        }
-
-        let type = typeEnum.SUCCESS
-        let title = '提现成功'
-        let message = `提现数量 ${amount} BTC`
-
-        if (status.result === 'ExtrinsicSuccess') {
-          handleClose()
-        } else if (status.result === 'ExtrinsicFailed') {
-          type = typeEnum.ERROR
-          title = '提现失败'
-          message = `交易hash ${status.txHash}`
-          setDisabled(false)
-        }
-        dispatch(addSnack({ id, type, title, message }))
-        removeSnackInSeconds(dispatch, id, 5)
+        return showSnack(status, messages, dispatch)
+      })
+      .then(() => {
+        handleClose()
         dispatch(fetchAccountAssets(accountAddress))
-      }
-    )
+      })
+      .catch(() => setDisabled(false))
   }
 
   return (
