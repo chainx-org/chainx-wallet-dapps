@@ -7,7 +7,6 @@ const InputWithLabel = styled.div`
   display: flex;
   flex-direction: column;
   color: #000000;
-  width: 448px;
   min-height: 40px;
   cursor: pointer;
   display: flex;
@@ -20,11 +19,13 @@ const InputWithLabel = styled.div`
     align-items: center;
   }
   .body-area {
+    display: flex;
+    align-items: center;
     background: #f2f3f4;
     border: 1px solid #dce0e2;
     border-radius: 6px;
     min-height: 28px;
-    width: 448px;
+    width: 446px;
     padding: 10px;
     span {
       color: #545454;

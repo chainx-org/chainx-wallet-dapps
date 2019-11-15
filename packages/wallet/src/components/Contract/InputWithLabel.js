@@ -5,7 +5,6 @@ const InputWithLabel = styled.div`
   display: flex;
   flex-direction: column;
   color: #000000;
-  width: 448px;
   .label {
     height: 36px;
     font-size: 14px;
@@ -16,7 +15,7 @@ const InputWithLabel = styled.div`
     background: #ffffff;
     border: 1px solid #dce0e2;
     border-radius: 6px;
-    width: 448px;
+    width: 446px;
     height: 20px;
     font-size: 14px;
     padding: 10px;
