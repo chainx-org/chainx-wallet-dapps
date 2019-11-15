@@ -104,7 +104,6 @@ export default function({ handleClose }) {
       memo ? memo.trim() : null
     ])
       .then(status => {
-        debugger
         const messages = {
           successTitle: '提现成功',
           failTitle: '提现失败',
