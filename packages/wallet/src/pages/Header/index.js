@@ -90,13 +90,8 @@ export default function() {
         {network === 'testnet' && (
           <>
             <Nav>
-              <NavLink exact activeClassName="active" to="/contract">
-                {$t('CONTRACT')}
-              </NavLink>
-            </Nav>
-            <Nav>
-              <NavLink exact activeClassName="active" to="/contract/code">
-                {$t('CODE')}
+              <NavLink activeClassName="active" to="/contract">
+                {$t('CONTRACTINDEX')}
               </NavLink>
             </Nav>
           </>
