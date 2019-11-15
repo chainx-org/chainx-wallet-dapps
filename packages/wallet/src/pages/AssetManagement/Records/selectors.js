@@ -39,9 +39,9 @@ export const normalizedScrollTransfers = createSelector(
       if (item.token === 'PCX') {
         value = toPrecision(item.value, pcxPrecision)
       } else if (item.token === 'BTC') {
-        value = toPrecision(item.number, xbtcPrecision)
+        value = toPrecision(item.value, xbtcPrecision)
       } else if (item.token === 'SDOT') {
-        value = toPrecision(item.number, sdotPrecision)
+        value = toPrecision(item.value, sdotPrecision)
       }
 
       return {
