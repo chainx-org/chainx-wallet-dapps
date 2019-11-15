@@ -181,10 +181,6 @@ export default function({ handleClose }) {
             <img src={infoIcon} alt="info" />
             <span>目前仅支持 1 和 3 开头的 BTC 地址发起的跨链充值；</span>
           </li>
-          <li>
-            <img src={infoIcon} alt="info" />
-            <span>类似 imToken 钱包的 memo 不是 OP_RETURN。</span>
-          </li>
         </ul>
         <section className="show-code">
           <h3 style={{ marginBottom: 0 }}>
