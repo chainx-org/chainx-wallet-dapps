@@ -21,8 +21,11 @@ import {
   typeEnum
 } from '../../../../../reducers/snackSlice'
 import { exFailed, exSuccess } from '../../../../../utils/constants'
+import { networkSelector } from '../../../../../reducers/settingsSlice'
+import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
 
 export default function({ handleClose }) {
+  const network = useSelector(networkSelector)
   const dispatch = useDispatch()
   const accountAddress = useSelector(addressSelector)
   const [address, setAddress] = useState('')
@@ -56,11 +59,15 @@ export default function({ handleClose }) {
       return false
     }
 
-    const valid = WAValidator.validate(address, 'BTC')
+    const valid = WAValidator.validate(
+      address,
+      'BTC',
+      network === 'testnet' ? 'testnet' : 'prod'
+    )
     if (!valid) {
       setAddressErrMsg('地址格式错误')
       return false
-    } else if (!['1', '3'].includes(address[0])) {
+    } else if (!['1', '3'].includes(address[0]) && network === 'mainnet') {
       setAddressErrMsg('提现的BTC地址必须以1或3开头')
       return false
     }
@@ -95,7 +102,7 @@ export default function({ handleClose }) {
       .toNumber()
     window.chainxProvider.signAndSendExtrinsic(
       accountAddress,
-      'withdrawal',
+      'xAssetsProcess',
       'withdraw',
       ['BTC', realAmount, address, memo ? memo.trim() : null],
       ({ err, status, reject }) => {
@@ -142,7 +149,8 @@ export default function({ handleClose }) {
           setDisabled(false)
         }
         dispatch(addSnack({ id, type, title, message }))
-        // removeSnackInSeconds(dispatch, id, 5)
+        removeSnackInSeconds(dispatch, id, 5)
+        dispatch(fetchAccountAssets(accountAddress))
       }
     )
   }
@@ -193,10 +201,12 @@ export default function({ handleClose }) {
 
         <div className="warning">
           <div className="left">
-            <p>
-              <img src={infoIcon} alt="info" />
-              <span>仅支持 1 和 3 开头的 BTC地址</span>
-            </p>
+            {network !== 'testnet' && (
+              <p>
+                <img src={infoIcon} alt="info" />
+                <span>仅支持 1 和 3 开头的 BTC地址</span>
+              </p>
+            )}
             <p>
               <img src={infoIcon} alt="info" />
               <span>提现申请会在 24 小时内处理</span>
