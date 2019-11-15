@@ -169,7 +169,7 @@ export default function({ handleClose }) {
                 setAmountErrMsg('')
                 setAmount(value)
               }}
-              placeholder={$t('ASSET_TRANSFER_AMOUNT')}
+              placeholder={$t('ASSET_WITHDRAWAL_AMOUNT')}
               precision={precision}
               error={!!amountErrMsg}
               errorText={amountErrMsg}

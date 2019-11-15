@@ -17,7 +17,7 @@ const StyledDialog = styled(Dialog)`
   main.content {
     padding: 16px;
 
-    section.code {
+    section.show-code {
       margin-top: 12px;
       background: #f2f3f4;
       border: 1px solid #dce0e2;
@@ -145,7 +145,7 @@ export default function({ handleClose }) {
         <p className={'op-return'}>
           获取含有 16 进制 ChainX 地址的 OP_RETURN 信息。
         </p>
-        <section className="code">
+        <section className="show-code">
           <h3>
             <span className="title">OP_RETURN</span>
             <CheckBox
@@ -181,12 +181,8 @@ export default function({ handleClose }) {
             <img src={infoIcon} alt="info" />
             <span>目前仅支持 1 和 3 开头的 BTC 地址发起的跨链充值；</span>
           </li>
-          <li>
-            <img src={infoIcon} alt="info" />
-            <span>类似 imToken 钱包的 memo 不是 OP_RETURN。</span>
-          </li>
         </ul>
-        <section className="code">
+        <section className="show-code">
           <h3 style={{ marginBottom: 0 }}>
             <span className="title">信托热多签地址</span>
             <ClipBoard className={'addr'}>{trusteeHotAddress}</ClipBoard>

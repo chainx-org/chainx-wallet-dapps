@@ -34,7 +34,7 @@ function App() {
         dispatch(setHead(head))
       })
 
-    return subscriber.unsubscribe
+    return () => subscriber.unsubscribe()
   }, [dispatch, address])
 
   return (

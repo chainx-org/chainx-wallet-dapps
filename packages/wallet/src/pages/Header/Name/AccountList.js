@@ -99,6 +99,7 @@ export default function() {
   const dispatch = useDispatch()
   const selectAccount = (name, address, isFromExtension) => {
     dispatch(setAccount({ name, address, isFromExtension }))
+    setTimeout(() => window.location.reload(), 0)
   }
 
   const demoAccountName = $t('HEADER_DEMO_ACCOUNT')
