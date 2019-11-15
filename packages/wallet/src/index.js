@@ -12,7 +12,6 @@ import { setNode } from './reducers/nodeSlice'
 import SnackGallery from './SnackGallery'
 import { setNetwork } from './reducers/settingsSlice'
 import { mainNetApi, setApi, testNetApi } from './services/api'
-import $t from './locale'
 
 const GlobalStyle = createGlobalStyle`
 html {
@@ -113,7 +112,37 @@ const nodePromise = new Promise(resolve => {
   nodeResolve = resolve
 })
 
-window.onload = () => {
+async function setExtensionAccount(network) {
+  const account = await window.chainxProvider.enable()
+  if (!account) {
+    store.dispatch(setExtensionAccounts([]))
+    return
+  }
+
+  store.dispatch(setExtensionAccounts([{ ...account, network }]))
+  const nowAddress = store.getState().address
+  if (nowAddress.isFromExtension && nowAddress.address !== account.address) {
+    store.dispatch(
+      setAccount({
+        name: account.name,
+        address: account.address,
+        isFromExtension: true
+      })
+    )
+  }
+}
+
+async function setExtensionNode(nowUrl) {
+  const node = await window.chainxProvider.getCurrentNode()
+  if (nowUrl !== node.url) {
+    store.dispatch(setNode(node))
+    setChainx(node.url)
+  } else {
+    setChainx(nowUrl)
+  }
+}
+
+window.onload = async () => {
   const { url } = store.getState().node
   if (!window.chainxProvider) {
     setChainx(url)
@@ -121,52 +150,13 @@ window.onload = () => {
     return
   }
 
-  window.chainxProvider
-    .getNetwork()
-    .then(network => {
-      store.dispatch(setNetwork(network))
-      setApi(network === 'testnet' ? testNetApi : mainNetApi)
-    })
-    .then(window.chainxProvider.enable)
-    .then(account => {
-      if (!account) {
-        store.dispatch(setExtensionAccounts([]))
-        store.dispatch(
-          setAccount({
-            name: $t('HEADER_DEMO_ACCOUNT'),
-            address: '5TGy4d488i7pp3sjzi1gibqFUPLShddfk7qPY2S445ErhDGq',
-            isFromExtension: false
-          })
-        )
-        return
-      }
+  const network = await window.chainxProvider.getNetwork()
+  store.dispatch(setNetwork(network))
+  setApi(network === 'testnet' ? testNetApi : mainNetApi)
 
-      const settings = store.getState().settings
-      store.dispatch(
-        setExtensionAccounts([{ ...account, network: settings.network }])
-      )
-      const address = store.getState().address
-      if (address.isFromExtension && address.address !== account.address) {
-        store.dispatch(
-          setAccount({
-            name: account.name,
-            address: account.address,
-            isFromExtension: true
-          })
-        )
-      }
-    })
-    .then(window.chainxProvider.getCurrentNode)
-    .then(node => {
-      if (url !== node.url) {
-        store.dispatch(setNode(node))
-        setChainx(node.url)
-        window.location.reload()
-      } else {
-        setChainx(url)
-      }
-      nodeResolve()
-    })
+  await setExtensionAccount(network)
+  await setExtensionNode(url)
+  nodeResolve()
 
   window.chainxProvider.listenNetworkChange(({ from, to }) => {
     store.dispatch(setNetwork(to))
@@ -174,6 +164,7 @@ window.onload = () => {
   })
 
   window.chainxProvider.listenAccountChange(({ to }) => {
+    console.log('update extension accounts', [to])
     store.dispatch(setExtensionAccounts([to]))
     const address = store.getState().address
     if (address.isFromExtension) {
