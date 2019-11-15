@@ -180,7 +180,7 @@ export default function({ handleClose }) {
           <div className="right">
             <p>
               <img src={infoIcon} alt="info" />
-              <span>最小提现数量为 0.0001</span>
+              <span>最小提现数量为 0.0015</span>
             </p>
           </div>
         </div>
