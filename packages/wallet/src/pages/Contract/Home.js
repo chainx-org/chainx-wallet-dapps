@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { PrimaryButton, DefaultButton } from '@chainx/ui'
 import DeployContract from '../../components/Contract/DeployContract'
 import ContractCard from '../../components/Contract/ContractCard'
+import ContractHeader from '../../components/Contract/ContractHeader'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAbiAndContractList } from '../../reducers/localSlice'
 import './Home.scss'
@@ -23,7 +24,8 @@ function Home(props) {
   }
 
   return (
-    <div className="home">
+    <div className="contract-home">
+      <ContractHeader />
       {showDeploy && (
         <DeployContract
           props={props}

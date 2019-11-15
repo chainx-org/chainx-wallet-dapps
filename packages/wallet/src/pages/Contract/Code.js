@@ -4,6 +4,7 @@ import { Abi } from '@chainx/api-contract'
 import DeployContract from '../../components/Contract/DeployContract'
 import UploadContract from '../../components/Contract/UploadContract'
 import ContractCard from '../../components/Contract/ContractCard'
+import ContractHeader from '../../components/Contract/ContractHeader'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAbiAndContractList } from '../../reducers/localSlice'
 import { isCodeHashExist, uploadContract } from '../../utils/contractHelper'
@@ -126,7 +127,8 @@ function Code(props) {
   }
 
   return (
-    <div className="code">
+    <div className="contract-code">
+      <ContractHeader />
       {showDeploy && (
         <DeployContract
           props={props}
