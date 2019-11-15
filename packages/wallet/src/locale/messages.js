@@ -98,6 +98,10 @@ const asset = {
   ASSET_CONVERT: {
     en: 'Convert',
     zh: '划转'
+  },
+  ASSET_WITHDRAWAL_AMOUNT: {
+    en: 'Withdrawal amount',
+    zh: '提现数量'
   }
 }
 
