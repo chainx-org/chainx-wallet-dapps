@@ -18,6 +18,7 @@ import closeGrayIcon from '../../static/close_gray.svg'
 import closeIcon from '../../static/close.svg'
 import deleteIcon from '../../static/delete.svg'
 import deployIcon from '../../static/deploy.svg'
+import ClipBoard from '../ClipBoard'
 
 export default function(props) {
   const { item, setAbi, setShowDeploy, setUpdate, type } = props
@@ -251,8 +252,8 @@ export default function(props) {
         <div className="header">
           <div className="left">
             <div className="name">
-              <span>{item.name}</span>
-              <span>{item.address || item.codeHash}</span>
+              <span className="contract-name">{item.name}</span>
+              <ClipBoard>{item.address || item.codeHash}</ClipBoard>
             </div>
           </div>
           <div className="action-area">

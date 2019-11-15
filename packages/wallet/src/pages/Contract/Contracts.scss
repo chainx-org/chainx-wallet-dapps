@@ -95,15 +95,15 @@
         flex-direction: column;
         justify-content: space-between;
         font-size: 12px;
-        :first-child {
-          font-size: 16px;
-          font-weight: bold;
-        }
         span {
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
         }
+      }
+      .contract-name {
+        font-size: 16px;
+        font-weight: bold;
       }
     }
     .action-area {
