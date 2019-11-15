@@ -185,6 +185,10 @@ const trust = {
 }
 
 const contract = {
+  CONTRACTINDEX: {
+    en: 'Contract',
+    zh: '智能合约'
+  },
   CONTRACT: {
     en: 'Contract',
     zh: '合约'
