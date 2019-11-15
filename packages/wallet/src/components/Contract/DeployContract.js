@@ -3,6 +3,7 @@ import { Abi } from '@chainx/api-contract'
 import UploadFile from './UploadFile'
 import Confirm from './Confirm'
 import InputWithLabel from './InputWithLabel'
+import CurrentAccount from './CurrentAccount'
 import { deploy, isContractExist } from '../../utils/contractHelper'
 import { useDispatch } from 'react-redux'
 import {
@@ -148,11 +149,7 @@ export default function({
       >
         {isnew && (
           <>
-            <InputWithLabel
-              label="Deploy account"
-              value="Alice 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehX"
-              disabled={true}
-            />
+            <CurrentAccount />
             <InputWithLabel
               label="Code hash for this contract"
               value={abi.codeHash}

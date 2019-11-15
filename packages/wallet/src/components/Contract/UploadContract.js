@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import UploadFile from './UploadFile'
 import Confirm from './Confirm'
 import InputWithLabel from './InputWithLabel'
+import CurrentAccount from './CurrentAccount'
 
 export default function({ upload, setShowUpload, isnew = true }) {
   const [file, setFile] = useState({})
@@ -26,11 +27,7 @@ export default function({ upload, setShowUpload, isnew = true }) {
         <div className="upload-area">
           {isnew && (
             <>
-              <InputWithLabel
-                label="Deploy account"
-                value="Alice 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehX"
-                disabled={true}
-              />
+              <CurrentAccount />
               <UploadFile accept="wasm" file={file} setFile={setFile} />
             </>
           )}
