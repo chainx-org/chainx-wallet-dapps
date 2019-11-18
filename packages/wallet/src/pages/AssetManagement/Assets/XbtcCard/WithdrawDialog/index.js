@@ -20,7 +20,10 @@ import {
   showSnack,
   signAndSendExtrinsic
 } from '../../../../../utils/chainxProvider'
-import { checkMemoAndHasError } from '../../../../../utils/errorCheck'
+import {
+  checkAmountAndHasError,
+  checkMemoAndHasError
+} from '../../../../../utils/errorCheck'
 
 export default function({ handleClose }) {
   const network = useSelector(networkSelector)
@@ -74,24 +77,18 @@ export default function({ handleClose }) {
     return true
   }
 
-  const sign = () => {
+  const sign = async () => {
     if (!validBtcAddress()) {
       return
     }
 
-    if (!amount) {
-      setAmountErrMsg('必填')
+    if (checkAmountAndHasError(amount, free, precision, setAmountErrMsg)) {
       return
     }
 
     const realAmount = BigNumber(amount)
       .multipliedBy(Math.pow(10, precision))
       .toNumber()
-
-    if (realAmount > free) {
-      setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_ERROR'))
-      return
-    }
 
     if (checkMemoAndHasError(memo, setMemoErrMsg)) {
       return
@@ -103,27 +100,26 @@ export default function({ handleClose }) {
     }
 
     setDisabled(true)
-    signAndSendExtrinsic(accountAddress, 'xAssetsProcess', 'withdraw', [
-      'BTC',
-      realAmount,
-      address,
-      memo ? memo.trim() : null
-    ])
-      .then(status => {
-        const messages = {
-          successTitle: '提现成功',
-          failTitle: '提现失败',
-          successMessage: `提现数量 ${amount} BTC`,
-          failMessage: `交易hash ${status.txHash}`
-        }
+    try {
+      const status = await signAndSendExtrinsic(
+        accountAddress,
+        'xAssetsProcess',
+        'withdraw',
+        ['BTC', realAmount, address, memo ? memo.trim() : null]
+      )
+      const messages = {
+        successTitle: '提现成功',
+        failTitle: '提现失败',
+        successMessage: `提现数量 ${amount} BTC`,
+        failMessage: `交易hash ${status.txHash}`
+      }
 
-        return showSnack(status, messages, dispatch)
-      })
-      .then(() => {
-        handleClose()
-        dispatch(fetchAccountAssets(accountAddress))
-      })
-      .catch(() => setDisabled(false))
+      await showSnack(status, messages, dispatch)
+      handleClose()
+      dispatch(fetchAccountAssets(accountAddress))
+    } catch (e) {
+      setDisabled(false)
+    }
   }
 
   return (
