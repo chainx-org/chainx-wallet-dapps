@@ -12,6 +12,7 @@ import { showSnack, signAndSendExtrinsic } from '../../../utils/chainxProvider'
 import { addressSelector } from '../../../reducers/addressSlice'
 import { fetchNominationRecords } from '../../../reducers/intentionSlice'
 import { fetchAccountAssets } from '../../../reducers/assetSlice'
+import { checkMemoAndHasError } from '../../../utils/errorCheck'
 
 export default function({
   handleClose,
@@ -26,6 +27,7 @@ export default function({
   const precision = useSelector(pcxPrecisionSelector)
 
   const [memo, setMemo] = useState('')
+  const [memoErrMsg, setMemoErrMsg] = useState('')
   const [disabled, setDisabled] = useState(false)
   const hasAmount = !amountErrMsg && amount
   const dispatch = useDispatch()
@@ -42,6 +44,12 @@ export default function({
 
     if (realAmount > nomination) {
       setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_TOO_MUCH_ERROR'))
+      return
+    }
+
+    if (
+      checkMemoAndHasError(memo, setMemoErrMsg, setDisabled.bind(null, true))
+    ) {
       return
     }
 
@@ -94,8 +102,13 @@ export default function({
         <div>
           <TextInput
             value={memo}
-            onChange={setMemo}
+            onChange={value => {
+              setMemoErrMsg('')
+              setMemo(value)
+            }}
             placeholder={$t('COMMON_MEMO')}
+            error={!!memoErrMsg}
+            errorText={memoErrMsg}
           />
         </div>
 
