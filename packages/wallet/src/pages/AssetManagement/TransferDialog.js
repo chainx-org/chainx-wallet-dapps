@@ -73,6 +73,7 @@ export default function({ handleClose, token }) {
   }
 
   const [memo, setMemo] = useState('')
+  const [memoErrMsg, setMemoErrMsg] = useState('')
   const [disabled, setDisabled] = useState(false)
 
   const dispatch = useDispatch()
@@ -80,7 +81,7 @@ export default function({ handleClose, token }) {
   const tokenName = token === 'BTC' ? 'X-BTC' : token
 
   const chainx = getChainx()
-  const sign = () => {
+  const sign = async () => {
     const isAddressValid = chainx.account.isAddressValid(address)
     if (!isAddressValid) {
       setAddressErrMsg($t('ASSET_TRANSFER_ADDR_ERROR'))
@@ -99,33 +100,37 @@ export default function({ handleClose, token }) {
       return
     }
 
+    if ((memo || '').length > 64) {
+      setMemoErrMsg($t('COMMON_TOO_LONG'))
+      return
+    }
+
     if (!window.chainxProvider) {
       // TODO: 考虑没有安装插件的情况下怎么与用户进行交互
       return
     }
 
     setDisabled(true)
-    signAndSendExtrinsic(accountAddress, 'xAssets', 'transfer', [
-      address,
-      token,
-      realAmount,
-      memo
-    ])
-      .then(status => {
-        const messages = {
-          successTitle: '转账成功',
-          failTitle: '转账失败',
-          successMessage: `转账数量 ${amount} ${tokenName}`,
-          failMessage: `交易hash ${status.txHash}`
-        }
+    try {
+      const status = await signAndSendExtrinsic(
+        accountAddress,
+        'xAssets',
+        'transfer',
+        [address, token, realAmount, memo]
+      )
+      const messages = {
+        successTitle: '转账成功',
+        failTitle: '转账失败',
+        successMessage: `转账数量 ${amount} ${tokenName}`,
+        failMessage: `交易hash ${status.txHash}`
+      }
 
-        return showSnack(status, messages, dispatch)
-      })
-      .then(() => {
-        handleClose()
-        dispatch(fetchAccountAssets(accountAddress))
-      })
-      .catch(() => setDisabled(false))
+      await showSnack(status, messages, dispatch)
+      handleClose()
+      dispatch(fetchAccountAssets(accountAddress))
+    } catch (e) {
+      setDisabled(true)
+    }
   }
 
   return (
@@ -175,8 +180,13 @@ export default function({ handleClose, token }) {
         <div>
           <TextInput
             value={memo}
-            onChange={setMemo}
+            onChange={value => {
+              setMemoErrMsg('')
+              setMemo(value)
+            }}
             placeholder={$t('COMMON_MEMO')}
+            error={!!memoErrMsg}
+            errorText={memoErrMsg}
           />
         </div>
 

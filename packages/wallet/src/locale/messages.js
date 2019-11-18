@@ -117,6 +117,10 @@ const common = {
   COMMON_ASSET_TOO_LOW_ERROR: {
     en: 'Balance too low',
     zh: '金额过低'
+  },
+  COMMON_TOO_LONG: {
+    en: 'Too long',
+    zh: '长度超过限制'
   }
 }
 
