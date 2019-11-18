@@ -34,6 +34,7 @@ export default function({ handleClose, intention }) {
   const dispatch = useDispatch()
 
   const [memo, setMemo] = useState('')
+  const [memoErrMsg, setMemoErrMsg] = useState('')
 
   const { free, precision } = useSelector(pcxFreeSelector)
 
@@ -53,6 +54,11 @@ export default function({ handleClose, intention }) {
 
     if (realAmount > free) {
       setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_ERROR'))
+      return
+    }
+
+    if ((memo || '').length > 64) {
+      setMemoErrMsg($t('COMMON_TOO_LONG'))
       return
     }
 
@@ -113,8 +119,13 @@ export default function({ handleClose, intention }) {
         <div>
           <TextInput
             value={memo}
-            onChange={setMemo}
+            onChange={value => {
+              setMemoErrMsg('')
+              setMemo(value)
+            }}
             placeholder={$t('COMMON_MEMO')}
+            error={!!memoErrMsg}
+            errorText={memoErrMsg}
           />
         </div>
 
