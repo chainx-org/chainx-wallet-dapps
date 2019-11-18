@@ -16,11 +16,13 @@ import {
   intentionsSelector
 } from '../../../reducers/intentionSlice'
 import { fetchAccountAssets } from '../../../reducers/assetSlice'
+import { checkMemoAndHasError } from '../../../utils/errorCheck'
 
 export default function({ handleClose, nomination, intention }) {
   const accountAddress = useSelector(addressSelector)
 
   const [memo, setMemo] = useState('')
+  const [memoErrMsg, setMemoErrMsg] = useState('')
   const [targetIntentionName, setTargetIntentionName] = useState('')
 
   const [amount, setAmount] = useState('')
@@ -80,6 +82,12 @@ export default function({ handleClose, nomination, intention }) {
 
     if (checkIntentionAndHasError()) {
       setDisabled(true)
+      return
+    }
+
+    if (
+      checkMemoAndHasError(memo, setMemoErrMsg, setDisabled.bind(null, true))
+    ) {
       return
     }
 
@@ -147,8 +155,13 @@ export default function({ handleClose, nomination, intention }) {
         <div>
           <TextInput
             value={memo}
-            onChange={setMemo}
+            onChange={value => {
+              setMemoErrMsg('')
+              setMemo(value)
+            }}
             placeholder={$t('COMMON_MEMO')}
+            error={!!memoErrMsg}
+            errorText={memoErrMsg}
           />
         </div>
 
