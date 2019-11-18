@@ -12,7 +12,10 @@ import { showSnack, signAndSendExtrinsic } from '../../../utils/chainxProvider'
 import { addressSelector } from '../../../reducers/addressSlice'
 import { fetchNominationRecords } from '../../../reducers/intentionSlice'
 import { fetchAccountAssets } from '../../../reducers/assetSlice'
-import { checkMemoAndHasError } from '../../../utils/errorCheck'
+import {
+  checkAmountAndHasError,
+  checkMemoAndHasError
+} from '../../../utils/errorCheck'
 
 export default function({
   handleClose,
@@ -33,17 +36,9 @@ export default function({
   const dispatch = useDispatch()
 
   const unNominate = async () => {
-    if (isNaN(parseFloat(amount))) {
-      setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_ERROR'))
-      return
-    }
-
-    const realAmount = BigNumber(amount)
-      .multipliedBy(Math.pow(10, precision))
-      .toNumber()
-
-    if (realAmount > nomination) {
-      setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_TOO_MUCH_ERROR'))
+    if (
+      checkAmountAndHasError(amount, precision, nomination, setAmountErrMsg)
+    ) {
       return
     }
 
@@ -57,6 +52,10 @@ export default function({
       // TODO: 考虑没有安装插件的情况下怎么与用户进行交互
       return
     }
+
+    const realAmount = BigNumber(amount)
+      .multipliedBy(Math.pow(10, precision))
+      .toNumber()
 
     setDisabled(true)
     try {
