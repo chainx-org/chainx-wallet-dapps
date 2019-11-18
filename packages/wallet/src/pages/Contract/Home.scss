@@ -1,7 +1,7 @@
 @import './Contracts.scss';
 
 .no-data {
-  margin-top: 16px;
+  margin-top: 53px;
   width: 100%;
   min-height: 325px;
   background: #FFFFFF;
@@ -21,24 +21,31 @@
   padding-right: 20px;
   background: #F2F3F4;
   .button-area {
-    width: 1248px;
+    position: absolute;
+    width: 100%;
     margin-top: -8px;
     display: flex;
     justify-content: flex-end;
     .last-button {
       margin-left: 16px;
+      margin-right: 16px;
     }
   }
-  .contract-card:last-child {
-    margin-bottom: 16px;
+  .contract-list {
+    margin-top: 37px;
+    padding-bottom: 16px;
+  }
+  .contract-card {
+    margin-top: 16px;
   }
 }
 
-.wide-button {
+.contract-wide-button {
   width: 240px;
   height: 40px;
   border-radius: 20px !important;
   font-size: 13px !important;
+  z-index: 100;
 }
 
 .small-button {

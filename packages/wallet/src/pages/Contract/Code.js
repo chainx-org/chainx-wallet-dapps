@@ -146,29 +146,31 @@ function Code(props) {
       )}
       <div className="button-area">
         <PrimaryButton
-          className="wide-button"
+          className="contract-wide-button"
           onClick={() => clickUpload(true)}
         >
           Upload WASM
         </PrimaryButton>
         <DefaultButton
-          className="wide-button last-button"
+          className="contract-wide-button last-button"
           onClick={() => clickUpload(false)}
         >
           Add existing code hash
         </DefaultButton>
       </div>
       {abiList.length > 0 ? (
-        abiList.map((item, i) => (
-          <ContractCard
-            key={i}
-            item={item}
-            setAbi={setAbi}
-            setShowDeploy={setShowDeploy}
-            setUpdate={setUpdate}
-            type="ABI"
-          />
-        ))
+        <div className="contract-list">
+          {abiList.map((item, i) => (
+            <ContractCard
+              key={i}
+              item={item}
+              setAbi={setAbi}
+              setShowDeploy={setShowDeploy}
+              setUpdate={setUpdate}
+              type="ABI"
+            />
+          ))}
+        </div>
       ) : (
         <div className="no-data">
           <span>No contract code available</span>

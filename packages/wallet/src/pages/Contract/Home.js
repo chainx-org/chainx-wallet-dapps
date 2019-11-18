@@ -38,28 +38,30 @@ function Home(props) {
       <div className="button-area">
         {abiList.length > 0 && (
           <PrimaryButton
-            className="wide-button"
+            className="contract-wide-button"
             onClick={() => clickDeploy(true)}
           >
             Deploy a code hash
           </PrimaryButton>
         )}
         <DefaultButton
-          className="wide-button last-button"
+          className="contract-wide-button last-button"
           onClick={() => clickDeploy(false)}
         >
           Add existing contract
         </DefaultButton>
       </div>
       {contractList.length > 0 ? (
-        contractList.map((item, i) => (
-          <ContractCard
-            item={item}
-            key={i}
-            type="CONTRACT"
-            setUpdate={setUpdate}
-          />
-        ))
+        <div className="contract-list">
+          {contractList.map((item, i) => (
+            <ContractCard
+              item={item}
+              key={i}
+              type="CONTRACT"
+              setUpdate={setUpdate}
+            />
+          ))}
+        </div>
       ) : (
         <div className="no-data">
           <span>No contract code available</span>
