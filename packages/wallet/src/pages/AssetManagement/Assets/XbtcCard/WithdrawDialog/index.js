@@ -20,6 +20,7 @@ import {
   showSnack,
   signAndSendExtrinsic
 } from '../../../../../utils/chainxProvider'
+import { checkMemoAndHasError } from '../../../../../utils/errorCheck'
 
 export default function({ handleClose }) {
   const network = useSelector(networkSelector)
@@ -34,6 +35,7 @@ export default function({ handleClose }) {
   const { free, precision } = useSelector(xbtcFreeSelector)
 
   const [memo, setMemo] = useState('')
+  const [memoErrMsg, setMemoErrMsg] = useState('')
 
   useEffect(() => {
     dispatch(fetchBtcWithdrawLimit())
@@ -88,6 +90,10 @@ export default function({ handleClose }) {
 
     if (realAmount > free) {
       setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_ERROR'))
+      return
+    }
+
+    if (checkMemoAndHasError(memo, setMemoErrMsg)) {
       return
     }
 
@@ -159,8 +165,13 @@ export default function({ handleClose }) {
         <div>
           <TextInput
             value={memo}
-            onChange={setMemo}
+            onChange={value => {
+              setMemoErrMsg('')
+              setMemo(value)
+            }}
             placeholder={$t('COMMON_MEMO')}
+            error={!!memoErrMsg}
+            errorText={memoErrMsg}
           />
         </div>
 
