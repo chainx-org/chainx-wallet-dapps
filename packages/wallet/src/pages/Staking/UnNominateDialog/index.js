@@ -32,7 +32,7 @@ export default function({
   const hasAmount = !amountErrMsg && amount
   const dispatch = useDispatch()
 
-  const unNominate = () => {
+  const unNominate = async () => {
     if (isNaN(parseFloat(amount))) {
       setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_ERROR'))
       return
@@ -59,27 +59,27 @@ export default function({
     }
 
     setDisabled(true)
-    signAndSendExtrinsic(accountAddress, 'xStaking', 'unnominate', [
-      intention.account,
-      realAmount,
-      memo
-    ])
-      .then(status => {
-        const messages = {
-          successTitle: '赎回成功',
-          failTitle: '赎回失败',
-          successMessage: `赎回数量 ${amount} PCX，锁定期3天`,
-          failMessage: `交易hash ${status.txHash}`
-        }
+    try {
+      const status = await signAndSendExtrinsic(
+        accountAddress,
+        'xStaking',
+        'unnominate',
+        [intention.account, realAmount, memo]
+      )
+      const messages = {
+        successTitle: '赎回成功',
+        failTitle: '赎回失败',
+        successMessage: `赎回数量 ${amount} PCX，锁定期3天`,
+        failMessage: `交易hash ${status.txHash}`
+      }
 
-        return showSnack(status, messages, dispatch)
-      })
-      .then(() => {
-        handleClose()
-        dispatch(fetchNominationRecords(accountAddress))
-        dispatch(fetchAccountAssets(accountAddress))
-      })
-      .catch(() => setDisabled(false))
+      await showSnack(status, messages, dispatch)
+      handleClose()
+      dispatch(fetchNominationRecords(accountAddress))
+      dispatch(fetchAccountAssets(accountAddress))
+    } catch (e) {
+      setDisabled(false)
+    }
   }
 
   return (
