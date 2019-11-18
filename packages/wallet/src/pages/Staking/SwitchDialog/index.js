@@ -74,7 +74,7 @@ export default function({ handleClose, nomination, intention }) {
     return false
   }
 
-  const switchNominate = () => {
+  const switchNominate = async () => {
     if (checkAmountAndHasError(amount)) {
       setDisabled(true)
       return
@@ -92,28 +92,27 @@ export default function({ handleClose, nomination, intention }) {
     }
 
     setDisabled(true)
-    signAndSendExtrinsic(accountAddress, 'xStaking', 'renominate', [
-      intention.account,
-      targetIntention.account,
-      realAmount,
-      memo
-    ])
-      .then(status => {
-        const messages = {
-          successTitle: '切换成功',
-          failTitle: '切换失败',
-          successMessage: `切换数量 ${amount} PCX`,
-          failMessage: `交易hash ${status.txHash}`
-        }
+    try {
+      const status = await signAndSendExtrinsic(
+        accountAddress,
+        'xStaking',
+        'renominate',
+        [intention.account, targetIntention.account, realAmount, memo]
+      )
+      const messages = {
+        successTitle: '切换成功',
+        failTitle: '切换失败',
+        successMessage: `切换数量 ${amount} PCX`,
+        failMessage: `交易hash ${status.txHash}`
+      }
 
-        return showSnack(status, messages, dispatch)
-      })
-      .then(() => {
-        handleClose()
-        dispatch(fetchNominationRecords(accountAddress))
-        dispatch(fetchAccountAssets(accountAddress))
-      })
-      .catch(() => setDisabled(false))
+      await showSnack(status, messages, dispatch)
+      handleClose()
+      dispatch(fetchNominationRecords(accountAddress))
+      dispatch(fetchAccountAssets(accountAddress))
+    } catch (e) {
+      setDisabled(false)
+    }
   }
 
   return (
