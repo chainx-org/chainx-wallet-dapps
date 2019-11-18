@@ -37,7 +37,7 @@ export default function({
 
   const unNominate = async () => {
     if (
-      checkAmountAndHasError(amount, precision, nomination, setAmountErrMsg)
+      checkAmountAndHasError(amount, nomination, precision, setAmountErrMsg)
     ) {
       return
     }

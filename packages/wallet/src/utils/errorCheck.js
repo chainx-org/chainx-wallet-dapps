@@ -18,8 +18,8 @@ export function checkMemoAndHasError(
 
 export function checkAmountAndHasError(
   amount,
-  precision,
   free,
+  precision,
   setAmountErrMsg,
   hookFunc = noneFunc
 ) {

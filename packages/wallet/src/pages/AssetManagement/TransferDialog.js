@@ -19,6 +19,10 @@ import { pcxFreeSelector } from './PcxCard/selectors'
 import { Label, Value } from './components'
 import { showSnack, signAndSendExtrinsic } from '../../utils/chainxProvider'
 import { fetchAccountAssets } from '../../reducers/assetSlice'
+import {
+  checkAmountAndHasError,
+  checkMemoAndHasError
+} from '../../utils/errorCheck'
 
 const StyledDialog = styled(Dialog)`
   div.wrapper {
@@ -88,20 +92,11 @@ export default function({ handleClose, token }) {
       return
     }
 
-    if (isNaN(parseFloat(amount))) {
-      setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_ERROR'))
-      return
-    }
-    const realAmount = BigNumber(amount)
-      .multipliedBy(Math.pow(10, precision))
-      .toNumber()
-    if (realAmount > free) {
-      setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_TOO_MUCH_ERROR'))
+    if (checkAmountAndHasError(amount, free, precision, setAmountErrMsg)) {
       return
     }
 
-    if ((memo || '').length > 64) {
-      setMemoErrMsg($t('COMMON_TOO_LONG'))
+    if (checkMemoAndHasError(memo, setMemoErrMsg)) {
       return
     }
 
@@ -109,6 +104,10 @@ export default function({ handleClose, token }) {
       // TODO: 考虑没有安装插件的情况下怎么与用户进行交互
       return
     }
+
+    const realAmount = BigNumber(amount)
+      .multipliedBy(Math.pow(10, precision))
+      .toNumber()
 
     setDisabled(true)
     try {
