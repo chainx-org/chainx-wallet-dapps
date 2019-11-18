@@ -28,7 +28,7 @@ export function signAndSendExtrinsic(address, module, call, args = []) {
               id,
               type: typeEnum.ERROR,
               title: '错误',
-              message: '提交交易出错'
+              message: `提交交易出错: ${err.toString()}`
             })
           )
           removeSnackInSeconds(store.dispatch, id, 5)
