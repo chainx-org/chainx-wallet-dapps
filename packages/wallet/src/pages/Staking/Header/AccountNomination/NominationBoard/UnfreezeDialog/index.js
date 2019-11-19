@@ -34,7 +34,12 @@ export default function({ handleClose, revocations = [] }) {
               return (
                 <tr key={index}>
                   <td style={{ paddingLeft: 16 }}>
-                    <p style={{ opacity: 0.72 }}>
+                    <p
+                      style={{
+                        opacity: 0.72,
+                        fontWeight: nowBlockNumber >= blockNumber ? 600 : 400
+                      }}
+                    >
                       {nowBlockNumber >= blockNumber
                         ? '已到期'
                         : moment(
