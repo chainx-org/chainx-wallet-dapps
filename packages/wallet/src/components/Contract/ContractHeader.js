@@ -14,7 +14,7 @@ const ContractHeader = styled.div`
   top: 56px;
   left: 0;
   border-bottom: 1px solid #dce0e2;
-  z-index: 100;
+  z-index: 1;
   .logo {
     width: 32px;
     padding-left: 16px;
