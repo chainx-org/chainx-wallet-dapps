@@ -9,6 +9,8 @@ import { pcxPrecisionSelector } from '../../../../selectors/assets'
 import VoteDialog from '../../../VoteDialog'
 import More from './More'
 import Claim from './Claim'
+import { Label, Value } from './components'
+import Unfreeze from './Unfreeze'
 
 const Wrapper = styled.div`
   display: flex;
@@ -74,24 +76,6 @@ const Wrapper = styled.div`
   }
 `
 
-const Label = styled.label`
-  opacity: 0.32;
-  font-size: 12px;
-  color: #000000;
-  letter-spacing: 0.2px;
-  line-height: 16px;
-`
-
-const Value = styled.span`
-  margin-top: 4px;
-  opacity: 0.72;
-  font-weight: 500;
-  font-size: 12px;
-  color: #000000;
-  letter-spacing: 0.2px;
-  line-height: 16px;
-`
-
 export default function() {
   const records = useSelector(detailedRecordsSelector)
   const precision = useSelector(pcxPrecisionSelector)
@@ -118,6 +102,7 @@ export default function() {
                   <span>{name}</span>
                 </div>
                 <div className="operations">
+                  <Unfreeze revocations={revocations} />
                   <DefaultButton
                     size="small"
                     style={{ marginRight: 8 }}
