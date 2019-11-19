@@ -41,9 +41,6 @@ export default function({ record, interest }) {
       await showSnack(status, messages, dispatch)
       dispatch(fetchNominationRecords(accountAddress))
       dispatch(fetchAccountAssets(accountAddress))
-    } catch (e) {
-      console.log(e)
-      debugger
     } finally {
       setDisabled(false)
     }
