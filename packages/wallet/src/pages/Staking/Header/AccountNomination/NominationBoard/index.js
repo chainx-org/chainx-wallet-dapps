@@ -1,20 +1,14 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { detailedRecordsSelector } from './selectors'
 import defaultLogo from '../../../svg/default-logo.svg'
-import { DefaultButton, PrimaryButton } from '@chainx/ui'
+import { DefaultButton } from '@chainx/ui'
 import { toPrecision } from '../../../../../utils'
 import { pcxPrecisionSelector } from '../../../../selectors/assets'
-import { addressSelector } from '../../../../../reducers/addressSlice'
-import {
-  showSnack,
-  signAndSendExtrinsic
-} from '../../../../../utils/chainxProvider'
-import { fetchNominationRecords } from '../../../../../reducers/intentionSlice'
-import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
 import VoteDialog from '../../../VoteDialog'
 import More from './More'
+import Claim from './Claim'
 
 const Wrapper = styled.div`
   display: flex;
@@ -99,48 +93,17 @@ const Value = styled.span`
 `
 
 export default function() {
-  const accountAddress = useSelector(addressSelector)
-
   const records = useSelector(detailedRecordsSelector)
   const precision = useSelector(pcxPrecisionSelector)
-  const [claimingTarget, setClaimingTarget] = useState('')
-  const dispatch = useDispatch()
 
   const [voteOpen, setVoteOpen] = useState(false)
   const [intention, setIntention] = useState(null)
-
-  const claim = target => {
-    if (!window.chainxProvider) {
-      // TODO: 考虑没有安装插件的情况下怎么与用户进行交互
-      return
-    }
-
-    setClaimingTarget(target)
-    signAndSendExtrinsic(accountAddress, 'xStaking', 'claim', [target])
-      .then(status => {
-        const messages = {
-          successTitle: '提息成功',
-          failTitle: '提息失败',
-          successMessage: `交易hash ${status.txHash}`,
-          failMessage: `交易hash ${status.txHash}`
-        }
-
-        return showSnack(status, messages, dispatch)
-      })
-      .then(() => {
-        setClaimingTarget('')
-        dispatch(fetchNominationRecords(accountAddress))
-        dispatch(fetchAccountAssets(accountAddress))
-      })
-      .catch(() => setClaimingTarget(''))
-  }
 
   return (
     <Wrapper>
       <ul>
         {records.map((record, index) => {
-          const { name, hasLogo, logo, jackpot = 0, account } =
-            record.intention || {}
+          const { name, hasLogo, logo, jackpot = 0 } = record.intention || {}
           const { nomination, revocations = [] } = record.info || {}
           const interest = record.interest
           const unfreeze = revocations.reduce((result, revocation) => {
@@ -165,14 +128,7 @@ export default function() {
                   >
                     投票
                   </DefaultButton>
-                  <PrimaryButton
-                    disabled={interest <= 0 || claimingTarget === account}
-                    size="small"
-                    style={{ marginRight: 8 }}
-                    onClick={() => claim(account)}
-                  >
-                    提息
-                  </PrimaryButton>
+                  <Claim record={record} interest={interest} />
                   <More intention={record.intention} record={record} />
                 </div>
               </header>
