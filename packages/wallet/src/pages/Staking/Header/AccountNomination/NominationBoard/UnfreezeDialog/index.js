@@ -30,7 +30,7 @@ export default function({ handleClose, revocations = [] }) {
           </thead>
           <tbody>
             {revocations.map((revocation, index) => {
-              const { blockNumber, value } = revocation
+              const { blockNumber } = revocation
               return (
                 <tr key={index}>
                   <td style={{ paddingLeft: 16 }}>

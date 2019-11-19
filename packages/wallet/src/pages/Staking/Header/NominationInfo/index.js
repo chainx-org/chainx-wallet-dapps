@@ -11,6 +11,7 @@ import rateIcon from './nomination_rate.svg'
 const Info = styled.ul`
   display: inline-flex;
   flex-direction: column;
+  padding-right: 24px;
 
   li {
     display: inline-flex;

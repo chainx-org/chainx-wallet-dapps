@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import NominationInfo from './NominationInfo'
 import AccountNomination from './AccountNomination'
+import Register from './Register'
 
 const Wrapper = styled.header`
   display: flex;
@@ -13,10 +14,19 @@ const Wrapper = styled.header`
   border-bottom: 1px solid #dce0e2;
 `
 
+const Left = styled.div`
+  display: flex;
+  align-items: center;
+  height: 100%;
+`
+
 export default function() {
   return (
     <Wrapper>
-      <NominationInfo />
+      <Left>
+        <NominationInfo />
+        <Register />
+      </Left>
       <AccountNomination />
     </Wrapper>
   )
