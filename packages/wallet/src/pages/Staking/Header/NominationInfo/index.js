@@ -16,10 +16,13 @@ const Info = styled.ul`
     display: inline-flex;
     align-items: center;
 
-    opacity: 0.72;
     font-size: 12px;
     color: #000000;
     line-height: 16px;
+
+    span {
+      opacity: 0.72;
+    }
 
     img {
       margin-right: 7px;
@@ -39,11 +42,11 @@ export default function() {
     <Info>
       <li>
         <img src={nominationIcon} alt="total nomination" />
-        {totalNomination}
+        <span>{totalNomination}</span>
       </li>
       <li>
         <img src={rateIcon} alt="nomination rate" />
-        {nominationRate}
+        <span>{nominationRate}</span>
       </li>
     </Info>
   )
