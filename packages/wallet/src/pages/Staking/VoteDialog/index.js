@@ -7,6 +7,7 @@ import { toPrecision } from '../../../utils'
 import { useDispatch, useSelector } from 'react-redux'
 import { pcxFreeSelector } from '../../AssetManagement/PcxCard/selectors'
 import {
+  fetchIntentions,
   fetchNominationRecords,
   nominationRecordsSelector
 } from '../../../reducers/intentionSlice'
@@ -16,6 +17,10 @@ import { showSnack, signAndSendExtrinsic } from '../../../utils/chainxProvider'
 import { addressSelector } from '../../../reducers/addressSlice'
 import BigNumber from 'bignumber.js'
 import { fetchAccountAssets } from '../../../reducers/assetSlice'
+import {
+  checkAmountAndHasError,
+  checkMemoAndHasError
+} from '../../../utils/errorCheck'
 
 export default function({ handleClose, intention }) {
   const accountAddress = useSelector(addressSelector)
@@ -42,23 +47,12 @@ export default function({ handleClose, intention }) {
 
   const hasAmount = !amountErrMsg && amount
 
-  const sign = () => {
-    if (!amount) {
-      setAmountErrMsg('必填')
+  const sign = async () => {
+    if (checkAmountAndHasError(amount, free, precision, setAmountErrMsg)) {
       return
     }
 
-    const realAmount = BigNumber(amount)
-      .multipliedBy(Math.pow(10, precision))
-      .toNumber()
-
-    if (realAmount > free) {
-      setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_ERROR'))
-      return
-    }
-
-    if ((memo || '').length > 64) {
-      setMemoErrMsg($t('COMMON_TOO_LONG'))
+    if (checkMemoAndHasError(memo, setMemoErrMsg)) {
       return
     }
 
@@ -67,28 +61,33 @@ export default function({ handleClose, intention }) {
       return
     }
 
-    setDisabled(true)
-    signAndSendExtrinsic(accountAddress, 'xStaking', 'nominate', [
-      intention.account,
-      realAmount,
-      memo
-    ])
-      .then(status => {
-        const messages = {
-          successTitle: '投票成功',
-          failTitle: '投票失败',
-          successMessage: `投票数量 ${amount} PCX`,
-          failMessage: `交易hash ${status.txHash}`
-        }
+    const realAmount = BigNumber(amount)
+      .multipliedBy(Math.pow(10, precision))
+      .toNumber()
 
-        return showSnack(status, messages, dispatch)
-      })
-      .then(() => {
-        handleClose()
-        dispatch(fetchNominationRecords(accountAddress))
-        dispatch(fetchAccountAssets(accountAddress))
-      })
-      .catch(() => setDisabled(false))
+    setDisabled(true)
+    try {
+      const status = await signAndSendExtrinsic(
+        accountAddress,
+        'xStaking',
+        'nominate',
+        [intention.account, realAmount, memo]
+      )
+      const messages = {
+        successTitle: '投票成功',
+        failTitle: '投票失败',
+        successMessage: `投票数量 ${amount} PCX`,
+        failMessage: `交易hash ${status.txHash}`
+      }
+
+      await showSnack(status, messages, dispatch)
+      handleClose()
+      dispatch(fetchNominationRecords(accountAddress))
+      dispatch(fetchAccountAssets(accountAddress))
+      dispatch(fetchIntentions())
+    } catch (e) {
+      setDisabled(false)
+    }
   }
 
   return (
