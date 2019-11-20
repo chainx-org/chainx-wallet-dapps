@@ -121,6 +121,10 @@ const common = {
   COMMON_TOO_LONG: {
     en: 'Too long',
     zh: '长度超过限制'
+  },
+  COMMON_INVALID_FORMAT: {
+    en: 'Invalid format',
+    zh: '格式错误'
   }
 }
 

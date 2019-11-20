@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import StyledDialog from './StyledDialog'
 import { noneFunc } from '../../../../../utils'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { myIntentionSelector } from './selectors'
 import { getChainx } from '../../../../../services/chainx'
 import { Label, Value } from '../../../../AssetManagement/components'
@@ -9,6 +9,11 @@ import { PrimaryButton, TextInput } from '@chainx/ui'
 import $t from '../../../../../locale'
 import { checkTextLengthAndHasError } from '../../../../../utils/errorCheck'
 import { addressSelector } from '../../../../../reducers/addressSlice'
+import {
+  showSnack,
+  signAndSendExtrinsic
+} from '../../../../../utils/chainxProvider'
+import { fetchIntentions } from '../../../../../reducers/intentionSlice'
 
 export default function({ handleClose = noneFunc }) {
   const intention = useSelector(myIntentionSelector)
@@ -26,12 +31,23 @@ export default function({ handleClose = noneFunc }) {
   const [about, setAbout] = useState('')
   const [aboutErrMsg, setAboutErrMsg] = useState('')
 
-  const [disabled, setDisabled] = useState(true)
+  const [disabled, setDisabled] = useState(false)
 
   const accountAddress = useSelector(addressSelector)
-  console.log(accountAddress)
+  const dispatch = useDispatch()
+
+  const checkKeyAndHasError = () => {
+    return !(
+      chainx.account.isAddressValid(key) || /^(0x)?[\da-zA-Z]{64}$/.test(key)
+    )
+  }
 
   const refresh = async () => {
+    if (checkKeyAndHasError()) {
+      setKeyErrMsg($t('COMMON_INVALID_FORMAT'))
+      return
+    }
+
     if (checkTextLengthAndHasError(url, 24, setUrlErrMsg)) {
       return
     }
@@ -41,7 +57,25 @@ export default function({ handleClose = noneFunc }) {
     }
 
     setDisabled(true)
-    // await signAndSendExtrinsic(accountAddress, 'xStaking', 'refresh', [])
+    try {
+      const status = await signAndSendExtrinsic(
+        accountAddress,
+        'xStaking',
+        'refresh',
+        [url, false, key, about]
+      )
+      const messages = {
+        successTitle: '更新成功',
+        failTitle: '更新失败',
+        successMessage: `交易hash ${status.txHash}`,
+        failMessage: `交易hash ${status.txHash}`
+      }
+      await showSnack(status, messages, dispatch)
+      handleClose()
+      dispatch(fetchIntentions)
+    } catch (e) {
+      setDisabled(false)
+    }
   }
 
   return (

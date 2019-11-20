@@ -128,7 +128,7 @@ export default function({ handleClose, token }) {
       handleClose()
       dispatch(fetchAccountAssets(accountAddress))
     } catch (e) {
-      setDisabled(true)
+      setDisabled(false)
     }
   }
 
