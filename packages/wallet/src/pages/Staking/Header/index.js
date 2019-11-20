@@ -3,6 +3,11 @@ import styled from 'styled-components'
 import NominationInfo from './NominationInfo'
 import AccountNomination from './AccountNomination'
 import Register from './Register'
+import { useSelector } from 'react-redux'
+import { intentionsSelector } from '../../../reducers/intentionSlice'
+import { getChainx } from '../../../services/chainx'
+import { addressSelector } from '../../../reducers/addressSlice'
+import Update from './Update'
 
 const Wrapper = styled.header`
   display: flex;
@@ -21,11 +26,20 @@ const Left = styled.div`
 `
 
 export default function() {
+  const address = useSelector(addressSelector)
+  const chainx = getChainx()
+  const accountId = chainx.account.decodeAddress(address, false)
+
+  const intentions = useSelector(intentionsSelector)
+  const isIntention = intentions.find(
+    intention => intention.account === accountId
+  )
+
   return (
     <Wrapper>
       <Left>
         <NominationInfo />
-        <Register />
+        {isIntention ? <Update /> : <Register />}
       </Left>
       <AccountNomination />
     </Wrapper>
