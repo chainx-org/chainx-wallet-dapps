@@ -2,6 +2,21 @@ import { noneFunc } from './index'
 import $t from '../locale'
 import BigNumber from 'bignumber.js'
 
+export function checkTextLengthAndHasError(
+  text = '',
+  length = 1,
+  setErrMsg = noneFunc,
+  hookFunc = noneFunc
+) {
+  if (text.length > length) {
+    setErrMsg($t('COMMON_TOO_LONG'))
+    hookFunc()
+    return true
+  }
+
+  return false
+}
+
 export function checkMemoAndHasError(
   memo,
   setMemoErrMsg = noneFunc,
