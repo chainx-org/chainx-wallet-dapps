@@ -6,7 +6,7 @@ import {
   activeIntentionChunksSelector,
   intentionChunksSelector
 } from './selectors'
-import { PrimaryButton } from '@chainx/ui'
+import { WhiteButton } from '@chainx/ui'
 
 const Main = styled.main`
   overflow-y: auto;
@@ -24,7 +24,7 @@ const Main = styled.main`
     margin-top: 16px;
 
     &.line {
-      li:not(:first-of-type) {
+      & > li:not(:first-of-type) {
         margin-left: 16px;
       }
     }
@@ -58,9 +58,9 @@ export default function() {
       </div>
       {showDropout ? null : (
         <div style={{ textAlign: 'center', marginTop: 20 }}>
-          <PrimaryButton size="large" onClick={() => setShowDropout(true)}>
+          <WhiteButton size="large" onClick={() => setShowDropout(true)}>
             查看退选节点
-          </PrimaryButton>
+          </WhiteButton>
         </div>
       )}
     </Main>
