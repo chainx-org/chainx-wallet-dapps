@@ -7,7 +7,10 @@ import { getChainx } from '../../../../../services/chainx'
 import { Label, Value } from '../../../../AssetManagement/components'
 import { PrimaryButton, TextInput } from '@chainx/ui'
 import $t from '../../../../../locale'
-import { checkTextLengthAndHasError } from '../../../../../utils/errorCheck'
+import {
+  checkTextLengthAndHasError,
+  checkTextShortAndHasError
+} from '../../../../../utils/errorCheck'
 import { addressSelector } from '../../../../../reducers/addressSlice'
 import {
   showSnack,
@@ -48,7 +51,10 @@ export default function({ handleClose = noneFunc }) {
       return
     }
 
-    if (checkTextLengthAndHasError(url, 24, setUrlErrMsg)) {
+    if (
+      checkTextLengthAndHasError(url, 24, setUrlErrMsg) ||
+      checkTextShortAndHasError(url, 4, setUrlErrMsg)
+    ) {
       return
     }
 
@@ -62,7 +68,7 @@ export default function({ handleClose = noneFunc }) {
         accountAddress,
         'xStaking',
         'refresh',
-        [url, false, key, about]
+        [url, undefined, key, about]
       )
       const messages = {
         successTitle: '更新成功',
@@ -72,7 +78,7 @@ export default function({ handleClose = noneFunc }) {
       }
       await showSnack(status, messages, dispatch)
       handleClose()
-      dispatch(fetchIntentions)
+      setTimeout(() => dispatch(fetchIntentions()), 2000)
     } catch (e) {
       setDisabled(false)
     }
@@ -102,7 +108,7 @@ export default function({ handleClose = noneFunc }) {
         <div className="domain">
           <p>官网域名</p>
           <TextInput
-            placeholder="24字符以内"
+            placeholder="4 - 24字符以内"
             value={url}
             onChange={value => {
               setUrlErrMsg('')

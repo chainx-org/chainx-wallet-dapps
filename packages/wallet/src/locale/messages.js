@@ -122,6 +122,10 @@ const common = {
     en: 'Too long',
     zh: '长度超过限制'
   },
+  COMMON_TOO_SHORT: {
+    en: 'Too short',
+    zh: '长度小于最小值'
+  },
   COMMON_INVALID_FORMAT: {
     en: 'Invalid format',
     zh: '格式错误'

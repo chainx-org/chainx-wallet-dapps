@@ -2,6 +2,21 @@ import { noneFunc } from './index'
 import $t from '../locale'
 import BigNumber from 'bignumber.js'
 
+export function checkTextShortAndHasError(
+  text = '',
+  length = 4,
+  setErrMsg = noneFunc,
+  hookFunc = noneFunc
+) {
+  if (text.length < length) {
+    setErrMsg($t('COMMON_TOO_SHORT'))
+    hookFunc()
+    return true
+  }
+
+  return false
+}
+
 export function checkTextLengthAndHasError(
   text = '',
   length = 1,
