@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import infoIcon from '../svg/info.svg'
 import styled from 'styled-components'
 import { BoldValue, DotInCenter, Label } from './components'
@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import { pcxPrecisionSelector } from '../../../../selectors/assets'
 import { toPrecision } from '../../../../../utils'
 import { getChainx } from '../../../../../services/chainx'
+import useOutsideClick from '../../../../../utils/useClickOutside'
 
 const Wrapper = styled.div`
   z-index: 2;
@@ -64,11 +65,19 @@ export default function({ intention }) {
   } = intention
   const precision = useSelector(pcxPrecisionSelector)
 
+  const popup = useRef(null)
+
   const chainx = getChainx()
   const jackpotAddress = chainx.account.decodeAddress(jackpotAccount, false)
   const accountAddress = chainx.account.decodeAddress(account, false)
 
   const [detailOpen, setDetailOpen] = useState(false)
+
+  useOutsideClick(popup, () => {
+    if (detailOpen) {
+      setDetailOpen(false)
+    }
+  })
 
   return (
     <Wrapper>
@@ -79,7 +88,7 @@ export default function({ intention }) {
       />
 
       {detailOpen && (
-        <div className="intention-detail">
+        <div className="intention-detail" ref={popup}>
           <h3>
             <span>{name}</span>
           </h3>
