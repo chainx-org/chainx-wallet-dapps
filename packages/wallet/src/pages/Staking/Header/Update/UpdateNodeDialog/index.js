@@ -4,8 +4,8 @@ import { noneFunc } from '../../../../../utils'
 import { useDispatch, useSelector } from 'react-redux'
 import { myIntentionSelector } from './selectors'
 import { getChainx } from '../../../../../services/chainx'
-import { Label, Value } from '../../../../AssetManagement/components'
-import { PrimaryButton, TextInput } from '@chainx/ui'
+import { Label, Value } from './StyledDialog'
+import { PrimaryButton, TextInput, Switch } from '@chainx/ui'
 import $t from '../../../../../locale'
 import {
   checkTextLengthAndHasError,
@@ -20,7 +20,9 @@ import { fetchIntentions } from '../../../../../reducers/intentionSlice'
 
 export default function({ handleClose = noneFunc }) {
   const intention = useSelector(myIntentionSelector)
-  const { sessionKey } = intention
+  const { sessionKey, isActive } = intention
+
+  const [wantToRun, setWantToRun] = useState(!!isActive)
 
   const chainx = getChainx()
   const sessionAddress = chainx.account.encodeAddress(sessionKey)
@@ -68,7 +70,7 @@ export default function({ handleClose = noneFunc }) {
         accountAddress,
         'xStaking',
         'refresh',
-        [url, undefined, key, about]
+        [url, wantToRun, key, about]
       )
       const messages = {
         successTitle: '更新成功',
@@ -131,6 +133,18 @@ export default function({ handleClose = noneFunc }) {
             }}
             error={!!aboutErrMsg}
             errorText={aboutErrMsg}
+          />
+        </div>
+
+        <div className="run">
+          <div className="status">
+            <Label>参选状态：</Label>
+            <Value>{wantToRun ? '参选' : '退选'}</Value>
+          </div>
+
+          <Switch
+            checked={wantToRun}
+            onChange={checked => setWantToRun(checked)}
           />
         </div>
 
