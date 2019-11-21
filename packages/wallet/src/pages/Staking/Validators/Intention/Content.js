@@ -80,7 +80,14 @@ const Wrapper = styled.div`
 `
 
 export default function(props) {
-  const { name, hasLogo, logo, selfVote, totalNomination } = props.intention
+  const {
+    name,
+    hasLogo,
+    logo,
+    selfVote,
+    totalNomination,
+    isActive
+  } = props.intention
   const precision = useSelector(pcxPrecisionSelector)
   const [voteOpen, setVoteOpen] = useState(false)
 
@@ -91,7 +98,9 @@ export default function(props) {
         <div className="summary">
           <header>
             <span className="name">{name}</span>
-            {totalNomination >= selfVote * 10 ? <LowSelfVote /> : null}
+            {isActive && totalNomination >= selfVote * 10 ? (
+              <LowSelfVote />
+            ) : null}
           </header>
           <ul>
             <li>
