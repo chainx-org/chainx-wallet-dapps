@@ -8,6 +8,7 @@ import $t from '../../../../locale'
 import { DefaultButton } from '@chainx/ui'
 import VoteDialog from '../../VoteDialog'
 import LowSelfVote from '../LowSelfVote'
+import infoIcon from './svg/info.svg'
 
 const Wrapper = styled.div`
   display: flex;
@@ -65,16 +66,26 @@ const Wrapper = styled.div`
         }
       }
     }
+  }
 
-    div.operation {
-      button {
-        opacity: 0.72;
-        font-size: 12px;
-        color: #000000;
-        letter-spacing: 0.2px;
-        text-align: center;
-        line-height: 16px;
+  div.operation {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    & > span {
+      text-align: right;
+      img {
+        cursor: pointer;
       }
+    }
+
+    button {
+      opacity: 0.72;
+      font-size: 12px;
+      color: #000000;
+      letter-spacing: 0.2px;
+      text-align: center;
+      line-height: 16px;
     }
   }
 `
@@ -119,9 +130,17 @@ export default function(props) {
         </div>
       </div>
       <div className="operation">
+        <span>
+          <img src={infoIcon} alt="info" />
+        </span>
         <DefaultButton
           onClick={() => setVoteOpen(true)}
-          style={{ padding: 0, fontSize: 12, opacity: 0.72, color: '#000' }}
+          style={{
+            padding: '6px 20px',
+            fontSize: 12,
+            opacity: 0.72,
+            color: '#000'
+          }}
         >
           {$t('STAKING_VOTE')}
         </DefaultButton>
