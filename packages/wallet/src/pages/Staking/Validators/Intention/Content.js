@@ -7,6 +7,7 @@ import { toPrecision } from '../../../../utils'
 import $t from '../../../../locale'
 import { DefaultButton } from '@chainx/ui'
 import VoteDialog from '../../VoteDialog'
+import LowSelfVote from '../LowSelfVote'
 
 const Wrapper = styled.div`
   display: flex;
@@ -21,11 +22,13 @@ const Wrapper = styled.div`
     div.summary {
       margin-left: 16px;
       header {
-        opacity: 0.72;
-        font-size: 14px;
-        font-weight: 500;
-        color: #000000;
-        line-height: 20px;
+        span.name {
+          opacity: 0.72;
+          font-size: 14px;
+          font-weight: 500;
+          color: #000000;
+          line-height: 20px;
+        }
       }
 
       & > ul {
@@ -86,7 +89,10 @@ export default function(props) {
       <div className="info">
         <img src={hasLogo ? logo : defaultLogo} alt="validator logo" />
         <div className="summary">
-          <header>{name}</header>
+          <header>
+            <span className="name">{name}</span>
+            {totalNomination >= selfVote * 10 ? <LowSelfVote /> : null}
+          </header>
           <ul>
             <li>
               <label>{$t('STAKING_TOTAL_NOMINATION')}</label>
