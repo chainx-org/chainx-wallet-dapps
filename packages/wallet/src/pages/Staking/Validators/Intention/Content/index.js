@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import defaultLogo from '../../svg/default-logo.svg'
-import { pcxPrecisionSelector } from '../../../selectors/assets'
+import defaultLogo from '../../../svg/default-logo.svg'
+import { pcxPrecisionSelector } from '../../../../selectors/assets'
 import { useSelector } from 'react-redux'
-import { toPrecision } from '../../../../utils'
-import $t from '../../../../locale'
+import { toPrecision } from '../../../../../utils'
+import $t from '../../../../../locale'
 import { DefaultButton } from '@chainx/ui'
-import VoteDialog from '../../VoteDialog'
-import LowSelfVote from '../LowSelfVote'
-import infoIcon from './svg/info.svg'
+import VoteDialog from '../../../VoteDialog'
+import LowSelfVote from '../../LowSelfVote'
+import Detail from './Detail'
 
 const Wrapper = styled.div`
   display: flex;
@@ -72,7 +72,7 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    & > span {
+    & > div {
       text-align: right;
       img {
         cursor: pointer;
@@ -130,9 +130,7 @@ export default function(props) {
         </div>
       </div>
       <div className="operation">
-        <span>
-          <img src={infoIcon} alt="info" />
-        </span>
+        <Detail intention={props.intention} />
         <DefaultButton
           onClick={() => setVoteOpen(true)}
           style={{
