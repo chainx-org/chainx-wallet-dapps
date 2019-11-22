@@ -10,6 +10,7 @@ import VoteDialog from '../../../VoteDialog'
 import LowSelfVote from '../../LowSelfVote'
 import DetailToggle from './DetailToggle'
 import Detail from './Detail'
+import { addressSelector } from '../../../../../reducers/addressSlice'
 
 const Wrapper = styled.div`
   display: flex;
@@ -93,18 +94,24 @@ const Wrapper = styled.div`
 `
 
 export default function(props) {
+  const accountAddress = useSelector(addressSelector)
+
   const {
     name,
     hasLogo,
     logo,
     selfVote,
     totalNomination,
-    isActive
+    isActive,
+    account
   } = props.intention
   const precision = useSelector(pcxPrecisionSelector)
   const [voteOpen, setVoteOpen] = useState(false)
 
   const [detailOpen, setDetailOpen] = useState(false)
+  const lowSelfVote = totalNomination >= selfVote * 10
+
+  const isSelf = accountAddress === account
 
   return (
     <Wrapper>
@@ -113,9 +120,7 @@ export default function(props) {
         <div className="summary">
           <header>
             <span className="name">{name}</span>
-            {isActive && totalNomination >= selfVote * 10 ? (
-              <LowSelfVote />
-            ) : null}
+            {isActive && lowSelfVote ? <LowSelfVote /> : null}
           </header>
           <ul>
             <li>
@@ -136,6 +141,7 @@ export default function(props) {
       <div className="operation">
         <DetailToggle onClick={() => setDetailOpen(!detailOpen)} />
         <DefaultButton
+          disabled={(!isSelf && lowSelfVote) || voteOpen}
           onClick={() => setVoteOpen(true)}
           style={{
             padding: '6px 20px',
