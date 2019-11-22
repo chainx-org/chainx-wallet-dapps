@@ -188,9 +188,8 @@ window.onload = async () => {
 
   window.chainxProvider.listenAccountChange(({ to }) => {
     console.log('update extension accounts', [to])
-    store.dispatch(setExtensionAccounts([to]))
-    const address = store.getState().address
-    if (address.isFromExtension) {
+    if (to) {
+      store.dispatch(setExtensionAccounts([to]))
       store.dispatch(
         setAccount({
           name: to.name,
@@ -198,9 +197,9 @@ window.onload = async () => {
           isFromExtension: true
         })
       )
-
-      window.location.reload()
     }
+
+    window.location.reload()
   })
 
   window.chainxProvider.listenNodeChange(({ to }) => {
