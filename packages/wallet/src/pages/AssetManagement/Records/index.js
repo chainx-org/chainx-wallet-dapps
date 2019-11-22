@@ -16,7 +16,7 @@ const Wrapper = styled(Card)`
         letter-spacing: 0.12px;
         line-height: 20px;
         cursor: pointer;
-        padding-bottom: 16px;
+        padding-bottom: 13px;
         &.active {
           border-bottom: 3px solid #f6c94a;
           opacity: 0.72;
