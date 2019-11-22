@@ -1,22 +1,15 @@
 import React from 'react'
-import noneLogo from '../../static/none.svg'
+import noneIcon from '../../../../../static/none.svg'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
+  min-width: 544px;
+  min-height: 224px;
+  text-align: center;
   display: flex;
-  justify-content: center;
   flex-direction: column;
-
-  section {
-    text-align: center;
-  }
-
-  img {
-    width: 56px;
-  }
-
+  justify-content: center;
   p {
-    margin-top: 8px;
     opacity: 0.24;
     font-size: 14px;
     color: #000000;
@@ -26,13 +19,14 @@ const Wrapper = styled.div`
   }
 `
 
-export default function(props) {
+export default function() {
   return (
     <Wrapper>
       <section>
-        <img src={noneLogo} alt="empty" />
+        <img src={noneIcon} alt="empty" />
       </section>
-      <p>{props.text}</p>
+      <p>请先对节点投票</p>
+      <p>投票后才能获得挖矿收益</p>
     </Wrapper>
   )
 }

@@ -11,6 +11,7 @@ import More from './More'
 import Claim from './Claim'
 import { Label, Value } from './components'
 import Unfreeze from './Unfreeze'
+import Empty from './Empty'
 
 const Wrapper = styled.div`
   display: flex;
@@ -18,7 +19,7 @@ const Wrapper = styled.div`
   border: 1px solid #dce0e2;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08), 0 8px 8px 0 rgba(0, 0, 0, 0.16);
   border-radius: 10px;
-  z-index: 9;
+  z-index: 90;
 
   position: absolute;
   top: 45px;
@@ -139,6 +140,7 @@ export default function() {
           )
         })}
       </ul>
+      {records.length <= 0 ? <Empty /> : null}
       {voteOpen && (
         <VoteDialog
           handleClose={() => {
