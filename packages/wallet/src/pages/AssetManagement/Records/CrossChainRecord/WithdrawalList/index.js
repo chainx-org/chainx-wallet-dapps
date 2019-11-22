@@ -21,7 +21,7 @@ import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
 
 const Wrapper = styled.div`
   & > div {
-    margin-top: 30px;
+    margin-top: 120px;
   }
 
   ul {

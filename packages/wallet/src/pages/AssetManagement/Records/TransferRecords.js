@@ -12,7 +12,7 @@ import { Empty } from '../../../components'
 
 const Wrapper = styled.ul`
   & > div {
-    margin-top: 30px;
+    margin-top: 120px;
   }
 
   & > li {
