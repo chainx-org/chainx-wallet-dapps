@@ -12,7 +12,7 @@ import $t from '../../../locale'
 import Logo from './Logo'
 import AccountInfo from './AccountInfo'
 import backgroundImg from './background.svg'
-import { DefaultButton } from '@chainx/ui'
+import { WhiteButton } from '@chainx/ui'
 import TransferDialog from '../TransferDialog'
 
 const InnerWrapper = styled.div`
@@ -88,12 +88,12 @@ export default function() {
               precision={pcxFree.precision}
             />
           )}
-          <DefaultButton
+          <WhiteButton
             onClick={() => setTransferOpen(true)}
             style={{ marginLeft: 32, height: 28, marginBottom: 4 }}
           >
             {$t('TRANSFER')}
-          </DefaultButton>
+          </WhiteButton>
         </section>
         <section className="details">
           {pcxDetails && (
