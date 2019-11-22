@@ -3,9 +3,12 @@ import { Dialog } from '@chainx/ui'
 
 const StyledDialog = styled(Dialog)`
   div.wrapper {
-    padding: 0 16px 16px;
+    padding: 0 16px 20px;
     & > div {
-      margin-top: 10px;
+      margin-top: 16px;
+      &:first-of-type {
+        margin-top: 10px;
+      }
       span.read {
         opacity: 0.72;
         font-size: 14px;
