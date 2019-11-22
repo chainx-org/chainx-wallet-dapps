@@ -26,7 +26,7 @@ const Wrapper = styled.ul`
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08), 0 8px 8px 0 rgba(0, 0, 0, 0.16);
   border-radius: 10px;
 
-  z-index: 2;
+  z-index: 99;
 
   & > li {
     cursor: pointer;
