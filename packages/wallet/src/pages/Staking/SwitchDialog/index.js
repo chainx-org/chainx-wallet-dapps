@@ -159,6 +159,8 @@ export default function({ handleClose, nomination, intention }) {
               setMemoErrMsg('')
               setMemo(value)
             }}
+            multiline={true}
+            rows={2}
             placeholder={$t('COMMON_MEMO')}
             error={!!memoErrMsg}
             errorText={memoErrMsg}

@@ -106,6 +106,8 @@ export default function({
               setMemoErrMsg('')
               setMemo(value)
             }}
+            multiline={true}
+            rows={2}
             placeholder={$t('COMMON_MEMO')}
             error={!!memoErrMsg}
             errorText={memoErrMsg}
