@@ -10,6 +10,7 @@ import { toPrecision } from '../../../../../../utils'
 import { blockDuration, timeFormat } from '../../../../../../utils/constants'
 import moment from 'moment'
 import { PrimaryButton } from '@chainx/ui'
+import { isDemoSelector } from '../../../../../../reducers/addressSlice'
 
 export default function({ handleClose, revocations = [] }) {
   const nowBlockNumber = useSelector(blockNumberSelector)
@@ -17,6 +18,7 @@ export default function({ handleClose, revocations = [] }) {
   const head = useSelector(headSelector)
   const { now = 0 } = head || {}
   const nowBlockTime = now * 1000
+  const isDemoAddr = useSelector(isDemoSelector)
 
   return (
     <StyledDialog open title={'赎回解冻'} handleClose={handleClose}>
@@ -54,7 +56,7 @@ export default function({ handleClose, revocations = [] }) {
                   </td>
                   <td>
                     <PrimaryButton
-                      disabled={nowBlockNumber < blockNumber}
+                      disabled={isDemoAddr || nowBlockNumber < blockNumber}
                       size="small"
                     >
                       解冻

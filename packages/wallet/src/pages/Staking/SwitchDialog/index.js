@@ -9,7 +9,7 @@ import arrow from '../svg/arrow.svg'
 import darkArrow from '../svg/dark-arrow.svg'
 import BigNumber from 'bignumber.js'
 import { showSnack, signAndSendExtrinsic } from '../../../utils/chainxProvider'
-import { addressSelector } from '../../../reducers/addressSlice'
+import { addressSelector, isDemoSelector } from '../../../reducers/addressSlice'
 import IntentionSelect from './IntentionSelect'
 import {
   fetchNominationRecords,
@@ -20,6 +20,7 @@ import { checkMemoAndHasError } from '../../../utils/errorCheck'
 
 export default function({ handleClose, nomination, intention }) {
   const accountAddress = useSelector(addressSelector)
+  const isDemoAddr = useSelector(isDemoSelector)
 
   const [memo, setMemo] = useState('')
   const [memoErrMsg, setMemoErrMsg] = useState('')
@@ -185,7 +186,7 @@ export default function({ handleClose, nomination, intention }) {
 
         <div>
           <PrimaryButton
-            disabled={disabled}
+            disabled={isDemoAddr || disabled}
             size="fullWidth"
             onClick={switchNominate}
           >

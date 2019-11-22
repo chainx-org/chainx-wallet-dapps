@@ -14,7 +14,7 @@ import {
 import arrow from '../svg/arrow.svg'
 import darkArrow from '../svg/dark-arrow.svg'
 import { showSnack, signAndSendExtrinsic } from '../../../utils/chainxProvider'
-import { addressSelector } from '../../../reducers/addressSlice'
+import { addressSelector, isDemoSelector } from '../../../reducers/addressSlice'
 import BigNumber from 'bignumber.js'
 import { fetchAccountAssets } from '../../../reducers/assetSlice'
 import {
@@ -25,6 +25,7 @@ import {
 export default function({ handleClose, intention }) {
   const accountAddress = useSelector(addressSelector)
   const nominationRecords = useSelector(nominationRecordsSelector)
+  const isDemoAddr = useSelector(isDemoSelector)
 
   const record = (nominationRecords || []).find(
     record => record.intention === intention.account
@@ -148,7 +149,11 @@ export default function({ handleClose, intention }) {
         </div>
 
         <div>
-          <PrimaryButton disabled={disabled} size="fullWidth" onClick={sign}>
+          <PrimaryButton
+            disabled={isDemoAddr || disabled}
+            size="fullWidth"
+            onClick={sign}
+          >
             {$t('COMMON_CONFIRM')}
           </PrimaryButton>
         </div>

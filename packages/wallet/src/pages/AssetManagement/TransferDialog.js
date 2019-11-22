@@ -12,7 +12,7 @@ import { toPrecision } from '../../utils'
 import { useDispatch, useSelector } from 'react-redux'
 import { xbtcFreeSelector } from './Assets/XbtcCard/selectors'
 import { getChainx } from '../../services/chainx'
-import { addressSelector } from '../../reducers/addressSlice'
+import { addressSelector, isDemoSelector } from '../../reducers/addressSlice'
 import BigNumber from 'bignumber.js'
 import { sdotFreeSelector } from './Assets/selectors'
 import { pcxFreeSelector } from './PcxCard/selectors'
@@ -48,6 +48,7 @@ const StyledDialog = styled(Dialog)`
 
 export default function({ handleClose, token }) {
   const accountAddress = useSelector(addressSelector)
+  const isDemoAddr = useSelector(isDemoSelector)
 
   const [address, setAddress] = useState('')
   const [addressErrMsg, setAddressErrMsg] = useState('')
@@ -190,7 +191,11 @@ export default function({ handleClose, token }) {
         </div>
 
         <div>
-          <PrimaryButton disabled={disabled} size="fullWidth" onClick={sign}>
+          <PrimaryButton
+            disabled={isDemoAddr || disabled}
+            size="fullWidth"
+            onClick={sign}
+          >
             {$t('COMMON_CONFIRM')}
           </PrimaryButton>
         </div>

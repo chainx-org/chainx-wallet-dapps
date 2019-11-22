@@ -13,7 +13,10 @@ import {
 } from '../../../../../reducers/trustSlice'
 import BigNumber from 'bignumber.js'
 import { default as WAValidator } from 'wallet-address-validator'
-import { addressSelector } from '../../../../../reducers/addressSlice'
+import {
+  addressSelector,
+  isDemoSelector
+} from '../../../../../reducers/addressSlice'
 import { networkSelector } from '../../../../../reducers/settingsSlice'
 import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
 import {
@@ -31,6 +34,7 @@ export default function({ handleClose }) {
   const network = useSelector(networkSelector)
   const dispatch = useDispatch()
   const accountAddress = useSelector(addressSelector)
+  const isDemoAddr = useSelector(isDemoSelector)
 
   let accountId
   if (accountAddress) {
@@ -220,7 +224,11 @@ export default function({ handleClose }) {
         </div>
 
         <div>
-          <PrimaryButton disabled={disabled} size="fullWidth" onClick={sign}>
+          <PrimaryButton
+            disabled={isDemoAddr || disabled}
+            size="fullWidth"
+            onClick={sign}
+          >
             {$t('COMMON_CONFIRM')}
           </PrimaryButton>
         </div>

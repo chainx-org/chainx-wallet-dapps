@@ -9,7 +9,7 @@ import arrow from '../svg/arrow.svg'
 import darkArrow from '../svg/dark-arrow.svg'
 import BigNumber from 'bignumber.js'
 import { showSnack, signAndSendExtrinsic } from '../../../utils/chainxProvider'
-import { addressSelector } from '../../../reducers/addressSlice'
+import { addressSelector, isDemoSelector } from '../../../reducers/addressSlice'
 import { fetchNominationRecords } from '../../../reducers/intentionSlice'
 import { fetchAccountAssets } from '../../../reducers/assetSlice'
 import {
@@ -24,6 +24,7 @@ export default function({
   revocations = []
 }) {
   const accountAddress = useSelector(addressSelector)
+  const isDemoAddr = useSelector(isDemoSelector)
 
   const [amount, setAmount] = useState('')
   const [amountErrMsg, setAmountErrMsg] = useState('')
@@ -139,7 +140,7 @@ export default function({
 
         <div>
           <PrimaryButton
-            disabled={disabled}
+            disabled={isDemoAddr || disabled}
             size="fullWidth"
             onClick={unNominate}
           >

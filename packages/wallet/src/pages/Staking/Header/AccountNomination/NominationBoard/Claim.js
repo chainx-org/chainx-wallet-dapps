@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addressSelector } from '../../../../../reducers/addressSlice'
+import {
+  addressSelector,
+  isDemoSelector
+} from '../../../../../reducers/addressSlice'
 import { PrimaryButton } from '@chainx/ui'
 import {
   showSnack,
@@ -11,6 +14,7 @@ import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
 
 export default function({ record, interest }) {
   const { account } = record.intention || {}
+  const isDemoAddr = useSelector(isDemoSelector)
 
   const accountAddress = useSelector(addressSelector)
   const [disabled, setDisabled] = useState(false)
@@ -48,7 +52,7 @@ export default function({ record, interest }) {
 
   return (
     <PrimaryButton
-      disabled={interest <= 0 || disabled}
+      disabled={isDemoAddr || interest <= 0 || disabled}
       size="small"
       style={{ marginRight: 8 }}
       onClick={() => claim(account)}
