@@ -8,11 +8,13 @@ import $t from '../../../../../locale'
 import { DefaultButton } from '@chainx/ui'
 import VoteDialog from '../../../VoteDialog'
 import LowSelfVote from '../../LowSelfVote'
+import DetailToggle from './DetailToggle'
 import Detail from './Detail'
 
 const Wrapper = styled.div`
   display: flex;
   padding: 16px 16px 0;
+  position: relative;
   & > div.info {
     display: flex;
 
@@ -102,6 +104,8 @@ export default function(props) {
   const precision = useSelector(pcxPrecisionSelector)
   const [voteOpen, setVoteOpen] = useState(false)
 
+  const [detailOpen, setDetailOpen] = useState(false)
+
   return (
     <Wrapper>
       <div className="info">
@@ -130,7 +134,7 @@ export default function(props) {
         </div>
       </div>
       <div className="operation">
-        <Detail intention={props.intention} />
+        <DetailToggle onClick={() => setDetailOpen(!detailOpen)} />
         <DefaultButton
           onClick={() => setVoteOpen(true)}
           style={{
@@ -147,6 +151,12 @@ export default function(props) {
         <VoteDialog
           handleClose={() => setVoteOpen(false)}
           intention={props.intention}
+        />
+      )}
+      {detailOpen && (
+        <Detail
+          intention={props.intention}
+          close={() => setDetailOpen(false)}
         />
       )}
     </Wrapper>

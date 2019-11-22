@@ -1,21 +1,18 @@
-import React, { useRef, useState } from 'react'
-import infoIcon from '../svg/info.svg'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
 import { BoldValue, DotInCenter, Label } from './components'
 import { useSelector } from 'react-redux'
 import { pcxPrecisionSelector } from '../../../../selectors/assets'
-import { toPrecision } from '../../../../../utils'
+import { noneFunc, toPrecision } from '../../../../../utils'
 import { getChainx } from '../../../../../services/chainx'
 import useOutsideClick from '../../../../../utils/useClickOutside'
 
 const Wrapper = styled.div`
-  z-index: 2;
-  position: relative;
-  text-align: left;
-
+  position: absolute;
+  z-index: 9;
+  right: 0;
+  top: 36px;
   .intention-detail {
-    position: absolute;
-    right: -16px;
     padding: 16px;
     background: rgb(255, 255, 255);
     border: 1px solid #dce0e2;
@@ -53,7 +50,7 @@ const Wrapper = styled.div`
   }
 `
 
-export default function({ intention }) {
+export default function({ intention, close = noneFunc }) {
   const {
     name,
     about,
@@ -71,52 +68,40 @@ export default function({ intention }) {
   const jackpotAddress = chainx.account.decodeAddress(jackpotAccount, false)
   const accountAddress = chainx.account.decodeAddress(account, false)
 
-  const [detailOpen, setDetailOpen] = useState(false)
-
   useOutsideClick(popup, () => {
-    if (detailOpen) {
-      setDetailOpen(false)
-    }
+    close()
   })
 
   return (
     <Wrapper>
-      <img
-        src={infoIcon}
-        alt="info"
-        onClick={() => setDetailOpen(!detailOpen)}
-      />
-
-      {detailOpen && (
-        <div className="intention-detail" ref={popup}>
-          <h3>
-            <span>{name}</span>
-          </h3>
-          <p>{about}</p>
-          <ul>
-            <li>
-              <Label>自抵押数</Label>
-              <BoldValue>{toPrecision(selfVote, precision)}</BoldValue>
-            </li>
-            <li>
-              <Label>总得票数</Label>
-              <BoldValue>{toPrecision(totalNomination, precision)}</BoldValue>
-            </li>
-            <li>
-              <Label>奖池金额</Label>
-              <BoldValue>{toPrecision(jackpot, precision)}</BoldValue>
-            </li>
-            <li>
-              <Label>奖池地址</Label>
-              <DotInCenter text={jackpotAddress} length={5} />
-            </li>
-            <li>
-              <Label>账户地址</Label>
-              <DotInCenter text={accountAddress} length={5} />
-            </li>
-          </ul>
-        </div>
-      )}
+      <div className="intention-detail" ref={popup}>
+        <h3>
+          <span>{name}</span>
+        </h3>
+        <p>{about}</p>
+        <ul>
+          <li>
+            <Label>自抵押数</Label>
+            <BoldValue>{toPrecision(selfVote, precision)}</BoldValue>
+          </li>
+          <li>
+            <Label>总得票数</Label>
+            <BoldValue>{toPrecision(totalNomination, precision)}</BoldValue>
+          </li>
+          <li>
+            <Label>奖池金额</Label>
+            <BoldValue>{toPrecision(jackpot, precision)}</BoldValue>
+          </li>
+          <li>
+            <Label>奖池地址</Label>
+            <DotInCenter text={jackpotAddress} length={5} />
+          </li>
+          <li>
+            <Label>账户地址</Label>
+            <DotInCenter text={accountAddress} length={5} />
+          </li>
+        </ul>
+      </div>
     </Wrapper>
   )
 }
