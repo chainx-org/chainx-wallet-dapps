@@ -12,6 +12,8 @@ import { setNode } from './reducers/nodeSlice'
 import SnackGallery from './SnackGallery'
 import { setNetwork } from './reducers/settingsSlice'
 import { mainNetApi, setApi, testNetApi } from './services/api'
+import { mainNetDemoAccount, testNetDemoAccount } from './utils/constants'
+import { isDemoAccount } from './selectors'
 
 const GlobalStyle = createGlobalStyle`
 html {
@@ -81,11 +83,13 @@ function saveState(state) {
 
 const persistedState = loadState()
 if (!persistedState.address) {
-  persistedState.address = {
-    address: '5TGy4d488i7pp3sjzi1gibqFUPLShddfk7qPY2S445ErhDGq',
-    extensionAccounts: [],
-    isFromExtension: false,
-    name: '体验账户'
+  if (
+    persistedState.settings &&
+    persistedState.settings.network === 'testnet'
+  ) {
+    persistedState.address = testNetDemoAccount
+  } else {
+    persistedState.address = mainNetDemoAccount
   }
 }
 
@@ -113,14 +117,23 @@ const nodePromise = new Promise(resolve => {
 })
 
 async function setExtensionAccount(network) {
+  const state = store.getState()
+  const nowAddress = state.address
+
   const account = await window.chainxProvider.enable()
   if (!account) {
     store.dispatch(setExtensionAccounts([]))
+    if (!isDemoAccount(nowAddress.address, network)) {
+      store.dispatch(
+        setAccount(
+          network === 'testnet' ? testNetDemoAccount : mainNetDemoAccount
+        )
+      )
+    }
     return
   }
 
   store.dispatch(setExtensionAccounts([{ ...account, network }]))
-  const nowAddress = store.getState().address
   if (nowAddress.isFromExtension && nowAddress.address !== account.address) {
     store.dispatch(
       setAccount({
@@ -143,14 +156,24 @@ async function setExtensionNode(nowUrl) {
 }
 
 window.onload = async () => {
+  const state = store.getState()
+  let network = state.settings.network
+
   const { url } = store.getState().node
   if (!window.chainxProvider) {
     setChainx(url)
+    store.dispatch(setExtensionAccounts([]))
+    store.dispatch(
+      setAccount(
+        network === 'testnet' ? testNetDemoAccount : mainNetDemoAccount
+      )
+    )
+
     nodeResolve()
     return
   }
 
-  const network = await window.chainxProvider.getNetwork()
+  network = await window.chainxProvider.getNetwork()
   store.dispatch(setNetwork(network))
   setApi(network === 'testnet' ? testNetApi : mainNetApi)
 

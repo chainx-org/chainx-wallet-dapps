@@ -7,6 +7,11 @@ import { extensionAccountsSelector } from '../../../reducers/addressSlice'
 import extensionIcon from './extension.svg'
 import useOutsideClick from '../../../utils/useClickOutside'
 import { noneFunc } from '../../../utils'
+import { networkSelector } from '../../../reducers/settingsSlice'
+import {
+  mainNetDemoAccount,
+  testNetDemoAccount
+} from '../../../utils/constants'
 
 const Wrapper = styled.ul`
   position: absolute;
@@ -105,8 +110,12 @@ export default function({ close = noneFunc }) {
     setTimeout(() => window.location.reload(), 0)
   }
 
-  const demoAccountName = $t('HEADER_DEMO_ACCOUNT')
-  const demoAccountAddress = '5TGy4d488i7pp3sjzi1gibqFUPLShddfk7qPY2S445ErhDGq'
+  const network = useSelector(networkSelector)
+  const demoAccount =
+    network === 'testnet' ? testNetDemoAccount : mainNetDemoAccount
+
+  const demoAccountName = demoAccount.name
+  const demoAccountAddress = demoAccount.address
 
   const hasExtension = !!window.chainxProvider
 
