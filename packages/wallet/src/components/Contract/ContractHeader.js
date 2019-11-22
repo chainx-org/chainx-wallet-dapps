@@ -26,6 +26,9 @@ const ContractHeader = styled.div`
 const Nav = styled.span`
   margin-left: 16px;
   height: 50px;
+  &.last-nav {
+    margin-left: 24px;
+  }
   & > a {
     display: inline-flex;
     height: 100%;
@@ -55,7 +58,7 @@ export default function({ i }) {
             {$t('CONTRACT')}
           </NavLink>
         </Nav>
-        <Nav>
+        <Nav className="last-nav">
           <NavLink exact activeClassName="active" to="/contract/code">
             {$t('CODE')}
           </NavLink>
