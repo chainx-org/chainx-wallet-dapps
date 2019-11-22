@@ -7,6 +7,7 @@ import {
 } from '../../selectors'
 import nominationIcon from './nomination.svg'
 import rateIcon from './nomination_rate.svg'
+import ReactTooltip from 'react-tooltip'
 
 const Info = styled.ul`
   display: inline-flex;
@@ -40,15 +41,18 @@ export default function() {
   const nominationRate = useSelector(nominationRateSelector)
 
   return (
-    <Info>
-      <li>
-        <img src={nominationIcon} alt="total nomination" />
-        <span>{totalNomination}</span>
-      </li>
-      <li>
-        <img src={rateIcon} alt="nomination rate" />
-        <span>{nominationRate}</span>
-      </li>
-    </Info>
+    <>
+      <Info>
+        <li data-tip="投票总数">
+          <img src={nominationIcon} alt="total nomination" />
+          <span>{totalNomination}</span>
+        </li>
+        <li data-tip="投票率">
+          <img src={rateIcon} alt="nomination rate" />
+          <span>{nominationRate}</span>
+        </li>
+      </Info>
+      <ReactTooltip place="bottom" type="dark" effect="solid" />
+    </>
   )
 }
