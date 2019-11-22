@@ -1,20 +1,22 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
 import $t from '../../../locale'
 import { useDispatch, useSelector } from 'react-redux'
 import { setAccount } from '../../../reducers/addressSlice'
 import { extensionAccountsSelector } from '../../../reducers/addressSlice'
 import extensionIcon from './extension.svg'
+import useOutsideClick from '../../../utils/useClickOutside'
+import { noneFunc } from '../../../utils'
 
 const Wrapper = styled.ul`
   position: absolute;
   top: 56px;
-  right: 0;
+  right: 16px;
   padding: 16px;
 
   width: 300px;
 
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 1);
   border: 1px solid #dce0e2;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08), 0 8px 8px 0 rgba(0, 0, 0, 0.16);
   border-radius: 10px;
@@ -22,6 +24,7 @@ const Wrapper = styled.ul`
   z-index: 2;
 
   & > li {
+    cursor: pointer;
     &:not(:first-of-type) {
       padding-top: 10px;
       border-top: 1px solid #eee;
@@ -94,7 +97,7 @@ const Wrapper = styled.ul`
   }
 `
 
-export default function() {
+export default function({ close = noneFunc }) {
   const extensionAccounts = useSelector(extensionAccountsSelector)
   const dispatch = useDispatch()
   const selectAccount = (name, address, isFromExtension) => {
@@ -107,8 +110,14 @@ export default function() {
 
   const hasExtension = !!window.chainxProvider
 
+  const popup = useRef(null)
+
+  useOutsideClick(popup, () => {
+    close()
+  })
+
   return (
-    <Wrapper>
+    <Wrapper ref={popup}>
       <li
         onClick={() =>
           selectAccount(demoAccountName, demoAccountAddress, false)

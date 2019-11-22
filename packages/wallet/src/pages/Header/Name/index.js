@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import { nameSelector } from '../../../reducers/addressSlice'
 import moreIcon from './more.svg'
-import AccountList from './AccountList'
 
 const Name = styled.span`
   height: 100%;
@@ -30,19 +29,15 @@ const Name = styled.span`
   }
 `
 
-export default function() {
+export default function({ onClick }) {
   const name = useSelector(nameSelector)
-  const [showList, setShowList] = useState(false)
-
-  const toggleList = () => setShowList(!showList)
 
   return (
     <Name>
-      <div className="info" onClick={toggleList}>
+      <div className="info" onClick={onClick}>
         <span>{name}</span>
         <img src={moreIcon} alt="more" />
       </div>
-      {showList ? <AccountList /> : null}
     </Name>
   )
 }

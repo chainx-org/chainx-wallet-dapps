@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import $t from '../../locale'
 import mainNetLogo from './logo.svg'
@@ -8,6 +8,7 @@ import { NavLink } from 'react-router-dom'
 import Name from './Name'
 import { useSelector } from 'react-redux'
 import { localeSelector, networkSelector } from '../../reducers/settingsSlice'
+import AccountList from './AccountList'
 
 const Wrapper = styled.header`
   display: flex;
@@ -63,6 +64,8 @@ export default function() {
     logo = locale === 'zh' ? testNetLogoZh : testNetLogoEn
   }
 
+  const [showList, setShowList] = useState(false)
+
   return (
     <Wrapper>
       <div className="left">
@@ -98,8 +101,9 @@ export default function() {
         )}
       </div>
       <div className="right">
-        <Name />
+        <Name onClick={() => setShowList(true)} />
       </div>
+      {showList ? <AccountList close={() => setShowList(false)} /> : null}
     </Wrapper>
   )
 }
