@@ -14,7 +14,8 @@ import {
 import arrow from '../svg/arrow.svg'
 import darkArrow from '../svg/dark-arrow.svg'
 import { showSnack, signAndSendExtrinsic } from '../../../utils/chainxProvider'
-import { addressSelector, isDemoSelector } from '../../../reducers/addressSlice'
+import { addressSelector } from '../../../reducers/addressSlice'
+import { isDemoSelector } from '../../../selectors'
 import BigNumber from 'bignumber.js'
 import { fetchAccountAssets } from '../../../reducers/assetSlice'
 import {

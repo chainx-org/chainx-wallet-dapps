@@ -9,7 +9,7 @@ import arrow from '../svg/arrow.svg'
 import darkArrow from '../svg/dark-arrow.svg'
 import BigNumber from 'bignumber.js'
 import { showSnack, signAndSendExtrinsic } from '../../../utils/chainxProvider'
-import { addressSelector, isDemoSelector } from '../../../reducers/addressSlice'
+import { addressSelector } from '../../../reducers/addressSlice'
 import IntentionSelect from './IntentionSelect'
 import {
   fetchNominationRecords,
@@ -17,6 +17,7 @@ import {
 } from '../../../reducers/intentionSlice'
 import { fetchAccountAssets } from '../../../reducers/assetSlice'
 import { checkMemoAndHasError } from '../../../utils/errorCheck'
+import { isDemoSelector } from '../../../selectors'
 
 export default function({ handleClose, nomination, intention }) {
   const accountAddress = useSelector(addressSelector)

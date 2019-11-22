@@ -10,6 +10,7 @@
     "chainx.js": "2.22.26",
     "classnames": "^2.2.6",
     "clipboard": "^2.0.4",
+    "extensionizer": "^1.0.1",
     "lodash.chunk": "^4.2.0",
     "lodash.throttle": "^4.1.1",
     "moment": "^2.24.0",

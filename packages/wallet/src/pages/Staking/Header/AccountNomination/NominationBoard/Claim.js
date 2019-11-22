@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  addressSelector,
-  isDemoSelector
-} from '../../../../../reducers/addressSlice'
+import { addressSelector } from '../../../../../reducers/addressSlice'
 import { PrimaryButton } from '@chainx/ui'
 import {
   showSnack,
@@ -11,6 +8,7 @@ import {
 } from '../../../../../utils/chainxProvider'
 import { fetchNominationRecords } from '../../../../../reducers/intentionSlice'
 import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
+import { isDemoSelector } from '../../../../../selectors'
 
 export default function({ record, interest }) {
   const { account } = record.intention || {}

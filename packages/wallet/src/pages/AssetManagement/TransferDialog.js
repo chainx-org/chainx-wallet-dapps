@@ -12,7 +12,7 @@ import { toPrecision } from '../../utils'
 import { useDispatch, useSelector } from 'react-redux'
 import { xbtcFreeSelector } from './Assets/XbtcCard/selectors'
 import { getChainx } from '../../services/chainx'
-import { addressSelector, isDemoSelector } from '../../reducers/addressSlice'
+import { addressSelector } from '../../reducers/addressSlice'
 import BigNumber from 'bignumber.js'
 import { sdotFreeSelector } from './Assets/selectors'
 import { pcxFreeSelector } from './PcxCard/selectors'
@@ -23,6 +23,7 @@ import {
   checkAmountAndHasError,
   checkMemoAndHasError
 } from '../../utils/errorCheck'
+import { isDemoSelector } from '../../selectors'
 
 const StyledDialog = styled(Dialog)`
   div.wrapper {

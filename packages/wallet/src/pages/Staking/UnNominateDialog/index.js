@@ -9,13 +9,14 @@ import arrow from '../svg/arrow.svg'
 import darkArrow from '../svg/dark-arrow.svg'
 import BigNumber from 'bignumber.js'
 import { showSnack, signAndSendExtrinsic } from '../../../utils/chainxProvider'
-import { addressSelector, isDemoSelector } from '../../../reducers/addressSlice'
+import { addressSelector } from '../../../reducers/addressSlice'
 import { fetchNominationRecords } from '../../../reducers/intentionSlice'
 import { fetchAccountAssets } from '../../../reducers/assetSlice'
 import {
   checkAmountAndHasError,
   checkMemoAndHasError
 } from '../../../utils/errorCheck'
+import { isDemoSelector } from '../../../selectors'
 
 export default function({
   handleClose,

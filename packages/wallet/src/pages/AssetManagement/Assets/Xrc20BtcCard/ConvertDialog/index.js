@@ -16,14 +16,12 @@ import {
   showSnack,
   signAndSendExtrinsic
 } from '../../../../../utils/chainxProvider'
-import {
-  addressSelector,
-  isDemoSelector
-} from '../../../../../reducers/addressSlice'
+import { addressSelector } from '../../../../../reducers/addressSlice'
 import { getChainx } from '../../../../../services/chainx'
 import { hexToU8a, u8aConcat, u8aToHex } from '@chainx/util'
 import { u64 } from '@chainx/types'
 import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
+import { isDemoSelector } from '../../../../../selectors'
 
 export default function({ handleClose }) {
   const accountAddress = useSelector(addressSelector)

@@ -10,7 +10,7 @@ import { toPrecision } from '../../../../../../utils'
 import { blockDuration, timeFormat } from '../../../../../../utils/constants'
 import moment from 'moment'
 import { PrimaryButton } from '@chainx/ui'
-import { isDemoSelector } from '../../../../../../reducers/addressSlice'
+import { isDemoSelector } from '../../../../../../selectors'
 
 export default function({ handleClose, revocations = [] }) {
   const nowBlockNumber = useSelector(blockNumberSelector)

@@ -36,9 +36,6 @@ export const accountSelector = createSelector(
   (name, address) => ({ name, address })
 )
 
-export const isDemoSelector = state =>
-  state.address.address === '5TGy4d488i7pp3sjzi1gibqFUPLShddfk7qPY2S445ErhDGq'
-
 export const extensionAccountsSelector = state =>
   state.address.extensionAccounts
 

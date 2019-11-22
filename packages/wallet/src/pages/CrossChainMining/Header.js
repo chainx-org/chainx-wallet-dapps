@@ -31,6 +31,7 @@ import {
 } from '../../reducers/snackSlice'
 import { pcxPrecisionSelector } from '../selectors/assets'
 import { fetchPseduNominationRecords } from '../../reducers/intentionSlice'
+import { isDemoSelector } from '../../selectors'
 
 export default function({ token }) {
   const accountAddress = useSelector(addressSelector)
@@ -102,12 +103,14 @@ export default function({ token }) {
       .catch(() => setDisabled(false))
   }
 
+  const isDemo = useSelector(isDemoSelector)
+
   return (
     <>
       <Logo icon={icon} name={token === tokens.XBTC ? 'X-BTC' : token} />
       {showInterest && (
         <Interest
-          disabled={disabled}
+          disabled={isDemo || disabled}
           interest={interest}
           precision={precision}
           claim={() => claim(token)}

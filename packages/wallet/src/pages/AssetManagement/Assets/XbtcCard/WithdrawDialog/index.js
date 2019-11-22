@@ -13,10 +13,7 @@ import {
 } from '../../../../../reducers/trustSlice'
 import BigNumber from 'bignumber.js'
 import { default as WAValidator } from 'wallet-address-validator'
-import {
-  addressSelector,
-  isDemoSelector
-} from '../../../../../reducers/addressSlice'
+import { addressSelector } from '../../../../../reducers/addressSlice'
 import { networkSelector } from '../../../../../reducers/settingsSlice'
 import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
 import {
@@ -29,6 +26,7 @@ import {
 } from '../../../../../utils/errorCheck'
 import { getChainx } from '../../../../../services/chainx'
 import { fetchWithdrawals } from '../../../../../reducers/crosschainSlice'
+import { isDemoSelector } from '../../../../../selectors'
 
 export default function({ handleClose }) {
   const network = useSelector(networkSelector)
