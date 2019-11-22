@@ -24,11 +24,20 @@ import {
   checkAmountAndHasError,
   checkMemoAndHasError
 } from '../../../../../utils/errorCheck'
+import { getChainx } from '../../../../../services/chainx'
+import { fetchWithdrawals } from '../../../../../reducers/crosschainSlice'
 
 export default function({ handleClose }) {
   const network = useSelector(networkSelector)
   const dispatch = useDispatch()
   const accountAddress = useSelector(addressSelector)
+
+  let accountId
+  if (accountAddress) {
+    const chainx = getChainx()
+    accountId = chainx.account.decodeAddress(accountAddress, false)
+  }
+
   const [address, setAddress] = useState('')
   const [addressErrMsg, setAddressErrMsg] = useState('')
 
@@ -116,7 +125,10 @@ export default function({ handleClose }) {
 
       await showSnack(status, messages, dispatch)
       handleClose()
-      dispatch(fetchAccountAssets(accountAddress))
+      setTimeout(() => {
+        dispatch(fetchAccountAssets(accountAddress))
+        dispatch(fetchWithdrawals(accountId))
+      }, 3000)
     } catch (e) {
       setDisabled(false)
     }

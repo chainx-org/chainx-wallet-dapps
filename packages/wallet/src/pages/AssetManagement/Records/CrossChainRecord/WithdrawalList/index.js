@@ -17,6 +17,7 @@ import {
   showSnack,
   signAndSendExtrinsic
 } from '../../../../../utils/chainxProvider'
+import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
 
 const Wrapper = styled.div`
   & > div {
@@ -99,6 +100,7 @@ export default function() {
     await showSnack(status, messages, dispatch)
     setTimeout(() => {
       dispatch(fetchWithdrawals(accountId))
+      dispatch(fetchAccountAssets(accountAddress))
     }, 3000)
   }
 
