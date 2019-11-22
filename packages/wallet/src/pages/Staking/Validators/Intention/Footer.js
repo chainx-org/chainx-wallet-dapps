@@ -15,14 +15,20 @@ import { useSelector } from 'react-redux'
 const Footer = styled.footer`
   display: flex;
 
+  & > img:first-of-type {
+    z-index: 9;
+  }
+
   & > img:nth-child(2) {
     position: relative;
     left: -7px;
+    z-index: 8;
   }
 
   & > img:nth-child(3) {
     position: relative;
     left: -14px;
+    z-index: 7;
   }
 `
 
