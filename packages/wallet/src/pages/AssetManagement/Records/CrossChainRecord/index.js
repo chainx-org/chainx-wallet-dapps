@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import DepositList from './DepositList'
 import WithdrawalList from './WithdrawalList'
 import LockList from './LockList'
+import $t from '../../../../locale'
 
 const Wrapper = styled.div`
   height: 100%;
@@ -50,19 +51,19 @@ export default function() {
             onClick={() => setOption('deposit')}
             className={option === 'deposit' ? 'active' : ''}
           >
-            充值
+            {$t('ASSET_CROSS_CHAIN_DEPOSIT')}
           </li>
           <li
             onClick={() => setOption('withdraw')}
             className={option === 'withdraw' ? 'active' : ''}
           >
-            提现
+            {$t('ASSET_CROSS_CHAIN_WITHDRAWAL')}
           </li>
           <li
             onClick={() => setOption('lock')}
             className={option === 'lock' ? 'active' : ''}
           >
-            锁仓
+            {$t('ASSET_CROSS_CHAIN_LOCK')}
           </li>
         </ul>
       </header>

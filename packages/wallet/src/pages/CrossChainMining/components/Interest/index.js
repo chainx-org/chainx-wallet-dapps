@@ -4,6 +4,7 @@ import { PrimaryButton } from '@chainx/ui'
 import React, { useState } from 'react'
 import warningIcon from './warning.svg'
 import Condition from './Condition'
+import $t from '../../../../locale'
 
 const Wrapper = styled.section`
   display: flex;
@@ -54,7 +55,7 @@ export default function(props) {
 
   return (
     <Wrapper>
-      <label>待提利息</label>
+      <label>{$t('PSEDU_INTEREST')}</label>
       <span>
         <span className="interest">{toPrecision(interest, precision)} PCX</span>
         {interest > 0 && !canClaim ? (
@@ -68,7 +69,7 @@ export default function(props) {
         size="small"
         onClick={() => claim(token)}
       >
-        提息
+        {$t('PSEDU_CLAIM')}
       </PrimaryButton>
       {interest > 0 && openCondition ? (
         <Condition

@@ -88,8 +88,20 @@ const asset = {
     zh: '转账记录'
   },
   ASSET_CROSS_CHAIN_RECORD: {
-    en: '跨链记录',
+    en: 'Cross chain',
     zh: '跨链记录'
+  },
+  ASSET_CROSS_CHAIN_DEPOSIT: {
+    en: 'Deposit',
+    zh: '充值'
+  },
+  ASSET_CROSS_CHAIN_WITHDRAWAL: {
+    en: 'Withdrawal',
+    zh: '提现'
+  },
+  ASSET_CROSS_CHAIN_LOCK: {
+    en: 'Lock',
+    zh: '锁仓'
   },
   ASSET_CONTACT: {
     en: 'Contact',
@@ -156,6 +168,14 @@ const pseduIntention = {
   PSEDU_BALANCE: {
     en: 'Balance',
     zh: '我的总余额'
+  },
+  PSEDU_CLAIM: {
+    en: 'Claim',
+    zh: '提息'
+  },
+  PSEDU_INTEREST: {
+    en: 'Interest',
+    zh: '利息'
   }
 }
 
