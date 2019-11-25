@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import Xbtc from './XbtcCard'
 import Lbtc from './LbtcCard'
 import Sdot from './SdotCard'
+import Power from './Power'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -19,6 +20,9 @@ const Wrapper = styled.div`
     margin-top: 16px;
   }
 `
+const Contained = styled.div`
+  display: flex;
+`
 
 export default function() {
   const address = useSelector(addressSelector)
@@ -31,10 +35,13 @@ export default function() {
   }, [dispatch, address])
 
   return (
-    <Wrapper>
-      <Xbtc />
-      <Lbtc />
-      <Sdot />
-    </Wrapper>
+    <Contained>
+      <Wrapper>
+        <Xbtc />
+        <Lbtc />
+        <Sdot />
+      </Wrapper>
+      <Power />
+    </Contained>
   )
 }
