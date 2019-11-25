@@ -1,37 +1,37 @@
 import React, { useState } from 'react'
-import Logo from './components/Logo'
-import xbtcIcon from '../../static/xbtc.svg'
-import lbtcIcon from '../../static/lbtc.svg'
-import sdotIcon from '../../static/sdot.svg'
-import Interest from './components/Interest'
-import { token as tokens } from '../../utils/constants'
+import Logo from '../components/Logo'
+import xbtcIcon from '../../../static/xbtc.svg'
+import lbtcIcon from '../../../static/lbtc.svg'
+import sdotIcon from '../../../static/sdot.svg'
+import Interest from '../components/Interest'
+import { token as tokens } from '../../../utils/constants'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   xbtcClaimInfoSelector,
   xbtcInterestSelector
-} from './XbtcCard/selectors'
+} from '../XbtcCard/selectors'
 import {
   sdotClaimInfoSelector,
   sdotInterestSelector
-} from './SdotCard/selectors'
+} from '../SdotCard/selectors'
 import {
   lbtcClaimInfoSelector,
   lbtcInterestSelector
-} from './LbtcCard/selectors'
+} from '../LbtcCard/selectors'
 import {
   addressSelector,
   isExtensionSelector
-} from '../../reducers/addressSlice'
-import { signAndSendExtrinsic } from '../../utils/chainxProvider'
+} from '../../../reducers/addressSlice'
+import { signAndSendExtrinsic } from '../../../utils/chainxProvider'
 import {
   addSnack,
   generateId,
   removeSnackInSeconds,
   typeEnum
-} from '../../reducers/snackSlice'
-import { pcxPrecisionSelector } from '../selectors/assets'
-import { fetchPseduNominationRecords } from '../../reducers/intentionSlice'
-import { isDemoSelector } from '../../selectors'
+} from '../../../reducers/snackSlice'
+import { pcxPrecisionSelector } from '../../selectors/assets'
+import { fetchPseduNominationRecords } from '../../../reducers/intentionSlice'
+import { isDemoSelector } from '../../../selectors'
 
 export default function({ token }) {
   const accountAddress = useSelector(addressSelector)
