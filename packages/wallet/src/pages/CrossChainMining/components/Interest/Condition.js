@@ -101,7 +101,7 @@ export default function({ claimInfo, close = noneFunc }) {
             <span>每次提息时间间隔不少于 7 天</span>
           </h3>
           {reachClaimHeight ? null : (
-            <div>
+            <div style={{ marginBottom: 8 }}>
               <header>下次可提息高度</header>
               <p>
                 {nextClaim}（预估 {moment(nextTime).format(timeFormat)}）
