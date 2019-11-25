@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import moreIcon from './more.svg'
 import styled from 'styled-components'
 import UnNominateDialog from '../../../UnNominateDialog'
 import SwitchDialog from '../../../SwitchDialog'
 import $t from '../../../../../locale'
+import useOutsideClick from '../../../../../utils/useClickOutside'
 
 const Wrapper = styled.div`
   display: inline-flex;
@@ -52,10 +53,18 @@ export default function({ intention, record = {} }) {
 
   const { nomination, revocations = [] } = record.info || {}
 
+  const popup = useRef(null)
+
+  useOutsideClick(popup, () => {
+    if (showMore) {
+      setShowMore(false)
+    }
+  })
+
   return (
     <Wrapper>
       <img src={moreIcon} alt="more" onClick={() => setShowMore(!showMore)} />
-      <ul className={showMore ? 'show' : 'hide'}>
+      <ul className={showMore ? 'show' : 'hide'} ref={popup}>
         <li
           onClick={() => {
             setUnNominateOpen(true)

@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import { detailedRecordsSelector } from './selectors'
 import defaultLogo from '../../../svg/default-logo.svg'
 import { DefaultButton } from '@chainx/ui'
-import { toPrecision } from '../../../../../utils'
+import { noneFunc, toPrecision } from '../../../../../utils'
 import { pcxPrecisionSelector } from '../../../../selectors/assets'
 import VoteDialog from '../../../VoteDialog'
 import More from './More'
@@ -13,6 +13,7 @@ import { Label, Value } from './components'
 import Unfreeze from './Unfreeze'
 import Empty from './Empty'
 import $t from '../../../../../locale'
+import useOutsideClick from '../../../../../utils/useClickOutside'
 
 const Wrapper = styled.div`
   display: flex;
@@ -78,15 +79,21 @@ const Wrapper = styled.div`
   }
 `
 
-export default function() {
+export default function({ close = noneFunc }) {
   const records = useSelector(detailedRecordsSelector)
   const precision = useSelector(pcxPrecisionSelector)
 
   const [voteOpen, setVoteOpen] = useState(false)
   const [intention, setIntention] = useState(null)
 
+  const popup = useRef(null)
+
+  useOutsideClick(popup, () => {
+    close()
+  })
+
   return (
-    <Wrapper>
+    <Wrapper ref={popup}>
       <ul>
         {records.map((record, index) => {
           const { name, hasLogo, logo, jackpot = 0 } = record.intention || {}

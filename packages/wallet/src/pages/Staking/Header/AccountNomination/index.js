@@ -85,7 +85,7 @@ export default function() {
         alt="open"
         onClick={() => setOpen(!open)}
       />
-      {open ? <NominationBoard /> : null}
+      {open ? <NominationBoard close={() => setOpen(false)} /> : null}
     </Wrapper>
   )
 }
