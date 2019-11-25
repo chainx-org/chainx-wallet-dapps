@@ -9,7 +9,7 @@ import useOutsideClick from '../../../../../utils/useClickOutside'
 
 const Wrapper = styled.div`
   position: absolute;
-  z-index: 9;
+  z-index: 10;
   right: 0;
   top: 36px;
   .intention-detail {
@@ -30,7 +30,12 @@ const Wrapper = styled.div`
     }
 
     p {
-      margin: 0;
+      margin: 0 0 10px;
+      opacity: 0.56;
+      font-size: 12px;
+      color: #000000;
+      letter-spacing: 0.2px;
+      line-height: 16px;
     }
 
     ul {
