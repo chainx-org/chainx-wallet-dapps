@@ -12,6 +12,7 @@ import Claim from './Claim'
 import { Label, Value } from './components'
 import Unfreeze from './Unfreeze'
 import Empty from './Empty'
+import $t from '../../../../../locale'
 
 const Wrapper = styled.div`
   display: flex;
@@ -112,7 +113,7 @@ export default function() {
                       setVoteOpen(true)
                     }}
                   >
-                    投票
+                    {$t('STAKING_VOTE')}
                   </DefaultButton>
                   <Claim record={record} interest={interest} />
                   <More intention={record.intention} record={record} />
@@ -120,19 +121,19 @@ export default function() {
               </header>
               <ul>
                 <li>
-                  <Label>Jackpot</Label>
+                  <Label>{$t('COMMON_JACKPOT')}</Label>
                   <Value>{toPrecision(jackpot, precision)}</Value>
                 </li>
                 <li>
-                  <Label>Unfreeze</Label>
+                  <Label>{$t('COMMON_UNFREEZE')}</Label>
                   <Value>{toPrecision(unfreeze, precision)}</Value>
                 </li>
                 <li>
-                  <Label>My nominations</Label>
+                  <Label>{$t('STAKING_MY_NOMINATION')}</Label>
                   <Value>{toPrecision(nomination, precision)}</Value>
                 </li>
                 <li>
-                  <Label>Unclaimed</Label>
+                  <Label>{$t('STAKING_INTEREST')}</Label>
                   <Value>{toPrecision(interest, precision)}</Value>
                 </li>
               </ul>

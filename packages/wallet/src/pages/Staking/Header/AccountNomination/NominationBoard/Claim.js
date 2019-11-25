@@ -9,6 +9,7 @@ import {
 import { fetchNominationRecords } from '../../../../../reducers/intentionSlice'
 import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
 import { isDemoSelector } from '../../../../../selectors'
+import $t from '../../../../../locale'
 
 export default function({ record, interest }) {
   const { account } = record.intention || {}
@@ -55,7 +56,7 @@ export default function({ record, interest }) {
       style={{ marginRight: 8 }}
       onClick={() => claim(account)}
     >
-      提息
+      {$t('STAKING_CLAIM')}
     </PrimaryButton>
   )
 }

@@ -134,12 +134,12 @@ export default function({ handleClose, intention }) {
 
         <div className="info">
           <section className="now">
-            <h4>当前票数</h4>
+            <h4>{$t('STAKING_NOW_NOMINATION')}</h4>
             <p>{toPrecision(nomination, precision)} PCX</p>
           </section>
           <img src={hasAmount ? arrow : darkArrow} alt="arrow" />
           <section className="after">
-            <h4>修改后票数</h4>
+            <h4>{$t('STAKING_AFTER_NOMINATION')}</h4>
             <p>
               {!hasAmount
                 ? '-'

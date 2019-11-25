@@ -141,6 +141,14 @@ const common = {
   COMMON_INVALID_FORMAT: {
     en: 'Invalid format',
     zh: '格式错误'
+  },
+  COMMON_JACKPOT: {
+    en: 'Jackpot',
+    zh: '奖池金额'
+  },
+  COMMON_UNFREEZE: {
+    en: 'unfreeze',
+    zh: '解冻'
   }
 }
 
@@ -207,6 +215,18 @@ const staking = {
     en: 'Vote',
     zh: '投票'
   },
+  STAKING_CLAIM: {
+    en: 'Claim',
+    zh: '提息'
+  },
+  STAKING_SWITCH_NOMINATION: {
+    en: 'Switch nomination',
+    zh: '切换投票'
+  },
+  STAKING_UN_NOMINATION: {
+    en: 'Redeem nomination',
+    zh: '赎回投票'
+  },
   STAKING_VOTE_AMOUNT: {
     en: 'Vote amount',
     zh: '投票数量'
@@ -258,6 +278,14 @@ const staking = {
   STAKING_INTEREST: {
     en: 'Interest',
     zh: '待领利息'
+  },
+  STAKING_NOW_NOMINATION: {
+    en: 'Now nomination',
+    zh: '当前票数'
+  },
+  STAKING_AFTER_NOMINATION: {
+    en: 'Nomination after operation',
+    zh: '修改后票数'
   }
 }
 

@@ -3,6 +3,7 @@ import moreIcon from './more.svg'
 import styled from 'styled-components'
 import UnNominateDialog from '../../../UnNominateDialog'
 import SwitchDialog from '../../../SwitchDialog'
+import $t from '../../../../../locale'
 
 const Wrapper = styled.div`
   display: inline-flex;
@@ -13,12 +14,12 @@ const Wrapper = styled.div`
   }
 
   ul {
+    width: 190px;
     display: none;
     &.show {
       display: flex;
     }
     flex-direction: column;
-    width: 116px;
     position: absolute;
     top: 30px;
     right: 0;
@@ -61,7 +62,7 @@ export default function({ intention, record = {} }) {
             setShowMore(false)
           }}
         >
-          赎回投票
+          {$t('STAKING_UN_NOMINATION')}
         </li>
         <li
           onClick={() => {
@@ -69,7 +70,7 @@ export default function({ intention, record = {} }) {
             setShowMore(false)
           }}
         >
-          切换投票
+          {$t('STAKING_SWITCH_NOMINATION')}
         </li>
       </ul>
       {unNominateOpen ? (
