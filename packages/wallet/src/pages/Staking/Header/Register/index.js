@@ -3,6 +3,7 @@ import registerIcon from './register.svg'
 import RegisterNodeDialog from './RegisterNodeDialog'
 import { IconWrapper } from '../components'
 import ReactTooltip from 'react-tooltip'
+import $t from '../../../../locale'
 
 export default function() {
   const [open, setOpen] = useState(false)
@@ -10,7 +11,11 @@ export default function() {
   return (
     <>
       <IconWrapper onClick={() => setOpen(true)}>
-        <img src={registerIcon} alt="register" data-tip="注册节点" />
+        <img
+          src={registerIcon}
+          alt="register"
+          data-tip={$t('STAKING_REGISTER_INTENTION')}
+        />
         <ReactTooltip place="bottom" type="dark" effect="solid" />
       </IconWrapper>
       {open ? <RegisterNodeDialog handleClose={() => setOpen(false)} /> : null}

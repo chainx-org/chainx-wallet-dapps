@@ -87,7 +87,11 @@ export default function({ handleClose = noneFunc }) {
   }
 
   return (
-    <StyledDialog open title="更新节点" handleClose={handleClose}>
+    <StyledDialog
+      open
+      title={$t('STAKING_UPDATE_INTENTION')}
+      handleClose={handleClose}
+    >
       <div className="wrapper">
         <ul>
           <li>

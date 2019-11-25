@@ -6,6 +6,7 @@ import { pcxPrecisionSelector } from '../../../../selectors/assets'
 import { noneFunc, toPrecision } from '../../../../../utils'
 import { getChainx } from '../../../../../services/chainx'
 import useOutsideClick from '../../../../../utils/useClickOutside'
+import $t from '../../../../../locale'
 
 const Wrapper = styled.div`
   position: absolute;
@@ -86,23 +87,23 @@ export default function({ intention, close = noneFunc }) {
         <p>{about}</p>
         <ul>
           <li>
-            <Label>自抵押数</Label>
+            <Label>{$t('STAKING_SELF_VOTE_NUMBER')}</Label>
             <BoldValue>{toPrecision(selfVote, precision)}</BoldValue>
           </li>
           <li>
-            <Label>总得票数</Label>
+            <Label>{$t('STAKING_NOMINATION_NUMBER')}</Label>
             <BoldValue>{toPrecision(totalNomination, precision)}</BoldValue>
           </li>
           <li>
-            <Label>奖池金额</Label>
+            <Label>{$t('STAKING_JACKPOT_AMOUNT')}</Label>
             <BoldValue>{toPrecision(jackpot, precision)}</BoldValue>
           </li>
           <li>
-            <Label>奖池地址</Label>
+            <Label>{$t('STAKING_JACKPOT_ADDR')}</Label>
             <DotInCenter text={jackpotAddress} length={5} />
           </li>
           <li>
-            <Label>账户地址</Label>
+            <Label>{$t('STAKING_ACCOUNT_ADDRESS')}</Label>
             <DotInCenter text={accountAddress} length={5} />
           </li>
         </ul>

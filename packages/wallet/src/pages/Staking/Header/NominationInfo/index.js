@@ -8,6 +8,7 @@ import {
 import nominationIcon from './nomination.svg'
 import rateIcon from './nomination_rate.svg'
 import ReactTooltip from 'react-tooltip'
+import $t from '../../../../locale'
 
 const Info = styled.ul`
   display: inline-flex;
@@ -43,11 +44,11 @@ export default function() {
   return (
     <>
       <Info>
-        <li data-tip="投票总数">
+        <li data-tip={$t('STAKING_ALL_NOMINATION')}>
           <img src={nominationIcon} alt="total nomination" />
           <span>{totalNomination}</span>
         </li>
-        <li data-tip="投票率">
+        <li data-tip={$t('STAKING_NOMINATION_RATE')}>
           <img src={rateIcon} alt="nomination rate" />
           <span>{nominationRate}</span>
         </li>

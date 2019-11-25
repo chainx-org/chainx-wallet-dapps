@@ -210,6 +210,54 @@ const staking = {
   STAKING_VOTE_AMOUNT: {
     en: 'Vote amount',
     zh: '投票数量'
+  },
+  STAKING_ACCOUNT_ADDRESS: {
+    en: 'Account address',
+    zh: '账户地址'
+  },
+  STAKING_SELF_VOTE_NUMBER: {
+    en: 'Self Vote',
+    zh: '自抵押数'
+  },
+  STAKING_JACKPOT_AMOUNT: {
+    en: 'Jackpot amount',
+    zh: '奖池金额'
+  },
+  STAKING_JACKPOT_ADDR: {
+    en: 'Jackpot address',
+    zh: '奖池地址'
+  },
+  STAKING_NOMINATION_NUMBER: {
+    en: 'Nomination',
+    zh: '总得票数'
+  },
+  STAKING_CHECK_DROP_OUT: {
+    en: 'View drop out intentions',
+    zh: '查看退选节点'
+  },
+  STAKING_REGISTER_INTENTION: {
+    en: 'Register Intention',
+    zh: '注册节点'
+  },
+  STAKING_UPDATE_INTENTION: {
+    en: 'Update Intention',
+    zh: '更新节点'
+  },
+  STAKING_NOMINATION_RATE: {
+    en: 'Nomination Rate',
+    zh: '投票率'
+  },
+  STAKING_ALL_NOMINATION: {
+    en: 'All Nomination',
+    zh: '投票总数'
+  },
+  STAKING_MY_NOMINATION: {
+    en: 'My nomination',
+    zh: '我的投票'
+  },
+  STAKING_INTEREST: {
+    en: 'Interest',
+    zh: '待领利息'
   }
 }
 

@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux'
 import normalIcon from './normal.svg'
 import openIcon from './open.svg'
 import NominationBoard from './NominationBoard'
+import $t from '../../../../locale'
 
 const Wrapper = styled.div`
   display: flex;
@@ -71,11 +72,11 @@ export default function() {
           <span>{totalRevocation}</span>
         </li>
         <li>
-          <label>我的投票</label>
+          <label>{$t('STAKING_MY_NOMINATION')}</label>
           <span>{totalNomination}</span>
         </li>
         <li>
-          <label>待领利息</label>
+          <label>{$t('STAKING_INTEREST')}</label>
           <span>{totalInterest}</span>
         </li>
       </Ul>

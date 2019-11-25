@@ -51,7 +51,11 @@ export default function({ handleClose = noneFunc }) {
   }
 
   return (
-    <StyledDialog open title="注册节点" handleClose={handleClose}>
+    <StyledDialog
+      open
+      title={$t('STAKING_REGISTER_INTENTION')}
+      handleClose={handleClose}
+    >
       <div className="wrapper">
         <p className="info">
           <img src={infoIcon} alt="info" />

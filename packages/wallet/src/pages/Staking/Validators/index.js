@@ -7,6 +7,7 @@ import {
   intentionChunksSelector
 } from './selectors'
 import { WhiteButton } from '@chainx/ui'
+import $t from '../../../locale'
 
 const Main = styled.main`
   overflow-y: auto;
@@ -59,7 +60,7 @@ export default function() {
       {showDropout ? null : (
         <div style={{ textAlign: 'center', marginTop: 20 }}>
           <WhiteButton size="large" onClick={() => setShowDropout(true)}>
-            查看退选节点
+            {$t('STAKING_CHECK_DROP_OUT')}
           </WhiteButton>
         </div>
       )}

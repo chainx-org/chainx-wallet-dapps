@@ -3,7 +3,7 @@ import { createSlice } from 'redux-starter-kit'
 const settingsSlice = createSlice({
   slice: 'settings',
   initialState: {
-    locale: 'zh',
+    locale: 'en',
     network: 'mainnet'
   },
   reducers: {
