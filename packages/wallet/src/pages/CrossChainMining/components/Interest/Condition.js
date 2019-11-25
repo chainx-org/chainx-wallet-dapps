@@ -3,12 +3,16 @@ import successIcon from './success.svg'
 import warningIcon from './warning.svg'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
-import { blockNumberSelector } from '../../../../reducers/chainSlice'
+import { headSelector } from '../../../../reducers/chainSlice'
 import useOutsideClick from '../../../../utils/useClickOutside'
-import { noneFunc } from '../../../../utils'
+import { noneFunc, toPrecision } from '../../../../utils'
+import { blockDuration, timeFormat } from '../../../../utils/constants'
+import moment from 'moment'
+import { pcxPrecisionSelector } from '../../../selectors/assets'
 
 const Wrapper = styled.div`
   position: absolute;
+  padding: 16px 0;
   background: rgba(255, 255, 255);
   border: 1px solid #dce0e2;
   border-radius: 10px;
@@ -28,6 +32,7 @@ const Wrapper = styled.div`
         color: #000000;
         letter-spacing: 0.12px;
         line-height: 20px;
+        margin: 0 0 8px;
         img {
           margin-right: 6px;
           margin-top: 2px;
@@ -38,17 +43,47 @@ const Wrapper = styled.div`
       &:first-of-type {
         border-bottom: 1px solid #eeeeee;
       }
+
+      &:not(:first-of-type) {
+        padding-top: 12px;
+      }
+
+      & > div {
+        margin-left: 22px;
+        header {
+          opacity: 0.32;
+          font-size: 12px;
+          color: #000000;
+          letter-spacing: 0.2px;
+          line-height: 16px;
+        }
+        p {
+          opacity: 0.72;
+          font-size: 14px;
+          color: #000000;
+          letter-spacing: 0.12px;
+          line-height: 20px;
+        }
+      }
     }
   }
 `
 
 export default function({ claimInfo, close = noneFunc }) {
-  const blockNumber = useSelector(blockNumberSelector)
-  const { nextClaim, hasEnoughStaking } = claimInfo
-
-  const reachClaimHeight = nextClaim <= blockNumber
+  const { number: blockNumber, now } = useSelector(headSelector)
+  const precision = useSelector(pcxPrecisionSelector)
+  console.log('now', now)
+  const {
+    nextClaim,
+    hasEnoughStaking,
+    needStakingPcx,
+    reachClaimHeight
+  } = claimInfo
+  console.log('claimInfo', claimInfo)
 
   const popup = useRef(null)
+
+  const nextTime = (nextClaim - blockNumber) * blockDuration + now * 1000
 
   useOutsideClick(popup, () => {
     close()
@@ -65,6 +100,14 @@ export default function({ claimInfo, close = noneFunc }) {
             />
             <span>每次提息时间间隔不少于 7 天</span>
           </h3>
+          {reachClaimHeight ? null : (
+            <div>
+              <header>下次可提息高度</header>
+              <p>
+                {nextClaim}（预估 {moment(nextTime).format(timeFormat)}）
+              </p>
+            </div>
+          )}
         </li>
         <li>
           <h3>
@@ -76,6 +119,12 @@ export default function({ claimInfo, close = noneFunc }) {
               PCX 投票冻结必须大于等于挖矿收益（包含推荐渠道收益）的 10倍
             </span>
           </h3>
+          {hasEnoughStaking ? null : (
+            <div>
+              <header>预估需要增加投票冻结</header>
+              <p>{toPrecision(needStakingPcx, precision)}PCX</p>
+            </div>
+          )}
         </li>
       </ul>
     </Wrapper>
