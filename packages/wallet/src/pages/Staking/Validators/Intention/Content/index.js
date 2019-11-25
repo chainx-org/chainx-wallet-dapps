@@ -102,7 +102,6 @@ export default function(props) {
     logo,
     selfVote,
     totalNomination,
-    isActive,
     account
   } = props.intention
   const precision = useSelector(pcxPrecisionSelector)
@@ -120,7 +119,7 @@ export default function(props) {
         <div className="summary">
           <header>
             <span className="name">{name}</span>
-            {isActive && lowSelfVote ? <LowSelfVote /> : null}
+            {lowSelfVote ? <LowSelfVote /> : null}
           </header>
           <ul>
             <li>
