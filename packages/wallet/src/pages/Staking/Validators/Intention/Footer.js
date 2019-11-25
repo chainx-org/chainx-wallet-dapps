@@ -1,11 +1,11 @@
 import React from 'react'
-import validatorIcon from './svg/validator.svg'
+import validatorEnIcon from './svg/validator.svg'
 import validatorZhIcon from './svg/validator_zh.svg'
-import trusteeIcon from './svg/trustee.svg'
+import trusteeEnIcon from './svg/trustee.svg'
 import trusteeZhIcon from './svg/trustee_zh.svg'
 import dropoutIcon from './svg/dropout.svg'
 import dropoutZhIcon from './svg/drop_out_zh.svg'
-import syncNodeIcon from './svg/sync_node.svg'
+import syncNodeEnIcon from './svg/sync_node.svg'
 import syncNodeZhIcon from './svg/sync_node_zh.svg'
 import senatorIcon from './svg/senator.svg'
 import senatorZhIcon from './svg/senator_zh.svg'
@@ -36,26 +36,16 @@ export default function(props) {
   const locale = useSelector(state => state.settings.locale)
 
   const { isTrustee, isValidator, isActive, isSenator } = props.intention
+
+  const trusteeIcon = locale === 'zh' ? trusteeZhIcon : trusteeEnIcon
+  const validatorIcon = locale === 'zh' ? validatorZhIcon : validatorEnIcon
+  const syncNodeIcon = locale === 'zh' ? syncNodeZhIcon : syncNodeEnIcon
   return (
     <Footer>
-      {isTrustee.length > 0 ? (
-        <img
-          src={locale === 'zh' ? trusteeZhIcon : trusteeIcon}
-          alt="trustee"
-        />
+      {isTrustee.length > 0 ? <img src={trusteeIcon} alt="trustee" /> : null}
+      {isActive ? (
+        <img src={isValidator ? validatorIcon : syncNodeIcon} alt="validator" />
       ) : null}
-      <img
-        src={
-          isValidator
-            ? locale === 'zh'
-              ? validatorZhIcon
-              : validatorIcon
-            : locale === 'zh'
-            ? syncNodeZhIcon
-            : syncNodeIcon
-        }
-        alt="validator"
-      />
       {!isActive ? (
         <img
           src={locale === 'zh' ? dropoutZhIcon : dropoutIcon}
