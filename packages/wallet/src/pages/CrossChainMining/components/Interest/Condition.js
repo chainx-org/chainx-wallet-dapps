@@ -72,14 +72,12 @@ const Wrapper = styled.div`
 export default function({ claimInfo, close = noneFunc }) {
   const { number: blockNumber, now } = useSelector(headSelector)
   const precision = useSelector(pcxPrecisionSelector)
-  console.log('now', now)
   const {
     nextClaim,
     hasEnoughStaking,
     needStakingPcx,
     reachClaimHeight
   } = claimInfo
-  console.log('claimInfo', claimInfo)
 
   const popup = useRef(null)
 

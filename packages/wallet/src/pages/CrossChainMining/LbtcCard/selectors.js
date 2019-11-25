@@ -26,5 +26,6 @@ export const lbtcClaimInfoSelector = createSelector(
   headSelector,
   pcxAssetSelector,
   lbtcRecordSelector,
+  lbtcInterestSelector,
   getClaimInfo
 )
