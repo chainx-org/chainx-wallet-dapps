@@ -1,4 +1,4 @@
-import { createSelector } from 'redux-starter-kit'
+import { createSelector } from '@reduxjs/toolkit'
 import { xbtcPrecisionSelector } from '../../../selectors/assets'
 import { xbtcAssetSelector } from '../selectors'
 

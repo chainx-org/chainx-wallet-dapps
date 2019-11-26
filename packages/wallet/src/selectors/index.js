@@ -1,4 +1,4 @@
-import { createSelector } from 'redux-starter-kit'
+import { createSelector } from '@reduxjs/toolkit'
 import { addressSelector } from '../reducers/addressSlice'
 import { networkSelector } from '../reducers/settingsSlice'
 import { mainNetDemoAccount, testNetDemoAccount } from '../utils/constants'

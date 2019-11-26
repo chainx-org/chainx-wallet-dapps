@@ -1,4 +1,4 @@
-import { createSlice } from 'redux-starter-kit'
+import { createSlice } from '@reduxjs/toolkit'
 
 let idCounter = 0
 
@@ -12,7 +12,7 @@ export const typeEnum = {
 const types = Object.values(typeEnum)
 
 const snackSlice = createSlice({
-  slice: 'snack',
+  name: 'snack',
   initialState: {
     snacks: []
   },

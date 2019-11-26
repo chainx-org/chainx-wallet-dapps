@@ -1,7 +1,7 @@
-import { createSlice } from 'redux-starter-kit'
+import { createSlice } from '@reduxjs/toolkit'
 
 const chainSlice = createSlice({
-  slice: 'chain',
+  name: 'chain',
   initialState: {
     head: null
   },

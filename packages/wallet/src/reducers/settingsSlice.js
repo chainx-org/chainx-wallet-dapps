@@ -1,7 +1,7 @@
-import { createSlice } from 'redux-starter-kit'
+import { createSlice } from '@reduxjs/toolkit'
 
 const settingsSlice = createSlice({
-  slice: 'settings',
+  name: 'settings',
   initialState: {
     locale: 'zh',
     network: 'mainnet'

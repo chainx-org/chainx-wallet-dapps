@@ -1,4 +1,4 @@
-import { createSelector } from 'redux-starter-kit'
+import { createSelector } from '@reduxjs/toolkit'
 import { intentionsSelector } from '../../reducers/intentionSlice'
 import { pcxPrecisionSelector } from '../selectors/assets'
 import { toPrecision } from '../../utils'

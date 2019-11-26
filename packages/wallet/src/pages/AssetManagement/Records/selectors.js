@@ -1,4 +1,4 @@
-import { createSelector } from 'redux-starter-kit'
+import { createSelector } from '@reduxjs/toolkit'
 import { scrollTransfersSelector } from '../../../reducers/transactionSlice'
 import moment from 'moment'
 import { addressSelector } from '../../../reducers/addressSlice'

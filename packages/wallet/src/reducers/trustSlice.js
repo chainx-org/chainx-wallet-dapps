@@ -1,10 +1,10 @@
-import { createSlice } from 'redux-starter-kit'
+import { createSlice } from '@reduxjs/toolkit'
 import { getChainx } from '../services/chainx'
 
 const bitcoin = 'Bitcoin'
 
 const trustSlice = createSlice({
-  slice: 'trust',
+  name: 'trust',
   initialState: {
     withdrawals: [],
     trusteeSessionInfo: null,

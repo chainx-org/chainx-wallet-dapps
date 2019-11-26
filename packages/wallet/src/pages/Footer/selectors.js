@@ -1,4 +1,4 @@
-import { createSelector } from 'redux-starter-kit'
+import { createSelector } from '@reduxjs/toolkit'
 import moment from 'moment'
 import { timeFormat } from '../../utils/constants'
 import { intentionsSelector } from '../../reducers/intentionSlice'

@@ -1,4 +1,4 @@
-import { createSelector, createSlice } from 'redux-starter-kit'
+import { createSelector, createSlice } from '@reduxjs/toolkit'
 
 let initialState = {
   name: 'abc',
@@ -8,7 +8,7 @@ let initialState = {
 }
 
 const addressSlice = createSlice({
-  slice: 'address',
+  name: 'address',
   initialState,
   reducers: {
     setAccount: {

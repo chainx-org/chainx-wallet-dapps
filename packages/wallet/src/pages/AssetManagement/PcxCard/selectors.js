@@ -1,4 +1,4 @@
-import { createSelector } from 'redux-starter-kit'
+import { createSelector } from '@reduxjs/toolkit'
 
 export const pcxPrecisionSelector = state => {
   const pcxInfo = state.assets.assetsInfo.find(info => info.name === 'PCX')

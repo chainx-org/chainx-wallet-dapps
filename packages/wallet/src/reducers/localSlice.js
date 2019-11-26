@@ -1,8 +1,8 @@
-import { createSlice } from 'redux-starter-kit'
+import { createSlice } from '@reduxjs/toolkit'
 import store from 'store'
 
 const localSlice = createSlice({
-  slice: 'store',
+  name: 'store',
   initialState: {
     abiList: [],
     contractList: []

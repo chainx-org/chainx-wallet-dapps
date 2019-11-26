@@ -1,8 +1,8 @@
-import { createSlice } from 'redux-starter-kit'
+import { createSlice } from '@reduxjs/toolkit'
 import { getChainx } from '../services/chainx'
 
 const xrcbtcSlice = createSlice({
-  slice: 'xrcbtc',
+  name: 'xrcbtc',
   initialState: {
     info: null,
     balance: 0

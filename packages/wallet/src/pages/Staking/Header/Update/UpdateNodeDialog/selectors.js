@@ -1,4 +1,4 @@
-import { createSelector } from 'redux-starter-kit'
+import { createSelector } from '@reduxjs/toolkit'
 import { intentionsSelector } from '../../../../../reducers/intentionSlice'
 import { addressSelector } from '../../../../../reducers/addressSlice'
 import { getChainx } from '../../../../../services/chainx'

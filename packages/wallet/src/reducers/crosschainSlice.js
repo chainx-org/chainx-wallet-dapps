@@ -1,9 +1,9 @@
-import { createSlice } from 'redux-starter-kit'
+import { createSlice } from '@reduxjs/toolkit'
 import { remove0xPrefix } from '../utils'
 import { getApi } from '../services/api'
 
 const crossChainSlice = createSlice({
-  slice: 'asset',
+  name: 'asset',
   initialState: {
     deposits: [],
     withdrawals: [],

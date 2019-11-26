@@ -1,4 +1,4 @@
-import { createSelector } from 'redux-starter-kit'
+import { createSelector } from '@reduxjs/toolkit'
 import { token } from '../../utils/constants'
 
 export const assetsInfoSelector = state => {

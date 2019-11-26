@@ -1,7 +1,7 @@
-import { createSlice } from 'redux-starter-kit'
+import { createSlice } from '@reduxjs/toolkit'
 
 const nodeSlice = createSlice({
-  slice: 'node',
+  name: 'node',
   initialState: {
     name: 'w1.org',
     url: 'wss://w1.chainx.org.cn/ws'

@@ -1,8 +1,8 @@
-import { createSlice } from 'redux-starter-kit'
+import { createSlice } from '@reduxjs/toolkit'
 import { getApi } from '../services/api'
 
 const transactionSlice = createSlice({
-  slice: 'asset',
+  name: 'asset',
   initialState: {
     scrollTransfers: {
       items: [],

@@ -1,4 +1,4 @@
-import { createSlice } from 'redux-starter-kit'
+import { createSlice } from '@reduxjs/toolkit'
 import { getChainx } from '../services/chainx'
 import { camelCaseKey } from './util'
 
@@ -15,7 +15,7 @@ const emptyAsset = {
 }
 
 const assetSlice = createSlice({
-  slice: 'asset',
+  name: 'asset',
   initialState: {
     assetsInfo: [],
     assets: []

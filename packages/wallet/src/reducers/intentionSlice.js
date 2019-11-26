@@ -1,9 +1,9 @@
-import { createSlice, createSelector } from 'redux-starter-kit'
+import { createSlice, createSelector } from '@reduxjs/toolkit'
 import { getChainx } from '../services/chainx'
 import { getApi } from '../services/api'
 
 const intentionSlice = createSlice({
-  slice: 'intentions',
+  name: 'intentions',
   initialState: {
     intentions: [],
     pseduIntentions: [],
