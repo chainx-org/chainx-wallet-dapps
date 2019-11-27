@@ -1,5 +1,10 @@
 import React, { useRef, useEffect } from 'react'
 
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchPower, fetchChainStatus } from '../../reducers/powerSlice'
+import { powerSelector, statusSelector } from '../../reducers/powerSlice'
+import NumberFormat from '../../components/NumberFormat'
+
 import { Paper, LinearProgress } from '@chainx/ui'
 import styled from 'styled-components'
 
@@ -133,23 +138,30 @@ class Piechart {
 
 export default function Power() {
   const canvasRef = useRef(null)
+  const dispatch = useDispatch()
+  const power = useSelector(powerSelector)
+  const status = useSelector(statusSelector)
 
   useEffect(() => {
-    const canvas = canvasRef.current
-    canvas.height = 188
-    const chart = new Piechart({
-      canvas: canvas,
-      colors: ['#EA754B', '#34C69A', '#46AEE2', '#F6C94A'],
-      width: 40
-    })
+    dispatch(fetchPower())
+    dispatch(fetchChainStatus())
+  }, [])
 
-    chart.draw({
-      'S-DOT': 1,
-      'X-BTC': 1.6,
-      'L-BTC': 22.4,
-      PCX: 75
-    })
-  })
+  useEffect(() => {
+    if (power) {
+      const canvas = canvasRef.current
+      canvas.height = 188
+      const chart = new Piechart({
+        canvas: canvas,
+        colors: ['#EA754B', '#34C69A', '#46AEE2', '#F6C94A'],
+        width: 40
+      })
+
+      chart.draw(power)
+    }
+  }, [power])
+
+  console.log(status)
 
   return (
     <PowerPaper>
@@ -158,13 +170,16 @@ export default function Power() {
         <TotalItem>
           <TotalHeader>
             <TotalTitle>发行总量（PCX）</TotalTitle>
-            <div>21,000,000/1,757,400</div>
+            <div style={{ color: 'rgba(0,0,0,.32)' }}>
+              <NumberFormat value={21000000} />
+              /<NumberFormat value={status.pcx_issuance / 100000000} />
+            </div>
           </TotalHeader>
           <div>
-            <LinearProgress value={50} />
+            <LinearProgress value={status.pcx_issuance / 21000000000000} />
           </div>
         </TotalItem>
-        <TotalItem>
+        {/* <TotalItem>
           <TotalHeader>
             <TotalTitle>日挖矿量（PCX）</TotalTitle>
             <div>14,400/7,400</div>
@@ -172,7 +187,7 @@ export default function Power() {
           <div>
             <LinearProgress value={50} />
           </div>
-        </TotalItem>
+        </TotalItem> */}
       </TotalWrapper>
       <div>
         <canvas ref={canvasRef} />
@@ -183,28 +198,28 @@ export default function Power() {
             <Circle color="#F6C94A" />
             PCX
           </div>
-          <div>75.0%</div>
+          <div>{(power.PCX * 100).toFixed(2)}%</div>
         </ListItem>
         <ListItem>
           <div>
             <Circle color="#46AEE2" />
             L-BTC
           </div>
-          <div>22.4%</div>
+          <div>{(power['L-BTC'] * 100).toFixed(2)}%</div>
         </ListItem>
         <ListItem>
           <div>
             <Circle color="#34C69A" />
             X-BTC
           </div>
-          <div>1.6%</div>
+          <div>{(power['X-BTC'] * 100).toFixed(2)}%</div>
         </ListItem>
         <ListItem>
           <div>
             <Circle color="#EA754B" />
             S-DOT
           </div>
-          <div>1.0%</div>
+          <div>{(power['S-DOT'] * 100).toFixed(2)}%</div>
         </ListItem>
       </ListWrapper>
     </PowerPaper>

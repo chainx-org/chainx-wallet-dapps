@@ -12,6 +12,7 @@ import snackReducer from './snackSlice'
 import crossChainReducer from './crosschainSlice'
 import xrcbtcReducer from './xrcBtcSlice'
 import localReducer from './localSlice'
+import powerReducer from './powerSlice'
 
 export default combineReducers({
   test: testReducer,
@@ -26,5 +27,6 @@ export default combineReducers({
   snack: snackReducer,
   crossChain: crossChainReducer,
   xrcbtc: xrcbtcReducer,
-  local: localReducer
+  local: localReducer,
+  power: powerReducer
 })
