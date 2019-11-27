@@ -161,8 +161,6 @@ export default function Power() {
     }
   }, [power])
 
-  console.log(status)
-
   return (
     <PowerPaper>
       <TitleWrapper>链状态</TitleWrapper>
