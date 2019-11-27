@@ -18,6 +18,7 @@ import {
   signAndSendExtrinsic
 } from '../../../../../utils/chainxProvider'
 import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
+import getState from './State'
 
 const Wrapper = styled.div`
   & > div {
@@ -118,7 +119,7 @@ export default function() {
                 {toPrecision(withdrawal.balance, precision)}
               </span>
               <span className="state">
-                <span className="text">{withdrawal.txstate}</span>
+                <span className="text">{getState(withdrawal.txstate)}</span>
                 {withdrawal.txstate === 'Applying' ? (
                   <img
                     onClick={() =>

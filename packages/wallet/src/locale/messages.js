@@ -114,6 +114,22 @@ const asset = {
   ASSET_WITHDRAWAL_AMOUNT: {
     en: 'Withdrawal amount',
     zh: '提现数量'
+  },
+  ASSET_WITHDRAWAL_AMOUNT_CANCEL: {
+    en: 'Canceled',
+    zh: '已取消'
+  },
+  ASSET_WITHDRAWAL_AMOUNT_APPLYING: {
+    en: 'Applying',
+    zh: '申请中'
+  },
+  ASSET_WITHDRAWAL_AMOUNT_CONFIRMED: {
+    en: 'Confirmed',
+    zh: '已确认'
+  },
+  ASSET_WITHDRAWAL_AMOUNT_SIGNING: {
+    en: 'Signing',
+    zh: '签名中'
   }
 }
 
