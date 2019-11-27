@@ -102,7 +102,7 @@ export default function() {
     setTimeout(() => {
       dispatch(fetchWithdrawals(accountId))
       dispatch(fetchAccountAssets(accountAddress))
-    }, 3000)
+    }, 6000)
   }
 
   const withdrawalsElement = (
