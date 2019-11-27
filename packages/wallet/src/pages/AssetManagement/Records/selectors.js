@@ -5,11 +5,10 @@ import { addressSelector } from '../../../reducers/addressSlice'
 import { getChainx } from '../../../services/chainx'
 import { ensure0xPrefix, toPrecision } from '../../../utils'
 import $t from '../../../locale'
-import { pcxPrecisionSelector } from '../../selectors/assets'
-import { sdotPrecisionSelector } from '../../selectors/assets'
 import {
-  xbtcPrecisionSelector,
-  lbtcPrecisionSelector
+  pcxPrecisionSelector,
+  sdotPrecisionSelector,
+  xbtcPrecisionSelector
 } from '../../selectors/assets'
 
 export const normalizedScrollTransfers = createSelector(
@@ -18,15 +17,7 @@ export const normalizedScrollTransfers = createSelector(
   pcxPrecisionSelector,
   sdotPrecisionSelector,
   xbtcPrecisionSelector,
-  lbtcPrecisionSelector,
-  (
-    scrollTransfers,
-    address,
-    pcxPrecision,
-    sdotPrecision,
-    xbtcPrecision,
-    lbtcPrecision
-  ) => {
+  (scrollTransfers, address, pcxPrecision, sdotPrecision, xbtcPrecision) => {
     const chainx = getChainx()
     return scrollTransfers.items.map(item => {
       const accountId = chainx.account.decodeAddress(address, false)

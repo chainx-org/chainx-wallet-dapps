@@ -1,21 +1,24 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
-import { addressSelector } from '../../../reducers/addressSlice'
-import { getChainx } from '../../../services/chainx'
+import { addressSelector } from '../../../../reducers/addressSlice'
+import { getChainx } from '../../../../services/chainx'
 import {
   fetchTransfers,
   loadedSelector
-} from '../../../reducers/transactionSlice'
-import { normalizedScrollTransfers } from './selectors'
-import { Empty } from '../../../components'
+} from '../../../../reducers/transactionSlice'
+import { normalizedScrollTransfers } from '../selectors'
+import { Empty } from '../../../../components'
+import Line from './Line'
 
-const Wrapper = styled.ul`
-  & > div {
+const Wrapper = styled.div`
+  & > div.empty {
     margin-top: 120px;
   }
 
-  & > li {
+  .line {
+    cursor: pointer;
+    position: relative;
     &:not(:first-of-type) {
       border-top: 1px solid #eee;
     }
@@ -62,18 +65,7 @@ export default function() {
   }, [dispatch, accountId, loaded])
 
   const transfersElement = transfers.map((transfer, index) => {
-    return (
-      <li key={index}>
-        <header>
-          <span>{transfer.token}</span>
-          <span>{transfer.time}</span>
-        </header>
-        <main>
-          <span>{transfer.value}</span>
-          <span>{transfer.direction}</span>
-        </main>
-      </li>
-    )
+    return <Line transfer={transfer} key={index} />
   })
 
   return (
@@ -81,7 +73,7 @@ export default function() {
       {(transfers || []).length > 0 ? (
         transfersElement
       ) : (
-        <div>
+        <div className="empty">
           <Empty text="暂无转账记录" />
         </div>
       )}
