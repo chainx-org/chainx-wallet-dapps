@@ -145,7 +145,7 @@ export default function Power() {
   useEffect(() => {
     dispatch(fetchPower())
     dispatch(fetchChainStatus())
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     if (power) {
