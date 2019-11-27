@@ -5,20 +5,10 @@ import {
 } from '../../../../../reducers/crosschainSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { addressSelector } from '../../../../../reducers/addressSlice'
-import { xbtcPrecisionSelector } from '../../../../selectors/assets'
 import { getChainx } from '../../../../../services/chainx'
 import styled from 'styled-components'
 import { Empty } from '../../../../../components'
-import moment from 'moment'
-import { timeFormat } from '../../../../../utils/constants'
-import { toPrecision } from '../../../../../utils'
-import cancelIcon from './cancel.svg'
-import {
-  showSnack,
-  signAndSendExtrinsic
-} from '../../../../../utils/chainxProvider'
-import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
-import getState from './State'
+import Line from './Line'
 
 const Wrapper = styled.div`
   & > div {
@@ -73,8 +63,6 @@ export default function() {
   const dispatch = useDispatch()
   const address = useSelector(addressSelector)
   const withdrawals = useSelector(withdrawalsSelector)
-  const precision = useSelector(xbtcPrecisionSelector)
-  const accountAddress = useSelector(addressSelector)
 
   const chainx = getChainx()
   const accountId = chainx.account.decodeAddress(address, false)
@@ -83,56 +71,10 @@ export default function() {
     dispatch(fetchWithdrawals(accountId))
   }, [dispatch, accountId])
 
-  const revokeWithdraw = async (id, balance) => {
-    const status = await signAndSendExtrinsic(
-      accountAddress,
-      'xAssetsProcess',
-      'revokeWithdraw',
-      [id]
-    )
-
-    const messages = {
-      successTitle: '取消提现成功',
-      failTitle: '取消提现失败',
-      successMessage: `提现数量 ${toPrecision(balance, precision)} BTC`,
-      failMessage: `交易hash ${status.txHash}`
-    }
-
-    await showSnack(status, messages, dispatch)
-    setTimeout(() => {
-      dispatch(fetchWithdrawals(accountId))
-      dispatch(fetchAccountAssets(accountAddress))
-    }, 6000)
-  }
-
   const withdrawalsElement = (
     <ul>
       {(withdrawals || []).map((withdrawal, index) => {
-        return (
-          <li key={index}>
-            <header>
-              <span>X-BTC</span>
-              <span>{moment(withdrawal['block.time']).format(timeFormat)}</span>
-            </header>
-            <main>
-              <span className="text">
-                {toPrecision(withdrawal.balance, precision)}
-              </span>
-              <span className="state">
-                <span className="text">{getState(withdrawal.txstate)}</span>
-                {withdrawal.txstate === 'Applying' ? (
-                  <img
-                    onClick={() =>
-                      revokeWithdraw(withdrawal.id, withdrawal.balance)
-                    }
-                    src={cancelIcon}
-                    alt="cancel"
-                  />
-                ) : null}
-              </span>
-            </main>
-          </li>
-        )
+        return <Line withdrawal={withdrawal} key={index} />
       })}
     </ul>
   )
