@@ -1,10 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import BlockInfo from './BlockInfo'
+import Settings from './Settings'
 
 const Wrapper = styled.footer`
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   height: 22px;
   padding: 0 16px;
@@ -18,6 +20,7 @@ export default function() {
   return (
     <Wrapper>
       <BlockInfo />
+      <Settings />
     </Wrapper>
   )
 }
