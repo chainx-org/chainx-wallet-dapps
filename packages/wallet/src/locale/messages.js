@@ -130,16 +130,28 @@ const asset = {
   ASSET_WITHDRAWAL_AMOUNT_SIGNING: {
     en: 'Signing',
     zh: '签名中'
+  },
+  ASSET_WITHDRAWAL_TX_ID: {
+    en: 'Tx ID',
+    zh: '交易ID'
   }
 }
 
 const common = {
+  COMMON_FEE: {
+    en: 'Fee',
+    zh: '手续费'
+  },
+  COMMON_MEMO_SHORT: {
+    en: 'Memo',
+    zh: '备注'
+  },
   COMMON_CONFIRM: {
     en: 'OK',
     zh: '确定'
   },
   COMMON_MEMO: {
-    en: 'Memo',
+    en: 'Memo(64 characters at most)',
     zh: '备注（64 字符以内）'
   },
   COMMON_ASSET_TOO_LOW_ERROR: {
@@ -165,6 +177,10 @@ const common = {
   COMMON_UNFREEZE: {
     en: 'unfreeze',
     zh: '解冻'
+  },
+  COMMON_ADDRESS: {
+    en: 'Address',
+    zh: '地址'
   }
 }
 

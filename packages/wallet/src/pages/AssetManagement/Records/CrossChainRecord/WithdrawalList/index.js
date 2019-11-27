@@ -15,8 +15,11 @@ const Wrapper = styled.div`
     margin-top: 120px;
   }
 
-  ul {
-    li {
+  & > ul {
+    & > li {
+      user-select: none;
+      position: relative;
+      cursor: pointer;
       &:not(:first-of-type) {
         border-top: 1px solid #eee;
       }
