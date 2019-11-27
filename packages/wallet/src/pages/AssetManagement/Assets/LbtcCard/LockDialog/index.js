@@ -10,6 +10,7 @@ import { u8aToHex } from '@polkadot/util'
 import { useSelector } from 'react-redux'
 import { addressSelector } from '../../../../../reducers/addressSlice'
 import { default as WAValidator } from 'wallet-address-validator'
+import { networkSelector } from '../../../../../reducers/settingsSlice'
 
 const StyledDialog = styled(Dialog)`
   main.content {
@@ -108,6 +109,8 @@ const StyledDialog = styled(Dialog)`
 `
 
 export default function({ handleClose }) {
+  const network = useSelector(networkSelector)
+
   const [btcAddress, setBtcAddress] = useState('')
   const [checked, setChecked] = useState(false)
   const [channel, setChannel] = useState('')
@@ -128,10 +131,14 @@ export default function({ handleClose }) {
       return
     }
 
-    const valid = WAValidator.validate(btcAddress, 'BTC')
+    const valid = WAValidator.validate(
+      btcAddress,
+      'BTC',
+      network === 'testnet' ? 'testnet' : 'prod'
+    )
     if (!valid) {
       setBtcAddressErrMsg('地址格式错误')
-    } else if (!['1', '3'].includes(btcAddress[0])) {
+    } else if (!['1', '3'].includes(btcAddress[0]) && network === 'mainnet') {
       setBtcAddressErrMsg('锁仓的BTC地址必须以1或3开头')
     }
   }
