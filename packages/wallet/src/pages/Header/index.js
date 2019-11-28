@@ -90,6 +90,11 @@ export default function() {
             {$t('TRUST')}
           </NavLink>
         </Nav>
+        <Nav>
+          <NavLink exact activeClassName="active" to="/trade">
+            {$t('TRADE')}
+          </NavLink>
+        </Nav>
         {network === 'testnet' && (
           <>
             <Nav>

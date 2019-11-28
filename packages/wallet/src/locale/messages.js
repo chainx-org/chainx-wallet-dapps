@@ -1,3 +1,5 @@
+import trade from './trade'
+
 const asset = {
   ASSET: {
     en: 'Asset',
@@ -382,5 +384,6 @@ export default {
   ...trust,
   ...header,
   ...common,
-  ...contract
+  ...contract,
+  ...trade
 }
