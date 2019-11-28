@@ -8,6 +8,7 @@ const Wrapper = styled.footer`
   align-items: center;
   justify-content: space-between;
 
+  margin-top: 16px;
   height: 22px;
   padding: 0 16px;
   background: rgba(255, 255, 255, 0.75);
