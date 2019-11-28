@@ -1,22 +1,25 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addressSelector } from '../../../../reducers/addressSlice'
-import { fetchLocks, locksSelector } from '../../../../reducers/crosschainSlice'
-import { lbtcPrecisionSelector } from '../../../selectors/assets'
-import { getChainx } from '../../../../services/chainx'
+import { addressSelector } from '../../../../../reducers/addressSlice'
+import {
+  fetchLocks,
+  locksSelector
+} from '../../../../../reducers/crosschainSlice'
+import { getChainx } from '../../../../../services/chainx'
 import styled from 'styled-components'
-import { Empty } from '../../../../components'
-import moment from 'moment'
-import { timeFormat } from '../../../../utils/constants'
-import { toPrecision } from '../../../../utils'
+import { Empty } from '../../../../../components'
+import Line from './Line'
 
 const Wrapper = styled.div`
   & > div {
     margin-top: 120px;
   }
 
-  ul {
-    li {
+  & > ul {
+    & > li {
+      position: relative;
+      cursor: pointer;
+      user-select: none;
       &:not(:first-of-type) {
         border-top: 1px solid #eee;
       }
@@ -52,7 +55,6 @@ export default function() {
   const dispatch = useDispatch()
   const address = useSelector(addressSelector)
   const locks = useSelector(locksSelector)
-  const precision = useSelector(lbtcPrecisionSelector)
 
   const chainx = getChainx()
   const accountId = chainx.account.decodeAddress(address, false)
@@ -64,21 +66,7 @@ export default function() {
   const lockElement = (
     <ul>
       {(locks || []).map((lock, index) => {
-        return (
-          <li key={index}>
-            <header>
-              <span>L-BTC</span>
-              <span>{moment(lock.lock_time).format(timeFormat)}</span>
-            </header>
-            <main>
-              <span>
-                {lock.type === 0 ? '+' : '-'}
-                {toPrecision(lock.value, precision)}
-              </span>
-              <span>{lock.type === 0 ? '锁仓' : '解锁'}</span>
-            </main>
-          </li>
-        )
+        return <Line lock={lock} key={index} />
       })}
     </ul>
   )

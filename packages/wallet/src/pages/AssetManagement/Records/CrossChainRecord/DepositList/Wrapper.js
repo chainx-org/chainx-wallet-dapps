@@ -9,6 +9,7 @@ const Wrapper = styled.div`
     & > li {
       position: relative;
       cursor: pointer;
+      user-select: none;
       &:not(:first-of-type) {
         border-top: 1px solid #eee;
       }
