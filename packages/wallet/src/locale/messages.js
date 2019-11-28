@@ -134,6 +134,14 @@ const asset = {
   ASSET_WITHDRAWAL_TX_ID: {
     en: 'Tx ID',
     zh: '交易ID'
+  },
+  ASSET_ORIGIN_TX_ID: {
+    en: 'Btc tx ID',
+    zh: '原链交易 ID'
+  },
+  ASSET_DEPOSIT_CONFIRMED: {
+    en: 'Confirmed',
+    zh: '已确认'
   }
 }
 

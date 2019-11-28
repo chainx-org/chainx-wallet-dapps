@@ -5,8 +5,10 @@ const Wrapper = styled.div`
     margin-top: 120px;
   }
 
-  ul {
-    li {
+  & > ul {
+    & > li {
+      position: relative;
+      cursor: pointer;
       &:not(:first-of-type) {
         border-top: 1px solid #eee;
       }
