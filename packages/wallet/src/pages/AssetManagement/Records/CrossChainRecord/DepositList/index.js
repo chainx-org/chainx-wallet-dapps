@@ -7,17 +7,13 @@ import {
   fetchDeposits
 } from '../../../../../reducers/crosschainSlice'
 import { Empty } from '../../../../../components'
-import moment from 'moment'
-import { timeFormat } from '../../../../../utils/constants'
-import { xbtcPrecisionSelector } from '../../../../selectors/assets'
-import { toPrecision } from '../../../../../utils'
 import Wrapper from './Wrapper'
+import Line from './Line'
 
 export default function() {
   const dispatch = useDispatch()
   const address = useSelector(addressSelector)
   const deposits = useSelector(depositsSelector)
-  const precision = useSelector(xbtcPrecisionSelector)
 
   const chainx = getChainx()
   const accountId = chainx.account.decodeAddress(address, false)
@@ -29,18 +25,7 @@ export default function() {
   const depositsElement = (
     <ul>
       {(deposits || []).map((deposit, index) => {
-        return (
-          <li key={index}>
-            <header>
-              <span>X-BTC</span>
-              <span>{moment(deposit['block.time']).format(timeFormat)}</span>
-            </header>
-            <main>
-              <span>{toPrecision(deposit.balance, precision)}</span>
-              <span>{deposit.txstate}</span>
-            </main>
-          </li>
-        )
+        return <Line deposit={deposit} key={index} />
       })}
     </ul>
   )
