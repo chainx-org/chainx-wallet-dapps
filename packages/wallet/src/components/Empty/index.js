@@ -28,7 +28,7 @@ const Wrapper = styled.div`
 
 export default function(props) {
   return (
-    <Wrapper>
+    <Wrapper className={props.className} style={props.style}>
       <section>
         <img src={noneLogo} alt="empty" />
       </section>

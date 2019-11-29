@@ -17,7 +17,7 @@ import ContractCode from './pages/Contract/Code'
 import { getChainx } from './services/chainx'
 import { setHead } from './reducers/chainSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchAccountAssets } from './reducers/assetSlice'
+import { fetchAccountAssets, fetchAssetsInfo } from './reducers/assetSlice'
 import { addressSelector } from './reducers/addressSlice'
 import { fetchPseduNominationRecords } from './reducers/intentionSlice'
 
@@ -28,6 +28,7 @@ function App() {
   useEffect(() => {
     dispatch(fetchAccountAssets(address))
     dispatch(fetchPseduNominationRecords(address))
+    dispatch(fetchAssetsInfo())
 
     const subscriber = getChainx()
       .chain.subscribeNewHead()
