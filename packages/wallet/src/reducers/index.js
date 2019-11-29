@@ -13,6 +13,7 @@ import crossChainReducer from './crosschainSlice'
 import xrcbtcReducer from './xrcBtcSlice'
 import localReducer from './localSlice'
 import powerReducer from './powerSlice'
+import tradeReducer from './tradeSlice'
 
 export default combineReducers({
   test: testReducer,
@@ -28,5 +29,6 @@ export default combineReducers({
   crossChain: crossChainReducer,
   xrcbtc: xrcbtcReducer,
   local: localReducer,
-  power: powerReducer
+  power: powerReducer,
+  trade: tradeReducer
 })
