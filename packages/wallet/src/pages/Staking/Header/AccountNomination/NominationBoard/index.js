@@ -14,6 +14,10 @@ import Unfreeze from './Unfreeze'
 import Empty from './Empty'
 import $t from '../../../../../locale'
 import useOutsideClick from '../../../../../utils/useClickOutside'
+import {
+  switchNominationOpenSelector,
+  unNominateOpenSelector
+} from '../../../../../reducers/runStatusSlice'
 
 const Wrapper = styled.div`
   display: flex;
@@ -86,10 +90,15 @@ export default function({ close = noneFunc }) {
   const [voteOpen, setVoteOpen] = useState(false)
   const [intention, setIntention] = useState(null)
 
+  const unNominateOpen = useSelector(unNominateOpenSelector)
+  const switchNominationOpen = useSelector(switchNominationOpenSelector)
+
   const popup = useRef(null)
 
   useOutsideClick(popup, () => {
-    close()
+    if (!unNominateOpen && !switchNominationOpen) {
+      close()
+    }
   })
 
   return (
