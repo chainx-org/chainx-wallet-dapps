@@ -14,6 +14,7 @@ import xrcbtcReducer from './xrcBtcSlice'
 import localReducer from './localSlice'
 import powerReducer from './powerSlice'
 import tradeReducer from './tradeSlice'
+import runStatusReducer from './runStatusSlice'
 
 export default combineReducers({
   test: testReducer,
@@ -30,5 +31,6 @@ export default combineReducers({
   xrcbtc: xrcbtcReducer,
   local: localReducer,
   power: powerReducer,
-  trade: tradeReducer
+  trade: tradeReducer,
+  runStatus: runStatusReducer
 })

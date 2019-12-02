@@ -5,6 +5,13 @@ import UnNominateDialog from '../../../UnNominateDialog'
 import SwitchDialog from '../../../SwitchDialog'
 import $t from '../../../../../locale'
 import useOutsideClick from '../../../../../utils/useClickOutside'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  setSwitchNominationOpen,
+  setUnNominateOpen,
+  switchNominationOpenSelector,
+  unNominateOpenSelector
+} from '../../../../../reducers/runStatusSlice'
 
 const Wrapper = styled.div`
   display: inline-flex;
@@ -48,8 +55,9 @@ const Wrapper = styled.div`
 
 export default function({ intention, record = {} }) {
   const [showMore, setShowMore] = useState(false)
-  const [unNominateOpen, setUnNominateOpen] = useState(false)
-  const [switchOpen, setSwitchOpen] = useState(false)
+  const unNominateOpen = useSelector(unNominateOpenSelector)
+  const switchNominationOpen = useSelector(switchNominationOpenSelector)
+  const dispatch = useDispatch()
 
   const { nomination, revocations = [] } = record.info || {}
 
@@ -67,7 +75,7 @@ export default function({ intention, record = {} }) {
       <ul className={showMore ? 'show' : 'hide'} ref={popup}>
         <li
           onClick={() => {
-            setUnNominateOpen(true)
+            dispatch(setUnNominateOpen(true))
             setShowMore(false)
           }}
         >
@@ -75,7 +83,7 @@ export default function({ intention, record = {} }) {
         </li>
         <li
           onClick={() => {
-            setSwitchOpen(true)
+            dispatch(setSwitchNominationOpen(true))
             setShowMore(false)
           }}
         >
@@ -87,14 +95,14 @@ export default function({ intention, record = {} }) {
           intention={intention}
           nomination={nomination}
           revocations={revocations}
-          handleClose={() => setUnNominateOpen(false)}
+          handleClose={() => dispatch(setUnNominateOpen(false))}
         />
       ) : null}
-      {switchOpen ? (
+      {switchNominationOpen ? (
         <SwitchDialog
           intention={intention}
           nomination={nomination}
-          handleClose={() => setSwitchOpen(false)}
+          handleClose={() => dispatch(setSwitchNominationOpen(false))}
         />
       ) : null}
     </Wrapper>
