@@ -1,34 +1,28 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { Table, TableBody, TableRow } from '@chainx/ui'
+
+import { normalizedBidsSelector } from './selectors'
 import { currentPairSelector } from '../../../../reducers/tradeSlice'
-import { Table, TableBody, TableHead, TableRow } from '@chainx/ui'
-import HeadCell from '../components/HeadCell'
 import { currentPairAssetInfo } from '../selectors'
-import { toPrecision } from '../../../../utils'
-import { normalizedAsksSelector } from './selectors'
 import { OrderAmountCell, OrderPriceCell, SumCell } from './Wrapper'
+import { toPrecision } from '../../../../utils'
 
 export default function() {
-  const asks = useSelector(normalizedAsksSelector)
+  const bids = useSelector(normalizedBidsSelector)
   const pair = useSelector(currentPairSelector)
   const { precision, unitPrecision } = pair || {
     precision: 0,
     unitPrecision: 0
   }
+
   const { precision: assetPrecision } = useSelector(currentPairAssetInfo) || {}
 
   return (
     <Table>
-      <TableHead>
-        <TableRow>
-          <HeadCell>价格</HeadCell>
-          <HeadCell>数量 (PCX)</HeadCell>
-          <HeadCell style={{ textAlign: 'right' }}>累计 (PCX)</HeadCell>
-        </TableRow>
-      </TableHead>
       <TableBody>
-        {asks.map((ask, index) => {
-          const price = Number(toPrecision(ask.price, pair.precision)).toFixed(
+        {bids.map((bid, index) => {
+          const price = Number(toPrecision(bid.price, pair.precision)).toFixed(
             precision - unitPrecision
           )
 
@@ -36,12 +30,12 @@ export default function() {
             <TableRow key={index}>
               <OrderPriceCell height={24}>{price}</OrderPriceCell>
               <OrderAmountCell
-                value={ask.amount}
+                value={bid.amount}
                 precision={assetPrecision}
                 height={24}
               />
               <SumCell height={24}>
-                {toPrecision(ask.sumAmount, assetPrecision)}
+                {toPrecision(bid.sumAmount, assetPrecision)}
               </SumCell>
             </TableRow>
           )

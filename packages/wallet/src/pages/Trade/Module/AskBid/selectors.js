@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit'
-import { asksSelector } from '../../../../reducers/tradeSlice'
+import { asksSelector, bidsSelector } from '../../../../reducers/tradeSlice'
 
 export const normalizedAsksSelector = createSelector(
   asksSelector,
@@ -26,5 +26,31 @@ export const normalizedAsksSelector = createSelector(
         ]
       }, [])
       .reverse()
+  }
+)
+
+export const normalizedBidsSelector = createSelector(
+  bidsSelector,
+  bids => {
+    let result = []
+
+    ;[...bids].forEach((bid, index) => {
+      if (index <= 0) {
+        result.push({
+          ...bid,
+          sumAmount: bid.amount
+        })
+
+        return
+      }
+
+      const sumAmount = result[index - 1].sumAmount + bid.amount
+      result.push({
+        ...bid,
+        sumAmount
+      })
+    })
+
+    return result
   }
 )
