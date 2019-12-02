@@ -1,8 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { currentPairSelector } from '../../../../reducers/tradeSlice'
-import { Table, TableBody, TableHead, TableRow } from '@chainx/ui'
-import HeadCell from '../components/HeadCell'
+import { Table, TableBody, TableRow } from '@chainx/ui'
 import { currentPairAssetInfo } from '../selectors'
 import { toPrecision } from '../../../../utils'
 import { normalizedAsksSelector } from './selectors'
@@ -19,13 +18,6 @@ export default function() {
 
   return (
     <Table>
-      <TableHead>
-        <TableRow>
-          <HeadCell>价格</HeadCell>
-          <HeadCell>数量 (PCX)</HeadCell>
-          <HeadCell style={{ textAlign: 'right' }}>累计 (PCX)</HeadCell>
-        </TableRow>
-      </TableHead>
       <TableBody>
         {asks.map((ask, index) => {
           const price = Number(toPrecision(ask.price, pair.precision)).toFixed(

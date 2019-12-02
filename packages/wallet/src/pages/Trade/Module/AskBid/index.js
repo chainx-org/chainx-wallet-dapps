@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Asks from './Asks'
 import Price from './Price'
 import Bids from './Bids'
+import Head from './Head'
 
 export default function() {
   const pair = useSelector(currentPairSelector)
@@ -20,8 +21,9 @@ export default function() {
   }, [dispatch, pair])
 
   return (
-    <TitledCard>
+    <TitledCard style={{ height: '100%', overflowY: 'auto' }}>
       <header>Open Orders</header>
+      <Head />
       <Asks />
       <Price />
       <Bids />
