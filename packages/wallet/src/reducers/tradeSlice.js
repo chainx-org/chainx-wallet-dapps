@@ -7,7 +7,11 @@ const tradeSlice = createSlice({
   initialState: {
     pairs: [],
     currentPair: null,
-    fills: {}
+    fills: {},
+    quotations: {
+      asks: [],
+      bids: []
+    }
   },
   reducers: {
     setPairs: (state, action) => {
@@ -18,11 +22,19 @@ const tradeSlice = createSlice({
     },
     setFills: (state, { payload: { pairId, fills } }) => {
       state.fills[pairId] = fills
+    },
+    setQuotations: (state, { payload }) => {
+      state.quotations = payload
     }
   }
 })
 
-export const { setPairs, setCurrentPair, setFills } = tradeSlice.actions
+export const {
+  setPairs,
+  setCurrentPair,
+  setFills,
+  setQuotations
+} = tradeSlice.actions
 
 export const fetchTradePairs = () => async dispatch => {
   const chainx = getChainx()
@@ -41,6 +53,14 @@ export const fetchFills = (pairId, count = 20) => async dispatch => {
 
   const data = await resp.json()
   dispatch(setFills({ pairId, fills: data }))
+}
+
+export const fetchQuotations = (pairId, count = 50) => async dispatch => {
+  const resp = await window.fetch(
+    `${getApi()}trade/handicap/${pairId}?count=${count}`
+  )
+  const data = await resp.json()
+  dispatch(setQuotations(data))
 }
 
 export const pairsSelector = state => state.trade.pairs
