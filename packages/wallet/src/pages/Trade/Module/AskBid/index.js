@@ -5,6 +5,7 @@ import {
   fetchQuotations
 } from '../../../../reducers/tradeSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import Asks from './Asks'
 
 export default function() {
   const pair = useSelector(currentPairSelector)
@@ -19,6 +20,7 @@ export default function() {
   return (
     <TitledCard>
       <header>Open Orders</header>
+      <Asks />
     </TitledCard>
   )
 }

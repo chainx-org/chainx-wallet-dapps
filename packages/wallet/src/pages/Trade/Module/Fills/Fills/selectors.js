@@ -3,7 +3,6 @@ import {
   currentPairSelector,
   fillsSelector
 } from '../../../../../reducers/tradeSlice'
-import { assetsInfoSelector } from '../../../../selectors/assets'
 
 export const currentFillsSelector = createSelector(
   currentPairSelector,
@@ -38,18 +37,5 @@ export const normalizedCurrentFillsSelector = createSelector(
         return { ...fill, arise }
       })
       .reverse()
-  }
-)
-
-export const currentPairAssetInfo = createSelector(
-  currentPairSelector,
-  assetsInfoSelector,
-  (pair, assetsInfo) => {
-    if (!pair) {
-      return null
-    }
-
-    const assets = pair.assets
-    return assetsInfo.find(asset => asset.name === assets)
   }
 )

@@ -7,6 +7,7 @@ const Cell = styled(BaseCell)`
   color: #000000;
   letter-spacing: 0.2px;
   line-height: 16px;
+  padding: 0 0 0 12px !important;
 `
 
 export default function({ value, precision = 0 }) {
