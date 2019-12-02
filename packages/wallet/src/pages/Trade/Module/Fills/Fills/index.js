@@ -7,8 +7,11 @@ import {
   currentPairSelector,
   fetchFills
 } from '../../../../../reducers/tradeSlice'
-import PriceCell from '../../components/PriceCell'
-import { currentFillsSelector, currentPairAssetInfo } from './selectors'
+import PriceCell, { PriceAriseCell } from '../../components/PriceCell'
+import {
+  currentPairAssetInfo,
+  normalizedCurrentFillsSelector
+} from './selectors'
 import { toPrecision } from '../../../../../utils'
 import AmountCell from '../../components/AmountCell'
 import moment from 'moment'
@@ -17,7 +20,7 @@ import { Empty } from '../../../../../components'
 
 export default function() {
   const pair = useSelector(currentPairSelector)
-  const fills = useSelector(currentFillsSelector)
+  const fills = useSelector(normalizedCurrentFillsSelector)
   const asset = useSelector(currentPairAssetInfo)
   const dispatch = useDispatch()
 
@@ -51,12 +54,18 @@ export default function() {
 
             return (
               <TableRow key={index}>
-                <PriceCell style={{ fontSize: 12, width: '22%' }}>
-                  {price}
-                </PriceCell>
+                {fill.arise ? (
+                  <PriceAriseCell style={{ fontSize: 12, width: '22%' }}>
+                    {price}
+                  </PriceAriseCell>
+                ) : (
+                  <PriceCell style={{ fontSize: 12, width: '22%' }}>
+                    {price}
+                  </PriceCell>
+                )}
                 <AmountCell
                   value={fill.amount}
-                  precision={asset.precision}
+                  precision={asset && asset.precision}
                   style={{ width: '50%' }}
                 />
                 <TimeCell style={{ width: '28%' }}>{time}</TimeCell>
