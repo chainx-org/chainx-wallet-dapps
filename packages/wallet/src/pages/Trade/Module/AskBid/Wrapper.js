@@ -6,6 +6,11 @@ import AmountCell from '../components/AmountCell'
 
 const Wrapper = styled(SideCard)``
 
+export const TableWrapper = styled.div`
+  height: 242px;
+  overflow-y: auto;
+`
+
 export const SumCell = styled(BaseCell)`
   opacity: 0.72;
   font-size: 12px;
