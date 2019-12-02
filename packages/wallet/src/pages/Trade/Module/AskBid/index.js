@@ -1,6 +1,10 @@
 import React from 'react'
-import Wrapper from './Wrapper'
+import TitledCard from '../../components/TitledCard'
 
 export default function() {
-  return <Wrapper>Ask bid</Wrapper>
+  return (
+    <TitledCard>
+      <header>Open Orders</header>
+    </TitledCard>
+  )
 }

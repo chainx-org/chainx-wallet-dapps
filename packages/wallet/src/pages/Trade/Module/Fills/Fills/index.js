@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import Wrapper from './Wrapper'
 import { Table, TableBody, TableHead, TableRow } from '@chainx/ui'
 import HeadCell from '../../components/HeadCell'
 import { useDispatch, useSelector } from 'react-redux'
@@ -17,6 +16,7 @@ import AmountCell from '../../components/AmountCell'
 import moment from 'moment'
 import TimeCell from './TimeCell'
 import { Empty } from '../../../../../components'
+import TitledCard from '../../../components/TitledCard'
 
 export default function() {
   const pair = useSelector(currentPairSelector)
@@ -31,7 +31,7 @@ export default function() {
   }, [dispatch, pair])
 
   return (
-    <Wrapper>
+    <TitledCard style={{ marginTop: 16 }}>
       <header>Latest</header>
       <Table>
         <TableHead>
@@ -75,6 +75,6 @@ export default function() {
         </TableBody>
       </Table>
       {fills.length <= 0 && <Empty text={'无成交'} style={{ marginTop: 30 }} />}
-    </Wrapper>
+    </TitledCard>
   )
 }

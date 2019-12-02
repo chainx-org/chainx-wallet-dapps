@@ -1,8 +1,7 @@
 import styled from 'styled-components'
-import SideCard from '../../../components/SideCard'
+import SideCard from './SideCard'
 
-const Wrapper = styled(SideCard)`
-  margin-top: 16px;
+const TitledCard = styled(SideCard)`
   padding-bottom: 10px;
   header {
     padding: 12px;
@@ -15,4 +14,4 @@ const Wrapper = styled(SideCard)`
   }
 `
 
-export default Wrapper
+export default TitledCard
