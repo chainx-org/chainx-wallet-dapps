@@ -27,7 +27,6 @@ export default function() {
         <div
           className="locale"
           onClick={() => {
-            console.log('fuck')
             setLocaleSettingOpen(true)
           }}
         >

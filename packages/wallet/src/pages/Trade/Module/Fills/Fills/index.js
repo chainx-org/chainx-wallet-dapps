@@ -7,14 +7,16 @@ import {
   fetchFills
 } from '../../../../../reducers/tradeSlice'
 import { PriceAriseCell, PriceDownCell } from '../../components/PriceCell'
-import { normalizedCurrentFillsSelector } from './selectors'
 import { toPrecision } from '../../../../../utils'
 import AmountCell from '../../components/AmountCell'
 import moment from 'moment'
 import TimeCell from './TimeCell'
 import { Empty } from '../../../../../components'
 import TitledCard from '../../../components/TitledCard'
-import { currentPairAssetInfo } from '../../selectors'
+import {
+  currentPairAssetInfo,
+  normalizedCurrentFillsSelector
+} from '../../selectors'
 
 export default function() {
   const pair = useSelector(currentPairSelector)
