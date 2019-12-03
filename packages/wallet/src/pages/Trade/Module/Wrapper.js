@@ -4,7 +4,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   height: 610px;
-  overflow: auto;
+  overflow-y: hidden;
 `
 
 export default Wrapper
