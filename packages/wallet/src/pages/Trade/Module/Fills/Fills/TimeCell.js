@@ -7,6 +7,8 @@ const TimeCell = styled(BaseCell)`
   letter-spacing: 0.2px;
   text-align: right !important;
   line-height: 16px;
+  padding: 0 12px 0 0 !important;
+  height: 24px !important;
 `
 
 export default TimeCell

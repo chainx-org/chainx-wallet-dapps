@@ -40,18 +40,18 @@ export default function() {
             return (
               <TableRow key={index}>
                 {fill.arise ? (
-                  <PriceAriseCell style={{ fontSize: 12, width: '22%' }}>
+                  <PriceAriseCell style={{ fontSize: 12, width: '30%' }}>
                     {price}
                   </PriceAriseCell>
                 ) : (
-                  <PriceDownCell style={{ fontSize: 12, width: '22%' }}>
+                  <PriceDownCell style={{ fontSize: 12, width: '30%' }}>
                     {price}
                   </PriceDownCell>
                 )}
                 <AmountCell
                   value={fill.amount}
                   precision={asset && asset.precision}
-                  style={{ width: '50%' }}
+                  style={{ width: '42%' }}
                 />
                 <TimeCell style={{ width: '28%' }}>{time}</TimeCell>
               </TableRow>

@@ -8,6 +8,7 @@ const PriceCell = styled(BaseCell)`
   line-height: 20px;
   border-bottom: 0 !important;
   width: 50%;
+  padding: 0 0 0 12px !important;
 `
 
 export const PriceDownCell = styled(PriceCell)`
