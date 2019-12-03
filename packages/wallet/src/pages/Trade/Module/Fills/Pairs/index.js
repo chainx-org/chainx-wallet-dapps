@@ -9,7 +9,11 @@ import {
 } from '../../../../../reducers/tradeSlice'
 import { toPrecision } from '../../../../../utils'
 import HeadCell from '../../components/HeadCell'
-import PriceCell from '../../components/PriceCell'
+import {
+  PairPriceAriseCell,
+  PairPriceDownCell
+} from '../../components/PriceCell'
+import { normalizedCurrentFillsSelector } from '../../selectors'
 
 export default function() {
   const currencies = useSelector(currenciesSelector)
@@ -18,6 +22,8 @@ export default function() {
   const [activeCurrencyIndex, setActiveCurrencyIndex] = useState(0)
   const nowCurrency = currencies[activeCurrencyIndex]
   const targetPairs = pairs.filter(pair => pair.currency === nowCurrency)
+
+  const [latest] = useSelector(normalizedCurrentFillsSelector)
 
   const dispatch = useDispatch()
 
@@ -61,11 +67,19 @@ export default function() {
             return (
               <TableRow key={index}>
                 <SymbolCell>{pair.assets}</SymbolCell>
-                <PriceCell style={{ textAlign: 'right' }}>
-                  {Number(toPrecision(pair.lastPrice, precision)).toFixed(
-                    showPrecision
-                  )}
-                </PriceCell>
+                {latest && latest.arise ? (
+                  <PairPriceAriseCell style={{ textAlign: 'right' }}>
+                    {Number(toPrecision(pair.lastPrice, precision)).toFixed(
+                      showPrecision
+                    )}
+                  </PairPriceAriseCell>
+                ) : (
+                  <PairPriceDownCell style={{ textAlign: 'right' }}>
+                    {Number(toPrecision(pair.lastPrice, precision)).toFixed(
+                      showPrecision
+                    )}
+                  </PairPriceDownCell>
+                )}
               </TableRow>
             )
           })}
