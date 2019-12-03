@@ -42,7 +42,7 @@ export default function() {
                   const targetPairs = pairs.filter(
                     pair => pair.currency === currency
                   )
-                  dispatch(setCurrentPair(targetPairs[index]))
+                  dispatch(setCurrentPair(targetPairs[0]))
                 }}
                 className={index === activeCurrencyIndex ? 'active' : null}
               >

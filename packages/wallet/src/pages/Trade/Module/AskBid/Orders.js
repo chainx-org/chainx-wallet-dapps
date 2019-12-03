@@ -24,9 +24,9 @@ export default function({ orders }) {
       <Table>
         <TableBody>
           {orders.map((order, index) => {
-            const price = Number(
-              toPrecision(order.price, pair.precision)
-            ).toFixed(precision - unitPrecision)
+            const price = Number(toPrecision(order.price, precision)).toFixed(
+              precision - unitPrecision
+            )
 
             return (
               <TableRow key={index}>
