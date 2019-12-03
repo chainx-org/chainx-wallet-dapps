@@ -11,7 +11,7 @@ import {
   TableWrapper
 } from './Wrapper'
 
-export default function({ orders }) {
+export default function({ orders, isAsk }) {
   const pair = useSelector(currentPairSelector)
   const { precision, unitPrecision } = pair || {
     precision: 0,
@@ -20,7 +20,9 @@ export default function({ orders }) {
   const { precision: assetPrecision } = useSelector(currentPairAssetInfo) || {}
 
   return (
-    <TableWrapper>
+    <TableWrapper
+      style={{ flexDirection: isAsk ? 'column-reverse' : 'column' }}
+    >
       <Table>
         <TableBody>
           {orders.map((order, index) => {

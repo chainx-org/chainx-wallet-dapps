@@ -6,5 +6,5 @@ import Orders from './Orders'
 export default function() {
   const asks = useSelector(normalizedAsksSelector)
 
-  return <Orders orders={asks} />
+  return <Orders orders={asks} isAsk={true} />
 }

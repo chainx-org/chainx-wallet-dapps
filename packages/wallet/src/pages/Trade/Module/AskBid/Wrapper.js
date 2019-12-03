@@ -9,6 +9,8 @@ const Wrapper = styled(SideCard)``
 export const TableWrapper = styled.div`
   height: 242px;
   overflow-y: auto;
+
+  display: flex;
 `
 
 export const SumCell = styled(BaseCell)`
