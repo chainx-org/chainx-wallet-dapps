@@ -27,4 +27,8 @@ export function remove0xPrefix(str = '') {
   return str
 }
 
+export function getSeconds(date) {
+  return parseInt((date.getTime() / 1000).toFixed(0))
+}
+
 export const noneFunc = () => {}
