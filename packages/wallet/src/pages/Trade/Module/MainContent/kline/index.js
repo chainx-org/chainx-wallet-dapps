@@ -8,6 +8,7 @@ import {
 import { typeCandlesSelector } from './selectors'
 import Galaxy from './Galaxy/main'
 import TypeSelector from './TypeSelector'
+import { currentPairIdSelector } from '../../../../../reducers/tradeSlice'
 
 const canvasId = 'chainx-kline'
 
@@ -15,18 +16,22 @@ export default function() {
   const dispatch = useDispatch()
   const data = useSelector(typeCandlesSelector)
   const [lastType, setLastType] = useState(null)
+  const [lastPairId, setLastPairId] = useState(null)
   const klineType = useSelector(klineTypeSelector)
+  const pairId = useSelector(currentPairIdSelector)
 
   useEffect(() => {
-    dispatch(fetchKline(klineType))
-  }, [dispatch, klineType])
+    if (typeof pairId === 'number') {
+      dispatch(fetchKline(pairId, klineType))
+    }
+  }, [dispatch, pairId, klineType])
 
   useEffect(() => {
     if (!data.length) {
       return
     }
 
-    if (klineType === lastType) {
+    if (klineType === lastType && pairId === lastPairId) {
       return
     }
 
@@ -37,8 +42,9 @@ export default function() {
     galaxy.draw()
 
     setLastType(klineType)
+    setLastPairId(pairId)
     return () => galaxy.destroy()
-  }, [data, klineType, lastType])
+  }, [data, klineType, lastType, pairId, lastPairId])
 
   return (
     <Wrapper>

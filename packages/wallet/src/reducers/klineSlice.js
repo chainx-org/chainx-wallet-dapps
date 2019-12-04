@@ -2,21 +2,21 @@ import { createSlice, createSelector } from '@reduxjs/toolkit'
 import { getApi } from '../services/api'
 import moment from 'moment'
 import { getSeconds } from '../utils'
-
-const types = [60, 300, 1800, 86400, 604800, 2592000]
+import { currentPairIdSelector } from './tradeSlice'
 
 const klineSlice = createSlice({
   name: 'kline',
   initialState: {
-    data: types.reduce((result, type) => {
-      result[type] = []
-      return result
-    }, {}),
+    data: {},
     type: 604800
   },
   reducers: {
-    setData: (state, { payload: { type, data } }) => {
-      state.data[type] = data
+    setData: (state, { payload: { pairId, type, data } }) => {
+      if (!state.data[pairId]) {
+        state.data[pairId] = {}
+      }
+
+      state.data[pairId][type] = data
     },
     setType: (state, { payload }) => {
       state.type = payload
@@ -37,15 +37,15 @@ function getStartDate(type) {
   }
 }
 
-export const fetchKline = (type = 604800) => async dispatch => {
+export const fetchKline = (pairId = 0, type = 604800) => async dispatch => {
   const endDate = getSeconds(new Date())
   const startDate = getSeconds(getStartDate(type))
   const resp = await window.fetch(
-    `${getApi()}kline/?pairid=0&type=${type}&start_date=${startDate}&end_date=${endDate}`
+    `${getApi()}kline/?pairid=${pairId}&type=${type}&start_date=${startDate}&end_date=${endDate}`
   )
 
   const data = await resp.json()
-  dispatch(setData({ type, data }))
+  dispatch(setData({ pairId, type, data }))
 }
 
 export const klineDataSelector = state => state.kline.data
@@ -54,8 +54,19 @@ export const klineTypeSelector = state => state.kline.type
 
 export const candlesSelector = createSelector(
   klineDataSelector,
+  currentPairIdSelector,
   klineTypeSelector,
-  (klineData, type) => klineData[type]
+  (klineData, pairId, type) => {
+    if (!klineData[pairId]) {
+      return []
+    }
+
+    if (!klineData[pairId][type]) {
+      return []
+    }
+
+    return klineData[pairId][type]
+  }
 )
 
 export const { setData, setType } = klineSlice.actions

@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { getChainx } from '../services/chainx'
 import { getApi } from '../services/api'
 
@@ -65,6 +65,17 @@ export const fetchQuotations = (pairId, count = 50) => async dispatch => {
 
 export const pairsSelector = state => state.trade.pairs
 export const currentPairSelector = state => state.trade.currentPair
+export const currentPairIdSelector = createSelector(
+  currentPairSelector,
+  pair => {
+    if (!pair) {
+      return null
+    }
+
+    return pair.id
+  }
+)
+
 export const fillsSelector = state => state.trade.fills
 export const asksSelector = state => state.trade.quotations.asks
 export const bidsSelector = state => state.trade.quotations.bids

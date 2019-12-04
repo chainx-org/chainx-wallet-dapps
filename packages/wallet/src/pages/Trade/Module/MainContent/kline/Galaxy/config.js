@@ -1,8 +1,8 @@
 export default {
   backgroundColor: '#FFF',
   marginTop: 30,
-  marginBottom: 110,
-  volumeCanvasHeight: 80,
+  marginBottom: 70,
+  volumeCanvasHeight: 40,
   studyCanvasHeight: 0,
   candle: {
     width: 5, // 每根蜡烛的宽度
