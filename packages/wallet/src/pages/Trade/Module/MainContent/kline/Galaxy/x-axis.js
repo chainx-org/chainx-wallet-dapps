@@ -131,11 +131,11 @@ export default class Xaxis {
       return (this.marks = this._getMarksForStep1Day())
     }
 
-    if (this.step === 86400 * 7) {
+    if (this.step === 604800) {
       return (this.marks = this._getMarksForStep1Week())
     }
 
-    if (this.step === '1month') {
+    if (this.step === 2592000) {
       return (this.marks = this._getMarksForStep1Month())
     }
 
@@ -261,9 +261,9 @@ export default class Xaxis {
 
     const fontHeight = parseInt(this.ctx.font)
     const xTextFormat =
-      this.step === 86400
+      this.step === 86400 // 1 day
         ? 'YYYY/MM/DD'
-        : this.step === '1month'
+        : this.step === 2592000 // 1 month
         ? 'YYYY/MM'
         : 'MM/DD HH:mm'
     const xText = moment(this.galaxy.chosenItems[crossIndex].date).format(
