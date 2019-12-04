@@ -5,7 +5,6 @@ import { fetchKline } from '../../../../../reducers/klineSlice'
 import { candlesSelector } from './selectors'
 import Galaxy from './Galaxy/main'
 
-console.log(Galaxy)
 const canvasId = 'chainx-kline'
 
 export default function() {
@@ -40,7 +39,6 @@ export default function() {
   return (
     <Wrapper>
       <canvas id={canvasId} width="600" height="250"></canvas>
-      {/*{data.length > 0 ? <Chart type="hybrid" data={data} ratio={1} /> : null}*/}
     </Wrapper>
   )
 }
