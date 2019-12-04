@@ -1,44 +1,49 @@
 import React, { useEffect, useState } from 'react'
 import Wrapper from './Wrapper'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchKline } from '../../../../../reducers/klineSlice'
-import { candlesSelector } from './selectors'
+import {
+  fetchKline,
+  klineTypeSelector
+} from '../../../../../reducers/klineSlice'
+import { typeCandlesSelector } from './selectors'
 import Galaxy from './Galaxy/main'
+import TypeSelector from './TypeSelector'
 
 const canvasId = 'chainx-kline'
 
 export default function() {
   const dispatch = useDispatch()
-  const data = useSelector(candlesSelector)
-  const [canvasRendered, setCanvasRendered] = useState(false)
+  const data = useSelector(typeCandlesSelector)
+  const [lastType, setLastType] = useState(null)
+  const klineType = useSelector(klineTypeSelector)
 
   useEffect(() => {
-    dispatch(fetchKline())
-  }, [dispatch])
+    dispatch(fetchKline(klineType))
+  }, [dispatch, klineType])
 
   useEffect(() => {
-    if (canvasRendered || !data.length) {
+    if (!data.length) {
+      return
+    }
+
+    if (klineType === lastType) {
       return
     }
 
     const canvas = window.document.getElementById(canvasId)
     const context = canvas.getContext('2d')
 
-    const items = data.map(d => ({
-      ...d,
-      date: d.date.getTime()
-    }))
-
-    const galaxy = new Galaxy(context, items, 604800)
+    const galaxy = new Galaxy(context, data, klineType)
     galaxy.draw()
 
-    setCanvasRendered(true)
+    setLastType(klineType)
     return () => galaxy.destroy()
-  }, [data, canvasRendered])
+  }, [data, klineType, lastType])
 
   return (
     <Wrapper>
-      <canvas id={canvasId} width="600" height="250"></canvas>
+      <TypeSelector />
+      <canvas id={canvasId} width="600" height="260" />
     </Wrapper>
   )
 }

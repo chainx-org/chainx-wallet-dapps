@@ -416,6 +416,9 @@ class Galaxy {
     }
 
     this.crossIndex = _.findLastIndex(this.chosenItems, item => item.x <= x)
+    if (this.crossIndex < 0) {
+      return
+    }
     const showX =
       this.chosenItems[this.crossIndex].x + this.config.candle.width / 2
 

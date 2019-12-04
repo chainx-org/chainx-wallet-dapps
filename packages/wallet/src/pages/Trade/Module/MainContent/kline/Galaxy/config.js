@@ -1,6 +1,6 @@
 export default {
   backgroundColor: '#FFF',
-  marginTop: 10,
+  marginTop: 30,
   marginBottom: 110,
   volumeCanvasHeight: 80,
   studyCanvasHeight: 0,

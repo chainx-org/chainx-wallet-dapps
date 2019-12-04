@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit'
 import {
-  klineDataSelector,
-  klineTypeSelector
+  klineTypeSelector,
+  candlesSelector
 } from '../../../../../reducers/klineSlice'
 import { currentPairSelector } from '../../../../../reducers/tradeSlice'
 import { toPrecision } from '../../../../../utils'
@@ -13,7 +13,7 @@ function normalizePrice(price, precision, unitPrecision) {
 }
 
 const normalizedCandlesSelector = createSelector(
-  klineDataSelector,
+  candlesSelector,
   currentPairSelector,
   (candles = [], pair) => {
     if (!pair) {
@@ -27,30 +27,31 @@ const normalizedCandlesSelector = createSelector(
       high: normalizePrice(candle.high, precision, unitPrecision),
       low: normalizePrice(candle.low, precision, unitPrecision),
       close: normalizePrice(candle.close, precision, unitPrecision),
-      volume: toPrecision(candle.volume, assetPrecision, false)
+      volume: toPrecision(candle.volume, assetPrecision, false),
+      date: candle.time * 1000
     }))
   }
 )
 
-export const candlesSelector = createSelector(
+export const typeCandlesSelector = createSelector(
   normalizedCandlesSelector,
   klineTypeSelector,
   (candles = [], type) => {
     const result = []
 
-    candles.forEach(candle => {
-      if (result.length <= 0) {
+    candles.forEach((candle, index) => {
+      if (index <= 0) {
         result.push(candle)
         return
       }
 
       const last = result[result.length - 1]
-      let t = result.time + type
+      let t = last.time + type
       while (t < candle.time) {
         const close = last.close
         result.push({
           time: t,
-          date: new Date(t * 1000),
+          date: t * 1000,
           open: close,
           low: close,
           high: close,
@@ -64,6 +65,7 @@ export const candlesSelector = createSelector(
       result.push(candle)
     })
 
+    console.log('result', result)
     return result
   }
 )

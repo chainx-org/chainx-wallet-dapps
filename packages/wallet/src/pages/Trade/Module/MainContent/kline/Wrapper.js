@@ -7,6 +7,7 @@ const Wrapper = styled.section`
   background: #ffffff;
   border: 1px solid #dce0e2;
   border-radius: 10px;
+  padding: 10px 0 0 10px;
 
   flex: 1;
 `
