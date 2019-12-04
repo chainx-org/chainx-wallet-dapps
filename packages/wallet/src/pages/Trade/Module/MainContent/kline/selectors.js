@@ -7,8 +7,8 @@ import { currentPairSelector } from '../../../../../reducers/tradeSlice'
 import { toPrecision } from '../../../../../utils'
 
 function normalizePrice(price, precision, unitPrecision) {
-  return Number(toPrecision(price, precision)).toFixed(
-    precision - unitPrecision
+  return Number(
+    Number(toPrecision(price, precision)).toFixed(precision - unitPrecision)
   )
 }
 
@@ -20,13 +20,14 @@ const normalizedCandlesSelector = createSelector(
       return []
     }
     const { precision, unitPrecision } = pair
-    console.log('pair', pair)
+    const assetPrecision = pair && pair.assets === 'PCX' ? 8 : 3
     return candles.map(candle => ({
       ...candle,
       open: normalizePrice(candle.open, precision, unitPrecision),
       high: normalizePrice(candle.high, precision, unitPrecision),
       low: normalizePrice(candle.low, precision, unitPrecision),
-      close: normalizePrice(candle.close, precision, unitPrecision)
+      close: normalizePrice(candle.close, precision, unitPrecision),
+      volume: toPrecision(candle.volume, assetPrecision, false)
     }))
   }
 )
