@@ -21,7 +21,7 @@ export default function() {
   }, [dispatch, pair])
 
   return (
-    <TitledCard style={{ height: 582, paddingBottom: 0 }}>
+    <TitledCard style={{ height: 590, paddingBottom: 0 }}>
       <header>Open Orders</header>
       <Head />
       <Asks />

@@ -65,7 +65,6 @@ export const typeCandlesSelector = createSelector(
       result.push(candle)
     })
 
-    console.log('result', result)
     return result
   }
 )

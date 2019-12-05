@@ -5,6 +5,9 @@ import {
 } from '../../../reducers/tradeSlice'
 import { assetsInfoSelector } from '../../selectors/assets'
 import { toPrecision } from '../../../utils'
+import { xbtcFreeSelector } from '../../AssetManagement/Assets/XbtcCard/selectors'
+import { pcxFreeSelector } from '../../AssetManagement/PcxCard/selectors'
+import { sdotFreeSelector } from '../../AssetManagement/Assets/selectors'
 
 export const currentPairAssetInfo = createSelector(
   currentPairSelector,
@@ -72,5 +75,64 @@ export const currentShowPriceSelector = createSelector(
     return Number(toPrecision(fill.price, pair.precision)).toFixed(
       precision - unitPrecision
     )
+  }
+)
+
+export const pairCurrencyFreeSelector = createSelector(
+  currentPairSelector,
+  xbtcFreeSelector,
+  pcxFreeSelector,
+  sdotFreeSelector,
+  (pair, xbtc, pcx, sdot) => {
+    if (!pair) {
+      return null
+    }
+
+    if (pair.currency === 'BTC') {
+      return xbtc
+    } else if (pair.currency === 'SDOT') {
+      return sdot
+    } else {
+      return pcx
+    }
+  }
+)
+
+export const pairAssetFreeSelector = createSelector(
+  currentPairSelector,
+  xbtcFreeSelector,
+  pcxFreeSelector,
+  sdotFreeSelector,
+  (pair, xbtc, pcx, sdot) => {
+    if (!pair) {
+      return null
+    }
+
+    if (pair.assets === 'BTC') {
+      return xbtc
+    } else if (pair.assets === 'SDOT') {
+      return sdot
+    } else {
+      return pcx
+    }
+  }
+)
+
+export const pairCurrencySelector = createSelector(
+  currentPairSelector,
+  pair => (pair ? pair.currency : null)
+)
+export const pairAssetSelector = createSelector(
+  currentPairSelector,
+  pair => (pair ? pair.assets : null)
+)
+export const pairPrecisionSelector = createSelector(
+  currentPairSelector,
+  pair => {
+    if (!pair) {
+      return null
+    }
+
+    return pair.precision - pair.unitPrecision
   }
 )
