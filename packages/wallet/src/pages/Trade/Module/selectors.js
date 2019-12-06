@@ -136,3 +136,21 @@ export const pairPrecisionSelector = createSelector(
     return pair.precision - pair.unitPrecision
   }
 )
+
+export const pairAssetPrecision = createSelector(
+  pairAssetFreeSelector,
+  free => {
+    if (!free) {
+      return 0
+    }
+
+    return free.precision
+  }
+)
+
+export const pairCurrencyPrecision = createSelector(
+  pairCurrencyFreeSelector,
+  free => {
+    return free ? free.precision : 0
+  }
+)

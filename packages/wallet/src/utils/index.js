@@ -11,6 +11,10 @@ export function toPrecision(value, precision = 0, paddingZero = true) {
   }
 }
 
+export function normalizeNumber(num, precision = 0) {
+  return Number(num.toFixed(precision))
+}
+
 export function ensure0xPrefix(str = '') {
   if (str.startsWith('0x')) {
     return str

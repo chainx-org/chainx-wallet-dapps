@@ -16,6 +16,17 @@ const Wrapper = styled.div`
 
     margin-top: 12px;
   }
+
+  & > .percentage {
+    margin-top: 20px;
+  }
+
+  & > .volume {
+    margin-top: 16px;
+    font-size: 13px;
+    color: #3f3f3f;
+    line-height: 18px;
+  }
 `
 
 export default Wrapper
