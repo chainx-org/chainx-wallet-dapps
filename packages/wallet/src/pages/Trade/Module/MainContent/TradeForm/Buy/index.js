@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Wrapper from './Wrapper'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   currentShowPriceSelector,
   pairAssetPrecision,
@@ -8,17 +8,34 @@ import {
   pairCurrencyFreeSelector,
   pairCurrencyPrecision,
   pairCurrencySelector,
-  pairPrecisionSelector
+  pairPrecisionSelector,
+  pairShowPrecisionSelector
 } from '../../../selectors'
 import Free from '../components/Free'
-import { AmountInput, Slider } from '@chainx/ui'
+import { AmountInput, Slider, SuccessButton } from '@chainx/ui'
 import Label from '../components/Label'
 import { normalizeNumber } from '../../../../../../utils'
+import { isDemoSelector } from '../../../../../../selectors'
+import {
+  showSnack,
+  signAndSendExtrinsic
+} from '../../../../../../utils/chainxProvider'
+import {
+  currentPairIdSelector,
+  fetchQuotations
+} from '../../../../../../reducers/tradeSlice'
+import { addressSelector } from '../../../../../../reducers/addressSlice'
+import BigNumber from 'bignumber.js'
 
 export default function() {
+  const accountAddress = useSelector(addressSelector)
+  const isDemoAddr = useSelector(isDemoSelector)
+
+  const pairId = useSelector(currentPairIdSelector)
   const currencyFree = useSelector(pairCurrencyFreeSelector) || {}
   const pairCurrency = useSelector(pairCurrencySelector)
   const pairAsset = useSelector(pairAssetSelector)
+  const pairShowPrecision = useSelector(pairShowPrecisionSelector)
   const pairPrecision = useSelector(pairPrecisionSelector)
   const assetPrecision = useSelector(pairAssetPrecision)
   const showPrice = useSelector(currentShowPriceSelector)
@@ -60,6 +77,41 @@ export default function() {
     setMax(normalizeNumber(rawMax, currencyPrecision))
   }, [currencyFree, price, currencyPrecision])
 
+  const [disabled, setDisabled] = useState(false)
+  const dispatch = useDispatch()
+
+  const sign = async () => {
+    setDisabled(true)
+
+    const realPrice = BigNumber(price)
+      .multipliedBy(Math.pow(10, pairPrecision))
+      .toNumber()
+    const realAmount = BigNumber(amount)
+      .multipliedBy(Math.pow(10, assetPrecision))
+      .toNumber()
+
+    try {
+      const status = await signAndSendExtrinsic(
+        accountAddress,
+        'xSpot',
+        'putOrder',
+        [pairId, 'Limit', 'Buy', realAmount, realPrice]
+      )
+
+      const messages = {
+        successTitle: '买单成功',
+        failTitle: '买单失败',
+        successMessage: `买单数量 ${amount} ${pairAsset}`,
+        failMessage: `交易hash ${status.txHash}`
+      }
+
+      await showSnack(status, messages, dispatch)
+      dispatch(fetchQuotations(pairId))
+    } finally {
+      setDisabled(false)
+    }
+  }
+
   return (
     <Wrapper>
       <Free
@@ -78,7 +130,7 @@ export default function() {
             setPrice(value)
           }}
           tokenName={pairCurrency}
-          precision={pairPrecision}
+          precision={pairShowPrecision}
         />
       </div>
       <div className="amount input">
@@ -124,6 +176,16 @@ export default function() {
             {volume.toFixed(currencyPrecision)} {pairCurrency}
           </span>
         ) : null}
+      </div>
+
+      <div className="button">
+        <SuccessButton
+          disabled={isDemoAddr || disabled}
+          size="fullWidth"
+          onClick={sign}
+        >
+          买入 PCX
+        </SuccessButton>
       </div>
     </Wrapper>
   )

@@ -18,14 +18,17 @@ const Wrapper = styled.div`
   }
 
   & > .percentage {
-    margin-top: 20px;
+    margin-top: 16px;
   }
 
   & > .volume {
-    margin-top: 16px;
     font-size: 13px;
     color: #3f3f3f;
     line-height: 18px;
+  }
+
+  & > div.button {
+    margin-top: 12px;
   }
 `
 

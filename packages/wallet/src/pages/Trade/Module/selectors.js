@@ -126,7 +126,7 @@ export const pairAssetSelector = createSelector(
   currentPairSelector,
   pair => (pair ? pair.assets : null)
 )
-export const pairPrecisionSelector = createSelector(
+export const pairShowPrecisionSelector = createSelector(
   currentPairSelector,
   pair => {
     if (!pair) {
@@ -134,6 +134,13 @@ export const pairPrecisionSelector = createSelector(
     }
 
     return pair.precision - pair.unitPrecision
+  }
+)
+
+export const pairPrecisionSelector = createSelector(
+  currentPairSelector,
+  pair => {
+    return pair ? pair.precision : null
   }
 )
 

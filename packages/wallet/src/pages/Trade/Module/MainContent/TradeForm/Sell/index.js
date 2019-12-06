@@ -5,7 +5,7 @@ import {
   pairAssetFreeSelector,
   pairAssetSelector,
   pairCurrencySelector,
-  pairPrecisionSelector
+  pairShowPrecisionSelector
 } from '../../../selectors'
 import Free from '../components/Free'
 import Label from '../components/Label'
@@ -15,7 +15,7 @@ export default function() {
   const assetFree = useSelector(pairAssetFreeSelector) || {}
   const pairCurrency = useSelector(pairCurrencySelector)
   const pairAsset = useSelector(pairAssetSelector)
-  const pairPrecision = useSelector(pairPrecisionSelector)
+  const pairPrecision = useSelector(pairShowPrecisionSelector)
 
   const [price, setPrice] = useState('')
   const [amount, setAmount] = useState('')
