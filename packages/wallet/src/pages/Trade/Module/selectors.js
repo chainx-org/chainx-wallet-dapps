@@ -66,7 +66,7 @@ export const currentShowPriceSelector = createSelector(
       return null
     }
 
-    const fill = fills[fills.length - 1]
+    const fill = fills[0]
     const { precision, unitPrecision } = pair || {
       precision: 0,
       unitPrecision: 0
