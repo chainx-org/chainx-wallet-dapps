@@ -9,6 +9,12 @@ const Wrapper = styled.div`
   border-right: 1px solid #eeeeee;
   padding: 4px 15.5px 0 0;
 
+  & > div.info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   & > div.input {
     display: flex;
     align-items: center;
@@ -30,6 +36,11 @@ const Wrapper = styled.div`
   & > div.button {
     margin-top: 12px;
   }
+`
+
+export const Error = styled.div`
+  font-size: 12px;
+  color: #de071c;
 `
 
 export default Wrapper

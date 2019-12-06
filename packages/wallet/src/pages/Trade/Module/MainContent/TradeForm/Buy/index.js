@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Wrapper from './Wrapper'
+import Wrapper, { Error } from './Wrapper'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   currentShowPriceSelector,
@@ -80,15 +80,36 @@ export default function() {
   const [disabled, setDisabled] = useState(false)
   const dispatch = useDispatch()
 
-  const sign = async () => {
-    setDisabled(true)
+  const [priceErrMsg, setPriceErrMsg] = useState('')
+  const [amountErrMsg, setAmountErrMsg] = useState('')
 
+  const sign = async () => {
     const realPrice = BigNumber(price)
       .multipliedBy(Math.pow(10, pairPrecision))
       .toNumber()
     const realAmount = BigNumber(amount)
       .multipliedBy(Math.pow(10, assetPrecision))
       .toNumber()
+
+    console.log('realPrice', realPrice)
+    console.log('realAmount', realAmount)
+
+    if (realPrice <= 0) {
+      setPriceErrMsg('无效价格')
+      return
+    }
+
+    if (realAmount <= 0) {
+      setAmountErrMsg('无效数量')
+      return
+    }
+
+    if (!window.chainxProvider) {
+      // TODO: 考虑没有安装插件的情况下怎么与用户进行交互
+      return
+    }
+
+    setDisabled(true)
 
     try {
       const status = await signAndSendExtrinsic(
@@ -114,24 +135,30 @@ export default function() {
 
   return (
     <Wrapper>
-      <Free
-        asset={pairCurrency}
-        free={currencyFree.free}
-        precision={currencyPrecision}
-      />
+      <div className="info">
+        <Free
+          asset={pairCurrency}
+          free={currencyFree.free}
+          precision={currencyPrecision}
+        />
+        <Error>{priceErrMsg || amountErrMsg}</Error>
+      </div>
       <div className="price input">
         <Label htmlFor="buy-price">价格</Label>
         {/*TODO: 设置默认价格*/}
-        <AmountInput
-          style={{ maxWidth: 216 }}
-          id="buy-price"
-          value={price}
-          onChange={value => {
-            setPrice(value)
-          }}
-          tokenName={pairCurrency}
-          precision={pairShowPrecision}
-        />
+        <div>
+          <AmountInput
+            style={{ maxWidth: 216 }}
+            id="buy-price"
+            value={price}
+            onChange={value => {
+              setPrice(value)
+            }}
+            tokenName={pairCurrency}
+            precision={pairShowPrecision}
+            error={!!priceErrMsg}
+          />
+        </div>
       </div>
       <div className="amount input">
         <Label>数量</Label>
@@ -150,6 +177,7 @@ export default function() {
           }}
           tokenName={pairAsset}
           precision={assetPrecision}
+          error={!!amountErrMsg}
         />
       </div>
 
