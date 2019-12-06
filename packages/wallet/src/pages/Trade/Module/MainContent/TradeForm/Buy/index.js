@@ -3,6 +3,7 @@ import Wrapper, { Error } from './Wrapper'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   currentShowPriceSelector,
+  maxBuyPriceSelector,
   pairAssetPrecision,
   pairAssetSelector,
   pairCurrencyFreeSelector,
@@ -14,7 +15,7 @@ import {
 import Free from '../components/Free'
 import { AmountInput, Slider, SuccessButton } from '@chainx/ui'
 import Label from '../components/Label'
-import { normalizeNumber } from '../../../../../../utils'
+import { normalizeNumber, toPrecision } from '../../../../../../utils'
 import { isDemoSelector } from '../../../../../../selectors'
 import {
   showSnack,
@@ -26,6 +27,7 @@ import {
 } from '../../../../../../reducers/tradeSlice'
 import { addressSelector } from '../../../../../../reducers/addressSlice'
 import BigNumber from 'bignumber.js'
+import { marks } from '../constants'
 
 export default function() {
   const accountAddress = useSelector(addressSelector)
@@ -40,19 +42,16 @@ export default function() {
   const assetPrecision = useSelector(pairAssetPrecision)
   const showPrice = useSelector(currentShowPriceSelector)
   const currencyPrecision = useSelector(pairCurrencyPrecision)
+  const maxBuyPrice = useSelector(maxBuyPriceSelector)
+  const maxBuyShowPrice = Number(
+    toPrecision(maxBuyPrice, pairPrecision)
+  ).toFixed(pairShowPrecision)
 
   const [price, setPrice] = useState('')
   const [priceInit, setPriceInit] = useState(false)
   const [amount, setAmount] = useState('0')
 
   const [percentage, setPercentage] = useState(0)
-  const marks = [
-    { value: 0 },
-    { value: 25 },
-    { value: 50 },
-    { value: 75 },
-    { value: 100 }
-  ]
 
   const volume = Number(
     Number(amount) * Number(price).toFixed(currencyPrecision)
@@ -91,11 +90,13 @@ export default function() {
       .multipliedBy(Math.pow(10, assetPrecision))
       .toNumber()
 
-    console.log('realPrice', realPrice)
-    console.log('realAmount', realAmount)
-
     if (realPrice <= 0) {
       setPriceErrMsg('无效价格')
+      return
+    }
+
+    if (maxBuyPrice && realPrice > maxBuyPrice) {
+      setPriceErrMsg(`最大价格${maxBuyShowPrice}`)
       return
     }
 
@@ -120,9 +121,9 @@ export default function() {
       )
 
       const messages = {
-        successTitle: '买单成功',
-        failTitle: '买单失败',
-        successMessage: `买单数量 ${amount} ${pairAsset}`,
+        successTitle: '卖单成功',
+        failTitle: '卖单失败',
+        successMessage: `卖单数量 ${amount} ${pairAsset}`,
         failMessage: `交易hash ${status.txHash}`
       }
 

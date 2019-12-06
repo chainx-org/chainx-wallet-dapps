@@ -161,3 +161,17 @@ export const pairCurrencyPrecision = createSelector(
     return free ? free.precision : 0
   }
 )
+
+export const maxBuyPriceSelector = createSelector(
+  currentPairSelector,
+  pair => {
+    return pair ? pair.maximumBid : 0
+  }
+)
+
+export const minSellPriceSelector = createSelector(
+  currentPairSelector,
+  pair => {
+    return pair ? pair.minimumOffer : 0
+  }
+)
