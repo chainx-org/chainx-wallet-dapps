@@ -1,7 +1,10 @@
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
+  flex: 1;
+
   display: flex;
+  flex-direction: column;
   margin-top: 18px;
   padding-top: 12px;
   background: #ffffff;

@@ -1,6 +1,7 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { getChainx } from '../services/chainx'
 import { getApi } from '../services/api'
+import { remove0xPrefix } from '../utils'
 
 const tradeSlice = createSlice({
   name: 'trade',
@@ -11,7 +12,8 @@ const tradeSlice = createSlice({
     quotations: {
       asks: [],
       bids: []
-    }
+    },
+    nowOrders: []
   },
   reducers: {
     setPairs: (state, action) => {
@@ -25,6 +27,9 @@ const tradeSlice = createSlice({
     },
     setQuotations: (state, { payload }) => {
       state.quotations = payload
+    },
+    setNowOrders: (state, { payload }) => {
+      state.nowOrders = payload
     }
   }
 })
@@ -33,7 +38,8 @@ export const {
   setPairs,
   setCurrentPair,
   setFills,
-  setQuotations
+  setQuotations,
+  setNowOrders
 } = tradeSlice.actions
 
 export const fetchTradePairs = () => async dispatch => {
@@ -63,9 +69,18 @@ export const fetchQuotations = (pairId, count = 50) => async dispatch => {
   dispatch(setQuotations(data))
 }
 
+export const fetchNowOrders = accountId => async dispatch => {
+  const resp = await window.fetch(
+    `${getApi()}trade/userorders/${remove0xPrefix(accountId)}?status=0`
+  )
+
+  const data = await resp.json()
+  dispatch(setNowOrders(data.items))
+}
+
 export const pairsSelector = state => state.trade.pairs
 export const currentPairSelector = state => state.trade.currentPair
-export const currentPairIdSelector = createSelector(
+export let currentPairIdSelector = createSelector(
   currentPairSelector,
   pair => {
     if (!pair) {
@@ -79,5 +94,6 @@ export const currentPairIdSelector = createSelector(
 export const fillsSelector = state => state.trade.fills
 export const asksSelector = state => state.trade.quotations.asks
 export const bidsSelector = state => state.trade.quotations.bids
+export const userOrders = state => state.trade.nowOrders
 
 export default tradeSlice.reducer
