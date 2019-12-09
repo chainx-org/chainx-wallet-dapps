@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { detailedRecordsSelector } from './selectors'
 import defaultLogo from '../../../svg/default-logo.svg'
 import { DefaultButton } from '@chainx/ui'
@@ -15,8 +15,10 @@ import Empty from './Empty'
 import $t from '../../../../../locale'
 import useOutsideClick from '../../../../../utils/useClickOutside'
 import {
+  setVoteOpen,
   switchNominationOpenSelector,
-  unNominateOpenSelector
+  unNominateOpenSelector,
+  voteOpenSelector
 } from '../../../../../reducers/runStatusSlice'
 
 const Wrapper = styled.div`
@@ -87,16 +89,18 @@ export default function({ close = noneFunc }) {
   const records = useSelector(detailedRecordsSelector)
   const precision = useSelector(pcxPrecisionSelector)
 
-  const [voteOpen, setVoteOpen] = useState(false)
+  const voteOpen = useSelector(voteOpenSelector)
   const [intention, setIntention] = useState(null)
 
   const unNominateOpen = useSelector(unNominateOpenSelector)
   const switchNominationOpen = useSelector(switchNominationOpenSelector)
 
+  const dispatch = useDispatch()
+
   const popup = useRef(null)
 
   useOutsideClick(popup, () => {
-    if (!unNominateOpen && !switchNominationOpen) {
+    if (!unNominateOpen && !switchNominationOpen && !voteOpen) {
       close()
     }
   })
@@ -126,7 +130,7 @@ export default function({ close = noneFunc }) {
                     style={{ marginRight: 8 }}
                     onClick={() => {
                       setIntention(record.intention)
-                      setVoteOpen(true)
+                      dispatch(setVoteOpen(true))
                     }}
                   >
                     {$t('STAKING_VOTE')}
@@ -161,7 +165,7 @@ export default function({ close = noneFunc }) {
       {voteOpen && (
         <VoteDialog
           handleClose={() => {
-            setVoteOpen(false)
+            dispatch(setVoteOpen(false))
           }}
           intention={intention}
         />
