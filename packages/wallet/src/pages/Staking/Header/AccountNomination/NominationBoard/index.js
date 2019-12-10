@@ -17,6 +17,7 @@ import useOutsideClick from '../../../../../utils/useClickOutside'
 import {
   setVoteOpen,
   switchNominationOpenSelector,
+  unFreezeOpenSelector,
   unNominateOpenSelector,
   voteOpenSelector
 } from '../../../../../reducers/runStatusSlice'
@@ -94,13 +95,19 @@ export default function({ close = noneFunc }) {
 
   const unNominateOpen = useSelector(unNominateOpenSelector)
   const switchNominationOpen = useSelector(switchNominationOpenSelector)
+  const unFreezeOpen = useSelector(unFreezeOpenSelector)
 
   const dispatch = useDispatch()
 
   const popup = useRef(null)
 
   useOutsideClick(popup, () => {
-    if (!unNominateOpen && !switchNominationOpen && !voteOpen) {
+    if (
+      !unNominateOpen &&
+      !switchNominationOpen &&
+      !voteOpen &&
+      !unFreezeOpen
+    ) {
       close()
     }
   })
