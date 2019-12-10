@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { BaseCell } from './UserOrders/Wrapper'
 
 const Wrapper = styled.div`
   flex: 1;
@@ -42,4 +43,14 @@ export const Header = styled.header`
       }
     }
   }
+`
+
+export const HeadCell = styled(BaseCell)`
+  opacity: 0.72 !important;
+  font-weight: 600 !important;
+`
+
+export const StatCell = styled(BaseCell)`
+  opacity: 0.72 !important;
+  text-align: right !important;
 `

@@ -8,11 +8,6 @@ export const BaseCell = styled(TableCell)`
   color: #000000;
 `
 
-export const HeadCell = styled(BaseCell)`
-  opacity: 0.72 !important;
-  font-weight: 600 !important;
-`
-
 export const TimeCell = styled(BaseCell)`
   padding: 0 !important;
   & > div {
@@ -86,6 +81,8 @@ export const FillCell = styled(BaseCell)`
 `
 
 export const ActionCell = styled(TableCell)`
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
   text-align: right !important;
   & > img.cancel {
     cursor: pointer;

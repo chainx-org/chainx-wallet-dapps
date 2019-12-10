@@ -1,9 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Header } from './Wrapper'
 
-export default function() {
-  const [idx, setIdx] = useState(0)
-
+export default function({ idx, setIdx }) {
   return (
     <Header>
       <ul>

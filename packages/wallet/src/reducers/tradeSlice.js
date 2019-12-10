@@ -13,7 +13,8 @@ const tradeSlice = createSlice({
       asks: [],
       bids: []
     },
-    nowOrders: []
+    nowOrders: [],
+    historyOrders: []
   },
   reducers: {
     setPairs: (state, action) => {
@@ -30,6 +31,9 @@ const tradeSlice = createSlice({
     },
     setNowOrders: (state, { payload }) => {
       state.nowOrders = payload
+    },
+    setHistoryOrders: (state, { payload }) => {
+      state.historyOrders = payload
     }
   }
 })
@@ -39,7 +43,8 @@ export const {
   setCurrentPair,
   setFills,
   setQuotations,
-  setNowOrders
+  setNowOrders,
+  setHistoryOrders
 } = tradeSlice.actions
 
 export const fetchTradePairs = () => async dispatch => {
@@ -78,6 +83,15 @@ export const fetchNowOrders = accountId => async dispatch => {
   dispatch(setNowOrders(data.items))
 }
 
+export const fetchHistoryOrders = accountId => async dispatch => {
+  const resp = await window.fetch(
+    `${getApi()}trade/userorders/${remove0xPrefix(accountId)}?status=3`
+  )
+
+  const data = await resp.json()
+  dispatch(setHistoryOrders(data.items))
+}
+
 export const pairsSelector = state => state.trade.pairs
 export const currentPairSelector = state => state.trade.currentPair
 export let currentPairIdSelector = createSelector(
@@ -95,5 +109,6 @@ export const fillsSelector = state => state.trade.fills
 export const asksSelector = state => state.trade.quotations.asks
 export const bidsSelector = state => state.trade.quotations.bids
 export const userOrders = state => state.trade.nowOrders
+export const historyOrdersSelector = state => state.trade.historyOrders
 
 export default tradeSlice.reducer
