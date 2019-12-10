@@ -20,7 +20,7 @@ export default function({ candle }) {
       <li>H: {candle.high}</li>
       <li>L: {candle.low}</li>
       <li>C: {candle.close}</li>
-      <li>V: {candle.volume.toFixed(0)}</li>
+      <li>V: {candle.volume}</li>
     </Wrapper>
   )
 }
