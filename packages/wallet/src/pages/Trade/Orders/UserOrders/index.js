@@ -3,13 +3,15 @@ import TableHead from './Head'
 import { useDispatch, useSelector } from 'react-redux'
 import { addressSelector } from '../../../../reducers/addressSlice'
 import { getChainx } from '../../../../services/chainx'
-import { fetchNowOrders } from '../../../../reducers/tradeSlice'
+import { fetchNowOrders, userOrders } from '../../../../reducers/tradeSlice'
 import Content from './Content'
+import { Empty } from '../../../../components'
 
 export default function() {
   const address = useSelector(addressSelector)
   const chainx = getChainx()
   const accountId = chainx.account.decodeAddress(address, false)
+  const orders = useSelector(userOrders)
 
   const dispatch = useDispatch()
 
@@ -20,7 +22,11 @@ export default function() {
   return (
     <>
       <TableHead />
-      <Content />
+      {orders.length > 0 ? (
+        <Content />
+      ) : (
+        <Empty text="暂无委托" style={{ marginTop: 30 }} />
+      )}
     </>
   )
 }
