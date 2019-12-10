@@ -131,7 +131,7 @@ export default function({ close = noneFunc }) {
                   <span>{name}</span>
                 </div>
                 <div className="operations">
-                  <Unfreeze revocations={revocations} />
+                  <Unfreeze revocations={revocations} record={record} />
                   <DefaultButton
                     size="small"
                     style={{ marginRight: 8 }}

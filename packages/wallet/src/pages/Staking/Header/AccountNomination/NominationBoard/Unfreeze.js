@@ -7,7 +7,7 @@ import {
   unFreezeOpenSelector
 } from '../../../../../reducers/runStatusSlice'
 
-export default function({ revocations = [] }) {
+export default function({ record }) {
   const [disabled, setDisabled] = useState(false)
   const unFreezeOpen = useSelector(unFreezeOpenSelector)
   const dispatch = useDispatch()
@@ -17,7 +17,7 @@ export default function({ revocations = [] }) {
       <DefaultButton
         size="small"
         style={{ marginRight: 8 }}
-        disabled={revocations.length <= 0 || disabled}
+        disabled={record.info.revocations.length <= 0 || disabled}
         onClick={() => {
           dispatch(setUnFreezeOpen(true))
           setDisabled(true)
@@ -27,7 +27,8 @@ export default function({ revocations = [] }) {
       </DefaultButton>
       {unFreezeOpen ? (
         <UnFreezeDialog
-          revocations={revocations}
+          record={record}
+          revocations={record.info.revocations}
           handleClose={() => {
             dispatch(setUnFreezeOpen(false))
             setDisabled(false)
