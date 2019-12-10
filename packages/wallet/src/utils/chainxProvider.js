@@ -6,6 +6,15 @@ import {
 } from '../reducers/snackSlice'
 import { store } from '../index'
 import { exFailed, exSuccess } from './constants'
+import $t from '../locale'
+
+function getMessage(err) {
+  if (err.code === 'sign-transaction-busy') {
+    return $t('COMMON_SIGN_TX_BUSY')
+  }
+
+  return err.msg
+}
 
 export function signAndSendExtrinsic(address, module, call, args = []) {
   return new Promise((resolve, reject) => {
@@ -27,8 +36,8 @@ export function signAndSendExtrinsic(address, module, call, args = []) {
             addSnack({
               id,
               type: typeEnum.ERROR,
-              title: '错误',
-              message: `提交交易出错: ${err.toString()}`
+              title: '提交交易出错',
+              message: getMessage(err)
             })
           )
           removeSnackInSeconds(store.dispatch, id, 5)

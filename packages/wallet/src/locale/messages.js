@@ -191,6 +191,10 @@ const common = {
   COMMON_ADDRESS: {
     en: 'Address',
     zh: '地址'
+  },
+  COMMON_SIGN_TX_BUSY: {
+    en: 'Sign transaction busy',
+    zh: '插件存在尚未处理的签名请求'
   }
 }
 
