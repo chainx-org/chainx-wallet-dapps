@@ -28,7 +28,7 @@ export default function() {
       {orders.length > 0 ? (
         <Content />
       ) : (
-        <Empty text="无历史委托" style={{ marginTop: 30 }} />
+        <Empty text="无历史委托" style={{ marginTop: 30, marginBottom: 30 }} />
       )}
     </>
   )
