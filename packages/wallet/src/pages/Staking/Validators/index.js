@@ -52,8 +52,8 @@ export default function() {
     <Main>
       {chunks.map((intentions, index) => {
         return (
-          <div className="chunks">
-            <ul key={index} className="line">
+          <div className="chunks" key={index}>
+            <ul className="line">
               {intentions.map(intention => {
                 return (
                   <li key={intention.account}>
