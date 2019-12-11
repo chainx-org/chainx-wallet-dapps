@@ -16,6 +16,14 @@ const Main = styled.main`
     margin: 0 auto;
     min-width: 1280px;
     max-width: 1440px;
+
+    &.chunks {
+      display: flex;
+      justify-content: center;
+      & > ul {
+        min-width: 1248px;
+      }
+    }
   }
 
   ul {
@@ -42,9 +50,9 @@ export default function() {
 
   return (
     <Main>
-      <div>
-        {chunks.map((intentions, index) => {
-          return (
+      {chunks.map((intentions, index) => {
+        return (
+          <div className="chunks">
             <ul key={index} className="line">
               {intentions.map(intention => {
                 return (
@@ -54,9 +62,9 @@ export default function() {
                 )
               })}
             </ul>
-          )
-        })}
-      </div>
+          </div>
+        )
+      })}
       {showDropout ? null : (
         <div style={{ textAlign: 'center', marginTop: 20 }}>
           <WhiteButton size="large" onClick={() => setShowDropout(true)}>
