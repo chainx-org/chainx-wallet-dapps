@@ -13,7 +13,7 @@ import {
   pairShowPrecisionSelector
 } from '../../../selectors'
 import Free from '../components/Free'
-import { AmountInput, Slider, SuccessButton } from '@chainx/ui'
+import { AmountInput, DangerButton, Slider, SuccessButton } from '@chainx/ui'
 import Label from '../components/Label'
 import { normalizeNumber, toPrecision } from '../../../../../../utils'
 import { isDemoSelector } from '../../../../../../selectors'
@@ -28,6 +28,7 @@ import {
 import { addressSelector } from '../../../../../../reducers/addressSlice'
 import BigNumber from 'bignumber.js'
 import { marks } from '../constants'
+import $t from '../../../../../../locale'
 
 export default function() {
   const accountAddress = useSelector(addressSelector)
@@ -199,7 +200,7 @@ export default function() {
         marks={marks}
       />
       <div className="volume">
-        <span>交易额 </span>
+        <span>{$t('TRADE_VOLUME')} </span>
         {pairCurrency ? (
           <span>
             {volume.toFixed(currencyPrecision)} {pairCurrency}
@@ -213,7 +214,7 @@ export default function() {
           size="fullWidth"
           onClick={sign}
         >
-          买入 PCX
+          {$t('TRADE_BUY')} {pairAsset}
         </SuccessButton>
       </div>
     </Wrapper>

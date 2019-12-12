@@ -6,6 +6,7 @@ import {
   setUnFreezeOpen,
   unFreezeOpenSelector
 } from '../../../../../reducers/runStatusSlice'
+import $t from '../../../../../locale'
 
 export default function({ record }) {
   const [disabled, setDisabled] = useState(false)
@@ -23,7 +24,7 @@ export default function({ record }) {
           setDisabled(true)
         }}
       >
-        解冻
+        {$t('COMMON_UNFREEZE')}
       </DefaultButton>
       {unFreezeOpen ? (
         <UnFreezeDialog

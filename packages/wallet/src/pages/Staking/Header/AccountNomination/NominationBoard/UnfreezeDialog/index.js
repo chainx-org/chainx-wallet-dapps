@@ -18,6 +18,7 @@ import {
 import { fetchNominationRecords } from '../../../../../../reducers/intentionSlice'
 import { fetchAccountAssets } from '../../../../../../reducers/assetSlice'
 import { addressSelector } from '../../../../../../reducers/addressSlice'
+import $t from '../../../../../../locale'
 
 export default function({ handleClose, record }) {
   const nowBlockNumber = useSelector(blockNumberSelector)
@@ -104,7 +105,7 @@ export default function({ handleClose, record }) {
                       size="small"
                       onClick={() => unfreeze(index)}
                     >
-                      解冻
+                      {$t('COMMON_UNFREEZE')}
                     </PrimaryButton>
                   </td>
                 </tr>

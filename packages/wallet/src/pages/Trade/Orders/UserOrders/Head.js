@@ -1,20 +1,31 @@
 import React from 'react'
 import { Table, TableHead, TableRow } from '@chainx/ui'
 import { HeadCell } from '../Wrapper'
+import $t from '../../../../locale'
 
 export default function() {
   return (
     <Table>
       <TableHead>
         <TableRow>
-          <HeadCell style={{ width: '12%' }}>时间</HeadCell>
-          <HeadCell style={{ width: '5%' }}>编号</HeadCell>
-          <HeadCell style={{ width: '8%' }}>交易对</HeadCell>
-          <HeadCell style={{ width: '11%' }}>委托价格</HeadCell>
-          <HeadCell style={{ width: '13%' }}>委托数量</HeadCell>
-          <HeadCell style={{ width: '16%' }}>交易额</HeadCell>
-          <HeadCell style={{ width: '16%' }}>实际成交/成交率%</HeadCell>
-          <HeadCell style={{ textAlign: 'right' }}>操作</HeadCell>
+          <HeadCell style={{ width: '12%' }}>{$t('TRADE_DATE')}</HeadCell>
+          <HeadCell style={{ width: '5%' }}>{$t('TRADE_INDEX')}</HeadCell>
+          <HeadCell style={{ width: '8%' }}>{$t('TRADE_PAIR')}</HeadCell>
+          <HeadCell style={{ width: '11%' }}>
+            {$t('TRADE_ORDER_PRICE')}
+          </HeadCell>
+          <HeadCell style={{ width: '13%' }}>
+            {$t('TRADE_ORDER_AMOUNT')}
+          </HeadCell>
+          <HeadCell style={{ width: '16%' }}>
+            {$t('TRADE_ORDER_VOLUME')}
+          </HeadCell>
+          <HeadCell style={{ width: '16%' }}>
+            {$t('TRADE_ORDER_FILLED_PERCENT')}
+          </HeadCell>
+          <HeadCell style={{ textAlign: 'right' }}>
+            {$t('TRADE_OPERATION')}
+          </HeadCell>
         </TableRow>
       </TableHead>
     </Table>

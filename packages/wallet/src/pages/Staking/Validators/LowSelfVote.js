@@ -1,7 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
+import $t from '../../../locale'
 
 const Wrapper = styled.span`
+  display: inline-flex;
+  align-items: center;
   background: #ff3b30;
   border-radius: 9px;
   font-size: 11px;
@@ -13,5 +16,5 @@ const Wrapper = styled.span`
 `
 
 export default function() {
-  return <Wrapper>抵押过低</Wrapper>
+  return <Wrapper>{$t('STAKING_LOW_SELF_VOTE')}</Wrapper>
 }

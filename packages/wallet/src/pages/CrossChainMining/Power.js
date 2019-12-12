@@ -7,6 +7,7 @@ import NumberFormat from '../../components/NumberFormat'
 
 import { Paper, LinearProgress } from '@chainx/ui'
 import styled from 'styled-components'
+import $t from '../../locale'
 
 const PowerPaper = styled(Paper)`
   width: 300px;
@@ -132,7 +133,7 @@ class Piechart {
     ctx.fillStyle = 'black'
     ctx.font = '16px serif'
     ctx.textAlign = 'center'
-    ctx.fillText('算力占比', centerX, centerY + 4)
+    ctx.fillText($t('CHAIN_POWER_PERCENTAGE'), centerX, centerY + 4)
   }
 }
 
@@ -163,11 +164,11 @@ export default function Power() {
 
   return (
     <PowerPaper>
-      <TitleWrapper>链状态</TitleWrapper>
+      <TitleWrapper>{$t('CHAIN_STAT')}</TitleWrapper>
       <TotalWrapper>
         <TotalItem>
           <TotalHeader>
-            <TotalTitle>发行总量（PCX）</TotalTitle>
+            <TotalTitle>{$t('CHAIN_ISSUANCE')}</TotalTitle>
             <div style={{ color: 'rgba(0,0,0,.32)' }}>
               <NumberFormat value={21000000} />
               /<NumberFormat value={status.pcx_issuance / 100000000} />

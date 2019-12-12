@@ -28,6 +28,7 @@ import {
   currentPairIdSelector,
   fetchQuotations
 } from '../../../../../../reducers/tradeSlice'
+import $t from '../../../../../../locale'
 
 export default function() {
   const pairPrecision = useSelector(pairPrecisionSelector)
@@ -180,7 +181,7 @@ export default function() {
       />
 
       <div className="volume">
-        <span>交易额 </span>
+        <span>{$t('TRADE_VOLUME')} </span>
         {pairCurrency ? (
           <span>
             {volume.toFixed(currencyPrecision)} {pairCurrency}
@@ -194,7 +195,7 @@ export default function() {
           size="fullWidth"
           onClick={sign}
         >
-          卖出 PCX
+          {$t('TRADE_SELL')} {pairAsset}
         </DangerButton>
       </div>
     </Wrapper>

@@ -14,6 +14,7 @@ import {
   PairPriceDownCell
 } from '../../components/PriceCell'
 import { normalizedCurrentFillsSelector } from '../../selectors'
+import $t from '../../../../../locale'
 
 export default function() {
   const currencies = useSelector(currenciesSelector)
@@ -56,8 +57,10 @@ export default function() {
       <Table>
         <TableHead>
           <TableRow>
-            <HeadCell>币种</HeadCell>
-            <HeadCell style={{ textAlign: 'right' }}>价格</HeadCell>
+            <HeadCell>{$t('TRADE_TOKEN')}</HeadCell>
+            <HeadCell style={{ textAlign: 'right' }}>
+              {$t('TRADE_PRICE')}
+            </HeadCell>
           </TableRow>
         </TableHead>
         <TableBody>
