@@ -1,12 +1,13 @@
 import React, { useRef } from 'react'
 import styled from 'styled-components'
-import { BoldValue, DotInCenter, Label } from './components'
+import { BoldValue, Label } from './components'
 import { useSelector } from 'react-redux'
 import { pcxPrecisionSelector } from '../../../../selectors/assets'
 import { noneFunc, toPrecision } from '../../../../../utils'
 import { getChainx } from '../../../../../services/chainx'
 import useOutsideClick from '../../../../../utils/useClickOutside'
 import $t from '../../../../../locale'
+import Address from '../../../../../components/Address'
 
 const Wrapper = styled.div`
   position: absolute;
@@ -100,11 +101,11 @@ export default function({ intention, close = noneFunc }) {
           </li>
           <li>
             <Label>{$t('STAKING_JACKPOT_ADDR')}</Label>
-            <DotInCenter text={jackpotAddress} length={5} />
+            <Address address={jackpotAddress} />
           </li>
           <li>
             <Label>{$t('STAKING_ACCOUNT_ADDRESS')}</Label>
-            <DotInCenter text={accountAddress} length={5} />
+            <Address address={accountAddress} />
           </li>
         </ul>
       </div>
