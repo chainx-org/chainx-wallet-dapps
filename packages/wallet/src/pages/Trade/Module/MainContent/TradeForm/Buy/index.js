@@ -13,7 +13,7 @@ import {
   pairShowPrecisionSelector
 } from '../../../selectors'
 import Free from '../components/Free'
-import { AmountInput, DangerButton, Slider, SuccessButton } from '@chainx/ui'
+import { AmountInput, Slider, SuccessButton } from '@chainx/ui'
 import Label from '../components/Label'
 import { normalizeNumber, toPrecision } from '../../../../../../utils'
 import { isDemoSelector } from '../../../../../../selectors'
