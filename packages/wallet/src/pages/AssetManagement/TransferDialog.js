@@ -8,7 +8,7 @@ import {
 } from '@chainx/ui'
 import styled from 'styled-components'
 import $t from '../../locale'
-import { toPrecision } from '../../utils'
+import { retry, toPrecision } from '../../utils'
 import { useDispatch, useSelector } from 'react-redux'
 import { xbtcFreeSelector } from './Assets/XbtcCard/selectors'
 import { getChainx } from '../../services/chainx'
@@ -24,6 +24,7 @@ import {
   checkMemoAndHasError
 } from '../../utils/errorCheck'
 import { isDemoSelector } from '../../selectors'
+import { fetchTransfers } from '../../reducers/transactionSlice'
 
 const StyledDialog = styled(Dialog)`
   div.wrapper {
@@ -87,6 +88,9 @@ export default function({ handleClose, token }) {
   const tokenName = token === 'BTC' ? 'X-BTC' : token
 
   const chainx = getChainx()
+  const accountId = chainx.account.decodeAddress(accountAddress, false)
+  console.log('accountId', accountId)
+
   const sign = async () => {
     const isAddressValid = chainx.account.isAddressValid(address)
     if (!isAddressValid) {
@@ -128,7 +132,14 @@ export default function({ handleClose, token }) {
 
       await showSnack(status, messages, dispatch)
       handleClose()
-      dispatch(fetchAccountAssets(accountAddress))
+      await retry(
+        () => {
+          dispatch(fetchAccountAssets(accountAddress))
+          dispatch(fetchTransfers(accountId))
+        },
+        5,
+        2
+      )
     } catch (e) {
       setDisabled(false)
     }

@@ -36,3 +36,14 @@ export function getSeconds(date) {
 }
 
 export const noneFunc = () => {}
+
+export const retry = async (func, times, second = 2) => {
+  do {
+    await new Promise(resolve => {
+      setTimeout(() => {
+        func()
+        resolve()
+      }, second * 1000)
+    })
+  } while (times-- > 0)
+}

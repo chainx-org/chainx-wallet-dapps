@@ -17,7 +17,10 @@ export default function({ transfer }) {
     remove0xPrefix(accountId) === transfer.signed
       ? transfer.payee
       : transfer.signed
-  const targetAddress = chainx.account.encodeAddress(ensure0xPrefix(targetId))
+  let targetAddress = ''
+  if (targetId) {
+    targetAddress = chainx.account.encodeAddress(ensure0xPrefix(targetId))
+  }
 
   const [open, setOpen] = useState(false)
 
