@@ -15,6 +15,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: #F0F1F2;
   overflow-x: auto;
+  
+  .MuiButton-root {
+    text-transform: unset;
+    font-size: 12px;
+  }
 
   #root {
     display: flex;
