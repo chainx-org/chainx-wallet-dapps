@@ -168,6 +168,10 @@ const render = () =>
   getChainx()
     .isRpcReady()
     .then(() => {
+      const loading = window.document.getElementById('loading')
+      loading.parentNode.removeChild(loading)
+    })
+    .then(() => {
       ReactDOM.render(
         <React.Fragment>
           <GlobalStyle />
