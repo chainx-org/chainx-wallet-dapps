@@ -2,6 +2,7 @@ import trade from './trade'
 import chain from './chain'
 import staking from './staking'
 import asset from './asset'
+import trust from './trust'
 
 const common = {
   COMMON_FEE: {
@@ -97,13 +98,6 @@ const intention = {
   INTENTION_TRUSTEE: {
     zh: '信托',
     en: 'Trustee'
-  }
-}
-
-const trust = {
-  TRUST: {
-    en: 'Trust',
-    zh: '资产信托'
   }
 }
 
