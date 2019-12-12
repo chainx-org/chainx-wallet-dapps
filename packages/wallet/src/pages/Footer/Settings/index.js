@@ -19,6 +19,7 @@ export default function() {
   const configLocale = (locale = 'zh') => {
     dispatch(setLocale(locale))
     setLocaleSettingOpen(false)
+    setTimeout(() => window.location.reload(), 0)
   }
 
   return (
