@@ -4,7 +4,7 @@ import { AmountInput, PrimaryButton, TextInput } from '@chainx/ui'
 import $t from '../../../locale'
 import { useDispatch, useSelector } from 'react-redux'
 import { pcxPrecisionSelector } from '../../selectors/assets'
-import { toPrecision } from '../../../utils'
+import { retry, toPrecision } from '../../../utils'
 import arrow from '../svg/arrow.svg'
 import darkArrow from '../svg/dark-arrow.svg'
 import BigNumber from 'bignumber.js'
@@ -110,8 +110,14 @@ export default function({ handleClose, nomination, intention }) {
 
       await showSnack(status, messages, dispatch)
       handleClose()
-      dispatch(fetchNominationRecords(accountAddress))
-      dispatch(fetchAccountAssets(accountAddress))
+      await retry(
+        () => {
+          dispatch(fetchNominationRecords(accountAddress))
+          dispatch(fetchAccountAssets(accountAddress))
+        },
+        5,
+        2
+      )
     } catch (e) {
       setDisabled(false)
     }

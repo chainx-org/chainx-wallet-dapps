@@ -10,6 +10,7 @@ import { fetchNominationRecords } from '../../../../../reducers/intentionSlice'
 import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
 import { isDemoSelector } from '../../../../../selectors'
 import $t from '../../../../../locale'
+import { retry } from '../../../../../utils'
 
 export default function({ record, interest }) {
   const { account } = record.intention || {}
@@ -42,8 +43,14 @@ export default function({ record, interest }) {
       }
 
       await showSnack(status, messages, dispatch)
-      dispatch(fetchNominationRecords(accountAddress))
-      dispatch(fetchAccountAssets(accountAddress))
+      await retry(
+        () => {
+          dispatch(fetchNominationRecords(accountAddress))
+          dispatch(fetchAccountAssets(accountAddress))
+        },
+        5,
+        2
+      )
     } finally {
       setDisabled(false)
     }

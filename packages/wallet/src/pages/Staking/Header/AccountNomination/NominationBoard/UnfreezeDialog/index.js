@@ -6,7 +6,7 @@ import {
   headSelector
 } from '../../../../../../reducers/chainSlice'
 import { pcxPrecisionSelector } from '../../../../../selectors/assets'
-import { toPrecision } from '../../../../../../utils'
+import { retry, toPrecision } from '../../../../../../utils'
 import { blockDuration, timeFormat } from '../../../../../../utils/constants'
 import moment from 'moment'
 import { PrimaryButton } from '@chainx/ui'
@@ -52,10 +52,14 @@ export default function({ handleClose, record }) {
       }
 
       await showSnack(status, messages, dispatch)
-      setTimeout(() => {
-        dispatch(fetchNominationRecords(accountAddress))
-        dispatch(fetchAccountAssets(accountAddress))
-      }, 5000)
+      await retry(
+        () => {
+          dispatch(fetchNominationRecords(accountAddress))
+          dispatch(fetchAccountAssets(accountAddress))
+        },
+        5,
+        2
+      )
     } finally {
       setDisableIndex(null)
     }

@@ -15,7 +15,7 @@ import Free from '../components/Free'
 import Label from '../components/Label'
 import { AmountInput, Slider, DangerButton } from '@chainx/ui'
 import { marks } from '../constants'
-import { toPrecision } from '../../../../../../utils'
+import { retry, toPrecision } from '../../../../../../utils'
 import { addressSelector } from '../../../../../../reducers/addressSlice'
 import { isDemoSelector } from '../../../../../../selectors'
 import BigNumber from 'bignumber.js'
@@ -116,7 +116,13 @@ export default function() {
       }
 
       await showSnack(status, messages, dispatch)
-      dispatch(fetchQuotations(pairId))
+      await retry(
+        () => {
+          dispatch(fetchQuotations(pairId))
+        },
+        5,
+        2
+      )
     } finally {
       setDisabled(false)
     }

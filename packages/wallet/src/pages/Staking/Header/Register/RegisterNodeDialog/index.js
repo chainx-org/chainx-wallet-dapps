@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import StyledDialog from './StyledDialog'
-import { noneFunc } from '../../../../../utils'
+import { noneFunc, retry } from '../../../../../utils'
 import infoIcon from '../../../../../static/explan.svg'
 import { PrimaryButton, TextInput } from '@chainx/ui'
 import { CheckBox } from '../../../../../components'
@@ -44,7 +44,13 @@ export default function({ handleClose = noneFunc }) {
 
       await showSnack(status, messages, dispatch)
       handleClose()
-      dispatch(fetchIntentions())
+      await retry(
+        () => {
+          dispatch(fetchIntentions())
+        },
+        5,
+        2
+      )
     } catch (e) {
       setDisabled(false)
     }

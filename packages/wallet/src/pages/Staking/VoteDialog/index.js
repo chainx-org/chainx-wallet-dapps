@@ -3,7 +3,7 @@ import StyledDialog from './StyledDialog'
 import { AmountInput, PrimaryButton, TextInput } from '@chainx/ui'
 import $t from '../../../locale'
 import { Label, Value } from '../../AssetManagement/components'
-import { toPrecision } from '../../../utils'
+import { retry, toPrecision } from '../../../utils'
 import { useDispatch, useSelector } from 'react-redux'
 import { pcxFreeSelector } from '../../AssetManagement/PcxCard/selectors'
 import {
@@ -84,9 +84,15 @@ export default function({ handleClose, intention }) {
 
       await showSnack(status, messages, dispatch)
       handleClose()
-      dispatch(fetchNominationRecords(accountAddress))
-      dispatch(fetchAccountAssets(accountAddress))
-      dispatch(fetchIntentions())
+      await retry(
+        () => {
+          dispatch(fetchNominationRecords(accountAddress))
+          dispatch(fetchAccountAssets(accountAddress))
+          dispatch(fetchIntentions())
+        },
+        5,
+        2
+      )
     } catch (e) {
       setDisabled(false)
     }

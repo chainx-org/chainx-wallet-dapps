@@ -5,7 +5,7 @@ import { AmountInput, PrimaryButton, SelectInput, TextInput } from '@chainx/ui'
 import { useDispatch, useSelector } from 'react-redux'
 import { xbtcFreeSelector } from '../selectors'
 import $t from '../../../../../locale'
-import { toPrecision } from '../../../../../utils'
+import { retry, toPrecision } from '../../../../../utils'
 import infoIcon from '../../../../../static/explan.svg'
 import {
   btcWithdrawLimitSelector,
@@ -24,21 +24,16 @@ import {
   checkAmountAndHasError,
   checkMemoAndHasError
 } from '../../../../../utils/errorCheck'
-import { getChainx } from '../../../../../services/chainx'
 import { fetchWithdrawals } from '../../../../../reducers/crosschainSlice'
 import { isDemoSelector } from '../../../../../selectors'
+import { accountIdSelector } from '../../../../selectors/assets'
 
 export default function({ handleClose }) {
   const network = useSelector(networkSelector)
   const dispatch = useDispatch()
   const accountAddress = useSelector(addressSelector)
   const isDemoAddr = useSelector(isDemoSelector)
-
-  let accountId
-  if (accountAddress) {
-    const chainx = getChainx()
-    accountId = chainx.account.decodeAddress(accountAddress, false)
-  }
+  const accountId = useSelector(accountIdSelector)
 
   const [address, setAddress] = useState('')
   const [addressErrMsg, setAddressErrMsg] = useState('')
@@ -127,10 +122,14 @@ export default function({ handleClose }) {
 
       await showSnack(status, messages, dispatch)
       handleClose()
-      setTimeout(() => {
-        dispatch(fetchAccountAssets(accountAddress))
-        dispatch(fetchWithdrawals(accountId))
-      }, 3000)
+      await retry(
+        () => {
+          dispatch(fetchAccountAssets(accountAddress))
+          dispatch(fetchWithdrawals(accountId))
+        },
+        5,
+        2
+      )
     } catch (e) {
       setDisabled(false)
     }

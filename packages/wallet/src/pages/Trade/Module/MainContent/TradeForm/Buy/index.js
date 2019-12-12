@@ -15,7 +15,7 @@ import {
 import Free from '../components/Free'
 import { AmountInput, Slider, SuccessButton } from '@chainx/ui'
 import Label from '../components/Label'
-import { normalizeNumber, toPrecision } from '../../../../../../utils'
+import { normalizeNumber, retry, toPrecision } from '../../../../../../utils'
 import { isDemoSelector } from '../../../../../../selectors'
 import {
   showSnack,
@@ -129,7 +129,13 @@ export default function() {
       }
 
       await showSnack(status, messages, dispatch)
-      dispatch(fetchQuotations(pairId))
+      await retry(
+        () => {
+          dispatch(fetchQuotations(pairId))
+        },
+        5,
+        2
+      )
     } finally {
       setDisabled(false)
     }

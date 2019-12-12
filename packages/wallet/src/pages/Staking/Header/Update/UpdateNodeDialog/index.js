@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import StyledDialog from './StyledDialog'
-import { noneFunc } from '../../../../../utils'
+import { noneFunc, retry } from '../../../../../utils'
 import { useDispatch, useSelector } from 'react-redux'
 import { myIntentionSelector } from './selectors'
 import { getChainx } from '../../../../../services/chainx'
@@ -80,7 +80,13 @@ export default function({ handleClose = noneFunc }) {
       }
       await showSnack(status, messages, dispatch)
       handleClose()
-      setTimeout(() => dispatch(fetchIntentions()), 2000)
+      await retry(
+        () => {
+          dispatch(fetchIntentions())
+        },
+        5,
+        2
+      )
     } catch (e) {
       setDisabled(false)
     }
