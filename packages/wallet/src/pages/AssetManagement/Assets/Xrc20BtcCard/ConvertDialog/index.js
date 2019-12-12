@@ -17,15 +17,15 @@ import {
   signAndSendExtrinsic
 } from '../../../../../utils/chainxProvider'
 import { addressSelector } from '../../../../../reducers/addressSlice'
-import { getChainx } from '../../../../../services/chainx'
 import { hexToU8a, u8aConcat, u8aToHex } from '@chainx/util'
 import { u64 } from '@chainx/types'
 import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
 import { isDemoSelector } from '../../../../../selectors'
+import { accountIdSelector } from '../../../../selectors/assets'
 
 export default function({ handleClose }) {
   const accountAddress = useSelector(addressSelector)
-  const accountId = getChainx().account.decodeAddress(accountAddress)
+  const accountId = useSelector(accountIdSelector)
   const isDemoAddr = useSelector(isDemoSelector)
 
   const options = ['X-BTC', 'XRC20-BTC'].map(token => ({

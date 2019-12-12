@@ -1,18 +1,17 @@
 import React, { useRef, useState } from 'react'
 import useOutsideClick from '../../../../utils/useClickOutside'
 import { useSelector } from 'react-redux'
-import { addressSelector } from '../../../../reducers/addressSlice'
 import { getChainx } from '../../../../services/chainx'
 import { ensure0xPrefix, remove0xPrefix } from '../../../../utils'
 import { Address, Hash } from '../../../../components'
 import Detail from '../components/Detail'
 import Label from '../components/Label'
 import $t from '../../../../locale'
+import { accountIdSelector } from '../../../selectors/assets'
 
 export default function({ transfer }) {
-  const accountAddress = useSelector(addressSelector)
   const chainx = getChainx()
-  const accountId = chainx.account.decodeAddress(accountAddress, false)
+  const accountId = useSelector(accountIdSelector)
   const targetId =
     remove0xPrefix(accountId) === transfer.signed
       ? transfer.payee

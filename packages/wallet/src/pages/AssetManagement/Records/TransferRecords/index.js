@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
-import { addressSelector } from '../../../../reducers/addressSlice'
-import { getChainx } from '../../../../services/chainx'
 import {
   fetchTransfers,
   loadedSelector
@@ -10,6 +8,7 @@ import {
 import { normalizedScrollTransfers } from '../selectors'
 import { Empty } from '../../../../components'
 import Line from './Line'
+import { accountIdSelector } from '../../../selectors/assets'
 
 const Wrapper = styled.div`
   & > div.empty {
@@ -49,13 +48,10 @@ const Wrapper = styled.div`
 `
 
 export default function() {
-  const chainx = getChainx()
-
-  const address = useSelector(addressSelector)
   const loaded = useSelector(loadedSelector)
   const transfers = useSelector(normalizedScrollTransfers)
 
-  const accountId = chainx.account.decodeAddress(address, false)
+  const accountId = useSelector(accountIdSelector)
   const dispatch = useDispatch()
 
   useEffect(() => {

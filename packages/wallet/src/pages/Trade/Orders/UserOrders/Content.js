@@ -23,17 +23,16 @@ import {
 } from './Wrapper'
 import cancelIcon from '../svg/cancel.svg'
 import cancelDisabledIcon from '../svg/cancel-disabled.svg'
-import { getChainx } from '../../../../services/chainx'
 import {
   showSnack,
   signAndSendExtrinsic
 } from '../../../../utils/chainxProvider'
 import { addressSelector } from '../../../../reducers/addressSlice'
+import { accountIdSelector } from '../../../selectors/assets'
 
 export default function() {
   const accountAddress = useSelector(addressSelector)
-  const chainx = getChainx()
-  const accountId = chainx.account.decodeAddress(accountAddress, false)
+  const accountId = useSelector(accountIdSelector)
 
   const orders = useSelector(userOrders)
   const assetPrecision = useSelector(pairAssetPrecision)

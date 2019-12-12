@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addressSelector } from '../../../../../reducers/addressSlice'
-import { getChainx } from '../../../../../services/chainx'
 import {
   depositsSelector,
   fetchDeposits
@@ -9,14 +7,12 @@ import {
 import { Empty } from '../../../../../components'
 import Wrapper from './Wrapper'
 import Line from './Line'
+import { accountIdSelector } from '../../../../selectors/assets'
 
 export default function() {
   const dispatch = useDispatch()
-  const address = useSelector(addressSelector)
   const deposits = useSelector(depositsSelector)
-
-  const chainx = getChainx()
-  const accountId = chainx.account.decodeAddress(address, false)
+  const accountId = useSelector(accountIdSelector)
 
   useEffect(() => {
     dispatch(fetchDeposits(accountId))

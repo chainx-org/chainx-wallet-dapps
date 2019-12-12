@@ -4,11 +4,10 @@ import {
   withdrawalsSelector
 } from '../../../../../reducers/crosschainSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { addressSelector } from '../../../../../reducers/addressSlice'
-import { getChainx } from '../../../../../services/chainx'
 import styled from 'styled-components'
 import { Empty } from '../../../../../components'
 import Line from './Line'
+import { accountIdSelector } from '../../../../selectors/assets'
 
 const Wrapper = styled.div`
   & > div {
@@ -64,11 +63,9 @@ const Wrapper = styled.div`
 
 export default function() {
   const dispatch = useDispatch()
-  const address = useSelector(addressSelector)
   const withdrawals = useSelector(withdrawalsSelector)
 
-  const chainx = getChainx()
-  const accountId = chainx.account.decodeAddress(address, false)
+  const accountId = useSelector(accountIdSelector)
 
   useEffect(() => {
     dispatch(fetchWithdrawals(accountId))

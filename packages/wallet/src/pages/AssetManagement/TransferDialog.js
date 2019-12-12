@@ -25,6 +25,7 @@ import {
 } from '../../utils/errorCheck'
 import { isDemoSelector } from '../../selectors'
 import { fetchTransfers } from '../../reducers/transactionSlice'
+import { accountIdSelector } from '../selectors/assets'
 
 const StyledDialog = styled(Dialog)`
   div.wrapper {
@@ -88,8 +89,7 @@ export default function({ handleClose, token }) {
   const tokenName = token === 'BTC' ? 'X-BTC' : token
 
   const chainx = getChainx()
-  const accountId = chainx.account.decodeAddress(accountAddress, false)
-  console.log('accountId', accountId)
+  const accountId = useSelector(accountIdSelector)
 
   const sign = async () => {
     const isAddressValid = chainx.account.isAddressValid(address)

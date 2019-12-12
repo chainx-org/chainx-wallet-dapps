@@ -11,9 +11,11 @@ import {
 import { fetchWithdrawals } from '../../../../../reducers/crosschainSlice'
 import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { xbtcPrecisionSelector } from '../../../../selectors/assets'
+import {
+  accountIdSelector,
+  xbtcPrecisionSelector
+} from '../../../../selectors/assets'
 import { addressSelector } from '../../../../../reducers/addressSlice'
-import { getChainx } from '../../../../../services/chainx'
 import Detail from '../../components/Detail'
 import Label from '../../components/Label'
 import { Hash } from '../../../../../components'
@@ -26,8 +28,7 @@ export default function({ withdrawal }) {
   const accountAddress = useSelector(addressSelector)
   const dispatch = useDispatch()
 
-  const chainx = getChainx()
-  const accountId = chainx.account.decodeAddress(accountAddress, false)
+  const accountId = useSelector(accountIdSelector)
 
   const [open, setOpen] = useState(false)
 

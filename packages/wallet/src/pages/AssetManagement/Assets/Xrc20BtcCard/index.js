@@ -7,13 +7,12 @@ import {
   fetchXrcBtcInfo,
   xrcBtcBalanceSelector
 } from '../../../../reducers/xrcBtcSlice'
-import { addressSelector } from '../../../../reducers/addressSlice'
-import { getChainx } from '../../../../services/chainx'
 import { AssetLine, DetailWrapper } from '../components/common'
 import $t from '../../../../locale'
 import AssetView from '../components/AssetView'
 import { PrimaryButton } from '@chainx/ui'
 import ConvertDialog from './ConvertDialog'
+import { accountIdSelector } from '../../../selectors/assets'
 
 export default function() {
   const meta = {
@@ -24,9 +23,7 @@ export default function() {
 
   const balance = useSelector(xrcBtcBalanceSelector)
 
-  const address = useSelector(addressSelector)
-  const chainx = getChainx()
-  const accountId = chainx.account.decodeAddress(address)
+  const accountId = useSelector(accountIdSelector)
   const [dialogOpen, setDialogOpen] = useState(false)
 
   const dispatch = useDispatch()

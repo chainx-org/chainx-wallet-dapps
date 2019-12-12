@@ -71,8 +71,8 @@ export default function({ intention, close = noneFunc }) {
   const popup = useRef(null)
 
   const chainx = getChainx()
-  const jackpotAddress = chainx.account.decodeAddress(jackpotAccount, false)
-  const accountAddress = chainx.account.decodeAddress(account, false)
+  const jackpotAddress = chainx.account.encodeAddress(jackpotAccount, false)
+  const accountAddress = chainx.account.encodeAddress(account, false)
 
   useOutsideClick(popup, () => {
     close()
