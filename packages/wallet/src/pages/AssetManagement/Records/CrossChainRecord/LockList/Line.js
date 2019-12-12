@@ -31,7 +31,13 @@ export default function({ lock }) {
           {lock.type === 0 ? '+' : '-'}
           {toPrecision(lock.value, precision)}
         </span>
-        <span>{lock.type === 0 ? '锁仓' : '解锁'}</span>
+        <span>
+          {$t(
+            lock.type === 0
+              ? 'ASSET_CROSS_CHAIN_LOCK'
+              : 'ASSET_CROSS_CHAIN_UNLOCK'
+          )}
+        </span>
       </main>
       {open ? (
         <Detail>

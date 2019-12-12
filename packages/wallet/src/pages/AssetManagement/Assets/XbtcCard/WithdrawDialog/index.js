@@ -209,7 +209,7 @@ export default function({ handleClose }) {
 
         <div className="fee">
           <h3 className="title">
-            <span>提现手续费</span>
+            <span>{$t('ASSET_WITHDRAWAL_FEE')}</span>
             <span>实际到账数量</span>
           </h3>
           <p className="content">
