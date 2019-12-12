@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js'
+import chunk from 'lodash.chunk'
 
 export function toPrecision(value, precision = 0, paddingZero = true) {
   precision = Number(precision)
@@ -46,4 +47,14 @@ export const retry = async (func, times, second = 2) => {
       }, second * 1000)
     })
   } while (times-- > 0)
+}
+
+export const reverseHex = function(hex) {
+  const normalizedHex = remove0xPrefix(hex)
+  const chunks = chunk(normalizedHex.split(''), 2)
+  const reversedHex = chunks.reduce((result, chunk) => {
+    return result + chunk.join('')
+  }, '')
+
+  return ensure0xPrefix(reversedHex)
 }

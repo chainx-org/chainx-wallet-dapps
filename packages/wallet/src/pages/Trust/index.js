@@ -8,12 +8,10 @@ import {
 import Card from '../../components/Card'
 import Empty from '../../components/Empty'
 import Status from './Status'
-
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@chainx/ui'
 import { getChainx } from '../../services/chainx'
 import Address from '../../components/Address'
 import BtcAddress from '../AssetManagement/Records/components/BtcAddress'
-import Hash from '../../components/Hash'
 import {
   AmountCell,
   BaseCell,
@@ -23,7 +21,8 @@ import {
   StatusHeadCell
 } from './Wrapper'
 import { xbtcPrecisionSelector } from '../selectors/assets'
-import { toPrecision } from '../../utils'
+import { reverseHex, toPrecision } from '../../utils'
+import BtcTx from '../AssetManagement/Records/components/BtcTx'
 
 const Wrapper = styled.div`
   display: flex;
@@ -90,7 +89,9 @@ export default function() {
                       <BtcAddress address={data.address} />
                     </TableCell>
                     <TableCell>
-                      {data.txid ? <Hash hash={data.txid} /> : null}
+                      {data.txid ? (
+                        <BtcTx hash={reverseHex(data.txid)} />
+                      ) : null}
                     </TableCell>
                     <RightAlignCell>
                       <Status status={data.status} />
