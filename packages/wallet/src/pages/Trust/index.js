@@ -23,6 +23,7 @@ import {
 import { xbtcPrecisionSelector } from '../selectors/assets'
 import { reverseHex, toPrecision } from '../../utils'
 import BtcTx from '../AssetManagement/Records/components/BtcTx'
+import $t from '../../locale'
 
 const Wrapper = styled.div`
   display: flex;
@@ -49,7 +50,7 @@ export default function() {
   return (
     <Wrapper>
       <Card>
-        <div>提现列表</div>
+        <div>{$t('TRUST_WITHDRAWAL_LIST')}</div>
         <div
           style={{
             marginTop: '16px',
@@ -60,14 +61,14 @@ export default function() {
           <Table>
             <TableHead>
               <TableRow>
-                <HeadCell>申请时间</HeadCell>
-                <HeadCell>编号</HeadCell>
-                <HeadCell>资产</HeadCell>
-                <HeadCell>金额</HeadCell>
-                <HeadCell>账户地址</HeadCell>
-                <HeadCell>原链地址</HeadCell>
-                <HeadCell>交易哈希</HeadCell>
-                <StatusHeadCell>状态</StatusHeadCell>
+                <HeadCell>{$t('TRUST_TIME')}</HeadCell>
+                <HeadCell>{$t('TRUST_INDEX')}</HeadCell>
+                <HeadCell>{$t('TRUST_ASSETS')}</HeadCell>
+                <HeadCell>{$t('TRUST_AMOUNT')}</HeadCell>
+                <HeadCell>{$t('TRUST_ACCOUNT_ADDR')}</HeadCell>
+                <HeadCell>{$t('TRUST_ORIGINAL_CHAIN')}</HeadCell>
+                <HeadCell>{$t('TRUST_TX_HASH')}</HeadCell>
+                <StatusHeadCell>{$t('TRUST_STATUS')}</StatusHeadCell>
               </TableRow>
             </TableHead>
             <TableBody>
