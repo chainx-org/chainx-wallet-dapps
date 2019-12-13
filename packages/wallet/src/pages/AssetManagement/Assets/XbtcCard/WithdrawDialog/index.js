@@ -136,11 +136,15 @@ export default function({ handleClose }) {
   }
 
   return (
-    <StyledDialog open title={'跨链提现'} handleClose={handleClose}>
+    <StyledDialog
+      open
+      title={$t('ASSET_CROSS_CHAIN_WITHDRAWAL_2')}
+      handleClose={handleClose}
+    >
       <main className="content">
         <SelectInput
           value={address}
-          placeholder="BTC 收款地址"
+          placeholder={$t('ASSET_WITHDRAWAL_BTC_ADDR')}
           onChange={value => {
             setAddressErrMsg('')
             setAddress(value)
@@ -191,18 +195,18 @@ export default function({ handleClose }) {
             {network !== 'testnet' && (
               <p>
                 <img src={infoIcon} alt="info" />
-                <span>仅支持 1 和 3 开头的 BTC地址</span>
+                <span>{$t('ASSET_WITHDRAWAL_REQU_ADDR')}</span>
               </p>
             )}
             <p>
               <img src={infoIcon} alt="info" />
-              <span>提现申请会在 24 小时内处理</span>
+              <span>{$t('ASSET_WITHDRAWAL_INFO_DEAL_TIME')}</span>
             </p>
           </div>
           <div className="right">
             <p>
               <img src={infoIcon} alt="info" />
-              <span>最小提现数量为 0.0015</span>
+              <span>{$t('ASSET_WITHDRAWAL__REQU_AMOUNT')}</span>
             </p>
           </div>
         </div>
@@ -210,7 +214,7 @@ export default function({ handleClose }) {
         <div className="fee">
           <h3 className="title">
             <span>{$t('ASSET_WITHDRAWAL_FEE')}</span>
-            <span>实际到账数量</span>
+            <span>{$t('ASSET_WITHDRAWAL_FINAL_AMOUNT')}</span>
           </h3>
           <p className="content">
             <span>

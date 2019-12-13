@@ -12,6 +12,7 @@ import {
 } from '../../../../../reducers/trustSlice'
 import OpReturnWallet from '../../components/OpReturnWallet'
 import IntentionSelect from '../../../../../components/IntentionSelect'
+import $t from '../../../../../locale'
 
 const StyledDialog = styled(Dialog)`
   main.content {
@@ -136,15 +137,17 @@ export default function({ handleClose }) {
   ).replace(/^0x/, '')
 
   return (
-    <StyledDialog open title={'跨链充值'} handleClose={handleClose}>
+    <StyledDialog
+      open
+      title={$t('ASSET_CROSS_CHAIN_DEPOSIT_2')}
+      handleClose={handleClose}
+    >
       <main className="content">
         <h1>
-          <span className="step">第一步</span>
-          <span className="text">获取 OP_RETURN</span>
+          <span className="step">{$t('ASSET_STEP_ONE')}</span>
+          <span className="text">{$t('ASSET_GET_OP_RETURN')}</span>
         </h1>
-        <p className={'op-return'}>
-          获取含有 16 进制 ChainX 地址的 OP_RETURN 信息。
-        </p>
+        <p className={'op-return'}>{$t('ASSET_GET_OP_RETURN_DETAIL')}</p>
         <section className="show-code">
           <h3>
             <span className="title">OP_RETURN</span>
@@ -153,7 +156,7 @@ export default function({ handleClose }) {
               onClick={() => setChecked(!checked)}
               className="channel"
             >
-              添加渠道 (选填)
+              {$t('ASSET_ADD_REFERRER')}
             </CheckBox>
           </h3>
           {checked ? (
@@ -166,25 +169,23 @@ export default function({ handleClose }) {
           <ClipBoard className="hex">{addressHex}</ClipBoard>
         </section>
         <h1 className="step-2">
-          <span className="step">第二步</span>
-          <span className="text">发起跨链提现</span>
+          <span className="step">{$t('ASSET_STEP_TWO')}</span>
+          <span className="text">{$t('ASSET_DO_CROSS_CHAIN_DEPOSIT')}</span>
         </h1>
-        <p className="input">
-          使用支持 OP_RETURN 的钱包向信托热多签地址充值，并输入 OP_RETURN 信息。
-        </p>
+        <p className="input">{$t('ASSET_DO_CROSS_CHAIN_DEPOSIT_DETAIL')}</p>
         <ul className={'info'}>
           <li>
             <img src={infoIcon} alt="info" />
-            <span>充值金额必须 >=0.001 BTC；</span>
+            <span>{$t('ASSET_DEPOSIT_REQUIREMENT_AMOUNT')}</span>
           </li>
           <li>
             <img src={infoIcon} alt="info" />
-            <span>目前仅支持 1 和 3 开头的 BTC 地址发起的跨链充值；</span>
+            <span>{$t('ASSET_DEPOSIT_REQUIREMENT_ADDR')}</span>
           </li>
         </ul>
         <section className="show-code">
           <h3 style={{ marginBottom: 0 }}>
-            <span className="title">信托热多签地址</span>
+            <span className="title">{$t('ASSET_TRUEST_HOT_ADDR')}</span>
             <ClipBoard className={'addr'}>{trusteeHotAddress}</ClipBoard>
           </h3>
         </section>

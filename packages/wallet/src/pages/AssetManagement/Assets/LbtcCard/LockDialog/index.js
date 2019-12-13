@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux'
 import { addressSelector } from '../../../../../reducers/addressSlice'
 import { default as WAValidator } from 'wallet-address-validator'
 import { networkSelector } from '../../../../../reducers/settingsSlice'
+import $t from '../../../../../locale'
 
 const StyledDialog = styled(Dialog)`
   main.content {
@@ -146,21 +147,22 @@ export default function({ handleClose }) {
   const btcAddressValid = !!btcAddress && btcAddressErrMsg.length <= 0
 
   return (
-    <StyledDialog open title={'跨链锁仓'} handleClose={handleClose}>
+    <StyledDialog
+      open
+      title={$t('ASSET_CROSS_CHAIN_LOCK_2')}
+      handleClose={handleClose}
+    >
       <main className="content">
         <h1>
-          <span className="step">第一步</span>
-          <span className="text">创建锁仓地址</span>
+          <span className="step">{$t('ASSET_STEP_ONE')}</span>
+          <span className="text">{$t('ASSET_LOCK_CREATE_ADDR')}</span>
         </h1>
-        <p>
-          使用任意钱包创建 1 或 3 开头的 BTC
-          地址用于存放锁仓资金。请注意使用该钱包的任意转出操作都可能花费锁仓金额，从而导致该笔锁仓挖矿停止。
-        </p>
+        <p>{$t('ASSET_LOCK_CREATE_ADDR_DETAIL')}</p>
         <h1>
-          <span className="step">第二步</span>
-          <span className="text">生成 OP_RETURN</span>
+          <span className="step">{$t('ASSET_STEP_TWO')}</span>
+          <span className="text">{$t('ASSET_CREATE_OP_RETURN')}</span>
         </h1>
-        <p>输入你创建的 BTC 锁仓地址。</p>
+        <p>{$t('ASSET_LOCK_INPUT_LOCK_ADDR')}</p>
         <div style={{ marginTop: 8 }}>
           <TextInput
             value={btcAddress}
@@ -169,7 +171,7 @@ export default function({ handleClose }) {
               setBtcAddress(value)
             }}
             onBlur={checkBtcAddress}
-            placeholder={'BTC 锁仓地址'}
+            placeholder={$t('ASSET_BTC_LOCK_ADDR')}
             error={!!btcAddressErrMsg}
             errorText={btcAddressErrMsg}
           />
@@ -183,10 +185,10 @@ export default function({ handleClose }) {
                 onClick={() => setChecked(!checked)}
                 className="channel"
               >
-                添加渠道 (选填)
+                {$t('ASSET_ADD_REFERRER')}
               </CheckBox>
             ) : (
-              <span className="text">请在上方输入 BTC 锁仓地址</span>
+              <span className="text">{$t('ASSET_LOCK_INPUT_UP_ADDR')}</span>
             )}
           </h3>
           {checked && btcAddressValid ? (
@@ -202,25 +204,22 @@ export default function({ handleClose }) {
         </section>
 
         <h1>
-          <span className="step">第三步</span>
-          <span className="text">发起锁仓交易</span>
+          <span className="step">{$t('ASSET_STEP_THIRD')}</span>
+          <span className="text">{$t('ASSET_LOCK_DO_LOCK')}</span>
         </h1>
-        <p>
-          使用支持 OP_RETURN 的钱包向锁仓地址转账（转账金额即锁仓金额），并输入
-          OP_RETURN 信息。
-        </p>
+        <p>{$t('ASSET_LOCK_DO_LOCK_DETAIL')}</p>
         <ul className={'info'}>
           <li>
             <img src={infoIcon} alt="info" />
-            <span>单笔 BTC 锁仓金额必须 >=0.01 BTC；</span>
+            <span>{$t('ASSET_LOCK_REQU_1')}</span>
           </li>
           <li>
             <img src={infoIcon} alt="info" />
-            <span>{'单个 BTC 锁仓地址总额必须 <=10 BTC；'}</span>
+            <span>{$t('ASSET_LOCK_REQU_2')}</span>
           </li>
           <li>
             <img src={infoIcon} alt="info" />
-            <span>单个 ChainX 地址锁仓总额不限。</span>
+            <span>{$t('ASSET_LOCK_REQU_3')}</span>
           </li>
         </ul>
         <OpReturnWallet />

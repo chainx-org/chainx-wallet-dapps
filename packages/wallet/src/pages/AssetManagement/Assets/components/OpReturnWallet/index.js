@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import wallets from './wallets'
 import ReactTooltip from 'react-tooltip'
+import $t from '../../../../../locale'
 
 const Wrapper = styled.div`
   display: flex;
@@ -27,7 +28,7 @@ const Wrapper = styled.div`
 export default function() {
   return (
     <Wrapper>
-      <span>目前支持发送 OP_RETURN 的钱包有：</span>
+      <span>{$t('ASSET_OP_RETURN_WALLETS')}</span>
       {wallets.map((wallet, index) => {
         return (
           <span key={index}>
