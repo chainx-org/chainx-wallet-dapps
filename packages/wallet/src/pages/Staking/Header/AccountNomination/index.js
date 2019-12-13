@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
 import {
   totalInterestSelector,
@@ -10,6 +10,13 @@ import normalIcon from './normal.svg'
 import openIcon from './open.svg'
 import NominationBoard from './NominationBoard'
 import $t from '../../../../locale'
+import useOutsideClick from '../../../../utils/useClickOutside'
+import {
+  switchNominationOpenSelector,
+  unFreezeOpenSelector,
+  unNominateOpenSelector,
+  voteOpenSelector
+} from '../../../../reducers/runStatusSlice'
 
 const Wrapper = styled.div`
   display: flex;
@@ -64,8 +71,26 @@ export default function() {
   const totalInterest = useSelector(totalInterestSelector)
   const [open, setOpen] = useState(false)
 
+  const voteOpen = useSelector(voteOpenSelector)
+  const unNominateOpen = useSelector(unNominateOpenSelector)
+  const switchNominationOpen = useSelector(switchNominationOpenSelector)
+  const unFreezeOpen = useSelector(unFreezeOpenSelector)
+
+  const popup = useRef(null)
+
+  useOutsideClick(popup, () => {
+    if (
+      !unNominateOpen &&
+      !switchNominationOpen &&
+      !voteOpen &&
+      !unFreezeOpen
+    ) {
+      setOpen(false)
+    }
+  })
+
   return (
-    <Wrapper>
+    <Wrapper ref={popup}>
       <Ul onClick={() => setOpen(!open)}>
         <li>
           <label>待解冻</label>

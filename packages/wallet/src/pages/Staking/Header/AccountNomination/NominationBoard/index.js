@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { detailedRecordsSelector } from './selectors'
@@ -13,12 +13,8 @@ import { Label, Value } from './components'
 import Unfreeze from './Unfreeze'
 import Empty from './Empty'
 import $t from '../../../../../locale'
-import useOutsideClick from '../../../../../utils/useClickOutside'
 import {
   setVoteOpen,
-  switchNominationOpenSelector,
-  unFreezeOpenSelector,
-  unNominateOpenSelector,
   voteOpenSelector
 } from '../../../../../reducers/runStatusSlice'
 
@@ -90,30 +86,14 @@ export default function({ close = noneFunc }) {
   const records = useSelector(detailedRecordsSelector)
   const precision = useSelector(pcxPrecisionSelector)
 
-  const voteOpen = useSelector(voteOpenSelector)
   const [intention, setIntention] = useState(null)
 
-  const unNominateOpen = useSelector(unNominateOpenSelector)
-  const switchNominationOpen = useSelector(switchNominationOpenSelector)
-  const unFreezeOpen = useSelector(unFreezeOpenSelector)
+  const voteOpen = useSelector(voteOpenSelector)
 
   const dispatch = useDispatch()
 
-  const popup = useRef(null)
-
-  useOutsideClick(popup, () => {
-    if (
-      !unNominateOpen &&
-      !switchNominationOpen &&
-      !voteOpen &&
-      !unFreezeOpen
-    ) {
-      close()
-    }
-  })
-
   return (
-    <Wrapper ref={popup}>
+    <Wrapper>
       <ul>
         {records.map((record, index) => {
           const { name, hasLogo, logo, jackpot = 0 } = record.intention || {}
