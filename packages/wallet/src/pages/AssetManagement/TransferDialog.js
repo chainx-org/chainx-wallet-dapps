@@ -124,10 +124,12 @@ export default function({ handleClose, token }) {
         [address, token, realAmount, memo]
       )
       const messages = {
-        successTitle: '转账成功',
-        failTitle: '转账失败',
-        successMessage: `转账数量 ${amount} ${tokenName}`,
-        failMessage: `交易hash ${status.txHash}`
+        successTitle: $t('NOTIFICATION_TRANSFER_SUCCESS'),
+        failTitle: $t('NOTIFICATION_TRANSFER_FAIL'),
+        successMessage: `${$t(
+          'NOTIFICATION_TRANSFER_AMOUNT'
+        )} ${amount} ${tokenName}`,
+        failMessage: `${$t('NOTIFICATION_TX_HASH')} ${status.txHash}`
       }
 
       await showSnack(status, messages, dispatch)
