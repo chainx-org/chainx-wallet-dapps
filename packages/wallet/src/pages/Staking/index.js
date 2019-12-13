@@ -11,6 +11,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchAssetsInfo } from '../../reducers/assetSlice'
 import styled from 'styled-components'
 import { addressSelector } from '../../reducers/addressSlice'
+import {
+  setVoteOpen,
+  voteIntentionSelector,
+  voteOpenSelector
+} from '../../reducers/runStatusSlice'
+import VoteDialog from './VoteDialog'
 
 const Wrapper = styled.div`
   display: flex;
@@ -25,8 +31,11 @@ const Wrapper = styled.div`
 
 export default function() {
   const address = useSelector(addressSelector)
+  const voteOpen = useSelector(voteOpenSelector)
+  const voteIntention = useSelector(voteIntentionSelector)
 
   const dispatch = useDispatch()
+
   useEffect(() => {
     dispatch(fetchSenators())
     dispatch(fetchIntentions())
@@ -39,6 +48,12 @@ export default function() {
     <Wrapper className="staking">
       <Header />
       <Validators />
+      {voteOpen && (
+        <VoteDialog
+          handleClose={() => dispatch(setVoteOpen(false))}
+          intention={voteIntention}
+        />
+      )}
     </Wrapper>
   )
 }

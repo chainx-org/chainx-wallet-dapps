@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { detailedRecordsSelector } from './selectors'
 import defaultLogo from '../../../svg/default-logo.svg'
 import { DefaultButton } from '@chainx/ui'
-import { noneFunc, toPrecision } from '../../../../../utils'
+import { toPrecision } from '../../../../../utils'
 import { pcxPrecisionSelector } from '../../../../selectors/assets'
-import VoteDialog from '../../../VoteDialog'
 import More from './More'
 import Claim from './Claim'
 import { Label, Value } from './components'
@@ -14,8 +13,8 @@ import Unfreeze from './Unfreeze'
 import Empty from './Empty'
 import $t from '../../../../../locale'
 import {
-  setVoteOpen,
-  voteOpenSelector
+  setVoteIntention,
+  setVoteOpen
 } from '../../../../../reducers/runStatusSlice'
 
 const Wrapper = styled.div`
@@ -82,14 +81,9 @@ const Wrapper = styled.div`
   }
 `
 
-export default function({ close = noneFunc }) {
+export default function() {
   const records = useSelector(detailedRecordsSelector)
   const precision = useSelector(pcxPrecisionSelector)
-
-  const [intention, setIntention] = useState(null)
-
-  const voteOpen = useSelector(voteOpenSelector)
-
   const dispatch = useDispatch()
 
   return (
@@ -116,7 +110,7 @@ export default function({ close = noneFunc }) {
                     size="small"
                     style={{ marginRight: 8 }}
                     onClick={() => {
-                      setIntention(record.intention)
+                      dispatch(setVoteIntention(record.intention))
                       dispatch(setVoteOpen(true))
                     }}
                   >
@@ -149,14 +143,6 @@ export default function({ close = noneFunc }) {
         })}
       </ul>
       {records.length <= 0 ? <Empty /> : null}
-      {voteOpen && (
-        <VoteDialog
-          handleClose={() => {
-            dispatch(setVoteOpen(false))
-          }}
-          intention={intention}
-        />
-      )}
     </Wrapper>
   )
 }

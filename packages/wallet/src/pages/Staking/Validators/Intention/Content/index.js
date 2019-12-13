@@ -2,15 +2,19 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import defaultLogo from '../../../svg/default-logo.svg'
 import { pcxPrecisionSelector } from '../../../../selectors/assets'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { toPrecision } from '../../../../../utils'
 import $t from '../../../../../locale'
 import { DefaultButton } from '@chainx/ui'
-import VoteDialog from '../../../VoteDialog'
 import LowSelfVote from '../../LowSelfVote'
 import DetailToggle from './DetailToggle'
 import Detail from './Detail'
 import { addressSelector } from '../../../../../reducers/addressSlice'
+import {
+  setVoteIntention,
+  setVoteOpen,
+  voteOpenSelector
+} from '../../../../../reducers/runStatusSlice'
 
 const Wrapper = styled.div`
   display: flex;
@@ -95,6 +99,7 @@ const Wrapper = styled.div`
 
 export default function(props) {
   const accountAddress = useSelector(addressSelector)
+  const dispatch = useDispatch()
 
   const {
     name,
@@ -105,7 +110,7 @@ export default function(props) {
     account
   } = props.intention
   const precision = useSelector(pcxPrecisionSelector)
-  const [voteOpen, setVoteOpen] = useState(false)
+  const voteOpen = useSelector(voteOpenSelector)
 
   const [detailOpen, setDetailOpen] = useState(false)
   const lowSelfVote = totalNomination >= selfVote * 10
@@ -141,7 +146,10 @@ export default function(props) {
         <DetailToggle onClick={() => setDetailOpen(!detailOpen)} />
         <DefaultButton
           disabled={(!isSelf && lowSelfVote) || voteOpen}
-          onClick={() => setVoteOpen(true)}
+          onClick={() => {
+            dispatch(setVoteIntention(props.intention))
+            dispatch(setVoteOpen(true))
+          }}
           style={{
             padding: '6px 20px',
             fontSize: 12,
@@ -152,12 +160,6 @@ export default function(props) {
           {$t('STAKING_VOTE')}
         </DefaultButton>
       </div>
-      {voteOpen && (
-        <VoteDialog
-          handleClose={() => setVoteOpen(false)}
-          intention={props.intention}
-        />
-      )}
       {detailOpen && (
         <Detail
           intention={props.intention}
