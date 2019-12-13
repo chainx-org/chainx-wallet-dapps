@@ -3,9 +3,9 @@ import Header from './Header'
 import Validators from './Validators'
 import {
   fetchIntentions,
-  fetchSenators,
   fetchLogos,
-  fetchNominationRecords
+  fetchNominationRecords,
+  fetchSenators
 } from '../../reducers/intentionSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAssetsInfo } from '../../reducers/assetSlice'
@@ -13,14 +13,18 @@ import styled from 'styled-components'
 import { addressSelector } from '../../reducers/addressSlice'
 import {
   setSwitchNominationOpen,
+  setUnNominateOpen,
   setVoteOpen,
   switchNominationDataSelector,
   switchNominationOpenSelector,
+  unNominateOpenSelector,
+  unNominationDataSelector,
   voteIntentionSelector,
   voteOpenSelector
 } from '../../reducers/runStatusSlice'
 import VoteDialog from './VoteDialog'
 import SwitchDialog from './SwitchDialog'
+import UnNominateDialog from './UnNominateDialog'
 
 const Wrapper = styled.div`
   display: flex;
@@ -39,6 +43,8 @@ export default function() {
   const voteIntention = useSelector(voteIntentionSelector)
   const switchNominationOpen = useSelector(switchNominationOpenSelector)
   const switchNominationData = useSelector(switchNominationDataSelector)
+  const unNominateOpen = useSelector(unNominateOpenSelector)
+  const unNominationData = useSelector(unNominationDataSelector)
 
   const dispatch = useDispatch()
 
@@ -65,6 +71,14 @@ export default function() {
           intention={switchNominationData.intention}
           nomination={switchNominationData.nomination}
           handleClose={() => dispatch(setSwitchNominationOpen(false))}
+        />
+      ) : null}
+      {unNominateOpen ? (
+        <UnNominateDialog
+          intention={unNominationData.intention}
+          nomination={unNominationData.nomination}
+          revocations={unNominationData.revocations}
+          handleClose={() => dispatch(setUnNominateOpen(false))}
         />
       ) : null}
     </Wrapper>

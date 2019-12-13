@@ -8,7 +8,8 @@ const runStatusSlice = createSlice({
     voteOpen: false,
     voteIntention: null,
     unFreezeOpen: false,
-    switchNominationData: {}
+    switchNominationData: {},
+    unNominationData: {}
   },
   reducers: {
     setUnNominateOpen(state, action) {
@@ -28,6 +29,9 @@ const runStatusSlice = createSlice({
     },
     setSwitchNominationData(state, action) {
       state.switchNominationData = action.payload
+    },
+    setUnNominationData(state, action) {
+      state.unNominationData = action.payload
     }
   }
 })
@@ -38,7 +42,8 @@ export const {
   setVoteOpen,
   setUnFreezeOpen,
   setVoteIntention,
-  setSwitchNominationData
+  setSwitchNominationData,
+  setUnNominationData
 } = runStatusSlice.actions
 
 export const unNominateOpenSelector = state => state.runStatus.unNominateOpen
@@ -49,5 +54,7 @@ export const unFreezeOpenSelector = state => state.runStatus.unFreezeOpen
 export const voteIntentionSelector = state => state.runStatus.voteIntention
 export const switchNominationDataSelector = state =>
   state.runStatus.switchNominationData
+export const unNominationDataSelector = state =>
+  state.runStatus.unNominationData
 
 export default runStatusSlice.reducer

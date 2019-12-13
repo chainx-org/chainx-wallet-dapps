@@ -1,15 +1,14 @@
 import React, { useRef, useState } from 'react'
 import moreIcon from './more.svg'
 import styled from 'styled-components'
-import UnNominateDialog from '../../../UnNominateDialog'
 import $t from '../../../../../locale'
 import useOutsideClick from '../../../../../utils/useClickOutside'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import {
   setSwitchNominationData,
   setSwitchNominationOpen,
   setUnNominateOpen,
-  unNominateOpenSelector
+  setUnNominationData
 } from '../../../../../reducers/runStatusSlice'
 
 const Wrapper = styled.div`
@@ -54,7 +53,6 @@ const Wrapper = styled.div`
 
 export default function({ intention, record = {} }) {
   const [showMore, setShowMore] = useState(false)
-  const unNominateOpen = useSelector(unNominateOpenSelector)
   const dispatch = useDispatch()
 
   const { nomination, revocations = [] } = record.info || {}
@@ -73,6 +71,9 @@ export default function({ intention, record = {} }) {
       <ul className={showMore ? 'show' : 'hide'} ref={popup}>
         <li
           onClick={() => {
+            dispatch(
+              setUnNominationData({ intention, nomination, revocations })
+            )
             dispatch(setUnNominateOpen(true))
             setShowMore(false)
           }}
@@ -94,14 +95,6 @@ export default function({ intention, record = {} }) {
           {$t('STAKING_SWITCH_NOMINATION')}
         </li>
       </ul>
-      {unNominateOpen ? (
-        <UnNominateDialog
-          intention={intention}
-          nomination={nomination}
-          revocations={revocations}
-          handleClose={() => dispatch(setUnNominateOpen(false))}
-        />
-      ) : null}
     </Wrapper>
   )
 }
