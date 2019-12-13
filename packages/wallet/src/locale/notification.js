@@ -38,5 +38,33 @@ export default {
   NOTIFICATION_VOTE_AMOUNT: {
     en: 'Amount ',
     zh: '投票数量'
+  },
+  NOTIFICATION_UN_NOMINATION_SUCCESS: {
+    en: 'UnNominate successfully',
+    zh: '赎回成功'
+  },
+  NOTIFICATION_UN_NOMINATION_FAIL: {
+    en: 'UnNominate failed',
+    zh: '赎回失败'
+  },
+  NOTIFICATION_UN_NOMINATION_AMOUNT: {
+    en: 'Amount ',
+    zh: '赎回数量'
+  },
+  NOTIFICATION_UN_NOMINATION_LOCK: {
+    en: 'lock in 3 days',
+    zh: '锁定期3天'
+  },
+  NOTIFICATION_SWITCH_SUCCESS: {
+    en: 'Switch successfully',
+    zh: '切换成功'
+  },
+  NOTIFICATION_SWITCH_FAIL: {
+    en: 'Swtich failed',
+    zh: '切换失败'
+  },
+  NOTIFICATION_SWITCH_AMOUNT: {
+    en: 'Amount ',
+    zh: '切换数量'
   }
 }

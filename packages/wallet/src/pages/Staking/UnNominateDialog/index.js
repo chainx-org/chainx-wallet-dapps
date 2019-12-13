@@ -68,10 +68,12 @@ export default function({
         [intention.account, realAmount, memo]
       )
       const messages = {
-        successTitle: '赎回成功',
-        failTitle: '赎回失败',
-        successMessage: `赎回数量 ${amount} PCX，锁定期3天`,
-        failMessage: `交易hash ${status.txHash}`
+        successTitle: $t('NOTIFICATION_UN_NOMINATION_SUCCESS'),
+        failTitle: $t('NOTIFICATION_UN_NOMINATION_FAIL'),
+        successMessage: `${$t(
+          'NOTIFICATION_UN_NOMINATION_AMOUNT'
+        )} ${amount} PCX，${$t('NOTIFICATION_UN_NOMINATION_LOCK')}`,
+        failMessage: `${$t('NOTIFICATION_TX_HASH')} ${status.txHash}`
       }
 
       await showSnack(status, messages, dispatch)
