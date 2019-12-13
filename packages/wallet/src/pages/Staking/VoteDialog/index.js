@@ -76,10 +76,10 @@ export default function({ handleClose, intention }) {
         [intention.account, realAmount, memo]
       )
       const messages = {
-        successTitle: '投票成功',
-        failTitle: '投票失败',
-        successMessage: `投票数量 ${amount} PCX`,
-        failMessage: `交易hash ${status.txHash}`
+        successTitle: $t('NOTIFICATION_VOTE_SUCCESS'),
+        failTitle: $t('NOTIFICATION_VOTE_FAIL'),
+        successMessage: `${$t('NOTIFICATION_VOTE_AMOUNT')} ${amount} PCX`,
+        failMessage: `${$t('NOTIFICATION_TX_HASH')} ${status.txHash}`
       }
 
       await showSnack(status, messages, dispatch)

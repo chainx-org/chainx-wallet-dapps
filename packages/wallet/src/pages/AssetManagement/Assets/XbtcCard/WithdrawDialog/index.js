@@ -114,10 +114,10 @@ export default function({ handleClose }) {
         ['BTC', realAmount, address, memo ? memo.trim() : null]
       )
       const messages = {
-        successTitle: '提现成功',
-        failTitle: '提现失败',
-        successMessage: `提现数量 ${amount} BTC`,
-        failMessage: `交易hash ${status.txHash}`
+        successTitle: $t('NOTIFICATION_WITHDRAWAL_SUCCESS'),
+        failTitle: $t('NOTIFICATION_WITHDRAWAL_FAIL'),
+        successMessage: `${$t('NOTIFICATION_WITHDRAWAL_AMOUNT')} ${amount} BTC`,
+        failMessage: `${$t('NOTIFICATION_TX_HASH')} ${status.txHash}`
       }
 
       await showSnack(status, messages, dispatch)
