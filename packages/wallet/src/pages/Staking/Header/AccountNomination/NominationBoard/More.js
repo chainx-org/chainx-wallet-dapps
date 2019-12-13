@@ -2,14 +2,13 @@ import React, { useRef, useState } from 'react'
 import moreIcon from './more.svg'
 import styled from 'styled-components'
 import UnNominateDialog from '../../../UnNominateDialog'
-import SwitchDialog from '../../../SwitchDialog'
 import $t from '../../../../../locale'
 import useOutsideClick from '../../../../../utils/useClickOutside'
 import { useDispatch, useSelector } from 'react-redux'
 import {
+  setSwitchNominationData,
   setSwitchNominationOpen,
   setUnNominateOpen,
-  switchNominationOpenSelector,
   unNominateOpenSelector
 } from '../../../../../reducers/runStatusSlice'
 
@@ -56,7 +55,6 @@ const Wrapper = styled.div`
 export default function({ intention, record = {} }) {
   const [showMore, setShowMore] = useState(false)
   const unNominateOpen = useSelector(unNominateOpenSelector)
-  const switchNominationOpen = useSelector(switchNominationOpenSelector)
   const dispatch = useDispatch()
 
   const { nomination, revocations = [] } = record.info || {}
@@ -83,6 +81,12 @@ export default function({ intention, record = {} }) {
         </li>
         <li
           onClick={() => {
+            dispatch(
+              setSwitchNominationData({
+                intention,
+                nomination
+              })
+            )
             dispatch(setSwitchNominationOpen(true))
             setShowMore(false)
           }}
@@ -96,13 +100,6 @@ export default function({ intention, record = {} }) {
           nomination={nomination}
           revocations={revocations}
           handleClose={() => dispatch(setUnNominateOpen(false))}
-        />
-      ) : null}
-      {switchNominationOpen ? (
-        <SwitchDialog
-          intention={intention}
-          nomination={nomination}
-          handleClose={() => dispatch(setSwitchNominationOpen(false))}
         />
       ) : null}
     </Wrapper>

@@ -12,11 +12,15 @@ import { fetchAssetsInfo } from '../../reducers/assetSlice'
 import styled from 'styled-components'
 import { addressSelector } from '../../reducers/addressSlice'
 import {
+  setSwitchNominationOpen,
   setVoteOpen,
+  switchNominationDataSelector,
+  switchNominationOpenSelector,
   voteIntentionSelector,
   voteOpenSelector
 } from '../../reducers/runStatusSlice'
 import VoteDialog from './VoteDialog'
+import SwitchDialog from './SwitchDialog'
 
 const Wrapper = styled.div`
   display: flex;
@@ -33,6 +37,8 @@ export default function() {
   const address = useSelector(addressSelector)
   const voteOpen = useSelector(voteOpenSelector)
   const voteIntention = useSelector(voteIntentionSelector)
+  const switchNominationOpen = useSelector(switchNominationOpenSelector)
+  const switchNominationData = useSelector(switchNominationDataSelector)
 
   const dispatch = useDispatch()
 
@@ -54,6 +60,13 @@ export default function() {
           intention={voteIntention}
         />
       )}
+      {switchNominationOpen ? (
+        <SwitchDialog
+          intention={switchNominationData.intention}
+          nomination={switchNominationData.nomination}
+          handleClose={() => dispatch(setSwitchNominationOpen(false))}
+        />
+      ) : null}
     </Wrapper>
   )
 }
