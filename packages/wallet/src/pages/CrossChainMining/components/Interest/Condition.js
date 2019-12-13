@@ -9,6 +9,7 @@ import { noneFunc, toPrecision } from '../../../../utils'
 import { blockDuration, timeFormat } from '../../../../utils/constants'
 import moment from 'moment'
 import { pcxPrecisionSelector } from '../../../selectors/assets'
+import $t from '../../../../locale'
 
 const Wrapper = styled.div`
   position: absolute;
@@ -96,13 +97,14 @@ export default function({ claimInfo, close = noneFunc }) {
               src={reachClaimHeight ? successIcon : warningIcon}
               alt="icon"
             />
-            <span>每次提息时间间隔不少于 7 天</span>
+            <span>{$t('PSEDU_CLAIM_INTERVAL')}</span>
           </h3>
           {reachClaimHeight ? null : (
             <div style={{ marginBottom: 8 }}>
-              <header>下次可提息高度</header>
+              <header>{$t('PSEDU_NEXT_CLAIM_HEIGHT')}</header>
               <p>
-                {nextClaim}（预估 {moment(nextTime).format(timeFormat)}）
+                {nextClaim}（{$t('PSEDU_ESTIMATE')}{' '}
+                {moment(nextTime).format(timeFormat)}）
               </p>
             </div>
           )}
@@ -113,13 +115,11 @@ export default function({ claimInfo, close = noneFunc }) {
               src={hasEnoughStaking ? successIcon : warningIcon}
               alt="icon"
             />
-            <span>
-              PCX 投票冻结必须大于等于挖矿收益（包含推荐渠道收益）的 10倍
-            </span>
+            <span>{$t('PSEDU_CLAIM_REQU_VOTE')}</span>
           </h3>
           {hasEnoughStaking ? null : (
             <div>
-              <header>预估需要增加投票冻结</header>
+              <header>{$t('PSEDU_TO_ADD_VOTE')}</header>
               <p>{toPrecision(needStakingPcx, precision)}PCX</p>
             </div>
           )}

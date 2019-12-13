@@ -3,6 +3,7 @@ import chain from './chain'
 import staking from './staking'
 import asset from './asset'
 import trust from './trust'
+import pseduIntention from './pseduIntention'
 
 const common = {
   COMMON_FEE: {
@@ -52,41 +53,6 @@ const common = {
   COMMON_SIGN_TX_BUSY: {
     en: 'Sign transaction busy',
     zh: '插件存在尚未处理的签名请求'
-  }
-}
-
-const pseduIntention = {
-  PSEDU_INTENTION: {
-    en: 'Mining',
-    zh: '跨链挖矿'
-  },
-  PSEDU_CIRCULATION: {
-    en: 'Circulation',
-    zh: '全链总余额'
-  },
-  PSEDU_POWER: {
-    en: 'Power',
-    zh: '挖矿算力'
-  },
-  PSEDU_EQUIVALENT: {
-    en: 'Equivalent',
-    zh: '折合投票数'
-  },
-  PSEDU_JACKPOT: {
-    en: 'Jackpot',
-    zh: '奖池金额'
-  },
-  PSEDU_BALANCE: {
-    en: 'Balance',
-    zh: '我的总余额'
-  },
-  PSEDU_CLAIM: {
-    en: 'Claim',
-    zh: '提息'
-  },
-  PSEDU_INTEREST: {
-    en: 'Interest',
-    zh: '利息'
   }
 }
 
