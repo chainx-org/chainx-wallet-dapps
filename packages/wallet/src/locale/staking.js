@@ -90,6 +90,10 @@ const staking = {
   STAKING_LOW_SELF_VOTE: {
     en: 'Low Self Vote',
     zh: '抵押过低'
+  },
+  STAKING_REVOCATION: {
+    en: 'Revocation',
+    zh: '待解冻'
   }
 }
 

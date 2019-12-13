@@ -93,7 +93,7 @@ export default function() {
     <Wrapper ref={popup}>
       <Ul onClick={() => setOpen(!open)}>
         <li>
-          <label>待解冻</label>
+          <label>{$t('STAKING_REVOCATION')}</label>
           <span>{totalRevocation}</span>
         </li>
         <li>
