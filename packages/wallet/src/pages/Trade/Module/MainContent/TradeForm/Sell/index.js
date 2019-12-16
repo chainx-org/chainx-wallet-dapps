@@ -154,7 +154,7 @@ export default function() {
         <Label>数量</Label>
         <AmountInput
           style={{ maxWidth: 216 }}
-          id="buy-amount"
+          id="sell-amount"
           value={amount}
           onChange={value => {
             setAmountErrMsg('')
