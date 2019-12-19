@@ -117,11 +117,10 @@ export default function({ handleClose, token }) {
 
     setDisabled(true)
     try {
+      const extrinsic = chainx.asset.transfer(address, token, realAmount, memo)
       const status = await signAndSendExtrinsic(
         accountAddress,
-        'xAssets',
-        'transfer',
-        [address, token, realAmount, memo]
+        extrinsic.toHex()
       )
       const messages = {
         successTitle: $t('NOTIFICATION_TRANSFER_SUCCESS'),
