@@ -22,6 +22,7 @@ import {
   checkAmountAndHasError,
   checkMemoAndHasError
 } from '../../../utils/errorCheck'
+import { getChainx } from '../../../services/chainx'
 
 export default function({ handleClose, intention }) {
   const accountAddress = useSelector(addressSelector)
@@ -48,6 +49,7 @@ export default function({ handleClose, intention }) {
   const [disabled, setDisabled] = useState(false)
 
   const hasAmount = !amountErrMsg && amount
+  const chainx = getChainx()
 
   const sign = async () => {
     if (checkAmountAndHasError(amount, free, precision, setAmountErrMsg)) {
@@ -69,11 +71,14 @@ export default function({ handleClose, intention }) {
 
     setDisabled(true)
     try {
+      const extrinsic = chainx.stake.nominate(
+        intention.account,
+        realAmount,
+        memo
+      )
       const status = await signAndSendExtrinsic(
         accountAddress,
-        'xStaking',
-        'nominate',
-        [intention.account, realAmount, memo]
+        extrinsic.toHex()
       )
       const messages = {
         successTitle: $t('NOTIFICATION_VOTE_SUCCESS'),

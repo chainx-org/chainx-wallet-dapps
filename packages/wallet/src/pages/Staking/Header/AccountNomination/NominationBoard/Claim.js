@@ -11,6 +11,7 @@ import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
 import { isDemoSelector } from '../../../../../selectors'
 import $t from '../../../../../locale'
 import { retry } from '../../../../../utils'
+import { getChainx } from '../../../../../services/chainx'
 
 export default function({ record, interest }) {
   const { account } = record.intention || {}
@@ -20,6 +21,7 @@ export default function({ record, interest }) {
   const [disabled, setDisabled] = useState(false)
 
   const dispatch = useDispatch()
+  const chainx = getChainx()
 
   const claim = async target => {
     if (!window.chainxProvider) {
@@ -29,11 +31,10 @@ export default function({ record, interest }) {
 
     setDisabled(true)
     try {
+      const extrinsic = chainx.stake.voteClaim(target)
       const status = await signAndSendExtrinsic(
         accountAddress,
-        'xStaking',
-        'claim',
-        [target]
+        extrinsic.toHex()
       )
       const messages = {
         successTitle: '提息成功',

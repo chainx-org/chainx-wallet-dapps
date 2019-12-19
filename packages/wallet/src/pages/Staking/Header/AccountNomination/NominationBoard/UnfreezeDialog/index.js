@@ -19,6 +19,7 @@ import { fetchNominationRecords } from '../../../../../../reducers/intentionSlic
 import { fetchAccountAssets } from '../../../../../../reducers/assetSlice'
 import { addressSelector } from '../../../../../../reducers/addressSlice'
 import $t from '../../../../../../locale'
+import { getChainx } from '../../../../../../services/chainx'
 
 export default function({ handleClose, record }) {
   const nowBlockNumber = useSelector(blockNumberSelector)
@@ -32,16 +33,16 @@ export default function({ handleClose, record }) {
   const dispatch = useDispatch()
 
   const [disableIndex, setDisableIndex] = useState(null)
+  const chainx = getChainx()
 
   const unfreeze = async index => {
     setDisableIndex(index)
 
     try {
+      const extrinsic = chainx.stake.unfreeze(intention, index)
       const status = await signAndSendExtrinsic(
         accountAddress,
-        'xStaking',
-        'unfreeze',
-        [intention, index]
+        extrinsic.toHex()
       )
 
       const messages = {

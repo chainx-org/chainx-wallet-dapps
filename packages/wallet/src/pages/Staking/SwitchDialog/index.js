@@ -18,6 +18,7 @@ import {
 import { fetchAccountAssets } from '../../../reducers/assetSlice'
 import { checkMemoAndHasError } from '../../../utils/errorCheck'
 import { isDemoSelector } from '../../../selectors'
+import { getChainx } from '../../../services/chainx'
 
 export default function({ handleClose, nomination, intention }) {
   const accountAddress = useSelector(addressSelector)
@@ -47,6 +48,8 @@ export default function({ handleClose, nomination, intention }) {
       .multipliedBy(Math.pow(10, precision))
       .toNumber()
   }
+
+  const chainx = getChainx()
 
   const checkAmountAndHasError = value => {
     if (isNaN(parseFloat(value))) {
@@ -95,11 +98,15 @@ export default function({ handleClose, nomination, intention }) {
 
     setDisabled(true)
     try {
+      const extrinsic = chainx.stake.renominate(
+        intention.account,
+        targetIntention.account,
+        realAmount,
+        memo
+      )
       const status = await signAndSendExtrinsic(
         accountAddress,
-        'xStaking',
-        'renominate',
-        [intention.account, targetIntention.account, realAmount, memo]
+        extrinsic.toHex()
       )
       const messages = {
         successTitle: $t('NOTIFICATION_SWITCH_SUCCESS'),

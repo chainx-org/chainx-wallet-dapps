@@ -17,6 +17,7 @@ import {
   checkMemoAndHasError
 } from '../../../utils/errorCheck'
 import { isDemoSelector } from '../../../selectors'
+import { getChainx } from '../../../services/chainx'
 
 export default function({
   handleClose,
@@ -36,6 +37,7 @@ export default function({
   const [disabled, setDisabled] = useState(false)
   const hasAmount = !amountErrMsg && amount
   const dispatch = useDispatch()
+  const chainx = getChainx()
 
   const unNominate = async () => {
     if (
@@ -61,11 +63,14 @@ export default function({
 
     setDisabled(true)
     try {
+      const extrinsic = chainx.stake.unnominate(
+        intention.account,
+        realAmount,
+        memo
+      )
       const status = await signAndSendExtrinsic(
         accountAddress,
-        'xStaking',
-        'unnominate',
-        [intention.account, realAmount, memo]
+        extrinsic.toHex()
       )
       const messages = {
         successTitle: $t('NOTIFICATION_UN_NOMINATION_SUCCESS'),
