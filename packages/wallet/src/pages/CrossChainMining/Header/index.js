@@ -32,6 +32,8 @@ import {
 import { pcxPrecisionSelector } from '../../selectors/assets'
 import { fetchPseduNominationRecords } from '../../../reducers/intentionSlice'
 import { isDemoSelector } from '../../../selectors'
+import { getChainx } from '../../../services/chainx'
+import { retry } from '../../../utils'
 
 export default function({ token }) {
   const accountAddress = useSelector(addressSelector)
@@ -67,7 +69,9 @@ export default function({ token }) {
   const showInterest =
     typeof interest === 'number' && typeof precision === 'number'
 
-  function claim(token) {
+  const chainx = getChainx()
+
+  async function claim(token) {
     if (!isFromExtension) {
       console.error('not extension account')
       return
@@ -83,24 +87,34 @@ export default function({ token }) {
     }
 
     setDisabled(true)
-    signAndSendExtrinsic(accountAddress, 'xTokens', 'claim', [token])
-      .then(status => {
-        let type = typeEnum.SUCCESS
-        let title =
-          status.result === 'ExtrinsicSuccess' ? '提息成功' : '提息失败'
-        let message = `交易hash ${status.txHash}`
+    try {
+      const extrinsic = chainx.stake.depositClaim(token)
+      const status = await signAndSendExtrinsic(
+        accountAddress,
+        extrinsic.toHex()
+      )
+      let type = typeEnum.SUCCESS
+      let title = status.result === 'ExtrinsicSuccess' ? '提息成功' : '提息失败'
+      let message = `交易hash ${status.txHash}`
 
-        if (status.result === 'ExtrinsicFailed') {
-          type = typeEnum.ERROR
-        }
+      if (status.result === 'ExtrinsicFailed') {
+        type = typeEnum.ERROR
+      }
 
-        dispatch(fetchPseduNominationRecords(accountAddress))
-        setDisabled(false)
-        let id = generateId()
-        dispatch(addSnack({ id, type, title, message }))
-        removeSnackInSeconds(dispatch, id, 5)
-      })
-      .catch(() => setDisabled(false))
+      setDisabled(false)
+      let id = generateId()
+      dispatch(addSnack({ id, type, title, message }))
+      removeSnackInSeconds(dispatch, id, 5)
+      await retry(
+        () => {
+          dispatch(fetchPseduNominationRecords(accountAddress))
+        },
+        5,
+        2
+      )
+    } catch (e) {
+      setDisabled(false)
+    }
   }
 
   const isDemo = useSelector(isDemoSelector)
