@@ -16,13 +16,11 @@ function getMessage(err) {
   return err.msg
 }
 
-export function signAndSendExtrinsic(address, module, call, args = []) {
+export function signAndSendExtrinsic(address, data) {
   return new Promise((resolve, reject) => {
     window.chainxProvider.signAndSendExtrinsic(
       address,
-      module,
-      call,
-      args,
+      data,
       ({ err, status, reject: userReject }) => {
         if (userReject) {
           console.log('transaction sign and send request is rejected.')
