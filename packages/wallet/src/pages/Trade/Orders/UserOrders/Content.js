@@ -29,6 +29,7 @@ import {
 } from '../../../../utils/chainxProvider'
 import { addressSelector } from '../../../../reducers/addressSlice'
 import { accountIdSelector } from '../../../selectors/assets'
+import { getChainx } from '../../../../services/chainx'
 
 export default function() {
   const accountAddress = useSelector(addressSelector)
@@ -41,16 +42,16 @@ export default function() {
   const dispatch = useDispatch()
   const [disabled, setDisabled] = useState(false)
   const [targetId, setTargetId] = useState(null)
+  const chainx = getChainx()
 
   const cancelOrder = async id => {
     setDisabled(true)
     setTargetId(id)
     try {
+      const extrinsic = chainx.trade.cancelOrder(pairId, id)
       const status = await signAndSendExtrinsic(
         accountAddress,
-        'xSpot',
-        'cancelOrder',
-        [pairId, id]
+        extrinsic.toHex()
       )
 
       const messages = {

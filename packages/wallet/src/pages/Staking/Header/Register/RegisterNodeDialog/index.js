@@ -12,6 +12,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import { addressSelector } from '../../../../../reducers/addressSlice'
 import { fetchIntentions } from '../../../../../reducers/intentionSlice'
+import { getChainx } from '../../../../../services/chainx'
 
 export default function({ handleClose = noneFunc }) {
   const accountAddress = useSelector(addressSelector)
@@ -21,6 +22,8 @@ export default function({ handleClose = noneFunc }) {
   const [disabled, setDisabled] = useState(false)
   const dispatch = useDispatch()
 
+  const chainx = getChainx()
+
   const register = async () => {
     if (name.length > 12) {
       setNameErrMsg($t('COMMON_TOO_LONG'))
@@ -29,11 +32,10 @@ export default function({ handleClose = noneFunc }) {
 
     setDisabled(true)
     try {
+      const extrinsic = chainx.stake.register(name.trim())
       const status = await signAndSendExtrinsic(
         accountAddress,
-        'xStaking',
-        'register',
-        [name.trim()]
+        extrinsic.toHex()
       )
       const messages = {
         successTitle: '注册成功',

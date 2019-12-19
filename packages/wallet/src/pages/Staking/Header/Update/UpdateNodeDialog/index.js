@@ -66,11 +66,10 @@ export default function({ handleClose = noneFunc }) {
 
     setDisabled(true)
     try {
+      const extrinsic = chainx.stake.refresh(url, wantToRun, key, about)
       const status = await signAndSendExtrinsic(
         accountAddress,
-        'xStaking',
-        'refresh',
-        [url, wantToRun, key, about]
+        extrinsic.toHex()
       )
       const messages = {
         successTitle: '更新成功',

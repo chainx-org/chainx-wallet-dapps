@@ -29,6 +29,7 @@ import { addressSelector } from '../../../../../../reducers/addressSlice'
 import BigNumber from 'bignumber.js'
 import { marks } from '../constants'
 import $t from '../../../../../../locale'
+import { getChainx } from '../../../../../../services/chainx'
 
 export default function() {
   const accountAddress = useSelector(addressSelector)
@@ -83,6 +84,8 @@ export default function() {
   const [priceErrMsg, setPriceErrMsg] = useState('')
   const [amountErrMsg, setAmountErrMsg] = useState('')
 
+  const chainx = getChainx()
+
   const sign = async () => {
     const realPrice = BigNumber(price)
       .multipliedBy(Math.pow(10, pairPrecision))
@@ -114,11 +117,16 @@ export default function() {
     setDisabled(true)
 
     try {
+      const extrinsic = chainx.trade.putOrder(
+        pairId,
+        'Limit',
+        'Buy',
+        realAmount,
+        realPrice
+      )
       const status = await signAndSendExtrinsic(
         accountAddress,
-        'xSpot',
-        'putOrder',
-        [pairId, 'Limit', 'Buy', realAmount, realPrice]
+        extrinsic.toHex()
       )
 
       const messages = {

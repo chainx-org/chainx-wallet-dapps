@@ -29,6 +29,7 @@ import {
   fetchQuotations
 } from '../../../../../../reducers/tradeSlice'
 import $t from '../../../../../../locale'
+import { getChainx } from '../../../../../../services/chainx'
 
 export default function() {
   const pairPrecision = useSelector(pairPrecisionSelector)
@@ -71,6 +72,8 @@ export default function() {
     toPrecision(minSellPrice, pairPrecision)
   ).toFixed(pairShowPrecision)
 
+  const chainx = getChainx()
+
   const sign = async () => {
     const realPrice = BigNumber(price)
       .multipliedBy(Math.pow(10, pairPrecision))
@@ -101,11 +104,16 @@ export default function() {
 
     setDisabled(true)
     try {
+      const extrinsic = chainx.trade.putOrder(
+        pairId,
+        'Limit',
+        'Sell',
+        realAmount,
+        realPrice
+      )
       const status = await signAndSendExtrinsic(
         accountAddress,
-        'xSpot',
-        'putOrder',
-        [pairId, 'Limit', 'Sell', realAmount, realPrice]
+        extrinsic.toHex()
       )
 
       const messages = {
