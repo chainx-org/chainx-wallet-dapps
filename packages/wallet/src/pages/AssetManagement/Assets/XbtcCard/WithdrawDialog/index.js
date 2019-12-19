@@ -27,6 +27,7 @@ import {
 import { fetchWithdrawals } from '../../../../../reducers/crosschainSlice'
 import { isDemoSelector } from '../../../../../selectors'
 import { accountIdSelector } from '../../../../selectors/assets'
+import { getChainx } from '../../../../../services/chainx'
 
 export default function({ handleClose }) {
   const network = useSelector(networkSelector)
@@ -105,13 +106,19 @@ export default function({ handleClose }) {
       return
     }
 
+    const chainx = getChainx()
+
     setDisabled(true)
     try {
+      const extrinsic = chainx.asset.withdraw(
+        'BTC',
+        realAmount,
+        address,
+        memo ? memo.trim() : null
+      )
       const status = await signAndSendExtrinsic(
         accountAddress,
-        'xAssetsProcess',
-        'withdraw',
-        ['BTC', realAmount, address, memo ? memo.trim() : null]
+        extrinsic.toHex()
       )
       const messages = {
         successTitle: $t('NOTIFICATION_WITHDRAWAL_SUCCESS'),

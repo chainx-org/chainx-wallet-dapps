@@ -22,6 +22,7 @@ import { Hash } from '../../../../../components'
 import BtcAddress from '../../components/BtcAddress'
 import useOutsideClick from '../../../../../utils/useClickOutside'
 import $t from '../../../../../locale'
+import { getChainx } from '../../../../../services/chainx'
 
 export default function({ withdrawal }) {
   const precision = useSelector(xbtcPrecisionSelector)
@@ -32,13 +33,10 @@ export default function({ withdrawal }) {
 
   const [open, setOpen] = useState(false)
 
+  const chainx = getChainx()
   const revokeWithdraw = async (id, balance) => {
-    const status = await signAndSendExtrinsic(
-      accountAddress,
-      'xAssetsProcess',
-      'revokeWithdraw',
-      [id]
-    )
+    const extrinsic = chainx.asset.revokeWithdraw(id)
+    const status = await signAndSendExtrinsic(accountAddress, extrinsic.toHex())
 
     const messages = {
       successTitle: '取消提现成功',
