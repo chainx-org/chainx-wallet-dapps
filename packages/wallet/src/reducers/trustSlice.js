@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { getChainx } from '../services/chainx'
+import { getApi } from '../services/api'
 
 const bitcoin = 'Bitcoin'
 
@@ -45,7 +46,24 @@ const {
 export const fetchWithdrawals = () => async dispatch => {
   const { asset } = await getChainx()
   const { data } = await asset.getWithdrawalList(bitcoin, 0, 1000)
-  dispatch(setWithdrawals(data))
+  data.sort((a, b) => b.height - a.height)
+  const blockIds = data.map(d => d.height)
+  const resp = await window.fetch(`${getApi()}blocksInfo`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ ids: blockIds })
+  })
+  const blocks = await resp.json()
+  const normalized = data.map(d => {
+    const block = blocks.find(b => b.number === d.height)
+    return {
+      ...d,
+      time: block ? block.time : null
+    }
+  })
+  dispatch(setWithdrawals(normalized))
 }
 
 export const fetchTrusteeSessionInfo = () => async dispatch => {
