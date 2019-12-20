@@ -67,12 +67,12 @@ export async function send(abi, address, method, params, value, gas, cb) {
       gas,
       parseAbi.messages[stringCamelCase(method)](...params)
     ]
+    const ex = chainx.api.tx.xContracts[_method](...args)
     if (enableExtension) {
-      contractApi(_method, args, cb)
+      contractApi(ex.toHex(), cb)
       return { status: true }
     }
 
-    const ex = chainx.api.tx.xContracts[_method](...args)
     ex.signAndSend(Alice, cb)
     return { status: true }
   } catch (error) {
@@ -123,15 +123,16 @@ export async function uploadContract(file, gas, cb) {
     return
   }
   const args = [gas, compactAddLength(file.data)]
+  const ex = chainx.api.tx.xContracts[method](...args)
   if (enableExtension) {
-    contractApi(method, args, cb)
+    contractApi(ex.toHex(), cb)
     return
   }
-  const ex = chainx.api.tx.xContracts[method](...args)
   ex.signAndSend(Alice, convertCb(cb))
 }
 
 export async function deploy(_abi, params, endowment, gas, cb) {
+  const chainx = getChainx()
   const abi = new Abi(_abi.abi)
   const method = 'instantiate'
   if (abi.constructors[0].args.length !== params.length) {
@@ -140,24 +141,17 @@ export async function deploy(_abi, params, endowment, gas, cb) {
   }
   const args = [endowment, gas, _abi.codeHash, abi.constructors[0](...params)]
   console.log('deploy abi in utils ', abi, args, params)
+  const ex = chainx.api.tx.xContracts[method](...args)
   if (enableExtension) {
-    contractApi(method, args, cb)
+    contractApi(ex.toHex(), cb)
     return
   }
-  const ex = chainx.api.tx.xContracts[method](...args)
   ex.signAndSend(Alice, convertCb(cb))
 }
 
-const contractApi = async (method, args, cb) => {
+const contractApi = async (hex, cb) => {
   const account = await window.chainxProvider.enable()
-  const mo = 'xContracts'
-  window.chainxProvider.signAndSendExtrinsic(
-    account.address,
-    mo,
-    method,
-    args,
-    cb
-  )
+  window.chainxProvider.signAndSendExtrinsic(account.address, hex, cb)
 }
 
 const convertCb = cb => {
