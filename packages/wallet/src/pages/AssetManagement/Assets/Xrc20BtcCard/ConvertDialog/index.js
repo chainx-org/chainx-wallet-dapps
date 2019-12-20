@@ -60,7 +60,6 @@ export default function({ handleClose }) {
       setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_ERROR'))
       return
     }
-    debugger
 
     const realAmount = BigNumber(amount)
       .multipliedBy(Math.pow(10, precision))
