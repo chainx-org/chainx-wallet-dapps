@@ -22,6 +22,7 @@ import { u64 } from '@chainx/types'
 import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
 import { isDemoSelector } from '../../../../../selectors'
 import { accountIdSelector } from '../../../../selectors/assets'
+import { getChainx } from '../../../../../services/chainx'
 
 export default function({ handleClose }) {
   const accountAddress = useSelector(addressSelector)
@@ -52,12 +53,14 @@ export default function({ handleClose }) {
   )
 
   const dispatch = useDispatch()
+  const chainx = getChainx()
 
   const convert = async () => {
     if (isNaN(parseFloat(amount))) {
       setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_ERROR'))
       return
     }
+    debugger
 
     const realAmount = BigNumber(amount)
       .multipliedBy(Math.pow(10, precision))
@@ -77,29 +80,22 @@ export default function({ handleClose }) {
     try {
       let status
       if (from === 'X-BTC') {
-        status = await signAndSendExtrinsic(
-          accountAddress,
-          'xContracts',
-          'convertToXrc20',
-          ['BTC', realAmount, gasLimit]
+        const extrinsic = chainx.api.tx.xContracts.convertToXrc20(
+          'BTC',
+          realAmount,
+          gasLimit
         )
+        status = await signAndSendExtrinsic(accountAddress, extrinsic.toHex())
       } else {
-        status = await signAndSendExtrinsic(
-          accountAddress,
-          'xContracts',
-          'call',
-          [
-            contractAddress,
-            0,
-            gasLimit,
-            u8aToHex(
-              u8aConcat(
-                hexToU8a(selectors.Destroy),
-                new u64(realAmount).toU8a()
-              )
-            )
-          ]
+        const extrinsic = chainx.api.tx.xContracts.call(
+          contractAddress,
+          0,
+          gasLimit,
+          u8aToHex(
+            u8aConcat(hexToU8a(selectors.Destroy), new u64(realAmount).toU8a())
+          )
         )
+        status = await signAndSendExtrinsic(accountAddress, extrinsic.toHex())
       }
 
       const prefix = from === 'X-BTC' ? '划转' : '转回'
@@ -116,6 +112,7 @@ export default function({ handleClose }) {
       dispatch(fetchXrcBtcBalance(accountId))
       dispatch(fetchAccountAssets(accountAddress))
     } catch (e) {
+      console.error(e)
       setDisabled(false)
     }
   }
