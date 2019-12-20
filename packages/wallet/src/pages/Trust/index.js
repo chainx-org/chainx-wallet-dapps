@@ -24,6 +24,8 @@ import { xbtcPrecisionSelector } from '../selectors/assets'
 import { reverseHex, toPrecision } from '../../utils'
 import BtcTx from '../AssetManagement/Records/components/BtcTx'
 import $t from '../../locale'
+import moment from 'moment'
+import { timeFormat } from '../../utils/constants'
 
 const Wrapper = styled.div`
   display: flex;
@@ -74,10 +76,13 @@ export default function() {
             <TableBody>
               {withdrawals.map(data => {
                 const address = chainx.account.encodeAddress(data.accountid)
+                const time = data.time
+                  ? moment(data.time).format(timeFormat)
+                  : null
 
                 return (
                   <TableRow key={data.id}>
-                    <TableCell>{data.height}</TableCell>
+                    <BaseCell>{time}</BaseCell>
                     <IndexCell>{data.id}</IndexCell>
                     <BaseCell>{data.token}</BaseCell>
                     <AmountCell>
