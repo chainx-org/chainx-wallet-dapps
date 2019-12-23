@@ -87,9 +87,7 @@ const Wrapper = styled.div`
     }
 
     button {
-      opacity: 0.72;
       font-size: 12px;
-      color: #000000;
       letter-spacing: 0.2px;
       text-align: center;
       line-height: 16px;
@@ -116,6 +114,7 @@ export default function(props) {
   const lowSelfVote = totalNomination >= selfVote * 10
 
   const isSelf = accountAddress === account
+  const disabled = (!isSelf && lowSelfVote) || voteOpen
 
   return (
     <Wrapper>
@@ -145,7 +144,7 @@ export default function(props) {
       <div className="operation">
         <DetailToggle onClick={() => setDetailOpen(!detailOpen)} />
         <DefaultButton
-          disabled={(!isSelf && lowSelfVote) || voteOpen}
+          disabled={disabled}
           onClick={() => {
             dispatch(setVoteIntention(props.intention))
             dispatch(setVoteOpen(true))
@@ -153,8 +152,7 @@ export default function(props) {
           style={{
             padding: '6px 20px',
             fontSize: 12,
-            opacity: 0.72,
-            color: '#000'
+            color: `rbga(0, 0, 0, ${disabled ? 0.24 : 0.72}) !important`
           }}
         >
           {$t('STAKING_VOTE')}
