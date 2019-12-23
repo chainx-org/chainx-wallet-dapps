@@ -14,12 +14,9 @@ import { addressSelector } from '../../reducers/addressSlice'
 import {
   setSwitchNominationOpen,
   setUnFreezeOpen,
-  setVoteOpen,
   switchNominationDataSelector,
   switchNominationOpenSelector,
-  unFreezeRecordSelector,
-  voteIntentionSelector,
-  voteOpenSelector
+  unFreezeRecordSelector
 } from '../../reducers/runStatusSlice'
 import VoteDialog from './VoteDialog'
 import SwitchDialog from './SwitchDialog'
@@ -39,8 +36,6 @@ const Wrapper = styled.div`
 
 export default function() {
   const address = useSelector(addressSelector)
-  const voteOpen = useSelector(voteOpenSelector)
-  const voteIntention = useSelector(voteIntentionSelector)
   const switchNominationOpen = useSelector(switchNominationOpenSelector)
   const switchNominationData = useSelector(switchNominationDataSelector)
   const unFreezeRecord = useSelector(unFreezeRecordSelector)
@@ -59,12 +54,7 @@ export default function() {
     <Wrapper className="staking">
       <Header />
       <Validators />
-      {voteOpen && (
-        <VoteDialog
-          handleClose={() => dispatch(setVoteOpen(false))}
-          intention={voteIntention}
-        />
-      )}
+      <VoteDialog />
       {switchNominationOpen ? (
         <SwitchDialog
           intention={switchNominationData.intention}

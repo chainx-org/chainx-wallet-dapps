@@ -23,11 +23,20 @@ import {
   checkMemoAndHasError
 } from '../../../utils/errorCheck'
 import { getChainx } from '../../../services/chainx'
+import {
+  setVoteOpen,
+  voteIntentionSelector,
+  voteOpenSelector
+} from '../../../reducers/runStatusSlice'
 
-export default function({ handleClose, intention }) {
+export default function() {
   const accountAddress = useSelector(addressSelector)
   const nominationRecords = useSelector(nominationRecordsSelector)
   const isDemoAddr = useSelector(isDemoSelector)
+  const voteOpen = useSelector(voteOpenSelector)
+
+  const intention = useSelector(voteIntentionSelector) || {}
+  const handleClose = () => dispatch(setVoteOpen(false))
 
   const record = (nominationRecords || []).find(
     record => record.intention === intention.account
@@ -44,7 +53,7 @@ export default function({ handleClose, intention }) {
   const [memo, setMemo] = useState('')
   const [memoErrMsg, setMemoErrMsg] = useState('')
 
-  const { free, precision } = useSelector(pcxFreeSelector)
+  const { free, precision } = useSelector(pcxFreeSelector) || {}
 
   const [disabled, setDisabled] = useState(false)
 
@@ -104,7 +113,7 @@ export default function({ handleClose, intention }) {
   }
 
   return (
-    <StyledDialog open title={'投票'} handleClose={handleClose}>
+    <StyledDialog open={voteOpen} title={'投票'} handleClose={handleClose}>
       <main className="content">
         <div className="amount">
           <div>
