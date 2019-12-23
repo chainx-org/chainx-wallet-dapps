@@ -29,6 +29,8 @@ import { addressSelector } from '../../../../../../reducers/addressSlice'
 import BigNumber from 'bignumber.js'
 import { marks } from '../constants'
 import $t from '../../../../../../locale'
+import infoIcon from '../../assets/info.svg'
+import { PriceWrapper } from '../components/PriceWrapper'
 
 export default function() {
   const accountAddress = useSelector(addressSelector)
@@ -152,8 +154,10 @@ export default function() {
         <Error>{priceErrMsg || amountErrMsg}</Error>
       </div>
       <div className="price input">
-        <Label htmlFor="buy-price">价格</Label>
-        {/*TODO: 设置默认价格*/}
+        <PriceWrapper data-tip={`最大买入价格${maxBuyShowPrice}`}>
+          <Label htmlFor="buy-price">价格</Label>
+          <img src={infoIcon} alt="info" />
+        </PriceWrapper>
         <div>
           <AmountInput
             style={{ maxWidth: 216 }}
