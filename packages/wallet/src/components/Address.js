@@ -22,7 +22,7 @@ export default function({ address = '', length = 5 }) {
 
   return (
     <LinkWrapper href={url} target="_blank">
-      <span>{result}</span>
+      <span title={address}>{result}</span>
       <img className="link" src={link} alt="link" />
       <img
         className="link-highlight"
