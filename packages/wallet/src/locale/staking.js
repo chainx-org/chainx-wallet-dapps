@@ -96,7 +96,7 @@ const staking = {
     zh: '待解冻'
   },
   STAKING_NEXT_RENOMINATE_WARNING: {
-    en: '',
+    en: 'Next re-nominate height: {height} (About {time})',
     zh: '下次可切换高度：{height}（预估 {time}）'
   }
 }
