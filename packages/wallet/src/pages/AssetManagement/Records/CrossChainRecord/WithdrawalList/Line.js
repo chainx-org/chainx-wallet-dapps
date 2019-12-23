@@ -72,7 +72,10 @@ export default function({ withdrawal }) {
           <span className="text">{getState(withdrawal.txstate)}</span>
           {withdrawal.txstate === 'Applying' ? (
             <img
-              onClick={() => revokeWithdraw(withdrawal.id, withdrawal.balance)}
+              onClick={e => {
+                e.stopPropagation()
+                revokeWithdraw(withdrawal.id, withdrawal.balance).then(() => {})
+              }}
               src={cancelIcon}
               alt="cancel"
             />
