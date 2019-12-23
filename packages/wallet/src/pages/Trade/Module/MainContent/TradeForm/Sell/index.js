@@ -30,6 +30,8 @@ import {
 } from '../../../../../../reducers/tradeSlice'
 import $t from '../../../../../../locale'
 import { getChainx } from '../../../../../../services/chainx'
+import infoIcon from '../../assets/info.svg'
+import { PriceWrapper } from '../components/PriceWrapper'
 
 export default function() {
   const pairPrecision = useSelector(pairPrecisionSelector)
@@ -144,7 +146,10 @@ export default function() {
       </div>
 
       <div className="price input">
-        <Label htmlFor="sell-price">价格</Label>
+        <PriceWrapper data-tip={`最小卖出价格${minSellShowPrice}`}>
+          <Label htmlFor="sell-price">价格</Label>
+          <img src={infoIcon} alt="info" />
+        </PriceWrapper>
         <AmountInput
           style={{ maxWidth: 216 }}
           id="sell-price"

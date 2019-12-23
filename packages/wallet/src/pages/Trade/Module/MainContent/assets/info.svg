@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>解释</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M7.2,4 L8.8,4 L8.8,5.6 L7.2,5.6 L7.2,4 Z M8,7.2 C8.4418278,7.2 8.8,7.5581722 8.8,8 L8.8,11.2 C8.8,11.6418278 8.4418278,12 8,12 C7.5581722,12 7.2,11.6418278 7.2,11.2 L7.2,8 C7.2,7.5581722 7.5581722,7.2 8,7.2 Z M8,0 C3.584,0 0,3.584 0,8 C0,12.416 3.584,16 8,16 C12.416,16 16,12.416 16,8 C16,3.584 12.416,0 8,0 Z M8,14.4 C4.472,14.4 1.6,11.528 1.6,8 C1.6,4.472 4.472,1.6 8,1.6 C11.528,1.6 14.4,4.472 14.4,8 C14.4,11.528 11.528,14.4 8,14.4 Z"
+              id="path-1"></path>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.24">
+        <g id="05-02币币交易未登录" transform="translate(-381.000000, -472.000000)">
+            <g id="分组-6" transform="translate(332.000000, 414.000000)">
+                <g id="解释" transform="translate(49.000000, 58.000000)">
+                    <g id="黄色">
+                        <g>
+                            <mask id="mask-2" fill="white">
+                                <use xlink:href="#path-1"></use>
+                            </mask>
+                            <use id="Mask" fill="#000000" fill-rule="nonzero" xlink:href="#path-1"></use>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
