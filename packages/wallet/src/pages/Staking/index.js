@@ -13,10 +13,12 @@ import styled from 'styled-components'
 import { addressSelector } from '../../reducers/addressSlice'
 import {
   setSwitchNominationOpen,
+  setUnFreezeOpen,
   setUnNominateOpen,
   setVoteOpen,
   switchNominationDataSelector,
   switchNominationOpenSelector,
+  unFreezeRecordSelector,
   unNominateOpenSelector,
   unNominationDataSelector,
   voteIntentionSelector,
@@ -25,6 +27,7 @@ import {
 import VoteDialog from './VoteDialog'
 import SwitchDialog from './SwitchDialog'
 import UnNominateDialog from './UnNominateDialog'
+import UnFreezeDialog from './UnfreezeDialog'
 
 const Wrapper = styled.div`
   display: flex;
@@ -45,6 +48,7 @@ export default function() {
   const switchNominationData = useSelector(switchNominationDataSelector)
   const unNominateOpen = useSelector(unNominateOpenSelector)
   const unNominationData = useSelector(unNominationDataSelector)
+  const unFreezeRecord = useSelector(unFreezeRecordSelector)
 
   const dispatch = useDispatch()
 
@@ -81,6 +85,17 @@ export default function() {
           handleClose={() => dispatch(setUnNominateOpen(false))}
         />
       ) : null}
+      <UnFreezeDialog
+        record={unFreezeRecord}
+        revocations={
+          unFreezeRecord &&
+          unFreezeRecord.info &&
+          unFreezeRecord.info.revocations
+        }
+        handleClose={() => {
+          dispatch(setUnFreezeOpen(false))
+        }}
+      />
     </Wrapper>
   )
 }
