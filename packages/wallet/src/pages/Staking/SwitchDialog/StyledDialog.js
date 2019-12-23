@@ -45,5 +45,17 @@ export default styled(Dialog)`
         }
       }
     }
+
+    & > ul.warning {
+      li {
+        margin-top: 16px;
+        opacity: 0.72;
+        font-size: 14px;
+        color: #000000;
+        letter-spacing: 0.12px;
+        text-align: center;
+        line-height: 20px;
+      }
+    }
   }
 `

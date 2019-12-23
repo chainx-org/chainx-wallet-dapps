@@ -1,7 +1,8 @@
 import messages from './messages'
 import { store } from '../index'
+import * as format from 'string-template'
 
-export default function $t(key) {
+export default function $t(key, args) {
   const locale = store.getState().settings.locale
   const reversedLocale = locale === 'en' ? 'zh' : 'en'
 
@@ -13,5 +14,6 @@ export default function $t(key) {
   const reversedValue = value[reversedLocale]
   const message = value[locale]
 
-  return message ? message : reversedValue ? reversedValue : ''
+  const msg = message ? message : reversedValue ? reversedValue : ''
+  return format(msg, args)
 }

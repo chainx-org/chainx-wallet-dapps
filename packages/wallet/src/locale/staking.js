@@ -94,6 +94,10 @@ const staking = {
   STAKING_REVOCATION: {
     en: 'Revocation',
     zh: '待解冻'
+  },
+  STAKING_NEXT_RENOMINATE_WARNING: {
+    en: '',
+    zh: '下次可切换高度：{height}（预估 {time}）'
   }
 }
 

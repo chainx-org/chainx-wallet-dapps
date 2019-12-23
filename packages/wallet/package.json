@@ -28,6 +28,7 @@
     "react-tooltip": "^3.11.1",
     "redux": "^4.0.4",
     "store": "^2.0.12",
+    "string-template": "^1.0.0",
     "styled-components": "^4.4.0",
     "technicalindicators": "^3.0.0",
     "uniqid": "^5.0.3",

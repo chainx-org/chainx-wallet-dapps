@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import StyledDialog from './StyledDialog'
 import { AmountInput, PrimaryButton, TextInput } from '@chainx/ui'
 import $t from '../../../locale'
@@ -9,20 +9,43 @@ import arrow from '../svg/arrow.svg'
 import darkArrow from '../svg/dark-arrow.svg'
 import BigNumber from 'bignumber.js'
 import { showSnack, signAndSendExtrinsic } from '../../../utils/chainxProvider'
-import { addressSelector } from '../../../reducers/addressSlice'
+import {
+  accountIdSelector,
+  addressSelector
+} from '../../../reducers/addressSlice'
 import IntentionSelect from './IntentionSelect'
 import {
+  fetchNextRenominateByAccount,
   fetchNominationRecords,
-  intentionsSelector
+  intentionsSelector,
+  nextRenominateHeightSelector
 } from '../../../reducers/intentionSlice'
 import { fetchAccountAssets } from '../../../reducers/assetSlice'
 import { checkMemoAndHasError } from '../../../utils/errorCheck'
 import { isDemoSelector } from '../../../selectors'
 import { getChainx } from '../../../services/chainx'
+import {
+  setSwitchNominationOpen,
+  switchNominationDataSelector,
+  switchNominationOpenSelector
+} from '../../../reducers/runStatusSlice'
+import {
+  nextRenominateTimeSelector,
+  reachNexRenominateSelector
+} from './selectors'
 
-export default function({ handleClose, nomination, intention }) {
+export default function() {
   const accountAddress = useSelector(addressSelector)
   const isDemoAddr = useSelector(isDemoSelector)
+  const reachNextRenominate = useSelector(reachNexRenominateSelector)
+  const nextRenominateTime = useSelector(nextRenominateTimeSelector)
+  const nextRenominateHeight = useSelector(nextRenominateHeightSelector)
+
+  const switchNominationOpen = useSelector(switchNominationOpenSelector)
+  const switchNominationData = useSelector(switchNominationDataSelector)
+  const intention = switchNominationData.intention
+  const nomination = switchNominationData.nomination
+  const handleClose = () => dispatch(setSwitchNominationOpen(false))
 
   const [memo, setMemo] = useState('')
   const [memoErrMsg, setMemoErrMsg] = useState('')
@@ -50,6 +73,11 @@ export default function({ handleClose, nomination, intention }) {
   }
 
   const chainx = getChainx()
+  const accountId = useSelector(accountIdSelector)
+
+  useEffect(() => {
+    dispatch(fetchNextRenominateByAccount(accountId))
+  }, [accountId, dispatch])
 
   const checkAmountAndHasError = value => {
     if (isNaN(parseFloat(value))) {
@@ -131,7 +159,11 @@ export default function({ handleClose, nomination, intention }) {
   }
 
   return (
-    <StyledDialog open title={'切换投票'} handleClose={handleClose}>
+    <StyledDialog
+      open={switchNominationOpen}
+      title={'切换投票'}
+      handleClose={handleClose}
+    >
       <main className="content">
         <div className="intention">
           <div>
@@ -200,9 +232,20 @@ export default function({ handleClose, nomination, intention }) {
           </section>
         </div>
 
+        <ul className="warning">
+          {reachNextRenominate ? null : (
+            <li>
+              {$t('STAKING_NEXT_RENOMINATE_WARNING', {
+                height: nextRenominateHeight,
+                time: nextRenominateTime
+              })}
+            </li>
+          )}
+        </ul>
+
         <div>
           <PrimaryButton
-            disabled={isDemoAddr || disabled}
+            disabled={isDemoAddr || disabled || !reachNextRenominate}
             size="fullWidth"
             onClick={switchNominate}
           >

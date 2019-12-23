@@ -1,4 +1,5 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
+import { getChainx } from '../services/chainx'
 
 let initialState = {
   name: 'abc',
@@ -29,6 +30,19 @@ const addressSlice = createSlice({
 export const { setAccount, setExtensionAccounts } = addressSlice.actions
 
 export const addressSelector = state => state.address.address
+
+export const accountIdSelector = createSelector(
+  addressSelector,
+  address => {
+    if (!address) {
+      return null
+    }
+
+    const chainx = getChainx()
+    return chainx.account.decodeAddress(address, false)
+  }
+)
+
 export const nameSelector = state => state.address.name
 export const accountSelector = createSelector(
   nameSelector,

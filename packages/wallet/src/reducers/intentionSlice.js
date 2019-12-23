@@ -10,7 +10,8 @@ const intentionSlice = createSlice({
     pseduNominationRecords: [],
     senators: [],
     logos: {},
-    nominationRecords: []
+    nominationRecords: [],
+    nextRenominateHeight: null
   },
   reducers: {
     setIntentions: {
@@ -42,6 +43,9 @@ const intentionSlice = createSlice({
       reducer(state, action) {
         state.nominationRecords = action.payload
       }
+    },
+    setNextRenominateHeight(state, action) {
+      state.nextRenominateHeight = action.payload
     }
   }
 })
@@ -52,7 +56,8 @@ export const {
   setPseduNominationRecords,
   setSenators,
   setLogos,
-  setNominationRecords
+  setNominationRecords,
+  setNextRenominateHeight
 } = intentionSlice.actions
 
 async function getStake() {
@@ -95,6 +100,12 @@ export const fetchPseduNominationRecords = address => async dispatch => {
 
   const resp = await stake.getPseduNominationRecordsV1(address)
   dispatch(setPseduNominationRecords(resp))
+}
+
+export const fetchNextRenominateByAccount = accountId => async dispatch => {
+  const stake = await getStake()
+  const result = await stake.getNextRenominateByAccount(accountId)
+  dispatch(setNextRenominateHeight(result))
 }
 
 export const fetchSenators = () => async dispatch => {
@@ -181,5 +192,7 @@ export const activeIntentionsSelector = createSelector(
 
 export const nominationRecordsSelector = state =>
   state.intentions.nominationRecords
+export const nextRenominateHeightSelector = state =>
+  state.intentions.nextRenominateHeight
 
 export default intentionSlice.reducer
