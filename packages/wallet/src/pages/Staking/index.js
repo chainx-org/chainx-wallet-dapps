@@ -14,13 +14,10 @@ import { addressSelector } from '../../reducers/addressSlice'
 import {
   setSwitchNominationOpen,
   setUnFreezeOpen,
-  setUnNominateOpen,
   setVoteOpen,
   switchNominationDataSelector,
   switchNominationOpenSelector,
   unFreezeRecordSelector,
-  unNominateOpenSelector,
-  unNominationDataSelector,
   voteIntentionSelector,
   voteOpenSelector
 } from '../../reducers/runStatusSlice'
@@ -46,8 +43,6 @@ export default function() {
   const voteIntention = useSelector(voteIntentionSelector)
   const switchNominationOpen = useSelector(switchNominationOpenSelector)
   const switchNominationData = useSelector(switchNominationDataSelector)
-  const unNominateOpen = useSelector(unNominateOpenSelector)
-  const unNominationData = useSelector(unNominationDataSelector)
   const unFreezeRecord = useSelector(unFreezeRecordSelector)
 
   const dispatch = useDispatch()
@@ -77,14 +72,7 @@ export default function() {
           handleClose={() => dispatch(setSwitchNominationOpen(false))}
         />
       ) : null}
-      {unNominateOpen ? (
-        <UnNominateDialog
-          intention={unNominationData.intention}
-          nomination={unNominationData.nomination}
-          revocations={unNominationData.revocations}
-          handleClose={() => dispatch(setUnNominateOpen(false))}
-        />
-      ) : null}
+      <UnNominateDialog />
       <UnFreezeDialog
         record={unFreezeRecord}
         revocations={

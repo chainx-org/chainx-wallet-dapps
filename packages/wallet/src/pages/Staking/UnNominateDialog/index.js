@@ -18,13 +18,13 @@ import {
 } from '../../../utils/errorCheck'
 import { isDemoSelector } from '../../../selectors'
 import { getChainx } from '../../../services/chainx'
+import {
+  setUnNominateOpen,
+  unNominateOpenSelector,
+  unNominationDataSelector
+} from '../../../reducers/runStatusSlice'
 
-export default function({
-  handleClose,
-  nomination,
-  intention,
-  revocations = []
-}) {
+export default function() {
   const accountAddress = useSelector(addressSelector)
   const isDemoAddr = useSelector(isDemoSelector)
 
@@ -38,6 +38,17 @@ export default function({
   const hasAmount = !amountErrMsg && amount
   const dispatch = useDispatch()
   const chainx = getChainx()
+
+  const unNominationData = useSelector(unNominationDataSelector)
+  const intention = unNominationData && unNominationData.intention
+  const nomination = unNominationData && unNominationData.nomination
+  const revocations = unNominationData ? unNominationData.revocations || [] : []
+
+  const unNominateOpen = useSelector(unNominateOpenSelector)
+
+  const handleClose = () => {
+    dispatch(setUnNominateOpen(false))
+  }
 
   const unNominate = async () => {
     if (
@@ -97,7 +108,11 @@ export default function({
   }
 
   return (
-    <StyledDialog open title={'赎回投票'} handleClose={handleClose}>
+    <StyledDialog
+      open={unNominateOpen}
+      title={'赎回投票'}
+      handleClose={handleClose}
+    >
       <main className="content">
         <div className="amount">
           <AmountInput
