@@ -106,6 +106,7 @@ export async function isContractExist(address) {
 }
 
 export async function uploadContract(file, gas, cb) {
+  const chainx = getChainx()
   const method = 'putCode'
   let codehash = '0x'
   blake2AsU8a(file.data).forEach(i => {
