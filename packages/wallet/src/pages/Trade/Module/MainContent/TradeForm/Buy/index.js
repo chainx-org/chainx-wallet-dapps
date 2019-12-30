@@ -23,6 +23,7 @@ import {
 } from '../../../../../../utils/chainxProvider'
 import {
   currentPairIdSelector,
+  fetchNowOrders,
   fetchQuotations
 } from '../../../../../../reducers/tradeSlice'
 import { addressSelector } from '../../../../../../reducers/addressSlice'
@@ -32,8 +33,10 @@ import $t from '../../../../../../locale'
 import { getChainx } from '../../../../../../services/chainx'
 import infoIcon from '../../assets/info.svg'
 import { PriceWrapper } from '../components/PriceWrapper'
+import { accountIdSelector } from '../../../../../selectors/assets'
 
 export default function() {
+  const accountId = useSelector(accountIdSelector)
   const accountAddress = useSelector(addressSelector)
   const isDemoAddr = useSelector(isDemoSelector)
 
@@ -142,6 +145,7 @@ export default function() {
       await retry(
         () => {
           dispatch(fetchQuotations(pairId))
+          dispatch(fetchNowOrders(accountId))
         },
         5,
         2
