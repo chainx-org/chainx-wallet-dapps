@@ -77,6 +77,7 @@ export default function({ handleClose = noneFunc }) {
         successMessage: `交易hash ${status.txHash}`,
         failMessage: `交易hash ${status.txHash}`
       }
+      setDisabled(false)
       await showSnack(status, messages, dispatch)
       handleClose()
       await retry(
