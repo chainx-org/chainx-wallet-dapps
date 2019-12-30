@@ -96,6 +96,7 @@ export default function() {
         failMessage: `${$t('NOTIFICATION_TX_HASH')} ${status.txHash}`
       }
 
+      setDisabled(false)
       await showSnack(status, messages, dispatch)
       handleClose()
       await retry(
