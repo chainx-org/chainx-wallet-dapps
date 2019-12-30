@@ -2,9 +2,11 @@ import React, { useRef } from 'react'
 import styled from 'styled-components'
 import $t from '../../../locale'
 import { useDispatch, useSelector } from 'react-redux'
-import { setAccount } from '../../../reducers/addressSlice'
-import { extensionAccountsSelector } from '../../../reducers/addressSlice'
-import extensionIcon from './extension.svg'
+import {
+  extensionAccountsSelector,
+  setAccount
+} from '../../../reducers/addressSlice'
+import signerIcon from './signer.svg'
 import useOutsideClick from '../../../utils/useClickOutside'
 import { noneFunc } from '../../../utils'
 import { networkSelector } from '../../../reducers/settingsSlice'
@@ -156,7 +158,7 @@ export default function({ close = noneFunc }) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <img src={extensionIcon} alt="extension" />
+            <img src={signerIcon} alt="extension" />
             <span>{$t('HEADER_GET_EXTENSION')}</span>
           </a>
         </li>
