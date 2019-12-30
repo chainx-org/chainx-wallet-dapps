@@ -75,7 +75,7 @@ export function showSnack(status, messages, dispatch) {
   return new Promise((resolve, reject) => {
     let id = generateId()
     dispatch(addSnack({ id, type, title, message }))
-    removeSnackInSeconds(dispatch, id, 5)
+    removeSnackInSeconds(dispatch, id, 8)
 
     if (status.result === 'ExtrinsicSuccess') {
       resolve()

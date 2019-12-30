@@ -119,9 +119,9 @@ export default function() {
       )
 
       const messages = {
-        successTitle: '买单成功',
-        failTitle: '买单失败',
-        successMessage: `买单数量 ${amount} ${pairAsset}`,
+        successTitle: '卖单成功',
+        failTitle: '卖单失败',
+        successMessage: `卖单数量 ${amount} ${pairAsset}`,
         failMessage: `交易hash ${status.txHash}`
       }
 
