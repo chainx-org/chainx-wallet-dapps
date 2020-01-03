@@ -30,6 +30,8 @@ export async function call(abi, address, method, gas, params) {
   const chainx = getChainx()
   const parseAbi = new Abi(abi)
 
+  parseParams(parseAbi.messages[stringCamelCase(method)].args, params)
+
   try {
     const obj = {
       origin: account.address,
@@ -41,12 +43,21 @@ export async function call(abi, address, method, gas, params) {
     const result = await chainx.api.rpc.chainx.contractCall(obj)
     console.log('call result: ', result)
     if (result.status === 0) {
-      const returnType =
-        parseAbi.messages[stringCamelCase(method)].type.displayName
+      const typeObj = parseAbi.messages[stringCamelCase(method)].type
+      let returnType = typeObj.displayName
       // const sliceData = '0x' + result.data.slice(4)
       // const data = createType(returnType, u8aToU8a(sliceData)).toJSON()
-      const data = createType(returnType, u8aToU8a(result.data)).toJSON()
-      return { status: true, result: data.toString() }
+      if (returnType === 'Option') {
+        returnType = typeObj.type
+      } else if (returnType === 'Vec') {
+        const vecContent = typeObj.params[0].type
+        returnType = `Vec<${vecContent}>`
+      }
+      const data = createType(
+        returnType.replace('{ "elems": "Vec" }<u8>', 'Text'),
+        u8aToU8a(result.data)
+      ).toJSON()
+      return { status: true, result: data }
     } else {
       return { status: false, result: 'status is error' }
     }
@@ -60,6 +71,7 @@ export async function send(abi, address, method, params, value, gas, cb) {
   const chainx = getChainx()
   const parseAbi = new Abi(abi)
   const _method = 'call'
+  parseParams(parseAbi.messages[stringCamelCase(method)].args, params)
   try {
     const args = [
       address,
@@ -140,7 +152,15 @@ export async function deploy(_abi, params, endowment, gas, cb) {
     console.log('params length is not correct', params)
     return
   }
-  const args = [endowment, gas, _abi.codeHash, abi.constructors[0](...params)]
+  parseParams(abi.constructors[0].args, params)
+  const selector = JSON.parse(_abi.abi.contract.constructors[0].selector)
+  const args = [
+    endowment,
+    gas,
+    _abi.codeHash,
+    selector.reduce((a, b) => a + b.slice(2)) +
+      abi.constructors[0](...params).slice(2)
+  ]
   console.log('deploy abi in utils ', abi, args, params)
   const ex = chainx.api.tx.xContracts[method](...args)
   if (enableExtension) {
@@ -153,6 +173,18 @@ export async function deploy(_abi, params, endowment, gas, cb) {
 const contractApi = async (hex, cb) => {
   const account = await window.chainxProvider.enable()
   window.chainxProvider.signAndSendExtrinsic(account.address, hex, cb)
+}
+
+const parseParams = (args, params) => {
+  args.forEach((arg, i) => {
+    const t = arg.type.type
+    if (t.startsWith('u')) {
+      params[i] = parseInt(params[i])
+    } else if (t === 'bool' && typeof params[i] === 'string') {
+      params[i] = JSON.parse(params[i].toLowerCase())
+    }
+  })
+  return params
 }
 
 const convertCb = cb => {
