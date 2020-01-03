@@ -102,6 +102,10 @@ const header = {
   HEADER_GET_EXTENSION: {
     en: 'Get ChainX Extension',
     zh: '获取ChainX插件'
+  },
+  HEADER_TXS: {
+    en: 'History transactions',
+    zh: '交易记录'
   }
 }
 
