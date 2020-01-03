@@ -5,6 +5,7 @@ import asset from './asset'
 import trust from './trust'
 import pseduIntention from './pseduIntention'
 import notification from './notification'
+import txs from './txs'
 
 const common = {
   COMMON_FEE: {
@@ -121,5 +122,6 @@ export default {
   ...contract,
   ...trade,
   ...chain,
-  ...notification
+  ...notification,
+  ...txs
 }

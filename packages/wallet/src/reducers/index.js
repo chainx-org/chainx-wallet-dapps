@@ -16,6 +16,7 @@ import powerReducer from './powerSlice'
 import tradeReducer from './tradeSlice'
 import runStatusReducer from './runStatusSlice'
 import klineReducer from './klineSlice'
+import historyTxsReducer from './historyTxSlice'
 
 export default combineReducers({
   test: testReducer,
@@ -34,5 +35,6 @@ export default combineReducers({
   power: powerReducer,
   trade: tradeReducer,
   runStatus: runStatusReducer,
-  kline: klineReducer
+  kline: klineReducer,
+  historyTxs: historyTxsReducer
 })
