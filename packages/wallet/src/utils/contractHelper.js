@@ -57,7 +57,7 @@ export async function call(abi, address, method, gas, params) {
         returnType.replace('{ "elems": "Vec" }<u8>', 'Text'),
         u8aToU8a(result.data)
       ).toJSON()
-      return { status: true, result: data }
+      return { status: true, result: data.toString() }
     } else {
       return { status: false, result: 'status is error' }
     }
