@@ -7,6 +7,7 @@ import IntentionSelect from './IntentionSelect'
 import Amount from './Amount'
 import Hash from './Hash'
 import Address from './Address'
+import Loading from './Loading'
 
 export {
   SignDialog,
@@ -17,5 +18,6 @@ export {
   IntentionSelect,
   Amount,
   Hash,
-  Address
+  Address,
+  Loading
 }

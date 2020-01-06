@@ -25,10 +25,13 @@ import {
   fetchNominationRecords,
   fetchPseduNominationRecords
 } from './reducers/intentionSlice'
+import { Loading } from './components'
+import { loadingSelector } from './reducers/runStatusSlice'
 
 function App() {
   const address = useSelector(addressSelector)
   const dispatch = useDispatch()
+  const loading = useSelector(loadingSelector)
 
   useEffect(() => {
     dispatch(fetchAccountAssets(address))
@@ -63,6 +66,7 @@ function App() {
         </Switch>
       </div>
       <Footer />
+      {loading ? <Loading /> : null}
     </Router>
   )
 }

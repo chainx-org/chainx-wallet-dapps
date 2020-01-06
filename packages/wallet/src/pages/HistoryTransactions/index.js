@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react'
-import { Wrapper } from './Wrapper'
+import { BaseCell, HeadCell, Wrapper } from './Wrapper'
 import Card from '../../components/Card'
 import $t from '../../locale'
-import { BaseCell, HeadCell } from './Wrapper'
 import {
   Table,
-  TableHead,
-  TableRow,
   TableBody,
   TableCell,
-  TablePagination
+  TableHead,
+  TablePagination,
+  TableRow
 } from '@chainx/ui'
 import { useDispatch, useSelector } from 'react-redux'
 import { accountIdSelector } from '../selectors/assets'
