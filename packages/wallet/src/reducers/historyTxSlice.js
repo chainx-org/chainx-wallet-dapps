@@ -43,5 +43,8 @@ export const fetchHistoryTxs = (accountId, page) => async dispatch => {
 export const { setHistoryTxs } = historyTxSlice.actions
 
 export const historyTxsSelector = state => state.historyTxs.items
+export const historyPageSelector = state => state.historyTxs.page
+export const historyPageSizeSelector = state => state.historyTxs.pageSize
+export const historyTotalSelector = state => state.historyTxs.total
 
 export default historyTxSlice.reducer
