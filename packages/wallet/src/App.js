@@ -14,6 +14,7 @@ import Trust from './pages/Trust'
 import Trade from './pages/Trade'
 import Contract from './pages/Contract/Home'
 import ContractCode from './pages/Contract/Code'
+import HistoryTransactions from './pages/HistoryTransactions'
 import { getChainx } from './services/chainx'
 import { setHead } from './reducers/chainSlice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -24,10 +25,13 @@ import {
   fetchNominationRecords,
   fetchPseduNominationRecords
 } from './reducers/intentionSlice'
+import { Loading } from './components'
+import { loadingSelector } from './reducers/runStatusSlice'
 
 function App() {
   const address = useSelector(addressSelector)
   const dispatch = useDispatch()
+  const loading = useSelector(loadingSelector)
 
   useEffect(() => {
     dispatch(fetchAccountAssets(address))
@@ -56,11 +60,13 @@ function App() {
           <Route exact path="/trust" component={Trust} />
           <Route exact path="/trade" component={Trade} />
           <Route exact path="/contract" component={Contract} />
+          <Route exact path="/txs" component={HistoryTransactions} />
           <Route exact path="/contract/code" component={ContractCode} />
           <Redirect to="/" />
         </Switch>
       </div>
       <Footer />
+      {loading ? <Loading /> : null}
     </Router>
   )
 }

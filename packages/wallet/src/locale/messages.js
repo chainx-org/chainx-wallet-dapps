@@ -5,6 +5,7 @@ import asset from './asset'
 import trust from './trust'
 import pseduIntention from './pseduIntention'
 import notification from './notification'
+import txs from './txs'
 
 const common = {
   COMMON_FEE: {
@@ -102,6 +103,10 @@ const header = {
   HEADER_GET_EXTENSION: {
     en: 'Get ChainX Extension',
     zh: '获取ChainX插件'
+  },
+  HEADER_TXS: {
+    en: 'History transactions',
+    zh: '交易记录'
   }
 }
 
@@ -117,5 +122,6 @@ export default {
   ...contract,
   ...trade,
   ...chain,
-  ...notification
+  ...notification,
+  ...txs
 }

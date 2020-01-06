@@ -4,6 +4,7 @@ import $t from '../../locale'
 import mainNetLogo from './logo.svg'
 import testNetLogoEn from './testnet-en.svg'
 import testNetLogoZh from './testnet-zh.svg'
+import txsIcon from './txs.svg'
 import { NavLink } from 'react-router-dom'
 import Name from './Name'
 import { useSelector } from 'react-redux'
@@ -29,6 +30,12 @@ const Wrapper = styled.header`
 
     &.right {
       height: 100%;
+      & > span:first-child {
+        img {
+          margin-right: 6px;
+        }
+        margin-right: 24px;
+      }
     }
   }
 `
@@ -106,6 +113,12 @@ export default function() {
         )}
       </div>
       <div className="right">
+        <Nav>
+          <NavLink activeClassName="active" to="/txs">
+            <img src={txsIcon} alt="txs" />
+            {$t('HEADER_TXS')}
+          </NavLink>
+        </Nav>
         <Name onClick={() => setShowList(true)} />
       </div>
       {showList ? <AccountList close={() => setShowList(false)} /> : null}
