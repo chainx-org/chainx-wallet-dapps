@@ -18,5 +18,25 @@ export default {
   TXS_PARAMS: {
     en: 'Params',
     zh: '参数'
+  },
+  TXS_TOKEN: {
+    en: 'Token',
+    zh: '币种'
+  },
+  TXS_AMOUNT: {
+    en: 'Amount',
+    zh: '数量'
+  },
+  TXS_MEMO: {
+    en: 'Memo',
+    zh: '备注'
+  },
+  TXS_SOURCE_ACCOUNT: {
+    en: 'Source Account',
+    zh: '来源账户'
+  },
+  TXS_TARGET_ACCOUNT: {
+    en: 'Target Account',
+    zh: '目标账户'
   }
 }
