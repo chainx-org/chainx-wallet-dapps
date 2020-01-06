@@ -34,8 +34,16 @@ export default function getDetailedArgs(tx) {
     case 'XStaking|unfreeze': {
       return getUnfreeze(tx)
     }
+    case 'XAssetsProcess|withdraw': {
+      return getWithdraw(tx)
+    }
+    case 'XAssetsProcess|revoke_withdraw': {
+      return getRevokeWithdraw(tx)
+    }
     default:
-      return []
+      return (tx.args || []).map(arg => {
+        return { label: arg.name, value: arg.data }
+      })
   }
 }
 
@@ -212,6 +220,47 @@ function getUnNominate(tx) {
   ]
 }
 
+function getWithdraw(tx) {
+  const { args } = tx
+  const token = args.find(arg => arg.name === 'token')
+  const value = args.find(arg => arg.name === 'value')
+  const addr = args.find(arg => arg.name === 'addr')
+  const ext = args.find(arg => arg.name === 'ext')
+
+  const precision = getPrecision(token.data)
+
+  return [
+    {
+      label: getLabel('token'),
+      value: token.data
+    },
+    {
+      label: getLabel('value'),
+      value: `${toPrecision(value.data, precision)} ${token.data}`
+    },
+    {
+      label: $t('TXS_Receipt_Address'),
+      value: addr.data
+    },
+    {
+      label: getLabel('memo'),
+      value: ext.data
+    }
+  ]
+}
+
+function getRevokeWithdraw(tx) {
+  const { args } = tx
+  const id = args.find(arg => arg.name === 'id')
+
+  return [
+    {
+      label: getLabel('id'),
+      value: id.data
+    }
+  ]
+}
+
 function getLabel(name) {
   switch (name) {
     case 'token':
@@ -229,6 +278,8 @@ function getLabel(name) {
       return $t('TXS_SOURCE_NODE')
     case 'revocation_index':
       return $t('TXS_REVOCATION_INDEX')
+    case 'id':
+      return $t('TXS_ID')
     default:
       return ''
   }

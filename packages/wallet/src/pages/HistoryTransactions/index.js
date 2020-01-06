@@ -69,7 +69,7 @@ export default function() {
             <TableHead>
               <TableRow>
                 <HeadCell>{$t('TXS_TIME')}</HeadCell>
-                <HeadCell>{$t('TXS_ID')}</HeadCell>
+                <HeadCell>{$t('TXS_TX_ID')}</HeadCell>
                 <HeadCell>{$t('TXS_OPERATION')}</HeadCell>
                 <HeadCell style={{ textAlign: 'right' }}>
                   {$t('TXS_PARAMS')}

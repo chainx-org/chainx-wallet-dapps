@@ -7,7 +7,7 @@ export default {
     en: 'Time',
     zh: '时间'
   },
-  TXS_ID: {
+  TXS_TX_ID: {
     en: 'Transaction ID',
     zh: '本链交易ID'
   },
@@ -46,5 +46,13 @@ export default {
   TXS_REVOCATION_INDEX: {
     en: 'Revocation Index',
     zh: '解冻编号'
+  },
+  TXS_Receipt_Address: {
+    en: 'Receipt address',
+    zh: '收款地址'
+  },
+  TXS_ID: {
+    en: 'Index',
+    zh: '编号'
   }
 }
