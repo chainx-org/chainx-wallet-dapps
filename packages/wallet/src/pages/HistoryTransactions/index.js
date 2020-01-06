@@ -28,10 +28,10 @@ import { localeSelector } from '../../reducers/settingsSlice'
 import { enCallNameMap, zhCallNameMap } from './callNameMap'
 import getDetailedArgs from './detailedArgs'
 
-function getOperation(call, locale) {
+function getOperation(module, call, locale) {
   const callNameMap = locale === 'zh' ? zhCallNameMap : enCallNameMap
 
-  return callNameMap[call] || ''
+  return callNameMap[call] || `${module}|${call}`
 }
 
 export default function() {
@@ -86,7 +86,9 @@ export default function() {
                     <TableCell>
                       <Hash hash={ensure0xPrefix(tx.hash)} />
                     </TableCell>
-                    <BaseCell>{getOperation(tx.call, locale)}</BaseCell>
+                    <BaseCell>
+                      {getOperation(tx.module, tx.call, locale)}
+                    </BaseCell>
                     <BaseCell style={{ textAlign: 'right' }}>
                       {getDetailedArgs(tx).reduce((result, item, index) => {
                         return (

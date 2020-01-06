@@ -38,5 +38,13 @@ export default {
   TXS_TARGET_ACCOUNT: {
     en: 'Target Account',
     zh: '目标账户'
+  },
+  TXS_SOURCE_NODE: {
+    en: 'Source Node',
+    zh: '源节点'
+  },
+  TXS_REVOCATION_INDEX: {
+    en: 'Revocation Index',
+    zh: '解冻编号'
   }
 }

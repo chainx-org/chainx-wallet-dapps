@@ -25,6 +25,15 @@ export default function getDetailedArgs(tx) {
     case 'XStaking|nominate': {
       return getNominate(tx)
     }
+    case 'XStaking|renominate': {
+      return getReNominate(tx)
+    }
+    case 'XStaking|unnominate': {
+      return getUnNominate(tx)
+    }
+    case 'XStaking|unfreeze': {
+      return getUnfreeze(tx)
+    }
     default:
       return []
   }
@@ -98,7 +107,7 @@ function getNominate(tx) {
   return [
     {
       label: getLabel('value'),
-      value: toPrecision(value.data, precision) + ' PCX'
+      value: `${toPrecision(value.data, precision)} ${tokens.PCX} `
     },
     {
       label: getLabel('memo'),
@@ -107,6 +116,98 @@ function getNominate(tx) {
     {
       label: getLabel('target'),
       value: targetIntention.name
+    }
+  ]
+}
+
+function getIntention(accountId) {
+  const state = store.getState()
+  const intentions = intentionsSelector(state)
+  return intentions.find(
+    intention => intention.account === ensure0xPrefix(accountId)
+  )
+}
+
+function getUnfreeze(tx) {
+  const { args } = tx
+  const target = args.find(arg => arg.name === 'target')
+  const index = args.find(arg => arg.name === 'revocation_index')
+
+  const targetIntention = getIntention(target.data)
+  return [
+    {
+      label: getLabel('revocation_index'),
+      value: index.data
+    },
+    {
+      label: getLabel('target'),
+      value: targetIntention.name
+    }
+  ]
+}
+
+function getReNominate(tx) {
+  const { args } = tx
+  const from = args.find(arg => arg.name === 'from')
+  const to = args.find(arg => arg.name === 'to')
+  const value = args.find(arg => arg.name === 'value')
+  const memo = args.find(arg => arg.name === 'memo')
+
+  const state = store.getState()
+  const intentions = intentionsSelector(state)
+  const fromIntention = intentions.find(
+    intention => intention.account === ensure0xPrefix(from.data)
+  )
+  const toIntention = intentions.find(
+    intention => intention.account === ensure0xPrefix(to.data)
+  )
+
+  const precision = getPrecision(tokens.PCX)
+
+  return [
+    {
+      label: getLabel('from'),
+      value: fromIntention.name
+    },
+    {
+      label: getLabel('to'),
+      value: toIntention.name
+    },
+    {
+      label: getLabel('value'),
+      value: `${toPrecision(value.data, precision)} ${tokens.PCX}`
+    },
+    {
+      label: getLabel('memo'),
+      value: memo.data
+    }
+  ]
+}
+
+function getUnNominate(tx) {
+  const { args } = tx
+  const target = args.find(arg => arg.name === 'target')
+  const value = args.find(arg => arg.name === 'value')
+  const memo = args.find(arg => arg.name === 'memo')
+
+  const intentions = intentionsSelector(store.getState())
+  const targetIntention = intentions.find(
+    intention => intention.account === ensure0xPrefix(target.data)
+  )
+  const precision = getPrecision(tokens.PCX)
+
+  return [
+    {
+      label: getLabel('target'),
+      value: targetIntention.name
+    },
+    {
+      label: getLabel('value'),
+      value: `${toPrecision(value.data, precision)} ${tokens.PCX} `
+    },
+    {
+      label: getLabel('memo'),
+      value: memo.data
     }
   ]
 }
@@ -122,7 +223,12 @@ function getLabel(name) {
     case 'source':
       return $t('TXS_SOURCE_ACCOUNT')
     case 'target':
+    case 'to':
       return $t('TXS_TARGET_ACCOUNT')
+    case 'from':
+      return $t('TXS_SOURCE_NODE')
+    case 'revocation_index':
+      return $t('TXS_REVOCATION_INDEX')
     default:
       return ''
   }
