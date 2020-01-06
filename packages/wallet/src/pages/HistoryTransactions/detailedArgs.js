@@ -50,7 +50,7 @@ function getAssetTransfer(tx) {
     },
     {
       label: getLabel('value'),
-      value: toPrecision(value.data, precision)
+      value: `${toPrecision(value.data, precision)} ${token.data}`
     },
     {
       label: getLabel('memo'),
@@ -98,7 +98,7 @@ function getNominate(tx) {
   return [
     {
       label: getLabel('value'),
-      value: toPrecision(value.data, precision)
+      value: toPrecision(value.data, precision) + ' PCX'
     },
     {
       label: getLabel('memo'),
