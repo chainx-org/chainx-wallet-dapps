@@ -7,35 +7,41 @@ import {
   sdotPrecisionSelector,
   xbtcPrecisionSelector
 } from '../selectors/assets'
-import { toPrecision } from '../../utils'
+import { ensure0xPrefix, toPrecision } from '../../utils'
+import { getChainx } from '../../services/chainx'
+import { addressSelector } from '../../reducers/addressSlice'
+import { intentionsSelector } from '../../reducers/intentionSlice'
 
 export default function getDetailedArgs(tx) {
   const { module, call } = tx
 
   switch (`${module}|${call}`) {
     case 'XAssets|transfer': {
-      return [
-        {
-          label: '',
-          value: ''
-        }
-      ]
+      return getAssetTransfer(tx)
     }
-    case 'XTokens|claim': {
-      return ''
+    case 'XStaking|claim': {
+      return getClaim(tx)
+    }
+    case 'XStaking|nominate': {
+      return getNominate(tx)
     }
     default:
-      reeturn
+      return []
   }
 }
 
 function getAssetTransfer(tx) {
+  const chainx = getChainx()
+  const state = store.getState()
+  const address = addressSelector(state)
   const { args } = tx
   const token = args.find(arg => arg.name === 'token')
   const value = args.find(arg => arg.name === 'value')
   const memo = args.find(arg => arg.name === 'memo')
+  const dest = args.find(arg => arg.name === 'dest')
+  const destAddress = chainx.account.encodeAddress(ensure0xPrefix(dest.data))
 
-  const precision = getPrecision(token.value)
+  const precision = getPrecision(token.data)
 
   return [
     {
@@ -49,6 +55,58 @@ function getAssetTransfer(tx) {
     {
       label: getLabel('memo'),
       value: memo.data
+    },
+    {
+      label: getLabel(address === destAddress ? 'source' : 'target'),
+      value: destAddress
+    }
+  ]
+}
+
+function getClaim(tx) {
+  const { args } = tx
+  const target = args.find(arg => arg.name === 'target')
+
+  const state = store.getState()
+  const intentions = intentionsSelector(state)
+  const targetIntention = intentions.find(
+    intention => intention.account === ensure0xPrefix(target.data)
+  )
+
+  return [
+    {
+      label: getLabel('target'),
+      value: targetIntention.name
+    }
+  ]
+}
+
+function getNominate(tx) {
+  const { args } = tx
+  const target = args.find(arg => arg.name === 'target')
+  const value = args.find(arg => arg.name === 'value')
+  const memo = args.find(arg => arg.name === 'memo')
+
+  const state = store.getState()
+  const intentions = intentionsSelector(state)
+  const targetIntention = intentions.find(
+    intention => intention.account === ensure0xPrefix(target.data)
+  )
+
+  const precision = getPrecision(tokens.PCX)
+
+  return [
+    {
+      label: getLabel('value'),
+      value: toPrecision(value.data, precision)
+    },
+    {
+      label: getLabel('memo'),
+      value: memo.data
+    },
+    {
+      label: getLabel('target'),
+      value: targetIntention.name
     }
   ]
 }
@@ -61,6 +119,10 @@ function getLabel(name) {
       return $t('TXS_AMOUNT')
     case 'memo':
       return $t('TXS_MEMO')
+    case 'source':
+      return $t('TXS_SOURCE_ACCOUNT')
+    case 'target':
+      return $t('TXS_TARGET_ACCOUNT')
     default:
       return ''
   }
@@ -68,6 +130,7 @@ function getLabel(name) {
 
 function getPrecision(token) {
   const state = store.getState()
+
   if (token === tokens.PCX) {
     return pcxPrecisionSelector(state)
   } else if (token === tokens.LBTC) {
@@ -77,6 +140,6 @@ function getPrecision(token) {
   } else if (token === tokens.SDOT) {
     return sdotPrecisionSelector(state)
   } else {
-    throw `Invalid token: ${token}`
+    throw new Error(`Invalid token: ${token}`)
   }
 }

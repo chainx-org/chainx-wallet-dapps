@@ -16,6 +16,7 @@ import Hash from '../../components/Hash'
 import { ensure0xPrefix } from '../../utils'
 import { localeSelector } from '../../reducers/settingsSlice'
 import { enCallNameMap, zhCallNameMap } from './callNameMap'
+import getDetailedArgs from './detailedArgs'
 
 function getOperation(call, locale) {
   const callNameMap = locale === 'zh' ? zhCallNameMap : enCallNameMap
@@ -52,7 +53,9 @@ export default function() {
                 <HeadCell>{$t('TXS_TIME')}</HeadCell>
                 <HeadCell>{$t('TXS_ID')}</HeadCell>
                 <HeadCell>{$t('TXS_OPERATION')}</HeadCell>
-                <HeadCell>{$t('TXS_PARAMS')}</HeadCell>
+                <HeadCell style={{ textAlign: 'right' }}>
+                  {$t('TXS_PARAMS')}
+                </HeadCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -66,6 +69,14 @@ export default function() {
                       <Hash hash={ensure0xPrefix(tx.hash)} />
                     </TableCell>
                     <BaseCell>{getOperation(tx.call, locale)}</BaseCell>
+                    <BaseCell style={{ textAlign: 'right' }}>
+                      {getDetailedArgs(tx).reduce((result, item, index) => {
+                        return (
+                          result +
+                          `${index <= 0 ? '' : ','}${item.label}: ${item.value}`
+                        )
+                      }, '')}
+                    </BaseCell>
                   </TableRow>
                 )
               })}

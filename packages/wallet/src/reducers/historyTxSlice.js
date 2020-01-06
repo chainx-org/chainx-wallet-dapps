@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { getApi } from '../services/api'
 import { remove0xPrefix } from '../utils'
 
-const pageSize = 20
+const pageSize = 10
 
 const historyTxSlice = createSlice({
   name: 'historyTx',
