@@ -164,25 +164,23 @@ window.onload = async () => {
   })
 }
 
-const render = () =>
-  getChainx()
-    .isRpcReady()
-    .then(() => {
-      const loading = window.document.getElementById('loading')
-      loading.parentNode.removeChild(loading)
-    })
-    .then(() => {
-      ReactDOM.render(
-        <React.Fragment>
-          <GlobalStyle />
-          <Provider store={store}>
-            <SnackGallery />
-            <App />
-          </Provider>
-        </React.Fragment>,
-        document.getElementById('root')
-      )
-    })
+const render = async () => {
+  await getChainx().isRpcReady()
+
+  const loading = window.document.getElementById('loading')
+  loading.parentNode.removeChild(loading)
+
+  ReactDOM.render(
+    <React.Fragment>
+      <GlobalStyle />
+      <Provider store={store}>
+        <SnackGallery />
+        <App />
+      </Provider>
+    </React.Fragment>,
+    document.getElementById('root')
+  )
+}
 
 nodePromise.then(render)
 
