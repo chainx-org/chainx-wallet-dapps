@@ -43,7 +43,6 @@ export default function() {
   const total = useSelector(historyTotalSelector)
 
   const txs = useSelector(historyTxsSelector)
-  console.log('txs', txs)
 
   useEffect(() => {
     dispatch(fetchHistoryTxs(accountId, 0))
