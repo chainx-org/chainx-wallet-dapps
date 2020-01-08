@@ -132,7 +132,7 @@ window.onload = async () => {
   await setExtensionNode(url)
   nodeResolve()
 
-  window.chainxProvider.listenNetworkChange(({ from, to }) => {
+  window.chainxProvider.listenNetworkChange(({ to }) => {
     store.dispatch(setNetwork(to))
     window.location.reload()
   })
