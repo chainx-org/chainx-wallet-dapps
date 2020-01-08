@@ -5,7 +5,7 @@ import * as serviceWorker from './serviceWorker'
 import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import rootReducer from './reducers'
-import { getChainx, setChainx } from './services/chainx'
+import { setChainx } from './services/chainx'
 import { setAccount, setExtensionAccounts } from './reducers/addressSlice'
 import { setNode } from './reducers/nodeSlice'
 import SnackGallery from './SnackGallery'
@@ -100,9 +100,9 @@ async function setExtensionNode(nowUrl) {
   const node = await window.chainxProvider.getCurrentNode()
   if (nowUrl !== node.url) {
     store.dispatch(setNode(node))
-    setChainx(node.url)
+    await setChainx(node.url)
   } else {
-    setChainx(nowUrl)
+    await setChainx(nowUrl)
   }
 }
 
@@ -112,7 +112,7 @@ window.onload = async () => {
 
   const { url } = store.getState().node
   if (!window.chainxProvider) {
-    setChainx(url)
+    await setChainx(url)
     store.dispatch(setExtensionAccounts([]))
     store.dispatch(
       setAccount(
@@ -164,9 +164,7 @@ window.onload = async () => {
   })
 }
 
-const render = async () => {
-  await getChainx().isRpcReady()
-
+const render = () => {
   const loading = window.document.getElementById('loading')
   loading.parentNode.removeChild(loading)
 

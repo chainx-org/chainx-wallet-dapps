@@ -11,7 +11,8 @@ const runStatusSlice = createSlice({
     switchNominationData: {},
     unNominationData: {},
     unFreezeRecord: {},
-    loading: false
+    loading: false,
+    extensionConnected: false
   },
   reducers: {
     setUnNominateOpen(state, action) {
@@ -40,6 +41,9 @@ const runStatusSlice = createSlice({
     },
     setLoading(state, action) {
       state.loading = action.payload
+    },
+    setExtensionConnection(state, action) {
+      state.extensionConnected = action.payload
     }
   }
 })
@@ -53,7 +57,8 @@ export const {
   setSwitchNominationData,
   setUnNominationData,
   setUnFreezeRecord,
-  setLoading
+  setLoading,
+  setExtensionConnection
 } = runStatusSlice.actions
 
 export const unNominateOpenSelector = state => state.runStatus.unNominateOpen
