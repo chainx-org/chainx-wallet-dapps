@@ -137,6 +137,8 @@ class Piechart {
   }
 }
 
+const total = 2100 * Math.pow(10, 4) * Math.pow(10, 8)
+
 export default function Power() {
   const canvasRef = useRef(null)
   const dispatch = useDispatch()
@@ -170,12 +172,12 @@ export default function Power() {
           <TotalHeader>
             <TotalTitle>{$t('CHAIN_ISSUANCE')}</TotalTitle>
             <div style={{ color: 'rgba(0,0,0,.32)' }}>
-              <NumberFormat value={21000000} />
-              /<NumberFormat value={status.pcx_issuance / 100000000} />
+              <NumberFormat value={status.pcx_issuance / 100000000} />
+              /<NumberFormat value={21000000} />
             </div>
           </TotalHeader>
           <div>
-            <LinearProgress value={status.pcx_issuance / 21000000000000} />
+            <LinearProgress value={(status.pcx_issuance / total) * 100} />
           </div>
         </TotalItem>
         {/* <TotalItem>
