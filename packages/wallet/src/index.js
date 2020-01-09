@@ -6,14 +6,16 @@ import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import rootReducer from './reducers'
 import { setChainx } from './services/chainx'
-import { setAccount, setExtensionAccounts } from './reducers/addressSlice'
-import { setNode } from './reducers/nodeSlice'
+import {
+  extensionAccountSelector,
+  isExtensionSelector,
+  setAccount,
+  setExtensionAccounts
+} from './reducers/addressSlice'
 import SnackGallery from './SnackGallery'
-import { setNetwork } from './reducers/settingsSlice'
-import { mainNetApi, setApi, testNetApi } from './services/api'
 import { mainNetDemoAccount, testNetDemoAccount } from './utils/constants'
-import { isDemoAccount } from './selectors'
 import GlobalStyle from './GlobalStyle'
+import { connectExtension } from './connector'
 
 function loadState() {
   try {
@@ -67,43 +69,30 @@ const nodePromise = new Promise(resolve => {
   nodeResolve = resolve
 })
 
-async function setExtensionAccount(network) {
+function setExtensionAccount(network) {
   const state = store.getState()
-  const nowAddress = state.address
 
-  const account = await window.chainxProvider.enable()
-  if (!account) {
-    store.dispatch(setExtensionAccounts([]))
-    if (!isDemoAccount(nowAddress.address, network)) {
-      store.dispatch(
-        setAccount(
-          network === 'testnet' ? testNetDemoAccount : mainNetDemoAccount
-        )
-      )
-    }
+  const isExtension = isExtensionSelector(state)
+  if (!isExtension) {
     return
   }
 
-  store.dispatch(setExtensionAccounts([{ ...account, network }]))
-  if (nowAddress.isFromExtension && nowAddress.address !== account.address) {
-    store.dispatch(
-      setAccount({
-        name: account.name,
-        address: account.address,
-        isFromExtension: true
-      })
-    )
-  }
-}
+  const account = extensionAccountSelector(state)
+  const demoAccount =
+    network === 'testnet' ? testNetDemoAccount : mainNetDemoAccount
 
-async function setExtensionNode(nowUrl) {
-  const node = await window.chainxProvider.getCurrentNode()
-  if (nowUrl !== node.url) {
-    store.dispatch(setNode(node))
-    await setChainx(node.url)
-  } else {
-    await setChainx(nowUrl)
-  }
+  // 原来是插件账户，但是现在插件里无账户，则用体验账户
+  store.dispatch(
+    setAccount(
+      account
+        ? {
+            name: account.name,
+            address: account.address,
+            isFromExtension: true
+          }
+        : demoAccount
+    )
+  )
 }
 
 window.onload = async () => {
@@ -125,43 +114,11 @@ window.onload = async () => {
   }
 
   network = await window.chainxProvider.getNetwork()
-  store.dispatch(setNetwork(network))
-  setApi(network === 'testnet' ? testNetApi : mainNetApi)
 
-  await setExtensionAccount(network)
-  await setExtensionNode(url)
+  await connectExtension()
+  setExtensionAccount(network)
+
   nodeResolve()
-
-  window.chainxProvider.listenNetworkChange(({ to }) => {
-    store.dispatch(setNetwork(to))
-    window.location.reload()
-  })
-
-  window.chainxProvider.listenAccountChange(({ to }) => {
-    console.log('update extension accounts', [to])
-    if (to) {
-      store.dispatch(setExtensionAccounts([to]))
-      store.dispatch(
-        setAccount({
-          name: to.name,
-          address: to.address,
-          isFromExtension: true
-        })
-      )
-    }
-
-    window.location.reload()
-  })
-
-  window.chainxProvider.listenNodeChange(({ to }) => {
-    const { url } = store.getState().node
-    if (url !== to.url) {
-      store.dispatch(setNode(to))
-      setTimeout(() => {
-        window.location.reload()
-      }, 0)
-    }
-  })
 }
 
 const render = () => {
