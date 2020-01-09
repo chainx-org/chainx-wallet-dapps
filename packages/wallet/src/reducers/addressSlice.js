@@ -5,6 +5,7 @@ let initialState = {
   name: 'abc',
   address: '5TGy4d488i7pp3sjzi1gibqFUPLShddfk7qPY2S445ErhDGq',
   isFromExtension: false,
+  signerConnected: false,
   extensionAccounts: []
 }
 
@@ -57,5 +58,6 @@ export const extensionAccountSelector = state =>
   state.address.extensionAccounts[0]
 
 export const isExtensionSelector = state => state.address.isFromExtension
+export const signerConnectedSelector = state => state.address.signerConnected
 
 export default addressSlice.reducer

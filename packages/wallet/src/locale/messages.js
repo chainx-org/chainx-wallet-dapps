@@ -107,6 +107,10 @@ const header = {
   HEADER_TXS: {
     en: 'History transactions',
     zh: '交易记录'
+  },
+  HEADER_CONNECT_SIGNER: {
+    en: 'Connect ChainX Signer',
+    zh: '连接 ChainX 本地签名器'
   }
 }
 

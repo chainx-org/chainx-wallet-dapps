@@ -3,7 +3,8 @@ import $t from '../../../locale'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   extensionAccountsSelector,
-  setAccount
+  setAccount,
+  signerConnectedSelector
 } from '../../../reducers/addressSlice'
 import signerIcon from './signer.svg'
 import useOutsideClick from '../../../utils/useClickOutside'
@@ -14,6 +15,7 @@ import {
   testNetDemoAccount
 } from '../../../utils/constants'
 import Wrapper from './Wrapper'
+import SignerConnector from './SignerConnector'
 
 export default function({ close = noneFunc }) {
   const extensionAccounts = useSelector(extensionAccountsSelector)
@@ -31,6 +33,7 @@ export default function({ close = noneFunc }) {
   const demoAccountAddress = demoAccount.address
 
   const hasExtension = !!window.chainxProvider
+  const signerConnected = useSelector(signerConnectedSelector)
 
   const popup = useRef(null)
 
@@ -74,6 +77,7 @@ export default function({ close = noneFunc }) {
           </a>
         </li>
       )}
+      {signerConnected ? null : <SignerConnector />}
     </Wrapper>
   )
 }
