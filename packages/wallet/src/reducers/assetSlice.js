@@ -39,6 +39,10 @@ export const fetchAccountAssets = address => async dispatch => {
   await chainx.isRpcReady()
   const { asset } = chainx
 
+  if (!address) {
+    return
+  }
+
   const { data } = await asset.getAssetsByAccount(address, 0, 100)
   ;['PCX', 'BTC', 'L-BTC', 'SDOT'].forEach(token => {
     if (!data.find(asset => asset.name === token)) {

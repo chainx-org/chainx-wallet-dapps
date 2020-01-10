@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchIntentions } from '../../../reducers/intentionSlice'
 import { getChainx } from '../../../services/chainx'
 import $t from '../../../locale'
+import { accountSelector } from '../../../reducers/addressSlice'
 
 const Wrapper = styled.div`
   display: flex;
@@ -39,7 +40,7 @@ const Roles = styled.p`
 `
 
 export default function() {
-  const account = useSelector(state => state.address)
+  const account = useSelector(accountSelector)
   const intentions = useSelector(state => state.intentions.intentions)
   const dispatch = useDispatch()
 

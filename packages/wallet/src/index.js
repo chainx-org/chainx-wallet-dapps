@@ -2,121 +2,69 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
-import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
-import rootReducer from './reducers'
 import { setChainx } from './services/chainx'
 import {
-  extensionAccountSelector,
+  isDemoSelector,
   isExtensionSelector,
-  setAccount,
-  setExtensionAccounts
+  isSignerSelector,
+  setAccount
 } from './reducers/addressSlice'
 import SnackGallery from './SnackGallery'
 import { mainNetDemoAccount, testNetDemoAccount } from './utils/constants'
 import GlobalStyle from './GlobalStyle'
 import { connectExtension } from './connector'
+import initStore from './store'
+import { connectSigner, disconnectSigner } from './services/signer'
 
-function loadState() {
-  try {
-    const serializedState = localStorage.getItem('state')
-    if (serializedState === null) {
-      return {}
-    }
-    return JSON.parse(serializedState)
-  } catch (err) {
-    return {}
-  }
-}
-
-function saveState(state) {
-  const serializedState = JSON.stringify(state)
-  localStorage.setItem('state', serializedState)
-}
-
-const persistedState = loadState()
-if (!persistedState.address) {
-  if (
-    persistedState.settings &&
-    persistedState.settings.network === 'testnet'
-  ) {
-    persistedState.address = testNetDemoAccount
-  } else {
-    persistedState.address = mainNetDemoAccount
-  }
-}
-
-const defaultNode = {
-  name: 'w1.cn',
-  url: 'wss://w1.chainx.org.cn/ws'
-}
-if (!persistedState.node) {
-  persistedState.node = defaultNode
-}
-export const store = configureStore({
-  reducer: rootReducer,
-  preloadedState: persistedState || {}
-})
-
-store.subscribe(() => {
-  const { address, node, settings } = store.getState()
-
-  saveState({ address, node, settings })
-})
+export let store
 
 let nodeResolve
 const nodePromise = new Promise(resolve => {
   nodeResolve = resolve
 })
 
-function setExtensionAccount(network) {
+async function setDemoAccount(store) {
   const state = store.getState()
+  let network = state.settings.network
+  const { url } = store.getState().node
 
-  const isExtension = isExtensionSelector(state)
-  if (!isExtension) {
-    return
-  }
-
-  const account = extensionAccountSelector(state)
-  const demoAccount =
-    network === 'testnet' ? testNetDemoAccount : mainNetDemoAccount
-
-  // 原来是插件账户，但是现在插件里无账户，则用体验账户
+  await setChainx(url)
   store.dispatch(
     setAccount(
-      account
-        ? {
-            name: account.name,
-            address: account.address,
-            isFromExtension: true
-          }
-        : demoAccount
+      network === 'testnet'
+        ? testNetDemoAccount.account
+        : mainNetDemoAccount.account
     )
   )
 }
 
 window.onload = async () => {
+  store = initStore()
   const state = store.getState()
-  let network = state.settings.network
 
-  const { url } = store.getState().node
-  if (!window.chainxProvider) {
-    await setChainx(url)
-    store.dispatch(setExtensionAccounts([]))
-    store.dispatch(
-      setAccount(
-        network === 'testnet' ? testNetDemoAccount : mainNetDemoAccount
-      )
-    )
+  console.log('state', state)
+  const isDemo = isDemoSelector(state)
+  const isExtension = isExtensionSelector(state)
+  const isSigner = isSignerSelector(state)
+
+  if (isDemo || (isExtension && !window.chainxProvider)) {
+    await setDemoAccount(store)
 
     nodeResolve()
     return
   }
 
-  network = await window.chainxProvider.getNetwork()
-
-  await connectExtension()
-  setExtensionAccount(network)
+  if (isExtension) {
+    await connectExtension()
+  } else if (isSigner) {
+    try {
+      await connectSigner()
+    } catch (e) {
+      disconnectSigner()
+      await setDemoAccount(store)
+    }
+  }
 
   nodeResolve()
 }

@@ -2,11 +2,8 @@ import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { getChainx } from '../services/chainx'
 
 let initialState = {
-  name: 'abc',
-  address: '5TGy4d488i7pp3sjzi1gibqFUPLShddfk7qPY2S445ErhDGq',
-  isFromExtension: false,
-  signerConnected: false,
-  extensionAccounts: []
+  version: 1,
+  account: null
 }
 
 const addressSlice = createSlice({
@@ -15,23 +12,17 @@ const addressSlice = createSlice({
   reducers: {
     setAccount: {
       reducer(state, action) {
-        state.name = action.payload.name
-        state.address = action.payload.address
-        state.isFromExtension = action.payload.isFromExtension
-        state.isFromSigner = action.payload.isFromSigner
-      }
-    },
-    setExtensionAccounts: {
-      reducer(state, action) {
-        state.extensionAccounts = action.payload
+        state.account = action.payload
       }
     }
   }
 })
 
-export const { setAccount, setExtensionAccounts } = addressSlice.actions
+export const { setAccount } = addressSlice.actions
 
-export const addressSelector = state => state.address.address
+export const addressSelector = state => {
+  return state.address.account && state.address.account.address
+}
 
 export const accountIdSelector = createSelector(
   addressSelector,
@@ -45,20 +36,19 @@ export const accountIdSelector = createSelector(
   }
 )
 
-export const nameSelector = state => state.address.name
-export const accountSelector = createSelector(
-  nameSelector,
-  addressSelector,
-  (name, address) => ({ name, address })
-)
+export const nameSelector = state =>
+  state.address.account && state.address.account.name
+export const accountSelector = state => state.address.account
 
-export const extensionAccountsSelector = state =>
-  state.address.extensionAccounts
-
-export const extensionAccountSelector = state =>
-  state.address.extensionAccounts[0]
-
-export const isExtensionSelector = state => state.address.isFromExtension
-export const signerConnectedSelector = state => state.address.signerConnected
+export const isExtensionSelector = state =>
+  state.address.account && state.address.account.isFromExtension
+export const isSignerSelector = state =>
+  state.address.account && state.address.account.isFromSigner
+export const signerConnectedSelector = state =>
+  state.address.account && state.address.account.isFromSigner
+export const isDemoSelector = state => {
+  const account = state.address.account
+  return !account.isFromExtension && !account.isFromSigner
+}
 
 export default addressSlice.reducer

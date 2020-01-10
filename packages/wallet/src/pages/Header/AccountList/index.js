@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import $t from '../../../locale'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  extensionAccountsSelector,
+  accountSelector,
   setAccount,
   signerConnectedSelector
 } from '../../../reducers/addressSlice'
@@ -19,7 +19,6 @@ import SignerConnector from './SignerConnector'
 import { openSignerDownloadDialogSelector } from '../../../reducers/runStatusSlice'
 
 export default function({ close = noneFunc }) {
-  const extensionAccounts = useSelector(extensionAccountsSelector)
   const dispatch = useDispatch()
   const selectAccount = (name, address, isFromExtension) => {
     dispatch(setAccount({ name, address, isFromExtension }))
@@ -28,7 +27,9 @@ export default function({ close = noneFunc }) {
 
   const network = useSelector(networkSelector)
   const demoAccount =
-    network === 'testnet' ? testNetDemoAccount : mainNetDemoAccount
+    network === 'testnet'
+      ? testNetDemoAccount.account
+      : mainNetDemoAccount.account
 
   const demoAccountName = demoAccount.name
   const demoAccountAddress = demoAccount.address
@@ -45,6 +46,8 @@ export default function({ close = noneFunc }) {
     }
   })
 
+  const account = useSelector(accountSelector) || {}
+
   return (
     <Wrapper ref={popup}>
       <li
@@ -55,20 +58,17 @@ export default function({ close = noneFunc }) {
         <h4>{demoAccountName}</h4>
         <p>{demoAccountAddress}</p>
       </li>
-      {extensionAccounts.map(account => {
-        return (
-          <li
-            onClick={() => selectAccount(account.name, account.address, true)}
-            key={account.address}
-          >
-            <h4>
-              <span>{account.name}</span>
-              <span className="extension">插件账户</span>
-            </h4>
-            <p>{account.address}</p>
-          </li>
-        )
-      })}
+      <li>
+        <h4>
+          <span>{account && account.name}</span>
+          {account.isFromExtension ? (
+            <span className="extension">插件账户</span>
+          ) : (
+            <span className="extension">Signer账户</span>
+          )}
+        </h4>
+        <p>{account.address}</p>
+      </li>
       {hasExtension ? null : (
         <li className="extension">
           <a

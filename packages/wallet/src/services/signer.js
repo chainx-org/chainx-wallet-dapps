@@ -2,8 +2,11 @@ import Signer from '@chainx/signer-connector'
 import { addAutoCloseSnackWithParams, typeEnum } from '../reducers/snackSlice'
 import $t from '../locale'
 import { store } from '../index'
+import { setAccount } from '../reducers/addressSlice'
+import { setChainx } from './chainx'
+import { mainNetApi, setApi, testNetApi } from './api'
 
-const signer = new Signer('dapp')
+export const signer = new Signer('dapp', true)
 
 export async function connectSigner() {
   try {
@@ -24,9 +27,21 @@ export async function connectSigner() {
       )
     }
 
-    console.log('account', account)
+    const settings = await signer.sendApiRequest({
+      method: 'get_settings',
+      params: []
+    })
 
-    signer.disconnect()
+    const isTestnet = settings.network === 'chainx-testnet'
+    setApi(isTestnet ? testNetApi : mainNetApi)
+
+    const node = await signer.sendApiRequest({
+      method: 'chainx_get_node',
+      params: []
+    })
+
+    await setChainx(node.url)
+    store.dispatch(setAccount({ ...account, isFromSigner: true }))
   } catch (e) {
     addAutoCloseSnackWithParams(
       store.dispatch,
@@ -35,4 +50,8 @@ export async function connectSigner() {
       $t('HEADER_MSG_SIGNER_LINK_FAIL_DETAIL')
     )
   }
+}
+
+export function disconnectSigner() {
+  signer.disconnect()
 }

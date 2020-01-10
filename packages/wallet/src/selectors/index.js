@@ -5,9 +5,9 @@ import { mainNetDemoAccount, testNetDemoAccount } from '../utils/constants'
 
 export function isDemoAccount(addr, network) {
   const isTestnetDemo =
-    network === 'testnet' && addr === testNetDemoAccount.address
+    network === 'testnet' && addr === testNetDemoAccount.account.address
   const isMainnetDemo =
-    network === 'mainnet' && addr === mainNetDemoAccount.address
+    network === 'mainnet' && addr === mainNetDemoAccount.account.address
   return isMainnetDemo || isTestnetDemo
 }
 
