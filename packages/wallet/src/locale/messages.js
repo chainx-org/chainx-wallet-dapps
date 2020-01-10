@@ -127,6 +127,22 @@ const header = {
   HEADER_GO_TO_DOWNLOAD: {
     en: 'Download page',
     zh: '去下载'
+  },
+  HEADER_MSG_NO_SIGNER_ACCOUNT_TITLE: {
+    en: 'No Signer account',
+    zh: 'Signer无账户'
+  },
+  HEADER_MSG_NO_SIGNER_ACCOUNT_DETAIL: {
+    en: 'Please add account in ChainX Signer',
+    zh: '请在ChainX Signer中创建账户'
+  },
+  HEADER_MSG_SIGNER_LINK_FAIL_TITLE: {
+    en: 'Fail to connect signer',
+    zh: '连接ChainX Signer失败'
+  },
+  HEADER_MSG_SIGNER_LINK_FAIL_DETAIL: {
+    en: 'Please retry after install and open ChainX Signer',
+    zh: '请下载安装或打开ChainX Signer后重试'
   }
 }
 

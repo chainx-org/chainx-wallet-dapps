@@ -18,6 +18,7 @@ const addressSlice = createSlice({
         state.name = action.payload.name
         state.address = action.payload.address
         state.isFromExtension = action.payload.isFromExtension
+        state.isFromSigner = action.payload.isFromSigner
       }
     },
     setExtensionAccounts: {

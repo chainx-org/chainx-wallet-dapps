@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chainx/signer-connector": "^1.0.3",
     "@chainx/ui": "0.0.33",
     "@polkadot/util": "^1.6.1",
     "@reduxjs/toolkit": "^1.0.4",
