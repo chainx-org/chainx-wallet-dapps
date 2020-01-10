@@ -11,7 +11,8 @@ const runStatusSlice = createSlice({
     switchNominationData: {},
     unNominationData: {},
     unFreezeRecord: {},
-    loading: false
+    loading: false,
+    openSignerDownloadDialog: false
   },
   reducers: {
     setUnNominateOpen(state, action) {
@@ -40,6 +41,9 @@ const runStatusSlice = createSlice({
     },
     setLoading(state, action) {
       state.loading = action.payload
+    },
+    setOpenSignerDownloadDialog(state, action) {
+      state.openSignerDownloadDialog = action.payload
     }
   }
 })
@@ -53,7 +57,8 @@ export const {
   setSwitchNominationData,
   setUnNominationData,
   setUnFreezeRecord,
-  setLoading
+  setLoading,
+  setOpenSignerDownloadDialog
 } = runStatusSlice.actions
 
 export const unNominateOpenSelector = state => state.runStatus.unNominateOpen
@@ -68,5 +73,7 @@ export const unNominationDataSelector = state =>
   state.runStatus.unNominationData
 export const unFreezeRecordSelector = state => state.runStatus.unFreezeRecord
 export const loadingSelector = state => state.runStatus.loading
+export const openSignerDownloadDialogSelector = state =>
+  state.runStatus.openSignerDownloadDialog
 
 export default runStatusSlice.reducer

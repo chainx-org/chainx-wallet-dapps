@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import signerIcon from '../signer.svg'
 import $t from '../../../../locale'
 import signerDownloadIcon from './signer_download.svg'
+import { useDispatch } from 'react-redux'
+import { setOpenSignerDownloadDialog } from '../../../../reducers/runStatusSlice'
 
 const Wrapper = styled.li`
   display: flex;
@@ -36,13 +38,21 @@ const Wrapper = styled.li`
 `
 
 export default function() {
+  const dispatch = useDispatch()
+
   return (
     <Wrapper>
       <span>
         <img src={signerIcon} alt="extension" />
         <span>{$t('HEADER_CONNECT_SIGNER')}</span>
       </span>
-      <img src={signerDownloadIcon} alt="download signer" />
+      <img
+        src={signerDownloadIcon}
+        onClick={() => {
+          dispatch(setOpenSignerDownloadDialog(true))
+        }}
+        alt="download signer"
+      />
     </Wrapper>
   )
 }

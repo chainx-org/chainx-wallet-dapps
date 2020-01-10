@@ -16,6 +16,7 @@ import {
 } from '../../../utils/constants'
 import Wrapper from './Wrapper'
 import SignerConnector from './SignerConnector'
+import { openSignerDownloadDialogSelector } from '../../../reducers/runStatusSlice'
 
 export default function({ close = noneFunc }) {
   const extensionAccounts = useSelector(extensionAccountsSelector)
@@ -34,11 +35,14 @@ export default function({ close = noneFunc }) {
 
   const hasExtension = !!window.chainxProvider
   const signerConnected = useSelector(signerConnectedSelector)
+  const downloadSignerDialogOpen = useSelector(openSignerDownloadDialogSelector)
 
   const popup = useRef(null)
 
   useOutsideClick(popup, () => {
-    close()
+    if (!downloadSignerDialogOpen) {
+      close()
+    }
   })
 
   return (

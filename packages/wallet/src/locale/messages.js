@@ -16,6 +16,10 @@ const common = {
     en: 'Memo',
     zh: '备注'
   },
+  COMMON_CANCEL: {
+    en: 'Cancel',
+    zh: '取消'
+  },
   COMMON_CONFIRM: {
     en: 'OK',
     zh: '确定'
@@ -111,6 +115,18 @@ const header = {
   HEADER_CONNECT_SIGNER: {
     en: 'Connect ChainX Signer',
     zh: '连接 ChainX 本地签名器'
+  },
+  HEADER_DOWNLOAD_SIGNER_TITLE: {
+    en: 'Download ChainX Signer',
+    zh: '下载 ChainX Signer'
+  },
+  HEADER_DOWNLOAD_SIGNER_DETAIL: {
+    en: 'Please refresh this page after download the ChainX Signer.',
+    zh: '下载 ChainX Signer，安装完成后请手动刷新钱包页面。'
+  },
+  HEADER_GO_TO_DOWNLOAD: {
+    en: 'Download page',
+    zh: '去下载'
   }
 }
 

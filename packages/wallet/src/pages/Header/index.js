@@ -7,9 +7,14 @@ import testNetLogoZh from './testnet-zh.svg'
 import txsIcon from './txs.svg'
 import { NavLink } from 'react-router-dom'
 import Name from './Name'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { localeSelector, networkSelector } from '../../reducers/settingsSlice'
 import AccountList from './AccountList'
+import DownloadSignerDialog from './DownloadSignerDialog'
+import {
+  openSignerDownloadDialogSelector,
+  setOpenSignerDownloadDialog
+} from '../../reducers/runStatusSlice'
 
 const Wrapper = styled.header`
   display: flex;
@@ -72,6 +77,12 @@ export default function() {
   }
 
   const [showList, setShowList] = useState(false)
+  const dispatch = useDispatch()
+  const handleSignerDownloadClose = () => {
+    dispatch(setOpenSignerDownloadDialog(false))
+  }
+
+  const downloadSignerDialogOpen = useSelector(openSignerDownloadDialogSelector)
 
   return (
     <Wrapper>
@@ -122,6 +133,9 @@ export default function() {
         <Name onClick={() => setShowList(true)} />
       </div>
       {showList ? <AccountList close={() => setShowList(false)} /> : null}
+      {downloadSignerDialogOpen ? (
+        <DownloadSignerDialog handleClose={handleSignerDownloadClose} />
+      ) : null}
     </Wrapper>
   )
 }
