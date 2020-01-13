@@ -116,17 +116,33 @@ const header = {
     en: 'Connect ChainX Signer',
     zh: '连接 ChainX 本地签名器'
   },
+  HEADER_CONNECT_EXTENSION: {
+    en: 'Connect ChainX extension',
+    zh: '连接 ChainX 插件'
+  },
   HEADER_DOWNLOAD_SIGNER_TITLE: {
     en: 'Download ChainX Signer',
     zh: '下载 ChainX Signer'
+  },
+  HEADER_DOWNLOAD_EXTENSION_TITLE: {
+    en: 'Install ChiainX extension',
+    zh: '安装ChainX插件'
   },
   HEADER_DOWNLOAD_SIGNER_DETAIL: {
     en: 'Please refresh this page after download the ChainX Signer.',
     zh: '下载 ChainX Signer，安装完成后请手动刷新钱包页面。'
   },
+  HEADER_DOWNLOAD_EXTENSION_DETAIL: {
+    en: 'Install ChainX extension from chrome extension store.',
+    zh: '在 Google 商店内搜索并安装 ChainX 插件，安装完成后请手动刷新钱包页面。'
+  },
   HEADER_GO_TO_DOWNLOAD: {
     en: 'Download page',
     zh: '去下载'
+  },
+  HEADER_GO_TO_STORE: {
+    en: 'Extension store',
+    zh: '去商店'
   },
   HEADER_MSG_NO_SIGNER_ACCOUNT_TITLE: {
     en: 'No Signer account',

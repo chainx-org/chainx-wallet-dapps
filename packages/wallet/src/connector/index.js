@@ -76,7 +76,21 @@ export async function connectExtension() {
   await setExtensionAccount(network)
   await setExtensionNode()
 
+  listenExtension()
+}
+
+export function listenExtension() {
   window.chainxProvider.listenNetworkChange(extensionNetworkChangeListener)
   window.chainxProvider.listenAccountChange(extensionAccountChangeListener)
   window.chainxProvider.listenNodeChange(extensionNodeChangeListener)
+}
+
+export function disConnectExtension() {
+  window.chainxProvider.removeNodeChangeListener(extensionNodeChangeListener)
+  window.chainxProvider.removeAccountChangeListener(
+    extensionAccountChangeListener
+  )
+  window.chainxProvider.removeNetworkChangeListener(
+    extensionNetworkChangeListener
+  )
 }

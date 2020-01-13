@@ -55,8 +55,6 @@ export default function initStore() {
   const persistedState = loadState()
   const normalizedState = migrateState(persistedState)
 
-  console.log('normalizedState', normalizedState)
-
   const store = configureStore({
     reducer: rootReducer,
     preloadedState: normalizedState || {}

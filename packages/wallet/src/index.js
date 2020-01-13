@@ -43,7 +43,6 @@ window.onload = async () => {
   store = initStore()
   const state = store.getState()
 
-  console.log('state', state)
   const isDemo = isDemoSelector(state)
   const isExtension = isExtensionSelector(state)
   const isSigner = isSignerSelector(state)

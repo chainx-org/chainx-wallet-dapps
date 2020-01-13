@@ -62,30 +62,6 @@ const Wrapper = styled.ul`
       overflow-x: hidden;
       text-overflow: ellipsis;
     }
-
-    &.extension {
-      display: flex;
-      flex-direction: row-reverse;
-      a {
-        background: #f6c94a;
-        border: 1px solid rgba(0, 0, 0, 0.04);
-        border-radius: 8px;
-
-        display: inline-flex;
-        padding: 6px;
-        align-items: center;
-        text-decoration: none;
-
-        span {
-          margin-left: 12px;
-          opacity: 0.72;
-          font-size: 14px;
-          color: #000000;
-          letter-spacing: 0.12px;
-          line-height: 20px;
-        }
-      }
-    }
   }
 `
 

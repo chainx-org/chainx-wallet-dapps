@@ -1,13 +1,12 @@
 import React, { useRef } from 'react'
-import $t from '../../../locale'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   accountSelector,
   isDemoSelector,
+  isExtensionSelector,
   setAccount,
   signerConnectedSelector
 } from '../../../reducers/addressSlice'
-import signerIcon from './signer.svg'
 import useOutsideClick from '../../../utils/useClickOutside'
 import { noneFunc } from '../../../utils'
 import { networkSelector } from '../../../reducers/settingsSlice'
@@ -17,7 +16,11 @@ import {
 } from '../../../utils/constants'
 import Wrapper from './Wrapper'
 import SignerConnector from './SignerConnector'
-import { openSignerDownloadDialogSelector } from '../../../reducers/runStatusSlice'
+import {
+  openExtensionDownloadDialogSelector,
+  openSignerDownloadDialogSelector
+} from '../../../reducers/runStatusSlice'
+import ExtensionConnector from './ExtensionConnector'
 
 export default function({ close = noneFunc }) {
   const dispatch = useDispatch()
@@ -35,14 +38,17 @@ export default function({ close = noneFunc }) {
   const demoAccountName = demoAccount.name
   const demoAccountAddress = demoAccount.address
 
-  const hasExtension = !!window.chainxProvider
   const signerConnected = useSelector(signerConnectedSelector)
   const downloadSignerDialogOpen = useSelector(openSignerDownloadDialogSelector)
+  const isExtensionAccount = useSelector(isExtensionSelector)
+  const downloadExtensionDialogOpen = useSelector(
+    openExtensionDownloadDialogSelector
+  )
 
   const popup = useRef(null)
 
   useOutsideClick(popup, () => {
-    if (!downloadSignerDialogOpen) {
+    if (!downloadSignerDialogOpen && !downloadExtensionDialogOpen) {
       close()
     }
   })
@@ -73,18 +79,7 @@ export default function({ close = noneFunc }) {
           <p>{account.address}</p>
         </li>
       )}
-      {hasExtension ? null : (
-        <li className="extension">
-          <a
-            href="https://chrome.google.com/webstore/detail/chainx-extension/dffjlgnecfafjfmkknpipapcbgajflge"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img src={signerIcon} alt="extension" />
-            <span>{$t('HEADER_GET_EXTENSION')}</span>
-          </a>
-        </li>
-      )}
+      {isExtensionAccount ? null : <ExtensionConnector />}
       {signerConnected ? null : <SignerConnector />}
     </Wrapper>
   )

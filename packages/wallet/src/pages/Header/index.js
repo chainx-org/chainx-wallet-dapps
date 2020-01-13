@@ -11,8 +11,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { localeSelector, networkSelector } from '../../reducers/settingsSlice'
 import AccountList from './AccountList'
 import DownloadSignerDialog from './DownloadSignerDialog'
+import DownloadExtensionDialog from './DownloadExtensionDialog'
 import {
+  openExtensionDownloadDialogSelector,
   openSignerDownloadDialogSelector,
+  setOpenExtensionDownloadDialog,
   setOpenSignerDownloadDialog
 } from '../../reducers/runStatusSlice'
 
@@ -81,8 +84,14 @@ export default function() {
   const handleSignerDownloadClose = () => {
     dispatch(setOpenSignerDownloadDialog(false))
   }
+  const handleExtensionDownloadClose = () => {
+    dispatch(setOpenExtensionDownloadDialog(false))
+  }
 
   const downloadSignerDialogOpen = useSelector(openSignerDownloadDialogSelector)
+  const downloadExtensionDialogOpen = useSelector(
+    openExtensionDownloadDialogSelector
+  )
 
   return (
     <Wrapper>
@@ -135,6 +144,9 @@ export default function() {
       {showList ? <AccountList close={() => setShowList(false)} /> : null}
       {downloadSignerDialogOpen ? (
         <DownloadSignerDialog handleClose={handleSignerDownloadClose} />
+      ) : null}
+      {downloadExtensionDialogOpen ? (
+        <DownloadExtensionDialog handleClose={handleExtensionDownloadClose} />
       ) : null}
     </Wrapper>
   )
