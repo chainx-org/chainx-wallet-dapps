@@ -6,6 +6,7 @@ import { PrimaryButton, DefaultButton } from '@chainx/ui'
 const Confirm = styled.div`
   position: absolute;
   left: 50%;
+  top: 16px;
   margin-left: -250px;
   width: 468px;
   min-height: 98px;
