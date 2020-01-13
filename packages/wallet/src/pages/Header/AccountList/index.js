@@ -3,6 +3,7 @@ import $t from '../../../locale'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   accountSelector,
+  isDemoSelector,
   setAccount,
   signerConnectedSelector
 } from '../../../reducers/addressSlice'
@@ -47,6 +48,7 @@ export default function({ close = noneFunc }) {
   })
 
   const account = useSelector(accountSelector) || {}
+  const isDemo = useSelector(isDemoSelector)
 
   return (
     <Wrapper ref={popup}>
@@ -58,17 +60,19 @@ export default function({ close = noneFunc }) {
         <h4>{demoAccountName}</h4>
         <p>{demoAccountAddress}</p>
       </li>
-      <li>
-        <h4>
-          <span>{account && account.name}</span>
-          {account.isFromExtension ? (
-            <span className="extension">插件账户</span>
-          ) : (
-            <span className="extension">Signer账户</span>
-          )}
-        </h4>
-        <p>{account.address}</p>
-      </li>
+      {isDemo ? null : (
+        <li>
+          <h4>
+            <span>{account && account.name}</span>
+            {account.isFromExtension ? (
+              <span className="extension">插件账户</span>
+            ) : (
+              <span className="extension">Signer账户</span>
+            )}
+          </h4>
+          <p>{account.address}</p>
+        </li>
+      )}
       {hasExtension ? null : (
         <li className="extension">
           <a
