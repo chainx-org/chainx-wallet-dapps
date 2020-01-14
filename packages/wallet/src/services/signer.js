@@ -5,17 +5,36 @@ import { store } from '../index'
 import { setAccount } from '../reducers/addressSlice'
 import { setChainx } from './chainx'
 import { mainNetApi, setApi, testNetApi } from './api'
+import { networkChangeListener, nodeChangeListener } from '../connector'
 
 export const signer = new Signer('dapp', true)
+
+export const accountChangeListener = ({ to }) => {
+  console.log('update extension accounts', [to])
+  if (to) {
+    store.dispatch(
+      setAccount({
+        name: to.name,
+        address: to.address,
+        isFromSigner: true
+      })
+    )
+  }
+
+  window.location.reload()
+}
+
+export function listenSigner() {
+  signer.listenAccountChange(accountChangeListener)
+  signer.listenNodeChange(nodeChangeListener)
+  signer.listenNetworkChange(networkChangeListener)
+}
 
 export async function connectSigner() {
   const linked = await signer.link()
   console.log(linked ? `connect successfully` : `failed to connect`)
 
-  const account = await signer.sendApiRequest({
-    method: 'chainx_account',
-    params: []
-  })
+  const account = await signer.getCurrentAccount()
 
   if (!account) {
     return addAutoCloseSnackWithParams(
@@ -26,23 +45,23 @@ export async function connectSigner() {
     )
   }
 
-  const settings = await signer.sendApiRequest({
-    method: 'get_settings',
-    params: []
-  })
+  const settings = await signer.getSettings()
 
   const isTestnet = settings.network === 'chainx-testnet'
   setApi(isTestnet ? testNetApi : mainNetApi)
 
-  const node = await signer.sendApiRequest({
-    method: 'chainx_get_node',
-    params: []
-  })
+  const node = await signer.getCurrentNode()
 
   await setChainx(node.url)
   store.dispatch(setAccount({ ...account, isFromSigner: true }))
+
+  listenSigner()
 }
 
 export function disconnectSigner() {
+  signer.removeAccountChangeListener(accountChangeListener)
+  signer.removeNodeChangeListener(nodeChangeListener)
+  signer.removeNetworkChangeListener(networkChangeListener)
+
   signer.disconnect()
 }

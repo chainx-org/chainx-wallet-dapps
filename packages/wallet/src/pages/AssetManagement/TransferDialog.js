@@ -122,6 +122,7 @@ export default function({ handleClose, token }) {
         accountAddress,
         extrinsic.toHex()
       )
+
       const messages = {
         successTitle: $t('NOTIFICATION_TRANSFER_SUCCESS'),
         failTitle: $t('NOTIFICATION_TRANSFER_FAIL'),
@@ -142,6 +143,7 @@ export default function({ handleClose, token }) {
         2
       )
     } catch (e) {
+      console.log('sign transfer transaction error:', e)
       setDisabled(false)
     }
   }

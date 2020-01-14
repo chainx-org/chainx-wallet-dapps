@@ -978,10 +978,10 @@
     "@chainx/util" "^2.22.2"
     rxjs "^6.3.3"
 
-"@chainx/signer-connector@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@chainx/signer-connector/-/signer-connector-1.0.3.tgz#0428ff66ca9970e0712d3f84912a80cd37b89692"
-  integrity sha512-FpHVGNq/H0XB1kR9Smcb+w4ChuDDQUSkRhiR3E7I1ZuQ0DQV5gvSm/p3U3nnBqlDZrxGl6DWcPERbjbMiB1jkQ==
+"@chainx/signer-connector@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@chainx/signer-connector/-/signer-connector-1.0.6.tgz#8e0f8650e245e811794fc56a062fe0213c078f06"
+  integrity sha512-wsxSvxNCh/i9UO+K4Ikk0TIbzJQxkhBj+GpdPf44ccX0d9rS36OGtcIqzUO8d6V4TpaN4vi8wD1hGQ+DtEDG5w==
   dependencies:
     create-hash "^1.2.0"
     get-random-values "^1.2.0"

@@ -6,7 +6,7 @@ import { setChainx } from '../services/chainx'
 import { mainNetApi, setApi, testNetApi } from '../services/api'
 import { mainNetDemoAccount, testNetDemoAccount } from '../utils/constants'
 
-const extensionNodeChangeListener = ({ to }) => {
+export const nodeChangeListener = ({ to }) => {
   const { url } = store.getState().node
   if (url !== to.url) {
     store.dispatch(setNode(to))
@@ -16,7 +16,7 @@ const extensionNodeChangeListener = ({ to }) => {
   }
 }
 
-const extensionAccountChangeListener = ({ to }) => {
+const accountChangeListener = ({ to }) => {
   console.log('update extension accounts', [to])
   if (to) {
     store.dispatch(
@@ -31,7 +31,7 @@ const extensionAccountChangeListener = ({ to }) => {
   window.location.reload()
 }
 
-const extensionNetworkChangeListener = ({ to }) => {
+export const networkChangeListener = ({ to }) => {
   store.dispatch(setNetwork(to))
   window.location.reload()
 }
@@ -80,17 +80,13 @@ export async function connectExtension() {
 }
 
 export function listenExtension() {
-  window.chainxProvider.listenNetworkChange(extensionNetworkChangeListener)
-  window.chainxProvider.listenAccountChange(extensionAccountChangeListener)
-  window.chainxProvider.listenNodeChange(extensionNodeChangeListener)
+  window.chainxProvider.listenNetworkChange(networkChangeListener)
+  window.chainxProvider.listenAccountChange(accountChangeListener)
+  window.chainxProvider.listenNodeChange(nodeChangeListener)
 }
 
 export function disConnectExtension() {
-  window.chainxProvider.removeNodeChangeListener(extensionNodeChangeListener)
-  window.chainxProvider.removeAccountChangeListener(
-    extensionAccountChangeListener
-  )
-  window.chainxProvider.removeNetworkChangeListener(
-    extensionNetworkChangeListener
-  )
+  window.chainxProvider.removeNodeChangeListener(nodeChangeListener)
+  window.chainxProvider.removeAccountChangeListener(accountChangeListener)
+  window.chainxProvider.removeNetworkChangeListener(networkChangeListener)
 }
