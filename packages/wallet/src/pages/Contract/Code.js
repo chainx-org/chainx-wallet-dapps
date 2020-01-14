@@ -20,6 +20,7 @@ function Code(props) {
   const [abi, setAbi] = useState({ abi: { messages: [] } })
   const [update, setUpdate] = useState(new Date())
   const [isnew, setIsnew] = useState(true)
+  const [loading, setLoading] = useState(false)
 
   const { abiList } = useSelector(state => state.local)
   const dispatch = useDispatch()
@@ -72,6 +73,7 @@ function Code(props) {
       }
       return
     }
+    setLoading(true)
     uploadContract(file, gas, cb)
   }
 
@@ -79,6 +81,7 @@ function Code(props) {
     if (resp.reject) {
       console.log('tx was rejected')
       addAutoCloseSnackWithParams(dispatch, typeEnum.ERROR, '交易被拒绝')
+      setLoading(false)
       return
     }
     if (resp.err) {
@@ -89,6 +92,7 @@ function Code(props) {
         '交易失败',
         resp.err.message
       )
+      setLoading(false)
     } else {
       const result = resp.status
       console.log(result)
@@ -109,6 +113,7 @@ function Code(props) {
         } else {
           type = typeEnum.ERROR
           title = '合约上传失败'
+          setLoading(false)
         }
         addAutoCloseSnackWithParams(dispatch, type, title)
       }
@@ -135,6 +140,8 @@ function Code(props) {
           abi={abi}
           setShowDeploy={setShowDeploy}
           setUpdate={setUpdate}
+          loading={loading}
+          setLoading={setLoading}
         />
       )}
       {showUpload && (
@@ -142,6 +149,7 @@ function Code(props) {
           upload={upload}
           setShowUpload={setShowUpload}
           isnew={isnew}
+          loading={loading}
         />
       )}
       <div className="button-area">

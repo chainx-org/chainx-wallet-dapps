@@ -17,13 +17,14 @@ export default function({
   abi,
   setShowDeploy,
   setUpdate,
-  isnew = true
+  isnew = true,
+  loading,
+  setLoading
 }) {
   const [name, setName] = useState((abi && abi.name) || '')
   const [address, setAddress] = useState('')
   const [params, setParams] = useState(
-    abi &&
-      Array.from(abi.parseAbi.abi.contract.constructors[0].args.length).fill('')
+    abi && Array(abi.parseAbi.abi.contract.constructors[0].args.length).fill('')
   )
   const [endowment, setEndowment] = useState(0)
   const [gas, setGas] = useState(5000000)
@@ -35,6 +36,7 @@ export default function({
     if (resp.reject) {
       console.log('tx was rejected')
       addAutoCloseSnackWithParams(dispatch, typeEnum.ERROR, '交易被拒绝')
+      setLoading(false)
       return
     }
     if (resp.err) {
@@ -45,6 +47,7 @@ export default function({
         '交易失败',
         resp.err.message || resp.err.msg
       )
+      setLoading(false)
     } else {
       console.log(resp.status)
       const result = resp.status
@@ -67,6 +70,7 @@ export default function({
         } else {
           type = typeEnum.ERROR
           title = '合约部署失败'
+          setLoading(false)
         }
         addAutoCloseSnackWithParams(dispatch, type, title)
       }
@@ -104,6 +108,7 @@ export default function({
           return
         }
       }
+      setLoading(true)
       deploy(abi, params, endowment, gas, cb)
     } else {
       let type = typeEnum.SUCCESS
@@ -146,6 +151,7 @@ export default function({
         title={title}
         cancel={() => setShowDeploy(false)}
         confirm={() => _deploy(abi, name, params, endowment, gas)}
+        loading={loading}
       >
         {isnew && (
           <>
@@ -168,8 +174,10 @@ export default function({
                   type="text"
                   value={params[i]}
                   onChange={e => {
-                    params[i] = e.target.value
-                    setParams(params)
+                    const newParams = Array.from(params)
+                    const newValue = e.target.value
+                    newParams.splice(i, 1, newValue)
+                    setParams(newParams)
                   }}
                   placeholder={
                     abi.parseAbi.abi.contract.constructors[0].args[i].name +

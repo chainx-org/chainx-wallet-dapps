@@ -4,7 +4,7 @@ import Confirm from './Confirm'
 import InputWithLabel from './InputWithLabel'
 import CurrentAccount from './CurrentAccount'
 
-export default function({ upload, setShowUpload, isnew = true }) {
+export default function({ upload, setShowUpload, isnew = true, loading }) {
   const [file, setFile] = useState({})
   const [contractAbi, setContractAbi] = useState({})
   const [gas, setGas] = useState(20000000)
@@ -23,6 +23,7 @@ export default function({ upload, setShowUpload, isnew = true }) {
         title={title}
         cancel={() => setShowUpload(false)}
         confirm={() => upload(file, name, contractAbi, gas, codeHash, isnew)}
+        loading={loading}
       >
         <div className="upload-area">
           {isnew && (
