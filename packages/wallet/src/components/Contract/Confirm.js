@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import closeGrayIcon from '../../static/close_gray.svg'
 import { PrimaryButton, DefaultButton } from '@chainx/ui'
+import Loading from './Loading'
 
 const Confirm = styled.div`
   position: absolute;
@@ -46,9 +47,10 @@ const Confirm = styled.div`
   }
 `
 
-export default function({ title, confirm, cancel, children }) {
+export default function({ title, confirm, cancel, loading = false, children }) {
   return (
     <Confirm>
+      {loading && <Loading />}
       <div className="confirm-header">
         <span>{title}</span>
         <img src={closeGrayIcon} alt="closeIcon" onClick={cancel} />
