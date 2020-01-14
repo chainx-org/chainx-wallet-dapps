@@ -149,8 +149,8 @@ const header = {
     zh: 'Signer无账户'
   },
   HEADER_MSG_NO_SIGNER_ACCOUNT_DETAIL: {
-    en: 'Please add account in ChainX Signer',
-    zh: '请在ChainX Signer中创建账户'
+    en: 'No account in ChainX Signer and switch to demo account',
+    zh: 'ChainX Signer中无账户，自动切换为体验账户'
   },
   HEADER_MSG_SIGNER_LINK_FAIL_TITLE: {
     en: 'Fail to connect signer',

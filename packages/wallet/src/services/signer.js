@@ -6,6 +6,7 @@ import { setAccount } from '../reducers/addressSlice'
 import { setChainx } from './chainx'
 import { mainNetApi, setApi, testNetApi } from './api'
 import { networkChangeListener, nodeChangeListener } from '../connector'
+import _ from 'lodash'
 
 export const signer = new Signer('dapp', true)
 
@@ -36,13 +37,15 @@ export async function connectSigner() {
 
   const account = await signer.getCurrentAccount()
 
-  if (!account) {
-    return addAutoCloseSnackWithParams(
+  if (_.isEmpty(account)) {
+    addAutoCloseSnackWithParams(
       store.dispatch,
       typeEnum.ERROR,
       $t('HEADER_MSG_NO_SIGNER_ACCOUNT_TITLE'),
       $t('HEADER_MSG_NO_SIGNER_ACCOUNT_DETAIL')
     )
+
+    throw new Error('No account in signer')
   }
 
   const settings = await signer.getSettings()
