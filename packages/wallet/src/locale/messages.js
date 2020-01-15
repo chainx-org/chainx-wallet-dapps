@@ -159,6 +159,14 @@ const header = {
   HEADER_MSG_SIGNER_LINK_FAIL_DETAIL: {
     en: 'Please retry after install and open ChainX Signer',
     zh: '请下载安装或打开ChainX Signer后重试'
+  },
+  HEADER_SIGNER_DISCONNECT_TITLE: {
+    en: 'ChainX signer disconnectd',
+    zh: 'ChainX signer断开连接'
+  },
+  HEADER_SIGNER_DISCONNECT_DETAIL: {
+    en: 'ChainX signer disconnectd. Please open it and refresh the page.',
+    zh: 'ChainX signer断开连接，请打开signer后刷新页面。'
   }
 }
 

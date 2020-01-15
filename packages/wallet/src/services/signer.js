@@ -1,5 +1,10 @@
 import Signer from '@chainx/signer-connector'
-import { addAutoCloseSnackWithParams, typeEnum } from '../reducers/snackSlice'
+import {
+  addAutoCloseSnackWithParams,
+  addSnack,
+  generateId,
+  typeEnum
+} from '../reducers/snackSlice'
 import $t from '../locale'
 import { store } from '../index'
 import { setAccount } from '../reducers/addressSlice'
@@ -7,8 +12,9 @@ import { setChainx } from './chainx'
 import { mainNetApi, setApi, testNetApi } from './api'
 import { networkChangeListener, nodeChangeListener } from '../connector'
 import _ from 'lodash'
+import { nonFunc } from '@chainx/signer-connector/dist/constants'
 
-export const signer = new Signer('dapp', true)
+export const signer = new Signer('dapp')
 
 export const accountChangeListener = ({ to }) => {
   console.log('update extension accounts', [to])
@@ -29,10 +35,19 @@ export function listenSigner() {
   signer.listenAccountChange(accountChangeListener)
   signer.listenNodeChange(nodeChangeListener)
   signer.listenNetworkChange(networkChangeListener)
+
+  signer.addSocketCloseHandler(() => {
+    let id = generateId()
+    const type = typeEnum.ERROR
+    const title = $t('HEADER_SIGNER_DISCONNECT_TITLE')
+    const message = $t('HEADER_SIGNER_DISCONNECT_DETAIL')
+    store.dispatch(addSnack({ id, type, title, message }))
+  })
 }
 
 export async function connectSigner() {
   const linked = await signer.link()
+
   console.log(linked ? `connect successfully` : `failed to connect`)
 
   const account = await signer.getCurrentAccount()
@@ -48,14 +63,13 @@ export async function connectSigner() {
     throw new Error('No account in signer')
   }
 
-  const settings = await signer.getSettings()
+  const node = await signer.getCurrentNode()
+  await setChainx(node.url)
 
+  const settings = await signer.getSettings()
   const isTestnet = settings.network === 'chainx-testnet'
   setApi(isTestnet ? testNetApi : mainNetApi)
 
-  const node = await signer.getCurrentNode()
-
-  await setChainx(node.url)
   store.dispatch(setAccount({ ...account, isFromSigner: true }))
 
   listenSigner()
@@ -65,6 +79,7 @@ export function disconnectSigner() {
   signer.removeAccountChangeListener(accountChangeListener)
   signer.removeNodeChangeListener(nodeChangeListener)
   signer.removeNetworkChangeListener(networkChangeListener)
+  signer.addSocketCloseHandler(nonFunc)
 
   signer.disconnect()
 }
