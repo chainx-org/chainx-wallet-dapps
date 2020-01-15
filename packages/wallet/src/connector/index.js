@@ -86,7 +86,9 @@ export function listenExtension() {
 }
 
 export function disConnectExtension() {
-  window.chainxProvider.removeNodeChangeListener(nodeChangeListener)
-  window.chainxProvider.removeAccountChangeListener(accountChangeListener)
-  window.chainxProvider.removeNetworkChangeListener(networkChangeListener)
+  if (window.chainxProvider.removeNodeChangeListener) {
+    window.chainxProvider.removeNodeChangeListener(nodeChangeListener)
+    window.chainxProvider.removeAccountChangeListener(accountChangeListener)
+    window.chainxProvider.removeNetworkChangeListener(networkChangeListener)
+  }
 }
