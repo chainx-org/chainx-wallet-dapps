@@ -30,6 +30,6 @@ export const producerSelector = createSelector(
     const intention = intentions.find(
       intention => intention.account === producerAccount
     )
-    return `(${intention.name})`
+    return `(${intention ? intention.name : null})`
   }
 )
