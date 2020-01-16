@@ -151,7 +151,7 @@ export default function() {
 
       <div className="price input">
         <PriceWrapper data-tip={`最小卖出价格${minSellShowPrice}`}>
-          <Label htmlFor="sell-price">价格</Label>
+          <Label htmlFor="sell-price">{$t('TRADE_PRICE')}</Label>
           <img src={infoIcon} alt="info" />
         </PriceWrapper>
         <AmountInput
@@ -168,7 +168,7 @@ export default function() {
       </div>
 
       <div className="amount input">
-        <Label>数量</Label>
+        <Label>{$t('TRADE_AMOUNT')}</Label>
         <AmountInput
           style={{ maxWidth: 216 }}
           id="sell-amount"

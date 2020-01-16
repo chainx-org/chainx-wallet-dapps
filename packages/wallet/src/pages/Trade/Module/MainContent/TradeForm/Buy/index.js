@@ -167,7 +167,7 @@ export default function() {
       </div>
       <div className="price input">
         <PriceWrapper data-tip={`最大买入价格${maxBuyShowPrice}`}>
-          <Label htmlFor="buy-price">价格</Label>
+          <Label htmlFor="buy-price">{$t('TRADE_PRICE')}</Label>
           <img src={infoIcon} alt="info" />
         </PriceWrapper>
         <div>
@@ -186,7 +186,7 @@ export default function() {
         </div>
       </div>
       <div className="amount input">
-        <Label>数量</Label>
+        <Label>{$t('TRADE_AMOUNT')}</Label>
         <AmountInput
           style={{ maxWidth: 216 }}
           id="buy-amount"
