@@ -136,7 +136,7 @@ export default function({ handleClose }) {
             />
           </div>
           <div>
-            <TextInput value={to} disabled={true} />
+            <TextInput value={to} disabled={true} showClear={false} />
           </div>
         </div>
 
