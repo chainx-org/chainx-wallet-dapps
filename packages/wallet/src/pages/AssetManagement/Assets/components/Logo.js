@@ -21,7 +21,7 @@ const Title = styled.h6`
   margin: 0;
   opacity: 0.72;
   font-size: 16px;
-  line-height: 28px;
+  line-height: 24px;
 `
 
 const Desc = styled.span`
