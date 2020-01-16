@@ -54,14 +54,20 @@ export const addAutoCloseSnack = (dispatch, data, seconds = 5) => {
   removeSnackInSeconds(dispatch, data.id, seconds)
 }
 
-export const addAutoCloseSnackWithParams = (dispatch, type, title, message) => {
+export const addAutoCloseSnackWithParams = (
+  dispatch,
+  type,
+  title,
+  message,
+  seconds = 5
+) => {
   const data = {}
   const id = generateId()
   data.id = id
   data.type = type
   data.title = title
   data.message = message || ''
-  addAutoCloseSnack(dispatch, data)
+  addAutoCloseSnack(dispatch, data, seconds)
 }
 
 export const removeSnackInSeconds = (dispatch, id, seconds = 0) => {

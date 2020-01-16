@@ -8,6 +8,10 @@ import notification from './notification'
 import txs from './txs'
 
 const common = {
+  COMMON_TX_ERROR_TITLE: {
+    en: 'Sign request Error',
+    zh: '提交交易出错'
+  },
   COMMON_FEE: {
     en: 'Fee',
     zh: '手续费'

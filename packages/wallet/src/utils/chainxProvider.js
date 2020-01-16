@@ -1,4 +1,5 @@
 import {
+  addAutoCloseSnackWithParams,
   addSnack,
   generateId,
   removeSnackInSeconds,
@@ -35,16 +36,13 @@ export function signAndSendExtrinsic(address, data) {
 
 function handleExtrinsicResult(err, status, resolve, reject) {
   if (err) {
-    let id = generateId()
-    store.dispatch(
-      addSnack({
-        id,
-        type: typeEnum.ERROR,
-        title: '提交交易出错',
-        message: getMessage(err)
-      })
+    addAutoCloseSnackWithParams(
+      store.dispatch,
+      typeEnum.ERROR,
+      $t('COMMON_TX_ERROR_TITLE'),
+      getMessage(err),
+      8
     )
-    removeSnackInSeconds(store.dispatch, id, 5)
     reject()
     return
   }
@@ -68,15 +66,24 @@ export async function signAndSendWithSigner(address, hex) {
     reject = reject1
   })
 
-  const signResult = await signer.signAndSendExtrinsic(
-    address,
-    hex,
-    (err, status) => {
+  const signResult = await signer
+    .signAndSendExtrinsic(address, hex, (err, status) => {
       handleExtrinsicResult(err, status, resolve, reject)
-    }
-  )
+    })
+    .catch(e => {
+      if (e && e.code === 'sign-transaction-busy') {
+        addAutoCloseSnackWithParams(
+          store.dispatch,
+          typeEnum.ERROR,
+          $t('COMMON_TX_ERROR_TITLE'),
+          getMessage(e),
+          8
+        )
+      }
+      reject()
+    })
 
-  if (signResult.reject) {
+  if (signResult && signResult.reject) {
     console.log('transaction sign and send request is rejected.')
     reject()
   }
