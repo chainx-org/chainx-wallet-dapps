@@ -6,7 +6,10 @@ import {
   showSnack,
   signAndSendExtrinsic
 } from '../../../../../utils/chainxProvider'
-import { fetchNominationRecords } from '../../../../../reducers/intentionSlice'
+import {
+  fetchIntentions,
+  fetchNominationRecords
+} from '../../../../../reducers/intentionSlice'
 import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
 import { isDemoSelector } from '../../../../../selectors'
 import $t from '../../../../../locale'
@@ -48,6 +51,7 @@ export default function({ record, interest }) {
         () => {
           dispatch(fetchNominationRecords(accountAddress))
           dispatch(fetchAccountAssets(accountAddress))
+          dispatch(fetchIntentions())
         },
         5,
         2
