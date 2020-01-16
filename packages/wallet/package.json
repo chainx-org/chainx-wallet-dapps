@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@chainx/signer-connector": "^1.0.8",
-    "@chainx/ui": "0.0.33",
+    "@chainx/ui": "0.0.34",
     "@polkadot/util": "^1.6.1",
     "@reduxjs/toolkit": "^1.0.4",
     "bignumber.js": "^9.0.0",
