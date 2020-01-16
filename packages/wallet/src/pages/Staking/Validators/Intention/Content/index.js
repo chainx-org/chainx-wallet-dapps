@@ -9,7 +9,7 @@ import { DefaultButton } from '@chainx/ui'
 import LowSelfVote from '../../LowSelfVote'
 import DetailToggle from './DetailToggle'
 import Detail from './Detail'
-import { addressSelector } from '../../../../../reducers/addressSlice'
+import { accountIdSelector } from '../../../../../reducers/addressSlice'
 import {
   setVoteIntention,
   setVoteOpen,
@@ -96,7 +96,7 @@ const Wrapper = styled.div`
 `
 
 export default function(props) {
-  const accountAddress = useSelector(addressSelector)
+  const accountId = useSelector(accountIdSelector)
   const dispatch = useDispatch()
 
   const {
@@ -113,7 +113,7 @@ export default function(props) {
   const [detailOpen, setDetailOpen] = useState(false)
   const lowSelfVote = totalNomination >= selfVote * 10
 
-  const isSelf = accountAddress === account
+  const isSelf = accountId === account
   const disabled = (!isSelf && lowSelfVote) || voteOpen
 
   return (
