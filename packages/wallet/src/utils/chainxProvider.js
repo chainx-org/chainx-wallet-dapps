@@ -72,7 +72,6 @@ export async function signAndSendWithSigner(address, hex) {
     address,
     hex,
     (err, status) => {
-      console.log('status', status)
       handleExtrinsicResult(err, status, resolve, reject)
     }
   )
