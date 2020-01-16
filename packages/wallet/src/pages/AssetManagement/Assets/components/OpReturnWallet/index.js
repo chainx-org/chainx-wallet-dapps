@@ -36,7 +36,7 @@ export default function() {
               {wallet.text}
             </a>
             、
-            <ReactTooltip id={wallet.text}>
+            <ReactTooltip id={wallet.text} effect="solid">
               <img src={wallet.img} alt="" />
             </ReactTooltip>
           </span>
