@@ -176,6 +176,7 @@ export default function() {
             id="buy-price"
             value={price}
             onChange={value => {
+              setPriceErrMsg('')
               setPrice(value)
             }}
             tokenName={pairCurrency}
@@ -191,6 +192,7 @@ export default function() {
           id="buy-amount"
           value={amount}
           onChange={value => {
+            setAmountErrMsg('')
             if (value > max) {
               setAmount(max)
               setPercentage(100)
@@ -208,6 +210,7 @@ export default function() {
       <Slider
         className="percentage"
         onChange={value => {
+          setAmountErrMsg('')
           setPercentage(value)
           if (!currencyFree.free) {
             return

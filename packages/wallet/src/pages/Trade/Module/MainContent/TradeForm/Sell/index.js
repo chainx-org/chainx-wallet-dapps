@@ -159,8 +159,8 @@ export default function() {
           id="sell-price"
           value={price}
           onChange={value => {
-            setPrice(value)
             setPriceErrMsg('')
+            setPrice(value)
           }}
           tokenName={pairCurrency}
           precision={pairShowPrecision}
@@ -187,12 +187,14 @@ export default function() {
           }}
           tokenName={pairAsset}
           precision={assetPrecision}
+          error={!!amountErrMsg}
         />
       </div>
 
       <Slider
         className="percentage"
         onChange={value => {
+          setAmountErrMsg('')
           setPercentage(value)
           setAmount(toPrecision((assetFree * value) / 100, assetPrecision))
         }}
