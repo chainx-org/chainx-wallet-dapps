@@ -43,13 +43,13 @@ export default {
     en: 'Order Price',
     zh: '委托价格'
   },
-  TRADE_ORDER_AMOUNT: {
-    en: 'Order Amount',
-    zh: '委托数量'
-  },
   TRADE_ORDER_VOLUME: {
     en: 'Order Volume',
     zh: '交易额'
+  },
+  TRADE_ORDER_FREEZE: {
+    en: 'Freeze amount',
+    zh: '冻结金额'
   },
   TRADE_ORDER_FILLED_PERCENT: {
     en: 'Filled/Percentage%',

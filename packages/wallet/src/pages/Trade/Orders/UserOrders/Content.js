@@ -113,7 +113,7 @@ export default function() {
                 {order.direction === 'Sell'
                   ? `${toPrecision(order.reserve_last, currencyPrecision)} `
                   : `${toPrecision(order.reserve_last, assetPrecision)} `}
-                <span>{currencyPair[order.direction === 'Sell' ? 1 : 0]}</span>
+                <span>{currencyPair[order.direction === 'Sell' ? 0 : 1]}</span>
               </NumberCell>
               <FillCell
                 style={{ width: '16%' }}

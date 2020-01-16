@@ -18,7 +18,7 @@ export default function() {
             {$t('TRADE_ORDER_AMOUNT')}
           </HeadCell>
           <HeadCell style={{ width: '16%' }}>
-            {$t('TRADE_ORDER_VOLUME')}
+            {$t('TRADE_ORDER_FREEZE')}
           </HeadCell>
           <HeadCell style={{ width: '16%' }}>
             {$t('TRADE_ORDER_FILLED_PERCENT')}
