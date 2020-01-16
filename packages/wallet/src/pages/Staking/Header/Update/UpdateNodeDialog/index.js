@@ -20,7 +20,6 @@ import { fetchIntentions } from '../../../../../reducers/intentionSlice'
 
 export default function({ handleClose = noneFunc }) {
   const intention = useSelector(myIntentionSelector)
-  console.log('intention', intention)
   const {
     sessionKey,
     isActive,
