@@ -20,20 +20,26 @@ import { fetchIntentions } from '../../../../../reducers/intentionSlice'
 
 export default function({ handleClose = noneFunc }) {
   const intention = useSelector(myIntentionSelector)
-  const { sessionKey, isActive } = intention
+  console.log('intention', intention)
+  const {
+    sessionKey,
+    isActive,
+    url: intentionUrl,
+    about: intentionAbout
+  } = intention
 
   const [wantToRun, setWantToRun] = useState(!!isActive)
 
   const chainx = getChainx()
   const sessionAddress = chainx.account.encodeAddress(sessionKey)
 
-  const [key, setKey] = useState('')
+  const [key, setKey] = useState(sessionAddress)
   const [keyErrMsg, setKeyErrMsg] = useState('')
 
-  const [url, setUrl] = useState('')
+  const [url, setUrl] = useState(intentionUrl)
   const [urlErrMsg, setUrlErrMsg] = useState('')
 
-  const [about, setAbout] = useState('')
+  const [about, setAbout] = useState(intentionAbout)
   const [aboutErrMsg, setAboutErrMsg] = useState('')
 
   const [disabled, setDisabled] = useState(false)
@@ -109,6 +115,7 @@ export default function({ handleClose = noneFunc }) {
           <p>ChainX 出块公钥/出块地址</p>
           <TextInput
             value={key}
+            showClear={false}
             onChange={value => {
               setKeyErrMsg('')
               setKey(value)
@@ -121,6 +128,7 @@ export default function({ handleClose = noneFunc }) {
           <p>官网域名</p>
           <TextInput
             placeholder="4 - 24字符以内"
+            showClear={false}
             value={url}
             onChange={value => {
               setUrlErrMsg('')
