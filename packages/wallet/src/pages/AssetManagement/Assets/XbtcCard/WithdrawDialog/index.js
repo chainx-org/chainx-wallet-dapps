@@ -114,7 +114,7 @@ export default function({ handleClose }) {
         'BTC',
         realAmount,
         address,
-        memo ? memo.trim() : null
+        memo ? memo.trim() : ''
       )
       const status = await signAndSendExtrinsic(
         accountAddress,

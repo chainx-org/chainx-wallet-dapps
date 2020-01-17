@@ -13,7 +13,7 @@ import {
 import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
 import { isDemoSelector } from '../../../../../selectors'
 import $t from '../../../../../locale'
-import { retry } from '../../../../../utils'
+import { canRequestSign, retry } from '../../../../../utils'
 import { getChainx } from '../../../../../services/chainx'
 
 export default function({ record, interest }) {
@@ -27,7 +27,7 @@ export default function({ record, interest }) {
   const chainx = getChainx()
 
   const claim = async target => {
-    if (!window.chainxProvider) {
+    if (canRequestSign()) {
       // TODO: 考虑没有安装插件的情况下怎么与用户进行交互
       return
     }

@@ -1,5 +1,7 @@
 import BigNumber from 'bignumber.js'
 import chunk from 'lodash.chunk'
+import { store } from '../index'
+import { isExtensionSelector, isSignerSelector } from '../reducers/addressSlice'
 
 export function toPrecision(value, precision = 0, paddingZero = true) {
   precision = Number(precision)
@@ -57,4 +59,13 @@ export const reverseHex = function(hex) {
   }, '')
 
   return ensure0xPrefix(reversedHex)
+}
+
+export const canRequestSign = function() {
+  const state = store.getState()
+
+  const isExtension = isExtensionSelector(state)
+  const isSigner = isSignerSelector(state)
+
+  return isSigner || (isExtension && window.chainxProvider)
 }

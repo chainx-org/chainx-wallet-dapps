@@ -18,10 +18,7 @@ import {
   lbtcClaimInfoSelector,
   lbtcInterestSelector
 } from '../LbtcCard/selectors'
-import {
-  addressSelector,
-  isExtensionSelector
-} from '../../../reducers/addressSlice'
+import { addressSelector } from '../../../reducers/addressSlice'
 import { signAndSendExtrinsic } from '../../../utils/chainxProvider'
 import {
   addSnack,
@@ -33,11 +30,10 @@ import { pcxPrecisionSelector } from '../../selectors/assets'
 import { fetchPseduNominationRecords } from '../../../reducers/intentionSlice'
 import { isDemoSelector } from '../../../selectors'
 import { getChainx } from '../../../services/chainx'
-import { retry } from '../../../utils'
+import { canRequestSign, retry } from '../../../utils'
 
 export default function({ token }) {
   const accountAddress = useSelector(addressSelector)
-  const isFromExtension = useSelector(isExtensionSelector)
 
   const [disabled, setDisabled] = useState(false)
 
@@ -72,8 +68,7 @@ export default function({ token }) {
   const chainx = getChainx()
 
   async function claim(token) {
-    if (!isFromExtension) {
-      console.error('not extension account')
+    if (!canRequestSign()) {
       return
     }
 
