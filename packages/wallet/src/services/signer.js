@@ -13,6 +13,7 @@ import { mainNetApi, setApi, testNetApi } from './api'
 import { networkChangeListener, nodeChangeListener } from '../connector'
 import _ from 'lodash'
 import { nonFunc } from '@chainx/signer-connector/dist/constants'
+import { setNetwork } from '../reducers/settingsSlice'
 
 export const signer = new Signer('dapp')
 
@@ -68,6 +69,7 @@ export async function connectSigner() {
 
   const settings = await signer.getSettings()
   const isTestnet = settings.network === 'chainx-testnet'
+  store.dispatch(setNetwork(isTestnet ? 'testnet' : 'mainnet'))
   setApi(isTestnet ? testNetApi : mainNetApi)
 
   store.dispatch(setAccount({ ...account, isFromSigner: true }))
