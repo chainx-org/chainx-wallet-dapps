@@ -76,11 +76,6 @@ export default function({ token }) {
       return
     }
 
-    if (!canRequestSign()) {
-      // TODO: 考虑没有安装插件的情况下怎么与用户进行交互
-      return
-    }
-
     setDisabled(true)
     try {
       const extrinsic = chainx.stake.depositClaim(token)
