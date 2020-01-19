@@ -13,7 +13,10 @@ import styled from 'styled-components'
 import { addressSelector } from '../../reducers/addressSlice'
 import {
   setUnFreezeOpen,
-  unFreezeRecordSelector
+  switchNominationOpenSelector,
+  unFreezeRecordSelector,
+  unNominateOpenSelector,
+  voteOpenSelector
 } from '../../reducers/runStatusSlice'
 import VoteDialog from './VoteDialog'
 import SwitchDialog from './SwitchDialog'
@@ -34,6 +37,9 @@ const Wrapper = styled.div`
 export default function() {
   const address = useSelector(addressSelector)
   const unFreezeRecord = useSelector(unFreezeRecordSelector)
+  const voteOpen = useSelector(voteOpenSelector)
+  const switchNominationOpen = useSelector(switchNominationOpenSelector)
+  const unNominateOpen = useSelector(unNominateOpenSelector)
 
   const dispatch = useDispatch()
 
@@ -49,9 +55,9 @@ export default function() {
     <Wrapper className="staking">
       <Header />
       <Validators />
-      <VoteDialog />
-      <SwitchDialog />
-      <UnNominateDialog />
+      {voteOpen ? <VoteDialog /> : null}
+      {switchNominationOpen ? <SwitchDialog /> : null}
+      {unNominateOpen ? <UnNominateDialog /> : null}
       <UnFreezeDialog
         record={unFreezeRecord}
         revocations={
