@@ -27,7 +27,7 @@ export default function({ record, interest }) {
   const chainx = getChainx()
 
   const claim = async target => {
-    if (canRequestSign()) {
+    if (!canRequestSign()) {
       // TODO: 考虑没有安装插件的情况下怎么与用户进行交互
       return
     }
