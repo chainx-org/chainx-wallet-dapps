@@ -36,10 +36,7 @@ export default function() {
   const voteOpen = useSelector(voteOpenSelector)
 
   const intention = useSelector(voteIntentionSelector) || {}
-  const handleClose = () => {
-    reset()
-    dispatch(setVoteOpen(false))
-  }
+  const handleClose = () => dispatch(setVoteOpen(false))
 
   const record = (nominationRecords || []).find(
     record => record.intention === intention.account
@@ -62,11 +59,6 @@ export default function() {
 
   const hasAmount = !amountErrMsg && amount
   const chainx = getChainx()
-
-  const reset = () => {
-    setAmount('')
-    setMemo('')
-  }
 
   const sign = async () => {
     if (checkAmountAndHasError(amount, free, precision, setAmountErrMsg)) {
@@ -105,7 +97,6 @@ export default function() {
       }
 
       setDisabled(false)
-      reset()
       await showSnack(status, messages, dispatch)
       handleClose()
       await retry(
