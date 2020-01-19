@@ -45,7 +45,10 @@ export default function() {
   const switchNominationData = useSelector(switchNominationDataSelector)
   const intention = switchNominationData.intention
   const nomination = switchNominationData.nomination
-  const handleClose = () => dispatch(setSwitchNominationOpen(false))
+  const handleClose = () => {
+    reset()
+    dispatch(setSwitchNominationOpen(false))
+  }
 
   const [memo, setMemo] = useState('')
   const [memoErrMsg, setMemoErrMsg] = useState('')
@@ -78,6 +81,11 @@ export default function() {
   useEffect(() => {
     dispatch(fetchNextRenominateByAccount(accountId))
   }, [accountId, dispatch])
+
+  const reset = () => {
+    setTargetIntentionName('')
+    setMemo('')
+  }
 
   const checkAmountAndHasError = value => {
     if (isNaN(parseFloat(value))) {
@@ -144,6 +152,7 @@ export default function() {
       }
 
       setDisabled(false)
+      reset()
       await showSnack(status, messages, dispatch)
       handleClose()
       await retry(
