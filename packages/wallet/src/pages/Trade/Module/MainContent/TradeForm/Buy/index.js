@@ -15,7 +15,12 @@ import {
 import Free from '../components/Free'
 import { AmountInput, Slider, SuccessButton } from '@chainx/ui'
 import Label from '../components/Label'
-import { normalizeNumber, retry, toPrecision } from '../../../../../../utils'
+import {
+  canRequestSign,
+  normalizeNumber,
+  retry,
+  toPrecision
+} from '../../../../../../utils'
 import { isDemoSelector } from '../../../../../../selectors'
 import {
   showSnack,
@@ -114,7 +119,7 @@ export default function() {
       return
     }
 
-    if (!window.chainxProvider) {
+    if (!canRequestSign()) {
       // TODO: 考虑没有安装插件的情况下怎么与用户进行交互
       return
     }

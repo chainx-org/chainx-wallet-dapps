@@ -3,7 +3,7 @@ import StyledDialog from './StyledDialog'
 import { AmountInput, PrimaryButton, TextInput } from '@chainx/ui'
 import $t from '../../../locale'
 import { Label, Value } from '../../AssetManagement/components'
-import { retry, toPrecision } from '../../../utils'
+import { canRequestSign, retry, toPrecision } from '../../../utils'
 import { useDispatch, useSelector } from 'react-redux'
 import { pcxFreeSelector } from '../../AssetManagement/PcxCard/selectors'
 import {
@@ -69,7 +69,7 @@ export default function() {
       return
     }
 
-    if (!window.chainxProvider) {
+    if (!canRequestSign()) {
       // TODO: 考虑没有安装插件的情况下怎么与用户进行交互
       return
     }

@@ -8,7 +8,7 @@ import {
 } from '@chainx/ui'
 import styled from 'styled-components'
 import $t from '../../locale'
-import { retry, toPrecision } from '../../utils'
+import { canRequestSign, retry, toPrecision } from '../../utils'
 import { useDispatch, useSelector } from 'react-redux'
 import { xbtcFreeSelector } from './Assets/XbtcCard/selectors'
 import { getChainx } from '../../services/chainx'
@@ -106,7 +106,7 @@ export default function({ handleClose, token }) {
       return
     }
 
-    if (!window.chainxProvider) {
+    if (!canRequestSign()) {
       // TODO: 考虑没有安装插件的情况下怎么与用户进行交互
       return
     }

@@ -5,7 +5,7 @@ import { AmountInput, PrimaryButton, SelectInput, TextInput } from '@chainx/ui'
 import { useDispatch, useSelector } from 'react-redux'
 import { xbtcFreeSelector } from '../selectors'
 import $t from '../../../../../locale'
-import { retry, toPrecision } from '../../../../../utils'
+import { canRequestSign, retry, toPrecision } from '../../../../../utils'
 import infoIcon from '../../../../../static/explan.svg'
 import {
   btcWithdrawLimitSelector,
@@ -101,7 +101,7 @@ export default function({ handleClose }) {
       return
     }
 
-    if (!window.chainxProvider) {
+    if (!canRequestSign()) {
       // TODO: 考虑没有安装插件的情况下怎么与用户进行交互
       return
     }

@@ -15,7 +15,7 @@ import Free from '../components/Free'
 import Label from '../components/Label'
 import { AmountInput, Slider, DangerButton } from '@chainx/ui'
 import { marks } from '../constants'
-import { retry, toPrecision } from '../../../../../../utils'
+import { canRequestSign, retry, toPrecision } from '../../../../../../utils'
 import { addressSelector } from '../../../../../../reducers/addressSlice'
 import { isDemoSelector } from '../../../../../../selectors'
 import BigNumber from 'bignumber.js'
@@ -102,7 +102,7 @@ export default function() {
       return
     }
 
-    if (!window.chainxProvider) {
+    if (!canRequestSign()) {
       // TODO: 考虑没有安装插件的情况下怎么与用户进行交互
       return
     }
