@@ -71,6 +71,13 @@ export const sdotAssetSelector = createSelector(
   }
 )
 
+export const xbtcFreeSelector = createSelector(
+  xbtcAssetSelector,
+  xbtc => {
+    return xbtc.details.free
+  }
+)
+
 export const sdotFreeSelector = createSelector(
   sdotPrecisionSelector,
   sdotAssetSelector,

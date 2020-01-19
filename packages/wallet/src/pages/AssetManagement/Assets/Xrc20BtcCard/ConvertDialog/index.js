@@ -5,7 +5,6 @@ import $t from '../../../../../locale'
 import { Label, Value } from '../../../components'
 import { toPrecision } from '../../../../../utils'
 import { useDispatch, useSelector } from 'react-redux'
-import { xbtcBalanceSelector } from '../../../../CrossChainMining/selectors'
 import {
   fetchXrcBtcBalance,
   xrcBtcBalanceSelector,
@@ -23,6 +22,7 @@ import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
 import { isDemoSelector } from '../../../../../selectors'
 import { accountIdSelector } from '../../../../selectors/assets'
 import { getChainx } from '../../../../../services/chainx'
+import { xbtcFreeSelector } from '../../selectors'
 
 export default function({ handleClose }) {
   const accountAddress = useSelector(addressSelector)
@@ -34,7 +34,7 @@ export default function({ handleClose }) {
     label: token
   }))
 
-  const xbtcBalance = useSelector(xbtcBalanceSelector)
+  const xbtcFree = useSelector(xbtcFreeSelector)
   const xrcBtcBalance = useSelector(xrcBtcBalanceSelector)
 
   const [from, setFrom] = useState('X-BTC')
@@ -46,7 +46,7 @@ export default function({ handleClose }) {
   const [disabled, setDisabled] = useState(false)
 
   const precision = 8
-  const free = from === 'X-BTC' ? xbtcBalance : xrcBtcBalance
+  const free = from === 'X-BTC' ? xbtcFree : xrcBtcBalance
 
   const { address: contractAddress, selectors } = useSelector(
     xrcBtcXrc20InfoSelector
