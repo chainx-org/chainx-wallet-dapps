@@ -17,7 +17,7 @@ function getMessage(err) {
     return $t('COMMON_SIGN_TX_BUSY')
   }
 
-  return err.msg
+  return err.msg || err.message
 }
 
 export function signAndSendExtrinsic(address, data) {
