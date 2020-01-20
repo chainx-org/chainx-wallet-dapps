@@ -63,6 +63,14 @@ const common = {
   COMMON_SIGN_TX_BUSY: {
     en: 'Sign transaction busy',
     zh: '插件存在尚未处理的签名请求'
+  },
+  COMMON_INVALID_BROWSER_TITLE: {
+    en: 'Browser not supported',
+    zh: '非法浏览器'
+  },
+  COMMON_INVALID_BROWSER_MSG: {
+    en: 'Please use the latest chrome browser.',
+    zh: '请使用最新版chrome浏览器。'
   }
 }
 

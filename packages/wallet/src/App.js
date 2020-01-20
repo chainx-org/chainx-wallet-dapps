@@ -27,6 +27,11 @@ import {
 } from './reducers/intentionSlice'
 import { Loading } from './components'
 import { loadingSelector } from './reducers/runStatusSlice'
+import { addSnack, generateId, typeEnum } from './reducers/snackSlice'
+import $t from './locale'
+
+const isChrome =
+  !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime)
 
 function App() {
   const address = useSelector(addressSelector)
@@ -48,6 +53,18 @@ function App() {
 
     return () => subscriber.unsubscribe()
   }, [dispatch, address])
+
+  useEffect(() => {
+    if (isChrome) {
+      return
+    }
+
+    const id = generateId()
+    const type = typeEnum.ERROR
+    const title = $t('COMMON_INVALID_BROWSER_TITLE')
+    const message = $t('COMMON_INVALID_BROWSER_MSG')
+    dispatch(addSnack({ id, type, title, message }))
+  }, [dispatch])
 
   return (
     <Router>
