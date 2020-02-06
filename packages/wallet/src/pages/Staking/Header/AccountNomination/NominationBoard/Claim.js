@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addressSelector } from '../../../../../reducers/addressSlice'
 import { PrimaryButton } from '@chainx/ui'
@@ -25,6 +25,15 @@ export default function({ record, interest }) {
 
   const dispatch = useDispatch()
   const chainx = getChainx()
+
+  const mounted = useRef(false)
+  useEffect(() => {
+    mounted.current = true
+
+    return () => {
+      mounted.current = false
+    }
+  }, [])
 
   const claim = async target => {
     if (!canRequestSign()) {
@@ -58,7 +67,9 @@ export default function({ record, interest }) {
         2
       )
     } finally {
-      setDisabled(false)
+      if (mounted.current) {
+        setDisabled(false)
+      }
     }
   }
 
