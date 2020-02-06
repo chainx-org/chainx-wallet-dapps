@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
-import { detailedRecordsSelector } from './selectors'
+import { sortedRecordsSelector } from './selectors'
 import defaultLogo from '../../../svg/default-logo.svg'
 import { DefaultButton } from '@chainx/ui'
 import { toPrecision } from '../../../../../utils'
@@ -82,7 +82,7 @@ const Wrapper = styled.div`
 `
 
 export default function() {
-  const records = useSelector(detailedRecordsSelector)
+  const records = useSelector(sortedRecordsSelector)
   const precision = useSelector(pcxPrecisionSelector)
   const dispatch = useDispatch()
 

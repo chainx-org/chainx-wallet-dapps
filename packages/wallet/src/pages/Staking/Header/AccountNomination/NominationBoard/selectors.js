@@ -11,18 +11,29 @@ export const detailedRecordsSelector = createSelector(
   normalizedIntentionsSelector,
   blockNumberSelector,
   (records, intentions, blockNumber) => {
-    return records.map(record => {
-      const intention = intentions.find(
-        intention => intention.account === record.intention
-      )
+    return records
+      .map(record => {
+        const intention = intentions.find(
+          intention => intention.account === record.intention
+        )
 
-      const interest = calcInterest(record, intention, blockNumber)
+        const interest = calcInterest(record, intention, blockNumber)
 
-      return {
-        ...record,
-        intention,
-        interest
-      }
-    })
+        return {
+          ...record,
+          intention,
+          interest
+        }
+      })
+      .filter(record => {
+        return record.info.nomination > 0 || record.interest > 0
+      })
+  }
+)
+
+export const sortedRecordsSelector = createSelector(
+  detailedRecordsSelector,
+  records => {
+    return [...records].sort((a, b) => b.interest - a.interest)
   }
 )
