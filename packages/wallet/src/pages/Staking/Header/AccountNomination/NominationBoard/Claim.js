@@ -28,7 +28,6 @@ export default function({ record, interest }) {
 
   const claim = async target => {
     if (!canRequestSign()) {
-      // TODO: 考虑没有安装插件的情况下怎么与用户进行交互
       return
     }
 
@@ -39,11 +38,13 @@ export default function({ record, interest }) {
         accountAddress,
         extrinsic.toHex()
       )
+
+      const hashMsg = $t('COMMON_TX_HASH', { hash: status.txHash })
       const messages = {
-        successTitle: '提息成功',
-        failTitle: '提息失败',
-        successMessage: `交易hash ${status.txHash}`,
-        failMessage: `交易hash ${status.txHash}`
+        successTitle: $t('COMMON_MSG_SUCCESS', { msg: $t('STAKING_CLAIM') }),
+        failTitle: $t('COMMON_MSG_Fail', { msg: $t('STAKING_CLAIM') }),
+        successMessage: hashMsg,
+        failMessage: hashMsg
       }
 
       await showSnack(status, messages, dispatch)
