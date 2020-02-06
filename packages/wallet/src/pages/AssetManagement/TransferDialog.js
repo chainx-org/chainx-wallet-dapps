@@ -98,16 +98,11 @@ export default function({ handleClose, token }) {
       return
     }
 
-    if (checkAmountAndHasError(amount, free, precision, setAmountErrMsg)) {
-      return
-    }
-
-    if (checkMemoAndHasError(memo, setMemoErrMsg)) {
-      return
-    }
-
-    if (!canRequestSign()) {
-      // TODO: 考虑没有安装插件的情况下怎么与用户进行交互
+    if (
+      checkAmountAndHasError(amount, free, precision, setAmountErrMsg) ||
+      checkMemoAndHasError(memo, setMemoErrMsg) ||
+      !canRequestSign()
+    ) {
       return
     }
 
