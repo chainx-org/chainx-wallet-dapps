@@ -34,6 +34,6 @@ export const detailedRecordsSelector = createSelector(
 export const sortedRecordsSelector = createSelector(
   detailedRecordsSelector,
   records => {
-    return [...records].sort((a, b) => b.interest - a.interest)
+    return [...records].sort((a, b) => b.info.nomination - a.info.nomination)
   }
 )
