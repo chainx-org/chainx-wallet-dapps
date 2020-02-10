@@ -8,6 +8,7 @@ import Amount from './Amount'
 import Hash from './Hash'
 import Address from './Address'
 import Loading from './Loading'
+import MiniLoading from './MiniLoading'
 
 export {
   SignDialog,
@@ -19,5 +20,6 @@ export {
   Amount,
   Hash,
   Address,
-  Loading
+  Loading,
+  MiniLoading
 }
