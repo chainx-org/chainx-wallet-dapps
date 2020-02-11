@@ -98,6 +98,10 @@ const staking = {
   STAKING_NEXT_RENOMINATE_WARNING: {
     en: 'Next re-nominate height: {height} (About {time})',
     zh: '下次可切换高度：{height}（预估 {time}）'
+  },
+  STAKING_TOO_MUCH_NOMINATION: {
+    en: 'Total votes over 10 times node bonded',
+    zh: '节点总得票不能超过节点自抵押的10倍'
   }
 }
 

@@ -36,6 +36,7 @@ export default function() {
   const voteOpen = useSelector(voteOpenSelector)
 
   const intention = useSelector(voteIntentionSelector) || {}
+  console.log('intention', intention)
   const handleClose = () => dispatch(setVoteOpen(false))
 
   const record = (nominationRecords || []).find(
@@ -70,13 +71,17 @@ export default function() {
     }
 
     if (!canRequestSign()) {
-      // TODO: 考虑没有安装插件的情况下怎么与用户进行交互
       return
     }
 
     const realAmount = BigNumber(amount)
       .multipliedBy(Math.pow(10, precision))
       .toNumber()
+
+    if (intention.selfVote * 10 < intention.totalNomination + realAmount) {
+      setAmountErrMsg($t('STAKING_TOO_MUCH_NOMINATION'))
+      return
+    }
 
     setDisabled(true)
     try {
