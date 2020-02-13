@@ -26,7 +26,13 @@ export const producerSelector = createSelector(
       return null
     }
 
-    const producerAccount = getChainx().account.decodeAddress(head.producer)
+    let producerAccount
+    try {
+      producerAccount = getChainx().account.decodeAddress(head.producer)
+    } catch (e) {
+      return null
+    }
+
     const intention = intentions.find(
       intention => intention.account === producerAccount
     )
