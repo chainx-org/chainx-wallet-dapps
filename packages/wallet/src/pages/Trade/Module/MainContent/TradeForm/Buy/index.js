@@ -177,7 +177,7 @@ export default function() {
         </PriceWrapper>
         <div>
           <AmountInput
-            style={{ maxWidth: 216 }}
+            style={{ width: 216 }}
             id="buy-price"
             value={price}
             onChange={value => {
