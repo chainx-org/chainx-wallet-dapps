@@ -69,3 +69,9 @@ export const canRequestSign = function() {
 
   return isSigner || (isExtension && window.chainxProvider)
 }
+
+export const sleep = (seconds = 3) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => reject({ timeout: true }), seconds * 1000)
+  })
+}

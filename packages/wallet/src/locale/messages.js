@@ -106,6 +106,10 @@ const header = {
     en: 'Please retry after install and open ChainX Signer',
     zh: '请下载安装或打开ChainX Signer后重试'
   },
+  HEADER_MSG_SIGNER_LINK_TIMEOUT: {
+    en: 'Connect to signer timeout',
+    zh: '连接超时'
+  },
   HEADER_SIGNER_DISCONNECT_TITLE: {
     en: 'ChainX signer disconnectd',
     zh: 'ChainX signer断开连接'

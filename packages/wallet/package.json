@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "7.6.0",
-    "@chainx/signer-connector": "^1.0.10",
+    "@chainx/signer-connector": "^1.0.11",
     "@chainx/ui": "0.1.0",
     "@polkadot/util": "^1.6.1",
     "@reduxjs/toolkit": "^1.0.4",

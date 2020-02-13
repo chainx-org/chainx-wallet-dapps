@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import signerIcon from '../signer.svg'
 import $t from '../../../../locale'
 import signerDownloadIcon from './signer_download.svg'
@@ -13,10 +13,23 @@ import {
 import { store } from '../../../../index'
 import { isExtensionSelector } from '../../../../reducers/addressSlice'
 import { disConnectExtension, listenExtension } from '../../../../connector'
+import { MiniLoading } from '../../../../components'
+import { sleep } from '../../../../utils'
 
 export default function() {
   const dispatch = useDispatch()
   const isExtensionAccount = useSelector(isExtensionSelector)
+
+  const [connecting, setConnecting] = useState(false)
+
+  const mounted = useRef(false)
+  useEffect(() => {
+    mounted.current = true
+
+    return () => {
+      mounted.current = false
+    }
+  }, [])
 
   const connect = async () => {
     try {
@@ -24,7 +37,8 @@ export default function() {
         disConnectExtension()
       }
 
-      await connectSigner()
+      setConnecting(true)
+      await Promise.race([connectSigner(), sleep(20)])
     } catch (e) {
       if (isExtensionAccount) {
         listenExtension()
@@ -34,8 +48,16 @@ export default function() {
         store.dispatch,
         typeEnum.ERROR,
         $t('HEADER_MSG_SIGNER_LINK_FAIL_TITLE'),
-        $t('HEADER_MSG_SIGNER_LINK_FAIL_DETAIL')
+        $t(
+          e.timeout
+            ? 'HEADER_MSG_SIGNER_LINK_TIMEOUT'
+            : 'HEADER_MSG_SIGNER_LINK_FAIL_DETAIL'
+        )
       )
+    } finally {
+      if (mounted.current) {
+        setConnecting(false)
+      }
     }
   }
 
@@ -45,6 +67,7 @@ export default function() {
         <img src={signerIcon} alt="extension" />
         <span>{$t('HEADER_CONNECT_SIGNER')}</span>
       </span>
+      {connecting && <MiniLoading />}
       <img
         src={signerDownloadIcon}
         onClick={() => {
