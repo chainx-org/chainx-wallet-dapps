@@ -105,22 +105,21 @@ export default function() {
       .toNumber()
 
     if (realPrice <= 0) {
-      setPriceErrMsg('无效价格')
+      setPriceErrMsg($t('TRADE_INVALID_PRICE'))
       return
     }
 
     if (maxBuyPrice && realPrice > maxBuyPrice) {
-      setPriceErrMsg(`最大价格${maxBuyShowPrice}`)
+      setPriceErrMsg($t('TRADE_MAX_PRICE', { price: maxBuyShowPrice }))
       return
     }
 
     if (realAmount <= 0) {
-      setAmountErrMsg('无效数量')
+      setAmountErrMsg($t('TRADE_INVALID_AMOUNT'))
       return
     }
 
     if (!canRequestSign()) {
-      // TODO: 考虑没有安装插件的情况下怎么与用户进行交互
       return
     }
 
@@ -140,8 +139,8 @@ export default function() {
       )
 
       const messages = {
-        successTitle: '买单成功',
-        failTitle: '买单失败',
+        successTitle: $t('TRADE_BUY_SUCCESS'),
+        failTitle: $t('TRADE_BUY_FAIL'),
         successMessage: `买单数量 ${amount} ${pairAsset}`,
         failMessage: `交易hash ${status.txHash}`
       }

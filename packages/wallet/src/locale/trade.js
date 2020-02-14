@@ -70,5 +70,25 @@ export default {
   TRADE_SELL: {
     en: 'Sell',
     zh: '卖出'
+  },
+  TRADE_INVALID_PRICE: {
+    en: 'Invalid price',
+    zh: '无效价格'
+  },
+  TRADE_MAX_PRICE: {
+    en: 'Max price {price}',
+    zh: '最大价格{price}'
+  },
+  TRADE_INVALID_AMOUNT: {
+    en: 'Invalid amount',
+    zh: '无效数量'
+  },
+  TRADE_BUY_SUCCESS: {
+    en: 'Buy success',
+    zh: '买单成功'
+  },
+  TRADE_BUY_FAIL: {
+    en: 'Buy failed',
+    zh: '买单失败'
   }
 }
