@@ -79,8 +79,8 @@ export default function({ close = noneFunc }) {
           <p>{account.address}</p>
         </li>
       )}
-      {isExtensionAccount ? null : <ExtensionConnector />}
       {signerConnected ? null : <SignerConnector />}
+      {isExtensionAccount ? null : <ExtensionConnector />}
     </Wrapper>
   )
 }
