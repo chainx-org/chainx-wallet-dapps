@@ -4,7 +4,7 @@ import Lbtc from './LbtcCard'
 import Sdot from './SdotCard'
 import Xrc20Btc from './Xrc20BtcCard'
 import { useSelector } from 'react-redux'
-import { networkSelector } from '../../../reducers/settingsSlice'
+import { isTestNetSelector } from '../../../reducers/settingsSlice'
 import styled from 'styled-components'
 
 const Wrapper = styled.section`
@@ -31,7 +31,7 @@ const Wrapper = styled.section`
 `
 
 export default function() {
-  const network = useSelector(networkSelector)
+  const isTestNet = useSelector(isTestNetSelector)
 
   return (
     <Wrapper>
@@ -40,9 +40,7 @@ export default function() {
         <Sdot />
         <Lbtc />
       </div>
-      <div className="second-line">
-        {network === 'testnet' ? <Xrc20Btc /> : null}
-      </div>
+      <div className="second-line">{isTestNet && <Xrc20Btc />}</div>
     </Wrapper>
   )
 }

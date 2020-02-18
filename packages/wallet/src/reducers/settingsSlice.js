@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSelector, createSlice } from '@reduxjs/toolkit'
 
 const settingsSlice = createSlice({
   name: 'settings',
@@ -22,6 +22,10 @@ const settingsSlice = createSlice({
 
 export const localeSelector = state => state.settings.locale
 export const networkSelector = state => state.settings.network
+export const isTestNetSelector = createSelector(
+  networkSelector,
+  network => network === 'testneet'
+)
 
 export const { setLocale, setNetwork } = settingsSlice.actions
 
