@@ -49,7 +49,7 @@ export default function() {
         typeEnum.ERROR,
         $t('HEADER_MSG_SIGNER_LINK_FAIL_TITLE'),
         $t(
-          e.timeout
+          e && e.timeout
             ? 'HEADER_MSG_SIGNER_LINK_TIMEOUT'
             : 'HEADER_MSG_SIGNER_LINK_FAIL_DETAIL'
         )
