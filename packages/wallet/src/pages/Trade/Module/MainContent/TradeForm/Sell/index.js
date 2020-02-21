@@ -35,9 +35,11 @@ import infoIcon from '../../assets/info.svg'
 import { PriceWrapper } from '../components/PriceWrapper'
 import { accountIdSelector } from '../../../../../selectors/assets'
 import EventEmitter, { events } from '../../../eventEmitter'
+import { fetchAccountAssets } from '../../../../../../reducers/assetSlice'
 
 export default function() {
   const accountId = useSelector(accountIdSelector)
+  const address = useSelector(addressSelector)
   const pairPrecision = useSelector(pairPrecisionSelector)
   const { precision: assetPrecision = 0, free: assetFree = 0 } =
     useSelector(pairAssetFreeSelector) || {}
@@ -137,6 +139,7 @@ export default function() {
         () => {
           dispatch(fetchQuotations(pairId))
           dispatch(fetchNowOrders(accountId))
+          dispatch(fetchAccountAssets(address))
         },
         5,
         2
