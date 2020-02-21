@@ -31,7 +31,7 @@ const Desc = styled.span`
   line-height: 16px;
 `
 
-export default function(props) {
+export default React.memo(function(props) {
   return (
     <Wrapper>
       <img src={props.logo} alt="logo" />
@@ -41,4 +41,4 @@ export default function(props) {
       </section>
     </Wrapper>
   )
-}
+})

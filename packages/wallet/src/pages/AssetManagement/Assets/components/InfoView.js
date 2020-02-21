@@ -9,11 +9,11 @@ const Info = styled.p`
   line-height: 18px;
 `
 
-export default function(props) {
+export default React.memo(function({ className, title, info }) {
   return (
-    <div className={props.className}>
-      <Title>{props.title}</Title>
-      <Info>{props.info}</Info>
+    <div className={className}>
+      <Title>{title}</Title>
+      <Info>{info}</Info>
     </div>
   )
-}
+})
