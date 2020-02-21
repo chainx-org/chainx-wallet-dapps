@@ -60,7 +60,7 @@ export default function() {
   ).toFixed(pairShowPrecision)
 
   const [price, setPrice] = useState('')
-  const [priceInit, setPriceInit] = useState(false)
+  const [initPairId, setInitPairId] = useState(null)
   const [amount, setAmount] = useState('0')
 
   const [percentage, setPercentage] = useState(0)
@@ -70,11 +70,11 @@ export default function() {
   )
 
   useEffect(() => {
-    if (!priceInit && showPrice) {
+    if (initPairId !== pairId && showPrice) {
       setPrice(showPrice)
-      setPriceInit(true)
+      setInitPairId(pairId)
     }
-  }, [showPrice, priceInit])
+  }, [showPrice, pairId, initPairId])
 
   const [max, setMax] = useState(0)
 

@@ -46,7 +46,7 @@ export default function() {
   const showPrice = useSelector(currentShowPriceSelector)
 
   const [price, setPrice] = useState('')
-  const [priceInit, setPriceInit] = useState(false)
+  const [initPairId, setInitPairId] = useState(null)
   const [amount, setAmount] = useState('0')
 
   const [percentage, setPercentage] = useState(0)
@@ -54,12 +54,14 @@ export default function() {
   const accountAddress = useSelector(addressSelector)
   const isDemoAddr = useSelector(isDemoSelector)
 
+  const pairId = useSelector(currentPairIdSelector)
+
   useEffect(() => {
-    if (!priceInit && showPrice) {
+    if (initPairId !== pairId && showPrice) {
       setPrice(showPrice)
-      setPriceInit(true)
+      setInitPairId(pairId)
     }
-  }, [showPrice, priceInit])
+  }, [showPrice, pairId, initPairId])
 
   const volume = Number(
     Number(amount) * Number(price).toFixed(currencyPrecision)
@@ -70,7 +72,6 @@ export default function() {
 
   const [priceErrMsg, setPriceErrMsg] = useState('')
   const [amountErrMsg, setAmountErrMsg] = useState('')
-  const pairId = useSelector(currentPairIdSelector)
 
   const minSellPrice = useSelector(minSellPriceSelector)
   const minSellShowPrice = Number(
