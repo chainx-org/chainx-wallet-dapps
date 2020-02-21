@@ -24,7 +24,7 @@ const Value = styled.p`
     `}
 `
 
-export default function(props) {
+export default React.memo(function(props) {
   return (
     <div className={props.className}>
       <Title>{props.title}</Title>
@@ -37,4 +37,4 @@ export default function(props) {
       </Value>
     </div>
   )
-}
+})
