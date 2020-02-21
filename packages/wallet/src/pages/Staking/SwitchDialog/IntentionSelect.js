@@ -12,7 +12,10 @@ export default function({
   errorText
 }) {
   const intentions = useSelector(intentionsSelector)
-  const intentionNames = intentions.map(intention => intention.name)
+  const filteredIntentions = intentions.filter(intention =>
+    intention.name.toLowerCase().includes(value)
+  )
+  const intentionNames = filteredIntentions.map(intention => intention.name)
   const channelOptions = intentionNames.map(name => ({
     value: name,
     label: name
