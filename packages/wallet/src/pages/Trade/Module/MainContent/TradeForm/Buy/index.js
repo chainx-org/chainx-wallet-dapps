@@ -39,6 +39,7 @@ import { getChainx } from '../../../../../../services/chainx'
 import infoIcon from '../../assets/info.svg'
 import { PriceWrapper } from '../components/PriceWrapper'
 import { accountIdSelector } from '../../../../../selectors/assets'
+import EventEmitter, { events } from '../../../eventEmitter'
 
 export default function() {
   const accountId = useSelector(accountIdSelector)
@@ -75,6 +76,8 @@ export default function() {
       setInitPairId(pairId)
     }
   }, [showPrice, pairId, initPairId])
+
+  EventEmitter.subscribe(events.priceClicked, price => setPrice(price))
 
   const [max, setMax] = useState(0)
 

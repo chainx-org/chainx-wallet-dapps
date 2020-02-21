@@ -28,6 +28,7 @@ export const SumCell = styled(BaseCell)`
 export const OrderPriceCell = styled(PriceCell)`
   width: 30%;
   opacity: 0.72;
+  cursor: pointer;
   padding: 0 0 0 12px !important;
 `
 

@@ -10,6 +10,7 @@ import {
   SumCell,
   TableWrapper
 } from './Wrapper'
+import EventEmitter, { events } from '../eventEmitter'
 
 export default function({ orders, isAsk }) {
   const pair = useSelector(currentPairSelector)
@@ -32,7 +33,14 @@ export default function({ orders, isAsk }) {
 
             return (
               <TableRow key={index}>
-                <OrderPriceCell height={24}>{price}</OrderPriceCell>
+                <OrderPriceCell
+                  height={24}
+                  onClick={() =>
+                    EventEmitter.dispatch(events.priceClicked, price)
+                  }
+                >
+                  {price}
+                </OrderPriceCell>
                 <OrderAmountCell
                   value={order.amount}
                   precision={assetPrecision}
