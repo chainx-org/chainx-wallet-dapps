@@ -41,7 +41,7 @@ export default function() {
         onClick={() => {
           dispatch(setOpenExtensionDownloadDialog(true))
         }}
-        alt="download signer"
+        alt="download extension"
       />
     </Wrapper>
   )

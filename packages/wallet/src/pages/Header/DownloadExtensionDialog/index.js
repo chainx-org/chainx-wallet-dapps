@@ -3,10 +3,14 @@ import StyledDialog from '../DownloadSignerDialog/Wrapper'
 import $t from '../../../locale'
 import { DefaultButton, PrimaryButton } from '@chainx/ui'
 
-const extensionReleasesPageUrl =
+const chromeExtensionReleasesPageUrl =
   'https://chrome.google.com/webstore/detail/chainx-extension/dffjlgnecfafjfmkknpipapcbgajflge'
+const edgeExtensionReleasesPageUrl =
+  'https://microsoftedge.microsoft.com/addons/detail/pglmaogdhpmengmblgdjgnnabbafegkk'
 
 export default function({ handleClose }) {
+  const isEdge = /Edg/.test(window.navigator.userAgent)
+
   return (
     <StyledDialog
       open
@@ -19,7 +23,11 @@ export default function({ handleClose }) {
           <PrimaryButton
             size="medium"
             onClick={() => {
-              window.open(extensionReleasesPageUrl)
+              window.open(
+                isEdge
+                  ? edgeExtensionReleasesPageUrl
+                  : chromeExtensionReleasesPageUrl
+              )
             }}
           >
             {$t('HEADER_GO_TO_STORE')}

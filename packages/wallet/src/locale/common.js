@@ -60,8 +60,8 @@ export default {
     zh: '非法浏览器'
   },
   COMMON_INVALID_BROWSER_MSG: {
-    en: 'Please use the latest chrome browser.',
-    zh: '请使用最新版chrome浏览器。'
+    en: 'Please use the latest Chrome or Edge browser.',
+    zh: '请使用最新版Chrome或Edge浏览器。'
   },
   COMMON_TX_HASH: {
     en: 'Transaction hash {hash}',
