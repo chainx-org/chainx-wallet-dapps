@@ -65,6 +65,20 @@ export async function connectSigner() {
   }
 
   const node = await signer.getCurrentNode()
+  if (
+    node &&
+    window.location.protocol === 'https' &&
+    (node.url || '').startsWith('ws://')
+  ) {
+    addAutoCloseSnackWithParams(
+      store.dispatch,
+      typeEnum.ERROR,
+      $t('HEADER_MSG_NODE_INVALID_TITLE'),
+      $t('HEADER_MSG_NODE_INVALID_DETAIL')
+    )
+
+    throw new Error('Invalid node protocol')
+  }
   await setChainx(node.url)
 
   const settings = await signer.getSettings()

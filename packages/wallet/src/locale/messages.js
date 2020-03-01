@@ -98,6 +98,14 @@ const header = {
     en: 'No account in ChainX Signer and switch to demo account',
     zh: 'ChainX Signer中无账户，自动切换为体验账户'
   },
+  HEADER_MSG_NODE_INVALID_TITLE: {
+    en: 'Node protocol invalid',
+    zh: '节点协议非法'
+  },
+  HEADER_MSG_NODE_INVALID_DETAIL: {
+    en: 'Please use node with url starts with wss://',
+    zh: '请使用安全的节点连接（以wss://开头）'
+  },
   HEADER_MSG_SIGNER_LINK_FAIL_TITLE: {
     en: 'Fail to connect signer',
     zh: '连接ChainX Signer失败'
