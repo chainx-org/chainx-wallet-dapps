@@ -17,9 +17,7 @@ export default function({
   abi,
   setShowDeploy,
   setUpdate,
-  isnew = true,
-  loading,
-  setLoading
+  isnew = true
 }) {
   const [name, setName] = useState((abi && abi.name) || '')
   const [address, setAddress] = useState('')
@@ -29,6 +27,7 @@ export default function({
   const [endowment, setEndowment] = useState(0)
   const [gas, setGas] = useState(5000000)
   const [file, setFile] = useState({})
+  const [loading, setLoading] = useState(false)
 
   const dispatch = useDispatch()
 

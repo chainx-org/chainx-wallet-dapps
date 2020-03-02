@@ -111,6 +111,7 @@ export default function(props) {
     const id = generateId()
     if (message.mutates) {
       console.log('send methods')
+      debugger
       const data = await send(
         item.contract.abi,
         item.address,
