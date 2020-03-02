@@ -58,7 +58,7 @@ export async function call(abi, address, method, gas, params) {
       if (data) {
         return { status: true, result: data.toString() }
       } else {
-        return { status: true, result: result }
+        return { status: true, result: result.data }
       }
     } else {
       return { status: false, result: 'status is error' }
