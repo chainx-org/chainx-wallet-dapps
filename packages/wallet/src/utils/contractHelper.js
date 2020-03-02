@@ -29,7 +29,6 @@ export async function call(abi, address, method, gas, params) {
   const account = await window.chainxProvider.enable()
   const chainx = getChainx()
   const parseAbi = new Abi(abi)
-  debugger
   parseParams(parseAbi.messages[stringCamelCase(method)].args, params)
   try {
     const obj = {
