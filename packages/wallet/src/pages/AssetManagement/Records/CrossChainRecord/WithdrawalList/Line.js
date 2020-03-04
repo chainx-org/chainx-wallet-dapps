@@ -35,7 +35,13 @@ export default function({ withdrawal }) {
 
   const chainx = getChainx()
   const revokeWithdraw = async (id, balance) => {
-    const extrinsic = chainx.asset.revokeWithdraw(id)
+    const extrinsic = do {
+      if (chainx.api.tx.xAssetsProcess) {
+        chainx.asset.revokeWithdraw(id)
+      } else {
+        chainx.api.tx.withdrawal.revokeWithdraw(id)
+      }
+    }
     const status = await signAndSendExtrinsic(accountAddress, extrinsic.toHex())
 
     const messages = {
