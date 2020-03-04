@@ -56,9 +56,9 @@ export async function call(abi, address, method, gas, params) {
         u8aToU8a(result.data)
       ).toJSON()
       if (data) {
-        return { status: true, result: data.toString() }
+        return { status: true, result: JSON.stringify(result.data) }
       } else {
-        return { status: true, result: result.data }
+        return { status: true, result: JSON.stringify(result.data) }
       }
     } else {
       return { status: false, result: 'status is error' }
