@@ -58,7 +58,7 @@ export async function call(abi, address, method, gas, params) {
       if (data) {
         return { status: true, result: JSON.stringify(result.data) }
       } else {
-        return { status: true, result: JSON.stringify(result.data) }
+        return { status: true, result: JSON.stringify(result) }
       }
     } else {
       return { status: false, result: 'status is error' }
