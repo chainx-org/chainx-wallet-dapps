@@ -14,11 +14,11 @@ import { store } from '../../../../index'
 import { isExtensionSelector } from '../../../../reducers/addressSlice'
 import { disConnectExtension, listenExtension } from '../../../../connector'
 import { MiniLoading } from '../../../../components'
-import { sleep } from '../../../../utils'
+import { signer } from '../../../../services/signer'
 
 export default function() {
   const dispatch = useDispatch()
-  const isExtensionAccount = useSelector(isExtensionSelector)
+  const isExtensionConnected = useSelector(isExtensionSelector)
 
   const [connecting, setConnecting] = useState(false)
 
@@ -33,14 +33,15 @@ export default function() {
 
   const connect = async () => {
     try {
-      if (isExtensionAccount) {
+      setConnecting(true)
+      await connectSigner()
+
+      if (isExtensionConnected) {
+        console.log('disconnect extension')
         disConnectExtension()
       }
-
-      setConnecting(true)
-      await Promise.race([connectSigner(), sleep(20)])
     } catch (e) {
-      if (isExtensionAccount) {
+      if (isExtensionConnected) {
         listenExtension()
       }
 
@@ -54,6 +55,8 @@ export default function() {
             : 'HEADER_MSG_SIGNER_LINK_FAIL_DETAIL'
         )
       )
+
+      signer.disconnect()
     } finally {
       if (mounted.current) {
         setConnecting(false)
