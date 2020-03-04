@@ -31,7 +31,7 @@ import { addSnack, generateId, typeEnum } from './reducers/snackSlice'
 import $t from './locale'
 
 const isChrome =
-  !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime)
+  /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
 
 function App() {
   const address = useSelector(addressSelector)
