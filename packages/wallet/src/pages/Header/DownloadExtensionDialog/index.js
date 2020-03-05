@@ -15,7 +15,7 @@ export default function({ handleClose }) {
     <StyledDialog
       open
       handleClose={handleClose}
-      title={$t('HEADER_DOWNLOAD_SIGNER_TITLE')}
+      title={$t('HEADER_DOWNLOAD_EXTENSION_TITLE')}
     >
       <div className="wrapper">
         <p>{$t('HEADER_DOWNLOAD_EXTENSION_DETAIL')}</p>
