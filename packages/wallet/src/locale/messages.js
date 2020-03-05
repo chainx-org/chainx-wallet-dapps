@@ -80,7 +80,8 @@ const header = {
   },
   HEADER_DOWNLOAD_EXTENSION_DETAIL: {
     en: 'Install ChainX extension from chrome extension store.',
-    zh: '在 Google 商店内搜索并安装 ChainX 插件，安装完成后请手动刷新钱包页面。'
+    zh:
+      '在 {browser} 商店内搜索并安装 ChainX 插件，安装完成后请手动刷新钱包页面。'
   },
   HEADER_GO_TO_DOWNLOAD: {
     en: 'Download page',

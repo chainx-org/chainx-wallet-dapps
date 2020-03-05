@@ -18,7 +18,11 @@ export default function({ handleClose }) {
       title={$t('HEADER_DOWNLOAD_EXTENSION_TITLE')}
     >
       <div className="wrapper">
-        <p>{$t('HEADER_DOWNLOAD_EXTENSION_DETAIL')}</p>
+        <p>
+          {$t('HEADER_DOWNLOAD_EXTENSION_DETAIL', {
+            browser: isEdge ? 'Edge' : 'Google'
+          })}
+        </p>
         <div className="buttons">
           <PrimaryButton
             size="medium"
