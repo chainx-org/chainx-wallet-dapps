@@ -23,6 +23,16 @@ export default function() {
   const [candle, setCandle] = useState(null)
 
   useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (typeof pairId === 'number') {
+        dispatch(fetchKline(pairId, klineType))
+      }
+    }, 20000)
+
+    return () => clearInterval(intervalId)
+  }, [dispatch, pairId, klineType])
+
+  useEffect(() => {
     if (typeof pairId === 'number') {
       dispatch(fetchKline(pairId, klineType))
     }
