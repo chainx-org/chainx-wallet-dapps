@@ -15,6 +15,16 @@ export default function() {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (pair) {
+        dispatch(fetchQuotations(pair.id))
+      }
+    }, 5000)
+
+    return () => clearInterval(intervalId)
+  }, [dispatch, pair])
+
+  useEffect(() => {
     if (pair) {
       dispatch(fetchQuotations(pair.id))
     }

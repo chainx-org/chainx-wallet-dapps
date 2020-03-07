@@ -9,8 +9,15 @@ import { accountIdSelector } from '../../../selectors/assets'
 export default function() {
   const accountId = useSelector(accountIdSelector)
   const orders = useSelector(userOrders)
-
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      dispatch(fetchNowOrders(accountId))
+    }, 5000)
+
+    return () => clearInterval(intervalId)
+  }, [dispatch, accountId])
 
   useEffect(() => {
     dispatch(fetchNowOrders(accountId))
