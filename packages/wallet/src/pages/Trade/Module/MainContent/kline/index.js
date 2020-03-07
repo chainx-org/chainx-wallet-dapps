@@ -10,6 +10,7 @@ import Galaxy from './Galaxy/main'
 import TypeSelector from './TypeSelector'
 import { currentPairIdSelector } from '../../../../../reducers/tradeSlice'
 import Stat from './Stat'
+import { networkSelector } from '../../../../../reducers/settingsSlice'
 
 const canvasId = 'chainx-kline'
 
@@ -21,6 +22,7 @@ export default function() {
   const klineType = useSelector(klineTypeSelector)
   const pairId = useSelector(currentPairIdSelector)
   const [candle, setCandle] = useState(null)
+  const network = useSelector(networkSelector)
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -30,13 +32,13 @@ export default function() {
     }, 20000)
 
     return () => clearInterval(intervalId)
-  }, [dispatch, pairId, klineType])
+  }, [dispatch, pairId, klineType, network])
 
   useEffect(() => {
     if (typeof pairId === 'number') {
       dispatch(fetchKline(pairId, klineType))
     }
-  }, [dispatch, pairId, klineType])
+  }, [dispatch, pairId, klineType, network])
 
   class Observer {
     setSubject(galaxy) {
@@ -59,9 +61,9 @@ export default function() {
       return
     }
 
-    if (klineType === lastType && pairId === lastPairId) {
-      return
-    }
+    // if (klineType === lastType && pairId === lastPairId) {
+    //   return
+    // }
 
     const canvas = window.document.getElementById(canvasId)
     const context = canvas.getContext('2d')
@@ -73,7 +75,7 @@ export default function() {
     setLastType(klineType)
     setLastPairId(pairId)
     return () => galaxy.destroy()
-  }, [data, klineType, lastType, pairId, lastPairId, observer])
+  }, [data, klineType, lastType, pairId, lastPairId, observer, network])
 
   return (
     <Wrapper>
