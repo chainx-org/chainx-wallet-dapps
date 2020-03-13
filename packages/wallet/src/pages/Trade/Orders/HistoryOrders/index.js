@@ -24,11 +24,18 @@ export default function() {
 
   return (
     <>
-      <TableHead />
       {orders.length > 0 ? (
-        <Content />
+        <>
+          <Content />
+        </>
       ) : (
-        <Empty text="无历史委托" style={{ marginTop: 30, marginBottom: 30 }} />
+        <>
+          <TableHead />
+          <Empty
+            text="无历史委托"
+            style={{ marginTop: 30, marginBottom: 30 }}
+          />
+        </>
       )}
     </>
   )

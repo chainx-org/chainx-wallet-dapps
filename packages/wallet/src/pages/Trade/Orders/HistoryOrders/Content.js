@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { historyOrdersSelector } from '../../../../reducers/tradeSlice'
-import { Table, TableBody, TableRow } from '@chainx/ui'
+import { Table, TableBody, TableHead, TableRow } from '@chainx/ui'
 import {
   pairAssetPrecision,
   pairCurrencyPrecision
@@ -15,7 +15,7 @@ import {
   TimeCell
 } from '../UserOrders/Wrapper'
 import moment from 'moment'
-import { StatCell } from '../Wrapper'
+import { HeadCell, StatCell } from '../Wrapper'
 import $t from '../../../../locale'
 
 export default function() {
@@ -25,6 +25,32 @@ export default function() {
 
   return (
     <Table>
+      <TableHead>
+        <TableRow>
+          <HeadCell style={{ width: '12%' }}>{$t('TRADE_DATE')}</HeadCell>
+          <HeadCell style={{ width: '5%' }}>{$t('TRADE_INDEX')}</HeadCell>
+          <HeadCell style={{ width: '8%' }}>{$t('TRADE_PAIR')}</HeadCell>
+          <HeadCell style={{ width: '11%' }}>
+            {$t('TRADE_ORDER_PRICE')}
+          </HeadCell>
+          <HeadCell style={{ width: '14%' }}>
+            {$t('TRADE_ORDER_PRICE')}
+          </HeadCell>
+          <HeadCell style={{ width: '15%' }}>
+            {$t('TRADE_ORDER_FILLED_PERCENT')}
+          </HeadCell>
+          <HeadCell style={{ width: '11%' }}>
+            {$t('TRADE_ORDER_FILL_AVG_PRICE')}
+          </HeadCell>
+          <HeadCell style={{ width: '15%' }}>
+            {$t('TRADE_ORDER_FILL_ALL_VOLUME')}
+          </HeadCell>
+          <HeadCell style={{ textAlign: 'right' }}>
+            {$t('COMMON_STATUS')}
+          </HeadCell>
+        </TableRow>
+      </TableHead>
+
       <TableBody>
         {orders.map((order, index) => {
           const currencyPair = order['pair.currency_pair']
