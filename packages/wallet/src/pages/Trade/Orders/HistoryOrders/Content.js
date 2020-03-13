@@ -16,6 +16,7 @@ import {
 } from '../UserOrders/Wrapper'
 import moment from 'moment'
 import { StatCell } from '../Wrapper'
+import $t from '../../../../locale'
 
 export default function() {
   const orders = useSelector(historyOrdersSelector)
@@ -91,11 +92,11 @@ export default function() {
               </NumberCell>
               <StatCell>
                 {order.status === 'Canceled'
-                  ? '已撤销'
+                  ? $t('TRADE_ORDER_STATUS_CANCELED')
                   : order.status === 'Filled'
-                  ? '完全成交'
+                  ? $t('TRADE_ORDER_STATUS_FILLED')
                   : order.status === 'ParitialFillAndCanceled'
-                  ? '部分成交已撤销'
+                  ? $t('TRADE_ORDER_STATUS_PARTIAL_FILLED')
                   : ''}
               </StatCell>
             </TableRow>

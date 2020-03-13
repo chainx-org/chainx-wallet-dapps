@@ -176,7 +176,9 @@ export default function() {
         <Error>{priceErrMsg || amountErrMsg}</Error>
       </div>
       <div className="price input">
-        <PriceWrapper data-tip={`最大买入价格${maxBuyShowPrice}`}>
+        <PriceWrapper
+          data-tip={$t('TRADE_MAX_BUY_PRICE', { price: maxBuyShowPrice })}
+        >
           <Label htmlFor="buy-price">{$t('TRADE_PRICE')}</Label>
           <img src={infoIcon} alt="info" />
         </PriceWrapper>

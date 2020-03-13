@@ -94,22 +94,21 @@ export default function() {
       .toNumber()
 
     if (realPrice <= 0) {
-      setPriceErrMsg('无效价格')
+      setPriceErrMsg($t('TRADE_INVALID_PRICE'))
       return
     }
 
     if (minSellPrice && realPrice < minSellPrice) {
-      setPriceErrMsg(`最小价格${minSellShowPrice}`)
+      setPriceErrMsg($t('TRADE_MIN_SELL_PRICE', { price: minSellShowPrice }))
       return
     }
 
     if (realAmount <= 0) {
-      setAmountErrMsg('无效数量')
+      setAmountErrMsg($t('TRADE_INVALID_AMOUNT'))
       return
     }
 
     if (!canRequestSign()) {
-      // TODO: 考虑没有安装插件的情况下怎么与用户进行交互
       return
     }
 
@@ -157,7 +156,9 @@ export default function() {
       </div>
 
       <div className="price input">
-        <PriceWrapper data-tip={`最小卖出价格${minSellShowPrice}`}>
+        <PriceWrapper
+          data-tip={$t('TRADE_MIN_SELL_PRICE', { price: minSellShowPrice })}
+        >
           <Label htmlFor="sell-price">{$t('TRADE_PRICE')}</Label>
           <img src={infoIcon} alt="info" />
         </PriceWrapper>
