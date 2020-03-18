@@ -55,7 +55,11 @@ window.onload = async () => {
   }
 
   if (isExtension) {
-    await connectExtension()
+    try {
+      await connectExtension()
+    } catch (e) {
+      await setDemoAccount(store)
+    }
   } else if (isSigner) {
     try {
       await connectSigner()

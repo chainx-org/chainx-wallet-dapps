@@ -80,7 +80,7 @@ export async function connectExtension() {
       $t('HEADER_MSG_NO_EXTENSION_ACCOUNT_DETAIL')
     )
 
-    return
+    throw new Error('No account in extension')
   }
 
   const network = await window.chainxProvider.getNetwork()
