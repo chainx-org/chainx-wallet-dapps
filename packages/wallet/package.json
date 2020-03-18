@@ -19,7 +19,7 @@
     "bignumber.js": "^9.0.0",
     "camelcase": "^5.2.0",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
-    "chainx.js": "^2.24.2",
+    "chainx.js": "2.22.31",
     "classnames": "^2.2.6",
     "clipboard": "^2.0.4",
     "css-loader": "2.1.1",
