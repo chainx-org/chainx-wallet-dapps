@@ -1,5 +1,10 @@
 import { getChainx } from '../services/chainx'
-import { compactAddLength, stringCamelCase, u8aToU8a } from '@chainx/util'
+import {
+  compactAddLength,
+  stringCamelCase,
+  u8aToU8a,
+  u8aToHex
+} from '@chainx/util'
 import { blake2AsU8a } from '@chainx/util-crypto'
 import { createType } from '@chainx/types'
 import { Abi } from '@chainx/api-contract'
@@ -37,7 +42,6 @@ export async function call(abi, address, method, gas, params) {
       gasLimit: gas,
       inputData: parseAbi.messages[stringCamelCase(method)](...params)
     }
-
     const result = await chainx.api.rpc.chainx.contractCall(obj)
     console.log('call result: ', result)
     if (result.status === 0) {
@@ -51,12 +55,9 @@ export async function call(abi, address, method, gas, params) {
         const vecContent = typeObj.params[0].type
         returnType = `Vec<${vecContent}>`
       }
-      const data = createType(
-        returnType.replace('{ "elems": "Vec" }<u8>', 'Text'),
-        u8aToU8a(result.data)
-      ).toJSON()
+      const data = createType(returnType, u8aToU8a(result.data)).toString()
       if (data) {
-        return { status: true, result: JSON.stringify(result.data) }
+        return { status: true, result: data }
       } else {
         return { status: true, result: JSON.stringify(result) }
       }
