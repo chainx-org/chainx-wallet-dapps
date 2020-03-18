@@ -43,6 +43,10 @@ export default {
     en: 'Order Price',
     zh: '委托价格'
   },
+  TRADE_ORDER_AMOUNT: {
+    en: 'Order Amount',
+    zh: '委托数量'
+  },
   TRADE_ORDER_VOLUME: {
     en: 'Order Volume',
     zh: '交易额'
@@ -50,6 +54,14 @@ export default {
   TRADE_ORDER_FREEZE: {
     en: 'Freeze amount',
     zh: '冻结金额'
+  },
+  TRADE_ORDER_FILL_AVG_PRICE: {
+    en: 'Avg Price',
+    zh: '成交均价'
+  },
+  TRADE_ORDER_FILL_ALL_VOLUME: {
+    en: 'All Volume',
+    zh: '成交总额'
   },
   TRADE_ORDER_FILLED_PERCENT: {
     en: 'Filled/Percentage%',
@@ -90,5 +102,25 @@ export default {
   TRADE_BUY_FAIL: {
     en: 'Buy failed',
     zh: '买单失败'
+  },
+  TRADE_MAX_BUY_PRICE: {
+    en: 'Max buying price {price}',
+    zh: '最大买入价格{price}'
+  },
+  TRADE_MIN_SELL_PRICE: {
+    en: 'Min selling price {price}',
+    zh: '最小卖出价格{price}'
+  },
+  TRADE_ORDER_STATUS_CANCELED: {
+    en: 'Cancelled',
+    zh: '已撤销'
+  },
+  TRADE_ORDER_STATUS_FILLED: {
+    en: 'Filled',
+    zh: '完全成交'
+  },
+  TRADE_ORDER_STATUS_PARTIAL_FILLED: {
+    en: 'PartFill&Cancelled',
+    zh: '部分成交已撤销'
   }
 }

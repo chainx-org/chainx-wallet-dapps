@@ -80,7 +80,8 @@ const header = {
   },
   HEADER_DOWNLOAD_EXTENSION_DETAIL: {
     en: 'Install ChainX extension from chrome extension store.',
-    zh: '在 Google 商店内搜索并安装 ChainX 插件，安装完成后请手动刷新钱包页面。'
+    zh:
+      '在 {browser} 商店内搜索并安装 ChainX 插件，安装完成后请手动刷新钱包页面。'
   },
   HEADER_GO_TO_DOWNLOAD: {
     en: 'Download page',
@@ -97,6 +98,14 @@ const header = {
   HEADER_MSG_NO_SIGNER_ACCOUNT_DETAIL: {
     en: 'No account in ChainX Signer and switch to demo account',
     zh: 'ChainX Signer中无账户，自动切换为体验账户'
+  },
+  HEADER_MSG_NO_EXTENSION_ACCOUNT_TITLE: {
+    en: 'No extension account',
+    zh: '插件无账户'
+  },
+  HEADER_MSG_NO_EXTENSION_ACCOUNT_DETAIL: {
+    en: 'No account in ChainX extension and switched to demo account',
+    zh: 'ChainX 插件中无账户，请创建或导入账户，已自动切换为体验账户'
   },
   HEADER_MSG_NODE_INVALID_TITLE: {
     en: 'Node protocol invalid',

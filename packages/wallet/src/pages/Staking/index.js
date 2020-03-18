@@ -22,6 +22,8 @@ import VoteDialog from './VoteDialog'
 import SwitchDialog from './SwitchDialog'
 import UnNominateDialog from './UnNominateDialog'
 import UnFreezeDialog from './UnfreezeDialog'
+import { getApi } from '../../services/api'
+import { getChainx } from '../../services/chainx'
 
 const Wrapper = styled.div`
   display: flex;
@@ -40,6 +42,8 @@ export default function() {
   const voteOpen = useSelector(voteOpenSelector)
   const switchNominationOpen = useSelector(switchNominationOpenSelector)
   const unNominateOpen = useSelector(unNominateOpenSelector)
+  const api = getApi()
+  const chainx = getChainx()
 
   const dispatch = useDispatch()
 
@@ -48,6 +52,9 @@ export default function() {
     dispatch(fetchIntentions())
     dispatch(fetchAssetsInfo())
     dispatch(fetchLogos())
+  }, [dispatch, api, chainx])
+
+  useEffect(() => {
     dispatch(fetchNominationRecords(address))
   }, [dispatch, address])
 

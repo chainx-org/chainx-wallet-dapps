@@ -8,8 +8,8 @@ export default {
     width: 5, // 每根蜡烛的宽度
     interval: 2, // 蜡烛之间的间隔空间
     color: {
-      up: '#E84352',
-      down: '#49B07C'
+      down: '#E84352',
+      up: '#49B07C'
     }
   },
   axis: {

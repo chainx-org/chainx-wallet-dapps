@@ -5,6 +5,8 @@ import { setNetwork } from '../reducers/settingsSlice'
 import { setChainx } from '../services/chainx'
 import { mainNetApi, setApi, testNetApi } from '../services/api'
 import { mainNetDemoAccount, testNetDemoAccount } from '../utils/constants'
+import { addAutoCloseSnackWithParams, typeEnum } from '../reducers/snackSlice'
+import $t from '../locale'
 
 export const nodeChangeListener = ({ to }) => {
   const { url } = store.getState().node
@@ -69,13 +71,24 @@ async function setExtensionAccount(network) {
 }
 
 export async function connectExtension() {
+  const extensionAccount = await window.chainxProvider.enable()
+  if (!extensionAccount) {
+    addAutoCloseSnackWithParams(
+      store.dispatch,
+      typeEnum.ERROR,
+      $t('HEADER_MSG_NO_EXTENSION_ACCOUNT_TITLE'),
+      $t('HEADER_MSG_NO_EXTENSION_ACCOUNT_DETAIL')
+    )
+
+    throw new Error('No account in extension')
+  }
+
   const network = await window.chainxProvider.getNetwork()
   store.dispatch(setNetwork(network))
   setApi(network === 'testnet' ? testNetApi : mainNetApi)
 
   await setExtensionAccount(network)
   await setExtensionNode()
-
   listenExtension()
 }
 

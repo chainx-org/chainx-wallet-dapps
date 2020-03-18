@@ -41,11 +41,10 @@ export const nameSelector = state =>
 export const accountSelector = state => state.address.account
 
 export const isExtensionSelector = state =>
-  state.address.account && state.address.account.isFromExtension
-export const isSignerSelector = state =>
-  state.address.account && state.address.account.isFromSigner
+  state.address.account?.isFromExtension
+export const isSignerSelector = state => state.address.account?.isFromSigner
 export const signerConnectedSelector = state =>
-  state.address.account && state.address.account.isFromSigner
+  state.address.account?.isFromSigner
 export const isDemoSelector = state => {
   const account = state.address.account
   return !account.isFromExtension && !account.isFromSigner

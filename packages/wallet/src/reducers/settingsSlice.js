@@ -24,7 +24,7 @@ export const localeSelector = state => state.settings.locale
 export const networkSelector = state => state.settings.network
 export const isTestNetSelector = createSelector(
   networkSelector,
-  network => network === 'testneet'
+  network => network === 'testnet'
 )
 
 export const { setLocale, setNetwork } = settingsSlice.actions

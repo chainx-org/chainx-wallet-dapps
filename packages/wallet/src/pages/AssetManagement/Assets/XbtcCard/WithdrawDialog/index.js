@@ -110,12 +110,23 @@ export default function({ handleClose }) {
 
     setDisabled(true)
     try {
-      const extrinsic = chainx.asset.withdraw(
-        'BTC',
-        realAmount,
-        address,
-        memo ? memo.trim() : ''
-      )
+      const extrinsic = do {
+        if (chainx.api.tx.xAssetsProcess) {
+          chainx.asset.withdraw(
+            'BTC',
+            realAmount,
+            address,
+            memo ? memo.trim() : ''
+          )
+        } else {
+          chainx.api.tx.withdrawal.withdraw(
+            'BTC',
+            realAmount,
+            address,
+            memo ? memo.trim() : ''
+          )
+        }
+      }
       const status = await signAndSendExtrinsic(
         accountAddress,
         extrinsic.toHex()
@@ -138,6 +149,7 @@ export default function({ handleClose }) {
         2
       )
     } catch (e) {
+      console.error(e)
       setDisabled(false)
     }
   }

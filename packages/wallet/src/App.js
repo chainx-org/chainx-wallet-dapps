@@ -31,7 +31,13 @@ import { addSnack, generateId, typeEnum } from './reducers/snackSlice'
 import $t from './locale'
 
 const isChrome =
-  !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime)
+  /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
+
+function getChromeVersion() {
+  const raw = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./)
+
+  return raw ? parseInt(raw[2], 10) : false
+}
 
 function App() {
   const address = useSelector(addressSelector)
@@ -55,7 +61,7 @@ function App() {
   }, [dispatch, address])
 
   useEffect(() => {
-    if (isChrome) {
+    if (isChrome && getChromeVersion() >= 80) {
       return
     }
 

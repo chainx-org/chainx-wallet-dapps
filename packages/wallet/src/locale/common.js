@@ -74,5 +74,9 @@ export default {
   COMMON_MSG_Fail: {
     en: '{msg} failed',
     zh: '{msg}失败'
+  },
+  COMMON_STATUS: {
+    en: 'Status',
+    zh: '状态'
   }
 }

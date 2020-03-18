@@ -14,6 +14,7 @@ import { networkChangeListener, nodeChangeListener } from '../connector'
 import _ from 'lodash'
 import { nonFunc } from '@chainx/signer-connector/dist/constants'
 import { setNetwork } from '../reducers/settingsSlice'
+import { sleep } from '../utils'
 
 export const signer = new Signer('dapp')
 
@@ -47,7 +48,7 @@ export function listenSigner() {
 }
 
 export async function connectSigner() {
-  const linked = await signer.link()
+  const linked = await Promise.race([signer.link(), sleep(20)])
 
   console.log(linked ? `connect successfully` : `failed to connect`)
 
