@@ -1,10 +1,5 @@
 import { getChainx } from '../services/chainx'
-import {
-  compactAddLength,
-  stringCamelCase,
-  u8aToU8a,
-  u8aToHex
-} from '@chainx/util'
+import { compactAddLength, stringCamelCase, u8aToU8a } from '@chainx/util'
 import { blake2AsU8a } from '@chainx/util-crypto'
 import { createType } from '@chainx/types'
 import { Abi } from '@chainx/api-contract'
