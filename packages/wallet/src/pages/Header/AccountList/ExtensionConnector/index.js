@@ -19,7 +19,11 @@ export default function() {
       <span
         onClick={async () => {
           if (hasExtension) {
-            await connectExtension()
+            try {
+              await connectExtension()
+            } catch (e) {
+              console.log('Failed to connect extension')
+            }
 
             if (signerConnected) {
               disconnectSigner()

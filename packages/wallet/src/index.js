@@ -14,8 +14,10 @@ import SnackGallery from './SnackGallery'
 import { mainNetDemoAccount, testNetDemoAccount } from './utils/constants'
 import GlobalStyle from './GlobalStyle'
 import { connectExtension } from './connector'
-import initStore from './store'
+import initStore, { defaultMainNetNode, defaultTestNetNode } from './store'
 import { connectSigner, disconnectSigner } from './services/signer'
+import { isTestNetSelector } from './reducers/settingsSlice'
+import { setNode, urlSelector } from './reducers/nodeSlice'
 
 export let store
 
@@ -24,23 +26,24 @@ const nodePromise = new Promise(resolve => {
   nodeResolve = resolve
 })
 
-async function setDemoAccount(store) {
+export async function setDemoAccount(store) {
   const state = store.getState()
-  let network = state.settings.network
-  const { url } = store.getState().node
 
+  const isTestNet = isTestNetSelector(state)
+
+  store.dispatch(setNode(isTestNet ? defaultTestNetNode : defaultMainNetNode))
+  const url = urlSelector(state)
   await setChainx(url)
+
   store.dispatch(
     setAccount(
-      network === 'testnet'
-        ? testNetDemoAccount.account
-        : mainNetDemoAccount.account
+      isTestNet ? testNetDemoAccount.account : mainNetDemoAccount.account
     )
   )
 }
 
+store = initStore()
 window.onload = async () => {
-  store = initStore()
   const state = store.getState()
 
   const isDemo = isDemoSelector(state)

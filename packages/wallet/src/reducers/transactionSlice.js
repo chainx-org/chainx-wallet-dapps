@@ -5,15 +5,13 @@ const transactionSlice = createSlice({
   name: 'asset',
   initialState: {
     scrollTransfers: {
-      items: [],
-      loaded: false
+      items: []
     }
   },
   reducers: {
     setScrollTransfers: {
       reducer(state, action) {
         state.scrollTransfers = action.payload
-        state.scrollTransfers.loaded = true
       }
     },
     appendScrollTransfers: {
@@ -26,7 +24,6 @@ const transactionSlice = createSlice({
   }
 })
 
-export const loadedSelector = state => state.transaction.scrollTransfers.loaded
 export const scrollTransfersSelector = state =>
   state.transaction.scrollTransfers
 

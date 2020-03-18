@@ -1,10 +1,7 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  fetchTransfers,
-  loadedSelector
-} from '../../../../reducers/transactionSlice'
+import { fetchTransfers } from '../../../../reducers/transactionSlice'
 import { normalizedScrollTransfers } from '../selectors'
 import { Empty } from '../../../../components'
 import Line from './Line'
@@ -48,17 +45,14 @@ const Wrapper = styled.div`
 `
 
 export default function() {
-  const loaded = useSelector(loadedSelector)
   const transfers = useSelector(normalizedScrollTransfers)
 
   const accountId = useSelector(accountIdSelector)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (!loaded) {
-      dispatch(fetchTransfers(accountId))
-    }
-  }, [dispatch, accountId, loaded])
+    dispatch(fetchTransfers(accountId))
+  }, [dispatch, accountId])
 
   const transfersElement = transfers.map((transfer, index) => {
     return <Line transfer={transfer} key={index} />
