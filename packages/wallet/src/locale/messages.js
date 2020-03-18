@@ -104,8 +104,8 @@ const header = {
     zh: '插件无账户'
   },
   HEADER_MSG_NO_EXTENSION_ACCOUNT_DETAIL: {
-    en: 'No account in ChainX extension and switched to demo account',
-    zh: 'ChainX 插件中无账户，请创建或导入账户，已自动切换为体验账户'
+    en: 'No account in ChainX extension',
+    zh: 'ChainX 插件中无账户，请创建或导入账户'
   },
   HEADER_MSG_NODE_INVALID_TITLE: {
     en: 'Node protocol invalid',

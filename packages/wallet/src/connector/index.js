@@ -4,7 +4,6 @@ import { setAccount } from '../reducers/addressSlice'
 import { setNetwork } from '../reducers/settingsSlice'
 import { setChainx } from '../services/chainx'
 import { mainNetApi, setApi, testNetApi } from '../services/api'
-import { mainNetDemoAccount, testNetDemoAccount } from '../utils/constants'
 import { addAutoCloseSnackWithParams, typeEnum } from '../reducers/snackSlice'
 import $t from '../locale'
 
@@ -38,35 +37,21 @@ export const networkChangeListener = ({ to }) => {
   window.location.reload()
 }
 
-async function setExtensionNode(nowUrl) {
+async function setExtensionNode() {
   const node = await window.chainxProvider.getCurrentNode()
-  if (nowUrl !== node.url) {
-    store.dispatch(setNode(node))
-    await setChainx(node.url)
-  } else {
-    await setChainx(nowUrl)
-  }
+  store.dispatch(setNode(node))
+  await setChainx(node.url)
 }
 
-async function setExtensionAccount(network) {
+async function setExtensionAccount() {
   const extensionAccount = await window.chainxProvider.enable()
 
-  const demoAccount =
-    network === 'testnet'
-      ? testNetDemoAccount.account
-      : mainNetDemoAccount.account
-
-  // 原来是插件账户，但是现在插件里无账户，则用体验账户
   store.dispatch(
-    setAccount(
-      extensionAccount
-        ? {
-            name: extensionAccount.name,
-            address: extensionAccount.address,
-            isFromExtension: true
-          }
-        : demoAccount
-    )
+    setAccount({
+      name: extensionAccount.name,
+      address: extensionAccount.address,
+      isFromExtension: true
+    })
   )
 }
 

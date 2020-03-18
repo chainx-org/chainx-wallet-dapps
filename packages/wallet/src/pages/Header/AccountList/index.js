@@ -1,10 +1,9 @@
 import React, { useRef } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import {
   accountSelector,
   isDemoSelector,
   isExtensionSelector,
-  setAccount,
   signerConnectedSelector
 } from '../../../reducers/addressSlice'
 import useOutsideClick from '../../../utils/useClickOutside'
@@ -21,14 +20,9 @@ import {
   openSignerDownloadDialogSelector
 } from '../../../reducers/runStatusSlice'
 import ExtensionConnector from './ExtensionConnector'
+import { setDemoAccount, store } from '../../../index'
 
 export default function({ close = noneFunc }) {
-  const dispatch = useDispatch()
-  const selectAccount = (name, address, isFromExtension) => {
-    dispatch(setAccount({ name, address, isFromExtension }))
-    setTimeout(() => window.location.reload(), 0)
-  }
-
   const network = useSelector(networkSelector)
   const demoAccount =
     network === 'testnet'
@@ -58,11 +52,7 @@ export default function({ close = noneFunc }) {
 
   return (
     <Wrapper ref={popup}>
-      <li
-        onClick={() =>
-          selectAccount(demoAccountName, demoAccountAddress, false)
-        }
-      >
+      <li onClick={() => setDemoAccount(store)}>
         <h4>{demoAccountName}</h4>
         <p>{demoAccountAddress}</p>
       </li>

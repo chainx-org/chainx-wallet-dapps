@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import rootReducer from './reducers'
 import { mainNetDemoAccount, testNetDemoAccount } from './utils/constants'
+import { isTestNetSelector } from './reducers/settingsSlice'
 
 function loadState() {
   try {
@@ -32,8 +33,10 @@ function migrateState(state) {
     }
   }
 
+  const isTestNet = isTestNetSelector(state)
+
   if (!state.node) {
-    state.node = defaultNode
+    state.node = isTestNet ? defaultTestNetNode : defaultMainNetNode
   }
 
   if (!state.address) {
@@ -46,9 +49,14 @@ function migrateState(state) {
   return state
 }
 
-const defaultNode = {
+export const defaultMainNetNode = {
   name: 'w1.cn',
   url: 'wss://w1.chainx.org.cn/ws'
+}
+
+export const defaultTestNetNode = {
+  name: 'testnet.w1.org.cn',
+  url: 'wss://testnet.w1.chainx.org.cn/ws'
 }
 
 export default function initStore() {
