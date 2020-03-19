@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchTransfers } from '../../../../reducers/transactionSlice'
 import { normalizedScrollTransfers } from '../selectors'
-import { Empty } from '../../../../components'
+import { Empty, MiniLoading } from '../../../../components'
 import Line from './Line'
 import { accountIdSelector } from '../../../selectors/assets'
 
@@ -44,19 +44,48 @@ const Wrapper = styled.div`
   }
 `
 
+const LoadingWrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+`
+
 export default function() {
   const transfers = useSelector(normalizedScrollTransfers)
+  const [loading, setLoading] = useState(true)
 
   const accountId = useSelector(accountIdSelector)
   const dispatch = useDispatch()
 
+  const mounted = useRef(false)
   useEffect(() => {
-    dispatch(fetchTransfers(accountId))
+    mounted.current = true
+
+    return () => {
+      mounted.current = false
+    }
+  }, [])
+
+  useEffect(() => {
+    setLoading(true)
+    dispatch(fetchTransfers(accountId)).finally(() => {
+      if (mounted.current) {
+        setLoading(false)
+      }
+    })
   }, [dispatch, accountId])
 
   const transfersElement = transfers.map((transfer, index) => {
     return <Line transfer={transfer} key={index} />
   })
+
+  if (loading) {
+    return (
+      <LoadingWrapper>
+        <MiniLoading />
+      </LoadingWrapper>
+    )
+  }
 
   return (
     <Wrapper>
