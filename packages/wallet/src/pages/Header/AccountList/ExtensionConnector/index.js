@@ -18,18 +18,18 @@ export default function() {
     <Wrapper>
       <span
         onClick={async () => {
-          if (hasExtension) {
-            try {
-              await connectExtension()
-            } catch (e) {
-              console.log('Failed to connect extension')
-            }
-
-            if (signerConnected) {
-              disconnectSigner()
-            }
-          } else {
+          if (!hasExtension) {
             dispatch(setOpenExtensionDownloadDialog(true))
+          }
+
+          try {
+            await connectExtension()
+          } catch (e) {
+            console.log('Failed to connect extension')
+          }
+
+          if (signerConnected) {
+            disconnectSigner()
           }
         }}
       >
