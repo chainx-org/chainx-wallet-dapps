@@ -1,7 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit'
 import {
   intentionsSelector,
-  nominationRecordsSelector
+  nominationRecordsSelector,
+  recordsLoadedSelector
 } from '../../../../reducers/intentionSlice'
 import { pcxPrecisionSelector } from '../../../selectors/assets'
 import { toPrecision } from '../../../../utils'
@@ -52,5 +53,14 @@ export const totalInterestSelector = createSelector(
     }, 0)
 
     return toPrecision(total, precision)
+  }
+)
+
+export const interestLoadingSelector = createSelector(
+  blockNumberSelector,
+  intentionsSelector,
+  recordsLoadedSelector,
+  (blockNumber, intentions, loaded) => {
+    return null === blockNumber || intentions.length <= 0 || !loaded
   }
 )

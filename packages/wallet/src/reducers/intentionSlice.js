@@ -11,6 +11,7 @@ const intentionSlice = createSlice({
     senators: [],
     logos: {},
     nominationRecords: [],
+    nominationRecordsLoaded: false,
     nextRenominateHeight: null
   },
   reducers: {
@@ -42,6 +43,7 @@ const intentionSlice = createSlice({
     setNominationRecords: {
       reducer(state, action) {
         state.nominationRecords = action.payload
+        state.nominationRecordsLoaded = true
       }
     },
     setNextRenominateHeight(state, action) {
@@ -194,5 +196,7 @@ export const nominationRecordsSelector = state =>
   state.intentions.nominationRecords
 export const nextRenominateHeightSelector = state =>
   state.intentions.nextRenominateHeight
+export const recordsLoadedSelector = state =>
+  state.intentions.nominationRecordsLoaded
 
 export default intentionSlice.reducer

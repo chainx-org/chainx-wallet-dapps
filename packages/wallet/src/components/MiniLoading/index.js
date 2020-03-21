@@ -3,6 +3,8 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Wrapper = styled.i`
+  display: inline-flex;
+  align-items: center;
   @keyframes circle {
     0% {
       transform: rotate(0deg);

@@ -102,6 +102,10 @@ const staking = {
   STAKING_TOO_MUCH_NOMINATION: {
     en: 'Total votes over 10 times node bonded',
     zh: '节点总得票不能超过节点自抵押的10倍'
+  },
+  STAKING_LOADING_INTEREST: {
+    en: 'Loading interest',
+    zh: '加载待提利息'
   }
 }
 
