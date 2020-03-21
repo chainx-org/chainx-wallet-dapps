@@ -177,7 +177,9 @@ export default function() {
         <ul className="warning">
           <li>{$t('STAKING_LOCK_DAYS', { days: bondingDays })}</li>
           {revocations.length >= 7 ? (
-            <li>同时赎回不能超过 10 笔（当前 {revocations.length} 笔）</li>
+            <li>
+              {$t('STAKING_REVOCATION_LIMIT', { amount: revocations.length })}
+            </li>
           ) : null}
         </ul>
 

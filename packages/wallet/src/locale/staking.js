@@ -114,6 +114,10 @@ const staking = {
   STAKING_REVOKE_VOTES: {
     en: 'Revoke Votes',
     zh: '赎回投票'
+  },
+  STAKING_REVOCATION_LIMIT: {
+    en: 'Meanwhile at most 10 revocations (now {myRevocationCount})',
+    zh: '同时赎回不能超过 10 笔（当前 {amount} 笔）'
   }
 }
 
