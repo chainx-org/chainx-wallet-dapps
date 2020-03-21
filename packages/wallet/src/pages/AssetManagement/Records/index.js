@@ -30,7 +30,6 @@ const Wrapper = styled(Card)`
 
   & > main {
     flex: 1;
-    overflow-y: auto;
     margin: 0 -16px;
     border-top: 1px solid #eee;
   }

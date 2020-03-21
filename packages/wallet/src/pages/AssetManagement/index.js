@@ -16,8 +16,7 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     & > section {
-      height: 100%;
-
+      flex: 1;
       display: flex;
       flex-direction: column;
     }
