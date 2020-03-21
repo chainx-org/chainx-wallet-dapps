@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchTransfers } from '../../../../reducers/transactionSlice'
@@ -6,6 +6,7 @@ import { normalizedScrollTransfers } from '../selectors'
 import { Empty, MiniLoading } from '../../../../components'
 import Line from './Line'
 import { accountIdSelector } from '../../../selectors/assets'
+import { useIsMounted } from '../../../../utils/hooks'
 
 const Wrapper = styled.div`
   & > div.empty {
@@ -56,15 +57,7 @@ export default function() {
 
   const accountId = useSelector(accountIdSelector)
   const dispatch = useDispatch()
-
-  const mounted = useRef(false)
-  useEffect(() => {
-    mounted.current = true
-
-    return () => {
-      mounted.current = false
-    }
-  }, [])
+  const mounted = useIsMounted()
 
   useEffect(() => {
     setLoading(true)
@@ -73,7 +66,7 @@ export default function() {
         setLoading(false)
       }
     })
-  }, [dispatch, accountId])
+  }, [dispatch, accountId, mounted])
 
   const transfersElement = transfers.map((transfer, index) => {
     return <Line transfer={transfer} key={index} />

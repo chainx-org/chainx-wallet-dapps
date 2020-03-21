@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addressSelector } from '../../../../../reducers/addressSlice'
 import { PrimaryButton } from '@chainx/ui'
@@ -15,6 +15,7 @@ import { isDemoSelector } from '../../../../../selectors'
 import $t from '../../../../../locale'
 import { canRequestSign, retry } from '../../../../../utils'
 import { getChainx } from '../../../../../services/chainx'
+import { useIsMounted } from '../../../../../utils/hooks'
 
 export default function({ record, interest }) {
   const { account } = record.intention || {}
@@ -26,14 +27,7 @@ export default function({ record, interest }) {
   const dispatch = useDispatch()
   const chainx = getChainx()
 
-  const mounted = useRef(false)
-  useEffect(() => {
-    mounted.current = true
-
-    return () => {
-      mounted.current = false
-    }
-  }, [])
+  const mounted = useIsMounted()
 
   const claim = async target => {
     if (!canRequestSign()) {

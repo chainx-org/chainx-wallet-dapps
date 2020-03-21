@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import signerIcon from '../signer.svg'
 import $t from '../../../../locale'
 import signerDownloadIcon from './signer_download.svg'
 import { useDispatch, useSelector } from 'react-redux'
 import { setOpenSignerDownloadDialog } from '../../../../reducers/runStatusSlice'
 import Wrapper from './Wrapper'
-import { connectSigner } from '../../../../services/signer'
+import { connectSigner, signer } from '../../../../services/signer'
 import {
   addAutoCloseSnackWithParams,
   typeEnum
@@ -14,22 +14,14 @@ import { store } from '../../../../index'
 import { isExtensionSelector } from '../../../../reducers/addressSlice'
 import { disConnectExtension, listenExtension } from '../../../../connector'
 import { MiniLoading } from '../../../../components'
-import { signer } from '../../../../services/signer'
+import { useIsMounted } from '../../../../utils/hooks'
 
 export default function() {
   const dispatch = useDispatch()
   const isExtensionConnected = useSelector(isExtensionSelector)
 
   const [connecting, setConnecting] = useState(false)
-
-  const mounted = useRef(false)
-  useEffect(() => {
-    mounted.current = true
-
-    return () => {
-      mounted.current = false
-    }
-  }, [])
+  const mounted = useIsMounted()
 
   const connect = async () => {
     try {
