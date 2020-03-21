@@ -23,6 +23,11 @@ import {
   unNominateOpenSelector,
   unNominationDataSelector
 } from '../../../reducers/runStatusSlice'
+import {
+  bondingDaysSelector,
+  intentionBondingDaysSelector,
+  isUnNominationFromSelfIntention
+} from './selectors'
 
 export default function() {
   const accountAddress = useSelector(addressSelector)
@@ -43,6 +48,12 @@ export default function() {
   const intention = unNominationData && unNominationData.intention
   const nomination = unNominationData && unNominationData.nomination
   const revocations = unNominationData ? unNominationData.revocations || [] : []
+
+  const isUnNominateFromSelf = useSelector(isUnNominationFromSelfIntention)
+
+  const bondingDays = useSelector(
+    isUnNominateFromSelf ? intentionBondingDaysSelector : bondingDaysSelector
+  )
 
   const unNominateOpen = useSelector(unNominateOpenSelector)
 
@@ -111,7 +122,7 @@ export default function() {
   return (
     <StyledDialog
       open={unNominateOpen}
-      title={'赎回投票'}
+      title={$t('STAKING_REVOKE_VOTES')}
       handleClose={handleClose}
     >
       <main className="content">
@@ -122,7 +133,7 @@ export default function() {
               setAmountErrMsg('')
               setAmount(value)
             }}
-            placeholder={'数量'}
+            placeholder={$t('COMMON_AMOUNT')}
             precision={precision}
             error={!!amountErrMsg}
             errorText={amountErrMsg}
@@ -164,9 +175,9 @@ export default function() {
         </div>
 
         <ul className="warning">
-          <li>赎回锁定期3天</li>
+          <li>{$t('STAKING_LOCK_DAYS', { days: bondingDays })}</li>
           {revocations.length >= 7 ? (
-            <li>同时赎回不能超过 10 笔（当前 7 笔）</li>
+            <li>同时赎回不能超过 10 笔（当前 {revocations.length} 笔）</li>
           ) : null}
         </ul>
 

@@ -78,5 +78,9 @@ export default {
   COMMON_STATUS: {
     en: 'Status',
     zh: '状态'
+  },
+  COMMON_AMOUNT: {
+    en: 'Amount',
+    zh: '数量'
   }
 }

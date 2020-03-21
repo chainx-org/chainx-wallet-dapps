@@ -1,4 +1,4 @@
-import { createSlice, createSelector } from '@reduxjs/toolkit'
+import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { getChainx } from '../services/chainx'
 import { getApi } from '../services/api'
 
@@ -12,7 +12,9 @@ const intentionSlice = createSlice({
     logos: {},
     nominationRecords: [],
     nominationRecordsLoaded: false,
-    nextRenominateHeight: null
+    nextRenominateHeight: null,
+    intentionBondingDuration: null, // 节点赎回锁定期（块数）
+    bondingDuration: null // 普通投票赎回锁定期（块数）
   },
   reducers: {
     setIntentions: {
@@ -48,6 +50,15 @@ const intentionSlice = createSlice({
     },
     setNextRenominateHeight(state, action) {
       state.nextRenominateHeight = action.payload
+    },
+    setBondingDuration(
+      state,
+      {
+        payload: { intentionDuration, duration }
+      }
+    ) {
+      state.bondingDuration = duration
+      state.intentionBondingDuration = intentionDuration
     }
   }
 })
@@ -59,7 +70,8 @@ export const {
   setSenators,
   setLogos,
   setNominationRecords,
-  setNextRenominateHeight
+  setNextRenominateHeight,
+  setBondingDuration
 } = intentionSlice.actions
 
 async function getStake() {
@@ -143,6 +155,17 @@ export const fetchNominationRecords = address => async dispatch => {
   dispatch(setNominationRecords(normalized))
 }
 
+export const fetchBondingDuration = () => async dispatch => {
+  const stake = await getStake()
+
+  const [intentionDuration, duration] = await Promise.all([
+    stake.getIntentionBondingDuration(),
+    stake.getBondingDuration()
+  ])
+
+  dispatch(setBondingDuration({ intentionDuration, duration }))
+}
+
 export const intentionsSelector = state => {
   return state.intentions.intentions
 }
@@ -198,5 +221,8 @@ export const nextRenominateHeightSelector = state =>
   state.intentions.nextRenominateHeight
 export const recordsLoadedSelector = state =>
   state.intentions.nominationRecordsLoaded
+export const intentionBondingDurationSelector = state =>
+  state.intentions.intentionBondingDuration
+export const bondingDurationSelector = state => state.intentions.bondingDuration
 
 export default intentionSlice.reducer

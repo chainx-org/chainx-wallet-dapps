@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchAccountAssets, fetchAssetsInfo } from './reducers/assetSlice'
 import { addressSelector } from './reducers/addressSlice'
 import {
+  fetchBondingDuration,
   fetchIntentions,
   fetchNominationRecords,
   fetchPseduNominationRecords
@@ -50,6 +51,7 @@ function App() {
     dispatch(fetchAssetsInfo())
     dispatch(fetchIntentions())
     dispatch(fetchNominationRecords(address))
+    dispatch(fetchBondingDuration())
 
     const subscriber = getChainx()
       .chain.subscribeNewHead()
