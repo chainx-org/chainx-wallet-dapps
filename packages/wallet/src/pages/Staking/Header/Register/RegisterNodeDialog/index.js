@@ -47,13 +47,13 @@ export default function({ handleClose = noneFunc }) {
       setDisabled(false)
       await showSnack(status, messages, dispatch)
       handleClose()
-      await retry(
+      retry(
         () => {
           dispatch(fetchIntentions())
         },
         5,
         2
-      )
+      ).then(() => console.log('Refresh intentions 5 times after create node'))
     } catch (e) {
       setDisabled(false)
     }

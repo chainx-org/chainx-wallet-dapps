@@ -43,8 +43,8 @@ export const noneFunc = () => {}
 export const retry = async (func, times, second = 2) => {
   do {
     await new Promise(resolve => {
-      setTimeout(() => {
-        func()
+      setTimeout(async () => {
+        await func()
         resolve()
       }, second * 1000)
     })

@@ -57,15 +57,17 @@ export default function({ record, interest }) {
       }
 
       await showSnack(status, messages, dispatch)
-      await retry(
+      retry(
         () => {
-          dispatch(fetchNominationRecords(accountAddress))
-          dispatch(fetchAccountAssets(accountAddress))
-          dispatch(fetchIntentions())
+          Promise.all([
+            dispatch(fetchNominationRecords(accountAddress)),
+            dispatch(fetchAccountAssets(accountAddress)),
+            dispatch(fetchIntentions())
+          ])
         },
         5,
         2
-      )
+      ).then(() => console.log('Refresh stake info 5 times after claim'))
     } finally {
       if (mounted.current) {
         setDisabled(false)

@@ -95,12 +95,14 @@ export default function({ token }) {
       let id = generateId()
       dispatch(addSnack({ id, type, title, message }))
       removeSnackInSeconds(dispatch, id, 5)
-      await retry(
+      retry(
         () => {
           dispatch(fetchPseduNominationRecords(accountAddress))
         },
         5,
         2
+      ).then(() =>
+        console.log('Refresh psedu nomination records 5 times after claim')
       )
     } catch (e) {
       setDisabled(false)

@@ -129,14 +129,16 @@ export default function({ handleClose, token }) {
 
       await showSnack(status, messages, dispatch)
       handleClose()
-      await retry(
+      retry(
         () => {
-          dispatch(fetchAccountAssets(accountAddress))
-          dispatch(fetchTransfers(accountId))
+          Promise.all([
+            dispatch(fetchAccountAssets(accountAddress)),
+            dispatch(fetchTransfers(accountId))
+          ])
         },
         5,
         2
-      )
+      ).then(() => console.log('Refresh assets 5 times after transfer'))
     } catch (e) {
       console.log('sign transfer transaction error:', e)
       setDisabled(false)
