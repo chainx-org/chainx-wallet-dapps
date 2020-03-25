@@ -6,7 +6,7 @@ const Wrapper = styled.ul`
   right: 16px;
   padding: 16px;
 
-  width: 300px;
+  width: 350px;
 
   background: rgba(255, 255, 255, 1);
   border: 1px solid #dce0e2;
