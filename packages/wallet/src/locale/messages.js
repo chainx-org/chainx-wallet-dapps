@@ -59,8 +59,8 @@ const header = {
     zh: '交易记录'
   },
   HEADER_CONNECT_SIGNER: {
-    en: 'Connect ChainX Signer',
-    zh: '连接 ChainX 本地签名器'
+    en: 'Connect ChainX Signer(Recommended)',
+    zh: '连接 ChainX 本地签名器（推荐）'
   },
   HEADER_CONNECT_EXTENSION: {
     en: 'Connect ChainX extension',
