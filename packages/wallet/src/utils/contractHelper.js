@@ -1,8 +1,14 @@
 import { getChainx } from '../services/chainx'
-import { compactAddLength, stringCamelCase, u8aToU8a } from '@chainx/util'
+import {
+  compactAddLength,
+  stringCamelCase,
+  u8aToU8a,
+  u8aToHex
+} from '@chainx/util'
 import { blake2AsU8a } from '@chainx/util-crypto'
 import { createType } from '@chainx/types'
 import { Abi } from '@chainx/api-contract'
+import { littleEndianToBigEndian } from './index'
 
 // const Alice = chainx.account.from('Alice')
 // const Alice = chainx.account.from('0x436861696e582d416c6963652020202020202020202020202020202020202020')
@@ -43,6 +49,7 @@ export async function call(abi, address, method, gas, params) {
       let returnType = typeObj.displayName
       // const sliceData = '0x' + result.data.slice(4)
       // const data = createType(returnType, u8aToU8a(sliceData)).toJSON()
+      debugger
       if (returnType === 'Option') {
         returnType = typeObj.type
       } else if (returnType === 'Vec') {
@@ -53,10 +60,14 @@ export async function call(abi, address, method, gas, params) {
       } else if (returnType == 'H256Wrapper') {
         returnType = 'H256'
       }
-      const data = createType(
+      let data = createType(
         returnType.replace('{ "elems": "Vec" }<u8>', 'Text'),
         u8aToU8a(result.data)
       ).toJSON()
+      //h256 should take special methods, because  contract rcp return littleEndian, so we should revert it to big
+      if (returnType == 'H256') {
+        data = littleEndianToBigEndian(data)
+      }
       if (data) {
         return { status: true, result: JSON.stringify(data) }
       } else {
