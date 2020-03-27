@@ -38,7 +38,6 @@ export async function call(abi, address, method, gas, params) {
       inputData: parseAbi.messages[stringCamelCase(method)](...params)
     }
     const result = await chainx.api.rpc.chainx.contractCall(obj)
-    console.log('call result: ', result)
     if (result.status === 0) {
       const typeObj = parseAbi.messages[stringCamelCase(method)].type
       let returnType = typeObj.displayName
@@ -49,12 +48,19 @@ export async function call(abi, address, method, gas, params) {
       } else if (returnType === 'Vec') {
         const vecContent = typeObj.params[0].type
         returnType = `Vec<${vecContent}>`
+      } else if (returnType == 'BTreeMap') {
+        returnType = typeObj.type
+      } else if (returnType == 'H256Wrapper') {
+        returnType = 'H256'
       }
-      const data = createType(returnType, u8aToU8a(result.data)).toString()
+      const data = createType(
+        returnType.replace('{ "elems": "Vec" }<u8>', 'Text'),
+        u8aToU8a(result.data)
+      ).toJSON()
       if (data) {
-        return { status: true, result: data }
+        return { status: true, result: JSON.stringify(data) }
       } else {
-        return { status: true, result: JSON.stringify(result) }
+        return { status: true, result: result.data }
       }
     } else {
       return { status: false, result: 'status is error' }
