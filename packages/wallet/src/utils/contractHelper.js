@@ -1,10 +1,5 @@
 import { getChainx } from '../services/chainx'
-import {
-  compactAddLength,
-  stringCamelCase,
-  u8aToU8a,
-  u8aToHex
-} from '@chainx/util'
+import { compactAddLength, stringCamelCase, u8aToU8a } from '@chainx/util'
 import { blake2AsU8a } from '@chainx/util-crypto'
 import { createType } from '@chainx/types'
 import { Abi } from '@chainx/api-contract'
@@ -49,7 +44,6 @@ export async function call(abi, address, method, gas, params) {
       let returnType = typeObj.displayName
       // const sliceData = '0x' + result.data.slice(4)
       // const data = createType(returnType, u8aToU8a(sliceData)).toJSON()
-      debugger
       if (returnType === 'Option') {
         returnType = typeObj.type
       } else if (returnType === 'Vec') {

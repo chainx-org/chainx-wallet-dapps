@@ -179,17 +179,14 @@ export default function(props) {
         gasLimit,
         params
       )
-      debugger
       if (!data.status) {
         type = typeEnum.ERROR
         title = '调用失败'
         _message = data.result
       } else {
-        debugger
         result.push({ name: message.name, result: data.result })
         setResult(Array.from(result))
       }
-      debugger
       addAutoCloseSnackWithParams(dispatch, type, title, _message)
 
       if (result.length > 0) {
