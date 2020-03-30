@@ -49,9 +49,9 @@ export async function call(abi, address, method, gas, params) {
       } else if (returnType === 'Vec') {
         const vecContent = typeObj.params[0].type
         returnType = `Vec<${vecContent}>`
-      } else if (returnType == 'BTreeMap') {
+      } else if (returnType === 'BTreeMap') {
         returnType = typeObj.type
-      } else if (returnType == 'H256Wrapper') {
+      } else if (returnType === 'H256Wrapper') {
         returnType = 'H256'
       }
       let data = createType(
@@ -59,14 +59,10 @@ export async function call(abi, address, method, gas, params) {
         u8aToU8a(result.data)
       ).toJSON()
       //h256 should take special methods, because  contract rcp return littleEndian, so we should revert it to big
-      if (returnType == 'H256') {
+      if (returnType === 'H256') {
         data = littleEndianToBigEndian(data)
       }
-      if (data) {
-        return { status: true, result: JSON.stringify(data) }
-      } else {
-        return { status: true, result: result.data }
-      }
+      return { status: true, result: JSON.stringify(data) }
     } else {
       return { status: false, result: 'status is error' }
     }
