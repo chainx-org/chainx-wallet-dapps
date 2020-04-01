@@ -168,6 +168,9 @@ export default function({ handleClose }) {
             setAddressErrMsg('')
             setAddress(value)
           }}
+          onBlur={() => {
+            setAddress((address || '').trim())
+          }}
           error={!!addressErrMsg}
           errorText={addressErrMsg}
         />
