@@ -13,7 +13,8 @@ const runStatusSlice = createSlice({
     unFreezeRecord: {},
     loading: false,
     openSignerDownloadDialog: false,
-    openExtensionDownloadDialog: false
+    openExtensionDownloadDialog: false,
+    loadingIntentions: false
   },
   reducers: {
     setUnNominateOpen(state, action) {
@@ -48,6 +49,9 @@ const runStatusSlice = createSlice({
     },
     setOpenExtensionDownloadDialog(state, action) {
       state.openExtensionDownloadDialog = action.payload
+    },
+    setLoadingIntentions(state, action) {
+      state.loadingIntentions = action.payload
     }
   }
 })
@@ -63,7 +67,8 @@ export const {
   setUnFreezeRecord,
   setLoading,
   setOpenSignerDownloadDialog,
-  setOpenExtensionDownloadDialog
+  setOpenExtensionDownloadDialog,
+  setLoadingIntentions
 } = runStatusSlice.actions
 
 export const unNominateOpenSelector = state => state.runStatus.unNominateOpen
@@ -82,5 +87,7 @@ export const openSignerDownloadDialogSelector = state =>
   state.runStatus.openSignerDownloadDialog
 export const openExtensionDownloadDialogSelector = state =>
   state.runStatus.openExtensionDownloadDialog
+export const loadingIntentionsSelector = state =>
+  state.runStatus.loadingIntentions
 
 export default runStatusSlice.reducer

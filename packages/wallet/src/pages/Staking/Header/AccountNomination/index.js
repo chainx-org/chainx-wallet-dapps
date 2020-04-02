@@ -18,7 +18,7 @@ import {
   unNominateOpenSelector,
   voteOpenSelector
 } from '../../../../reducers/runStatusSlice'
-import { MiniLoading } from '../../../../components'
+import { LoadingWithText } from '../../../../components'
 
 const Wrapper = styled.div`
   display: flex;
@@ -67,18 +67,6 @@ const Ul = styled.ul`
   }
 `
 
-const LoadingWrapper = styled.section`
-  display: flex;
-  align-items: center;
-  span {
-    opacity: 0.56;
-    font-size: 12px;
-    color: #000000;
-    letter-spacing: 0.2px;
-    line-height: 16px;
-  }
-`
-
 export default function() {
   const loading = useSelector(interestLoadingSelector)
 
@@ -106,12 +94,7 @@ export default function() {
   })
 
   if (loading) {
-    return (
-      <LoadingWrapper>
-        <MiniLoading />
-        <span>{$t('STAKING_LOADING_INTEREST')}</span>
-      </LoadingWrapper>
-    )
+    return <LoadingWithText text={$t('STAKING_LOADING_INTEREST')} />
   }
 
   return (

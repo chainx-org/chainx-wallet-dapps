@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import Header from './Header'
 import Validators from './Validators'
 import {
-  fetchIntentions,
   fetchLogos,
   fetchNominationRecords,
   fetchSenators
@@ -23,9 +22,8 @@ import SwitchDialog from './SwitchDialog'
 import UnNominateDialog from './UnNominateDialog'
 import UnFreezeDialog from './UnfreezeDialog'
 import { getApi } from '../../services/api'
-import { getChainx } from '../../services/chainx'
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 
@@ -43,16 +41,14 @@ export default function() {
   const switchNominationOpen = useSelector(switchNominationOpenSelector)
   const unNominateOpen = useSelector(unNominateOpenSelector)
   const api = getApi()
-  const chainx = getChainx()
 
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(fetchSenators())
-    dispatch(fetchIntentions())
     dispatch(fetchAssetsInfo())
     dispatch(fetchLogos())
-  }, [dispatch, api, chainx])
+  }, [dispatch, api])
 
   useEffect(() => {
     dispatch(fetchNominationRecords(address))

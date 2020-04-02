@@ -107,6 +107,10 @@ const staking = {
     en: 'Loading interest',
     zh: '加载待提利息'
   },
+  STAKING_LOADING_INTENTIONS: {
+    en: 'Loading intentions',
+    zh: '加载节点信息'
+  },
   STAKING_LOCK_DAYS: {
     en: 'Lock {days} days',
     zh: '赎回锁定期{days}天'

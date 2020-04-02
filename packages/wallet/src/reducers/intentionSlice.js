@@ -1,6 +1,7 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { getChainx } from '../services/chainx'
 import { getApi } from '../services/api'
+import { setLoadingIntentions } from './runStatusSlice'
 
 const intentionSlice = createSlice({
   name: 'intentions',
@@ -82,24 +83,32 @@ async function getStake() {
   return stake
 }
 
-export const fetchIntentions = () => async dispatch => {
+export const fetchIntentions = (setLoading = false) => async dispatch => {
+  if (setLoading) {
+    dispatch(setLoadingIntentions(true))
+  }
+
   const stake = await getStake()
 
-  const resp = await stake.getIntentions()
-  resp.sort((a, b) => {
-    if (b.isActive && !a.isActive) {
-      return 1
-    } else if (!b.isActive && a.isActive) {
-      return -1
-    }
+  try {
+    const resp = await stake.getIntentions()
+    resp.sort((a, b) => {
+      if (b.isActive && !a.isActive) {
+        return 1
+      } else if (!b.isActive && a.isActive) {
+        return -1
+      }
 
-    if (a.selfVote !== b.selfVote) {
-      return b.selfVote - a.selfVote
-    }
+      if (a.selfVote !== b.selfVote) {
+        return b.selfVote - a.selfVote
+      }
 
-    return b.totalNomination - a.totalNomination
-  })
-  dispatch(setIntentions(resp))
+      return b.totalNomination - a.totalNomination
+    })
+    dispatch(setIntentions(resp))
+  } finally {
+    dispatch(setLoadingIntentions(false))
+  }
 }
 
 export const fetchPseduIntentions = () => async dispatch => {

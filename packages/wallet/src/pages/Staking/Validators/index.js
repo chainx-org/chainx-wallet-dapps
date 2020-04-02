@@ -8,6 +8,8 @@ import {
 } from './selectors'
 import { WhiteButton } from '@chainx/ui'
 import $t from '../../../locale'
+import { LoadingWithText } from '../../../components'
+import { loadingIntentionsSelector } from '../../../reducers/runStatusSlice'
 
 const Main = styled.main`
   overflow-y: auto;
@@ -40,13 +42,28 @@ const Main = styled.main`
   }
 `
 
+const LoadingWrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
+  padding-top: 30px;
+`
+
 export default function() {
   const [showDropout, setShowDropout] = useState(false)
 
   const intentionChunks = useSelector(activeIntentionChunksSelector)
   const allIntentionChunks = useSelector(intentionChunksSelector)
+  const loadingIntentions = useSelector(loadingIntentionsSelector)
 
   const chunks = showDropout ? allIntentionChunks : intentionChunks
+
+  if (loadingIntentions) {
+    return (
+      <LoadingWrapper className="staking">
+        <LoadingWithText text={$t('STAKING_LOADING_INTENTIONS')} />
+      </LoadingWrapper>
+    )
+  }
 
   return (
     <Main>

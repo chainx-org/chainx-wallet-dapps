@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchIntentions } from '../../../reducers/intentionSlice'
+import { useSelector } from 'react-redux'
 import { getChainx } from '../../../services/chainx'
 import $t from '../../../locale'
 import { accountSelector } from '../../../reducers/addressSlice'
@@ -42,7 +41,6 @@ const Roles = styled.p`
 export default function() {
   const account = useSelector(accountSelector)
   const intentions = useSelector(state => state.intentions.intentions)
-  const dispatch = useDispatch()
 
   const id = getChainx().account.decodeAddress(account.address, false)
   const validator = intentions.find(intention => intention.account === id)
@@ -56,10 +54,6 @@ export default function() {
   if (isValidator) {
     roles.push($t('INTENTION_VALIDATOR'))
   }
-
-  useEffect(() => {
-    dispatch(fetchIntentions())
-  }, [dispatch])
 
   return (
     <Wrapper>

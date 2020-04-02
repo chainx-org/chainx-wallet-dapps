@@ -30,6 +30,7 @@ import { Loading } from './components'
 import { loadingSelector } from './reducers/runStatusSlice'
 import { addSnack, generateId, typeEnum } from './reducers/snackSlice'
 import $t from './locale'
+import { isTestNetSelector } from './reducers/settingsSlice'
 
 const isChrome =
   /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
@@ -44,13 +45,12 @@ function App() {
   const address = useSelector(addressSelector)
   const dispatch = useDispatch()
   const loading = useSelector(loadingSelector)
+  const isTestNet = useSelector(isTestNetSelector)
 
   useEffect(() => {
     dispatch(fetchAccountAssets(address))
     dispatch(fetchPseduNominationRecords(address))
     dispatch(fetchAssetsInfo())
-    dispatch(fetchIntentions())
-    dispatch(fetchNominationRecords(address))
     dispatch(fetchBondingDuration())
 
     const subscriber = getChainx()
@@ -61,6 +61,11 @@ function App() {
 
     return () => subscriber.unsubscribe()
   }, [dispatch, address])
+
+  useEffect(() => {
+    dispatch(fetchIntentions(true))
+    dispatch(fetchNominationRecords(address))
+  }, [dispatch, address, isTestNet])
 
   useEffect(() => {
     if (isChrome && getChromeVersion() >= 80) {

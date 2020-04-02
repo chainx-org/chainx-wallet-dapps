@@ -9,6 +9,7 @@ import Hash from './Hash'
 import Address from './Address'
 import Loading from './Loading'
 import MiniLoading from './MiniLoading'
+import LoadingWithText from './LoadingWithText'
 
 export {
   SignDialog,
@@ -21,5 +22,6 @@ export {
   Hash,
   Address,
   Loading,
-  MiniLoading
+  MiniLoading,
+  LoadingWithText
 }
