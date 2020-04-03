@@ -14,7 +14,10 @@ import {
 import arrow from '../svg/arrow.svg'
 import darkArrow from '../svg/dark-arrow.svg'
 import { showSnack, signAndSendExtrinsic } from '../../../utils/chainxProvider'
-import { addressSelector } from '../../../reducers/addressSlice'
+import {
+  accountIdSelector,
+  addressSelector
+} from '../../../reducers/addressSlice'
 import { isDemoSelector } from '../../../selectors'
 import BigNumber from 'bignumber.js'
 import { fetchAccountAssets } from '../../../reducers/assetSlice'
@@ -34,9 +37,11 @@ export default function() {
   const nominationRecords = useSelector(nominationRecordsSelector)
   const isDemoAddr = useSelector(isDemoSelector)
   const voteOpen = useSelector(voteOpenSelector)
+  const accountId = useSelector(accountIdSelector)
 
   const intention = useSelector(voteIntentionSelector) || {}
-  console.log('intention', intention)
+
+  const isVoteSelf = intention.account === accountId
   const handleClose = () => dispatch(setVoteOpen(false))
 
   const record = (nominationRecords || []).find(
@@ -78,7 +83,10 @@ export default function() {
       .multipliedBy(Math.pow(10, precision))
       .toNumber()
 
-    if (intention.selfVote * 10 < intention.totalNomination + realAmount) {
+    if (
+      !isVoteSelf &&
+      intention.selfVote * 10 < intention.totalNomination + realAmount
+    ) {
       setAmountErrMsg($t('STAKING_TOO_MUCH_NOMINATION'))
       return
     }
