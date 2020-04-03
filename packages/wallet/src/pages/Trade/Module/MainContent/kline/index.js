@@ -61,9 +61,9 @@ export default function() {
       return
     }
 
-    // if (klineType === lastType && pairId === lastPairId) {
-    //   return
-    // }
+    if (klineType === lastType && pairId === lastPairId) {
+      return
+    }
 
     const canvas = window.document.getElementById(canvasId)
     const context = canvas.getContext('2d')
