@@ -91,7 +91,7 @@ export const fetchIntentions = (setLoading = false) => async dispatch => {
   const stake = await getStake()
 
   try {
-    const resp = await stake.getIntentions()
+    const resp = await stake.getIntentionsV1()
     resp.sort((a, b) => {
       if (b.isActive && !a.isActive) {
         return 1
