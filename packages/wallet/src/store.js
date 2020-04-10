@@ -50,8 +50,8 @@ function migrateState(state) {
 }
 
 export const defaultMainNetNode = {
-  name: 'w1.cn',
-  url: 'wss://w1.chainx.org.cn/ws'
+  name: 'w2.org',
+  url: 'wss://w2.chainx.org/ws'
 }
 
 export const defaultTestNetNode = {
