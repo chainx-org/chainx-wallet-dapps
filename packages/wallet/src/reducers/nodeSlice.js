@@ -1,11 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { defaultMainNetNode } from '../store'
 
 const nodeSlice = createSlice({
   name: 'node',
   initialState: {
-    name: defaultMainNetNode.name,
-    url: defaultMainNetNode.url
+    name: 'w1.cn',
+    url: 'wss://w1.chainx.org.cn/ws'
   },
   reducers: {
     setNode(state, action) {
