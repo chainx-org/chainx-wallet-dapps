@@ -5,11 +5,24 @@ const StyledDialog = styled(Dialog)`
   div.wrapper {
     padding: 16px;
     p {
-      opacity: 0.56;
+      &:first-of-type {
+        opacity: 0.72;
+      }
       font-size: 14px;
       color: #000000;
       letter-spacing: 0.12px;
       line-height: 20px;
+
+      &:last-of-type {
+        margin-top: 16px;
+        a {
+          text-decoration: none;
+          font-size: 14px;
+          color: #003a00;
+          letter-spacing: 0.12px;
+          line-height: 16px;
+        }
+      }
     }
 
     div.buttons {

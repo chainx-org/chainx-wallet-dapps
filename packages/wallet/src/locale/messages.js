@@ -76,16 +76,12 @@ const header = {
   },
   HEADER_DOWNLOAD_SIGNER_DETAIL: {
     en: 'Please refresh this page after download the ChainX Signer.',
-    zh: '下载 ChainX Signer，安装完成后请手动刷新钱包页面。'
+    zh: '安装完成后请手动刷新钱包页面。'
   },
   HEADER_DOWNLOAD_EXTENSION_DETAIL: {
     en: 'Install ChainX extension from chrome extension store.',
     zh:
       '在 {browser} 商店内搜索并安装 ChainX 插件，安装完成后请手动刷新钱包页面。'
-  },
-  HEADER_GO_TO_DOWNLOAD: {
-    en: 'Download page',
-    zh: '去下载'
   },
   HEADER_GO_TO_STORE: {
     en: 'Extension store',
