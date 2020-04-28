@@ -4,6 +4,8 @@ import { blake2AsU8a } from '@chainx/util-crypto'
 import { createType } from '@chainx/types'
 import { Abi } from '@chainx/api-contract'
 import { littleEndianToBigEndian } from './index'
+import { store } from '../index'
+import { addressSelector } from '../reducers/addressSlice'
 
 // const Alice = chainx.account.from('Alice')
 // const Alice = chainx.account.from('0x436861696e582d416c6963652020202020202020202020202020202020202020')
@@ -27,13 +29,13 @@ const Alice =
 const enableExtension = true
 
 export async function call(abi, address, method, gas, params) {
-  const account = await window.chainxProvider.enable()
+  const accountAddress = addressSelector(store.getState())
   const chainx = getChainx()
   const parseAbi = new Abi(abi)
   parseParams(parseAbi.messages[stringCamelCase(method)].args, params)
   try {
     const obj = {
-      origin: account.address,
+      origin: accountAddress,
       dest: address,
       gasLimit: gas,
       inputData: parseAbi.messages[stringCamelCase(method)](...params)
