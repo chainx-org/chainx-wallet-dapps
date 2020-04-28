@@ -2,11 +2,8 @@ import React, { useState } from 'react'
 import store from 'store'
 import { useDispatch } from 'react-redux'
 import {
-  generateId,
-  typeEnum,
-  addAutoCloseSnack,
   addAutoCloseSnackWithParams,
-  removeSnackInSeconds
+  typeEnum
 } from '../../reducers/snackSlice'
 import { PrimaryButton } from '@chainx/ui'
 import Draggable from 'react-draggable'
@@ -108,66 +105,16 @@ export default function(props) {
     let type = typeEnum.SUCCESS
     let title = '合约执行'
     let _message = '交易已发送'
-    const id = generateId()
     if (message.mutates) {
       console.log('send methods')
-      const data = await send(
+      await send(
         item.contract.abi,
         item.address,
         message.name,
         params,
         value,
-        gasLimit,
-        resp => {
-          if (resp.reject) {
-            console.log('tx was rejected')
-            addAutoCloseSnackWithParams(dispatch, typeEnum.ERROR, '交易被拒绝')
-            return
-          }
-          if (resp.err) {
-            console.log('error occurs ', resp.err)
-            addAutoCloseSnackWithParams(
-              dispatch,
-              typeEnum.ERROR,
-              '交易失败',
-              resp.err.message || resp.err.msg
-            )
-          } else {
-            const _result = resp.status
-            console.log(_result)
-            if (_result.status === 'Broadcast') {
-              addAutoCloseSnack(dispatch, {
-                id,
-                type,
-                title,
-                message: _message
-              })
-              // addAutoCloseSnackWithParams(dispatch, type, title, _message)
-            } else if (_result.status === 'Finalized') {
-              removeSnackInSeconds(dispatch, id)
-              if (_result.result === 'ExtrinsicSuccess') {
-                _message = '合约执行成功，可在列表内查看。'
-                result.push({
-                  name: message.name,
-                  result: JSON.stringify(_result)
-                })
-                setResult(Array.from(result))
-                setShowResultArea(true)
-              } else {
-                type = typeEnum.ERROR
-                _message = '合约执行失败'
-              }
-              addAutoCloseSnackWithParams(dispatch, type, title, _message)
-            }
-          }
-        }
+        gasLimit
       )
-      if (!data.status) {
-        type = typeEnum.ERROR
-        title = '调用失败'
-        _message = data.result
-        addAutoCloseSnackWithParams(dispatch, type, title, _message)
-      }
     } else {
       console.log('call methods')
       title = '调用成功'

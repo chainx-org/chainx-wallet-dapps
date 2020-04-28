@@ -6,6 +6,7 @@ import { Abi } from '@chainx/api-contract'
 import { littleEndianToBigEndian } from './index'
 import { store } from '../index'
 import { addressSelector } from '../reducers/addressSlice'
+import { showSnack, signAndSendExtrinsic } from './chainxProvider'
 
 // const Alice = chainx.account.from('Alice')
 // const Alice = chainx.account.from('0x436861696e582d416c6963652020202020202020202020202020202020202020')
@@ -74,10 +75,9 @@ export async function call(abi, address, method, gas, params) {
   }
 }
 
-export async function send(abi, address, method, params, value, gas, cb) {
+export async function send(abi, address, method, params, value, gas) {
   const chainx = getChainx()
   const parseAbi = new Abi(abi)
-  const _method = 'call'
   parseParams(parseAbi.messages[stringCamelCase(method)].args, params)
   try {
     const args = [
@@ -86,16 +86,20 @@ export async function send(abi, address, method, params, value, gas, cb) {
       gas,
       parseAbi.messages[stringCamelCase(method)](...params)
     ]
-    const ex = chainx.api.tx.xContracts[_method](...args)
-    if (enableExtension) {
-      contractApi(ex.toHex(), cb)
-      return { status: true }
+    const ex = chainx.api.tx.xContracts.call(...args)
+
+    const status = await signAndSend(ex.toHex())
+    const prefix = '调用'
+    const messages = {
+      successTitle: `${prefix}成功`,
+      failTitle: `${prefix}失败`,
+      successMessage: `${method} 调用成功`,
+      failMessage: `交易hash ${status.txHash}`
     }
 
-    ex.signAndSend(Alice, cb)
-    return { status: true }
+    await showSnack(status, messages, store.dispatch)
   } catch (error) {
-    return { status: false, result: error.message }
+    return { status: false, result: error && error.message }
   }
 }
 
@@ -175,6 +179,12 @@ export async function deploy(_abi, params, endowment, gas, cb) {
     return
   }
   ex.signAndSend(Alice, convertCb(cb))
+}
+
+async function signAndSend(hex) {
+  const accountAddress = addressSelector(store.getState())
+  const status = await signAndSendExtrinsic(accountAddress, hex)
+  return status
 }
 
 const contractApi = async (hex, cb) => {

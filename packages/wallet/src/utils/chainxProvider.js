@@ -36,6 +36,7 @@ export function signAndSendExtrinsic(address, data) {
 
 function handleExtrinsicResult(err, status, resolve, reject) {
   if (err) {
+    console.log('err', err)
     addAutoCloseSnackWithParams(
       store.dispatch,
       typeEnum.ERROR,
