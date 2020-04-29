@@ -31,6 +31,7 @@ import { loadingSelector } from './reducers/runStatusSlice'
 import { addSnack, generateId, typeEnum } from './reducers/snackSlice'
 import $t from './locale'
 import { isTestNetSelector } from './reducers/settingsSlice'
+import OddEven from './pages/OddEven'
 
 const isChrome =
   /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
@@ -92,6 +93,7 @@ function App() {
           <Route exact path="/contract" component={Contract} />
           <Route exact path="/txs" component={HistoryTransactions} />
           <Route exact path="/contract/code" component={ContractCode} />
+          <Route exact path="/oddeven" component={OddEven} />
           <Redirect to="/" />
         </Switch>
       </div>

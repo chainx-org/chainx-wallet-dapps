@@ -131,6 +131,11 @@ export default function() {
             </Nav>
           </>
         )}
+        <Nav>
+          <NavLink exact activeClassName="active" to="/oddeven">
+            预测BTC
+          </NavLink>
+        </Nav>
       </div>
       <div className="right">
         <Nav>

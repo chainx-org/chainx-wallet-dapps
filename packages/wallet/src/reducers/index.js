@@ -17,6 +17,7 @@ import tradeReducer from './tradeSlice'
 import runStatusReducer from './runStatusSlice'
 import klineReducer from './klineSlice'
 import historyTxsReducer from './historyTxSlice'
+import oddEvenReducer from './oddevenSlice'
 
 export default combineReducers({
   test: testReducer,
@@ -36,5 +37,6 @@ export default combineReducers({
   trade: tradeReducer,
   runStatus: runStatusReducer,
   kline: klineReducer,
-  historyTxs: historyTxsReducer
+  historyTxs: historyTxsReducer,
+  oddEven: oddEvenReducer
 })
