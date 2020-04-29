@@ -6,15 +6,18 @@ import { useSelector } from 'react-redux'
 import {
   betHeightSelector,
   betStatusSelector,
+  dealHeightSelector,
   nowBtcSelector
 } from '../../reducers/oddevenSlice'
 import Status from './Status'
 import Bet from './Bet'
+import NowBets from './NowBets'
 
 export default function() {
   const btc = useSelector(nowBtcSelector)
   const betHeight = useSelector(betHeightSelector)
   const status = useSelector(betStatusSelector)
+  const dealHeight = useSelector(dealHeightSelector)
 
   return (
     <Wrapper>
@@ -36,11 +39,15 @@ export default function() {
             <Status>{status}</Status>
           </header>
           <main>
-            <h3>
-              对 Bitcoin 块高 <span className="height">{betHeight}</span>{' '}
-              的交易哈希的 <span>奇/偶</span> 进行投注！
-            </h3>
-            <Bet />
+            <div>
+              <h3>
+                对 Bitcoin 块高 <span className="height">{betHeight}</span>{' '}
+                的交易哈希的 <span>奇/偶</span> 进行投注！
+              </h3>
+              <Bet />
+              <NowBets />
+            </div>
+            <footer>投注时间截止至 Bitcoin 块高 {dealHeight}</footer>
           </main>
         </BetArea>
         <MyBets>my bets</MyBets>

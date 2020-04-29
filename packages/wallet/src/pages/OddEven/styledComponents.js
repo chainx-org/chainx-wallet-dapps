@@ -56,6 +56,8 @@ export const Main = styled.main`
 
 export const BetArea = styled.section`
   flex: 1;
+  display: flex;
+  flex-direction: column;
 
   background: #ffffff;
   border: 1px solid #dce0e2;
@@ -79,10 +81,18 @@ export const BetArea = styled.section`
 
   main {
     flex: 1;
+    padding-bottom: 24px;
 
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
     h3 {
       max-width: 266px;
@@ -99,6 +109,15 @@ export const BetArea = styled.section`
           color: #0088cc;
         }
       }
+    }
+
+    footer {
+      opacity: 0.56;
+      font-size: 14px;
+      color: #000000;
+      letter-spacing: 0.12px;
+      text-align: center;
+      line-height: 20px;
     }
   }
 `

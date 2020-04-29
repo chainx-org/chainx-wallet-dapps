@@ -12,7 +12,12 @@ const initialState = {
   btcHeaderHash:
     '0000000000000000000ffba85d088a8640bd83785034727dc31d926ed41d87c2',
   betHeight: 700000,
-  status: betStatusEnum.ON
+  dealHeight: 627992,
+  status: betStatusEnum.ON,
+  bets: {
+    odd: 246382.72737627,
+    even: 24632.72737627
+  }
 }
 
 const oddEvenSlice = createSlice({
@@ -30,5 +35,7 @@ export const nowBtcSelector = state => {
 
 export const betStatusSelector = state => state.oddEven.status
 export const betHeightSelector = state => state.oddEven.betHeight
+export const betsSelector = state => state.oddEven.bets
+export const dealHeightSelector = state => state.oddEven.dealHeight
 
 export default oddEvenSlice.reducer
