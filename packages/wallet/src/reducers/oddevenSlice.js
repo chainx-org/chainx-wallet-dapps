@@ -17,7 +17,17 @@ const initialState = {
   bets: {
     odd: 246382.72737627,
     even: 24632.72737627
-  }
+  },
+  myBets: [
+    {
+      isEven: true,
+      amount: 62.62736273
+    },
+    {
+      isEven: false,
+      amount: 100
+    }
+  ]
 }
 
 const oddEvenSlice = createSlice({
@@ -37,5 +47,6 @@ export const betStatusSelector = state => state.oddEven.status
 export const betHeightSelector = state => state.oddEven.betHeight
 export const betsSelector = state => state.oddEven.bets
 export const dealHeightSelector = state => state.oddEven.dealHeight
+export const myBetsSelector = state => state.oddEven.myBets
 
 export default oddEvenSlice.reducer

@@ -121,13 +121,3 @@ export const BetArea = styled.section`
     }
   }
 `
-
-export const MyBets = styled.section`
-  width: 300px;
-
-  margin-left: 16px;
-
-  background: #ffffff;
-  border: 1px solid #dce0e2;
-  border-radius: 10px;
-`

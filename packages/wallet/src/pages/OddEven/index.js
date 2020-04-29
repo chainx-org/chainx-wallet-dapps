@@ -1,5 +1,5 @@
 import React from 'react'
-import { BetArea, Header, Main, MyBets, Wrapper } from './styledComponents'
+import { BetArea, Header, Main, Wrapper } from './styledComponents'
 import Logo from './odd-even-logo.svg'
 import BtcHash from './components/BtcHash'
 import { useSelector } from 'react-redux'
@@ -12,6 +12,7 @@ import {
 import Status from './Status'
 import Bet from './Bet'
 import NowBets from './NowBets'
+import MyBets from './MyBets'
 
 export default function() {
   const btc = useSelector(nowBtcSelector)
@@ -50,7 +51,7 @@ export default function() {
             <footer>投注时间截止至 Bitcoin 块高 {dealHeight}</footer>
           </main>
         </BetArea>
-        <MyBets>my bets</MyBets>
+        <MyBets />
       </Main>
     </Wrapper>
   )
