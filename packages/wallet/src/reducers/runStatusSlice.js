@@ -14,7 +14,9 @@ const runStatusSlice = createSlice({
     loading: false,
     openSignerDownloadDialog: false,
     openExtensionDownloadDialog: false,
-    loadingIntentions: false
+    loadingIntentions: false,
+    openBetBtcDialog: false,
+    betOdd: true
   },
   reducers: {
     setUnNominateOpen(state, action) {
@@ -52,6 +54,10 @@ const runStatusSlice = createSlice({
     },
     setLoadingIntentions(state, action) {
       state.loadingIntentions = action.payload
+    },
+    setOpenBetBtcDialog(state, action) {
+      state.openBetBtcDialog = action.payload.open
+      state.betOdd = action.payload.betOdd
     }
   }
 })
@@ -68,7 +74,8 @@ export const {
   setLoading,
   setOpenSignerDownloadDialog,
   setOpenExtensionDownloadDialog,
-  setLoadingIntentions
+  setLoadingIntentions,
+  setOpenBetBtcDialog
 } = runStatusSlice.actions
 
 export const unNominateOpenSelector = state => state.runStatus.unNominateOpen
@@ -89,5 +96,8 @@ export const openExtensionDownloadDialogSelector = state =>
   state.runStatus.openExtensionDownloadDialog
 export const loadingIntentionsSelector = state =>
   state.runStatus.loadingIntentions
+export const openBetBetDialogSelector = state =>
+  state.runStatus.openBetBtcDialog
+export const betOddSelector = state => state.runStatus.betOdd
 
 export default runStatusSlice.reducer

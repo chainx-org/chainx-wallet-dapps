@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useDispatch } from 'react-redux'
+import { setOpenBetBtcDialog } from '../../../reducers/runStatusSlice'
 
 const Btn = styled.button`
   font-weight: 600;
@@ -51,12 +53,21 @@ const Wrapper = styled.section`
 `
 
 export default function() {
-  const bet = () => console.log('bet')
+  const dispatch = useDispatch()
+
+  const bet = betOdd => {
+    dispatch(
+      setOpenBetBtcDialog({
+        open: true,
+        betOdd
+      })
+    )
+  }
 
   return (
     <Wrapper>
-      <Odd onClick={bet}>哈希是奇数</Odd>
-      <Even onClick={bet}>哈希是偶数</Even>
+      <Odd onClick={() => bet(true)}>哈希是奇数</Odd>
+      <Even onClick={() => bet(false)}>哈希是偶数</Even>
       <span>投注</span>
     </Wrapper>
   )

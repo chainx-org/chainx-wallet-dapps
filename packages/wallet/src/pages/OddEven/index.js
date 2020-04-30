@@ -13,12 +13,15 @@ import Status from './Status'
 import Bet from './Bet'
 import NowBets from './NowBets'
 import MyBets from './MyBets'
+import BetDialog from './BetDialog'
+import { openBetBetDialogSelector } from '../../reducers/runStatusSlice'
 
 export default function() {
   const btc = useSelector(nowBtcSelector)
   const betHeight = useSelector(betHeightSelector)
   const status = useSelector(betStatusSelector)
   const dealHeight = useSelector(dealHeightSelector)
+  const openBetBetDialog = useSelector(openBetBetDialogSelector)
 
   return (
     <Wrapper>
@@ -53,6 +56,7 @@ export default function() {
         </BetArea>
         <MyBets />
       </Main>
+      {openBetBetDialog && <BetDialog />}
     </Wrapper>
   )
 }

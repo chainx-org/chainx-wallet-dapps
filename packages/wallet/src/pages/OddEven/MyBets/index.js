@@ -56,8 +56,8 @@ export default function() {
     <Wrapper>
       <header>我的竞猜</header>
       <ol>
-        {myBets.map(bet => (
-          <li>
+        {myBets.map((bet, index) => (
+          <li key={index}>
             <img src={bet.isEven ? evenLogo : oddLogo} alt="logo" />
             <span>{bet.amount} PCX</span>
           </li>
