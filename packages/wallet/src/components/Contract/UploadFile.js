@@ -79,7 +79,7 @@ export default function({ accept, file, setFile }) {
 
   const getRenderFileInfo = () => {
     if (accept === 'wasm') {
-      return file.name ? (
+      return file && file.name ? (
         <span>
           {file.name} ({file.size} bytes)
         </span>

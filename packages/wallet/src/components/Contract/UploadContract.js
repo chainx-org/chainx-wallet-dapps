@@ -4,41 +4,32 @@ import Confirm from './Confirm'
 import InputWithLabel from './InputWithLabel'
 import CurrentAccount from './CurrentAccount'
 
-export default function({ upload, setShowUpload, isnew = true, loading }) {
+export default function({ upload, setShowUpload, loading }) {
   const [file, setFile] = useState({})
   const [contractAbi, setContractAbi] = useState({})
   const [gas, setGas] = useState(20000000)
   const [name, setName] = useState('')
-  const [codeHash, setCodeHash] = useState('')
+  const [codeHash] = useState('')
 
   useEffect(() => {
     setName(file.name)
   }, [file])
 
-  const title = isnew ? 'Upload WASM' : 'Add an existing code hash'
+  const title = 'Upload WASM'
 
   return (
     <div className="upload">
       <Confirm
         title={title}
         cancel={() => setShowUpload(false)}
-        confirm={() => upload(file, name, contractAbi, gas, codeHash, isnew)}
+        confirm={() => upload(file, name, contractAbi, gas, codeHash, true)}
         loading={loading}
       >
         <div className="upload-area">
-          {isnew && (
-            <>
-              <CurrentAccount />
-              <UploadFile accept="wasm" file={file} setFile={setFile} />
-            </>
-          )}
-          {!isnew && (
-            <InputWithLabel
-              label="Code hash"
-              value={codeHash || ''}
-              onChange={e => setCodeHash(e.target.value)}
-            />
-          )}
+          <>
+            <CurrentAccount />
+            <UploadFile accept="wasm" file={file} setFile={setFile} />
+          </>
           <InputWithLabel
             label="Code bundle name"
             value={name || ''}
@@ -49,14 +40,12 @@ export default function({ upload, setShowUpload, isnew = true, loading }) {
             file={contractAbi}
             setFile={setContractAbi}
           />
-          {isnew && (
-            <InputWithLabel
-              label="Maximum gas allowed"
-              value={gas}
-              onChange={e => setGas(e.target.value)}
-              type="number"
-            />
-          )}
+          <InputWithLabel
+            label="Maximum gas allowed"
+            value={gas}
+            onChange={e => setGas(e.target.value)}
+            type="number"
+          />
         </div>
       </Confirm>
     </div>

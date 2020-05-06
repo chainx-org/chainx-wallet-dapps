@@ -130,11 +130,9 @@ export async function isContractExist(address) {
 
 export async function uploadContract(file, gas, cb) {
   const chainx = getChainx()
-  const method = 'putCode'
-  let codehash = '0x'
-  blake2AsU8a(file.data).forEach(i => {
-    codehash += ('0' + i.toString(16)).slice(-2)
-  })
+  const codehash = blake2AsU8a(file.data).reduce((result, i) => {
+    return result + ('0' + i.toString(16)).slice(-2)
+  }, '0x')
   const isExist = await isCodeHashExist(codehash)
   if (isExist) {
     cb({
@@ -147,9 +145,9 @@ export async function uploadContract(file, gas, cb) {
     return
   }
   const args = [gas, compactAddLength(file.data)]
-  const ex = chainx.api.tx.xContracts[method](...args)
+  const ex = chainx.api.tx.xContracts['putCode'](...args)
   if (enableExtension) {
-    contractApi(ex.toHex(), cb)
+    await contractApi(ex.toHex(), cb)
     return
   }
   ex.signAndSend(Alice, convertCb(cb))
