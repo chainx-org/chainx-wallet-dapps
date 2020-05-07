@@ -83,7 +83,6 @@ export default function({ handleClose }) {
       return
     }
 
-    debugger
     const args = [gas, compactAddLength(file.data)]
     const ex = chainx.api.tx.xContracts['putCode'](...args)
 
@@ -92,8 +91,8 @@ export default function({ handleClose }) {
     const messages = {
       successTitle: 'Success',
       failTitle: 'Fail',
-      successMessage: 'Success to upload wasm file',
-      failMessage: 'Fail to upload wasm file'
+      successMessage: 'Success to upload contract',
+      failMessage: 'Fail to upload contract'
     }
 
     await showSnack(status, messages, dispatch)
