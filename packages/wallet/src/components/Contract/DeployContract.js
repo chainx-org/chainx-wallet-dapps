@@ -1,14 +1,11 @@
 import React, { useState } from 'react'
-import { Abi } from '@chainx/api-contract'
-import UploadFile from './UploadFile'
 import Confirm from './Confirm'
 import InputWithLabel from './InputWithLabel'
-import CurrentAccount from './CurrentAccount'
-import { deploy, isContractExist } from '../../utils/contractHelper'
+import { deploy } from '../../utils/contractHelper'
 import { useDispatch } from 'react-redux'
 import {
-  typeEnum,
-  addAutoCloseSnackWithParams
+  addAutoCloseSnackWithParams,
+  typeEnum
 } from '../../reducers/snackSlice'
 import store from 'store'
 
@@ -20,13 +17,11 @@ export default function({
   isnew = true
 }) {
   const [name, setName] = useState((abi && abi.name) || '')
-  const [address, setAddress] = useState('')
   const [params, setParams] = useState(
     abi && Array(abi.parseAbi.abi.contract.constructors[0].args.length).fill('')
   )
   const [endowment, setEndowment] = useState(0)
   const [gas, setGas] = useState(5000000)
-  const [file, setFile] = useState({})
   const [loading, setLoading] = useState(false)
 
   const dispatch = useDispatch()
@@ -78,10 +73,16 @@ export default function({
 
   const _deploy = async (abi, name, params, endowment, gas) => {
     console.log('deploy contract ', abi, name, params, endowment, gas)
-    if (isnew) {
-      if (
-        abi.parseAbi.abi.contract.constructors[0].args.length > params.length
-      ) {
+    if (abi.parseAbi.abi.contract.constructors[0].args.length > params.length) {
+      addAutoCloseSnackWithParams(
+        dispatch,
+        typeEnum.ERROR,
+        '请输入构造函数参数'
+      )
+      return
+    }
+    for (let i in params) {
+      if (!params[i]) {
         addAutoCloseSnackWithParams(
           dispatch,
           typeEnum.ERROR,
@@ -89,45 +90,17 @@ export default function({
         )
         return
       }
-      for (let i in params) {
-        if (!params[i]) {
-          addAutoCloseSnackWithParams(
-            dispatch,
-            typeEnum.ERROR,
-            '请输入构造函数参数'
-          )
-          return
-        }
-      }
-      const paramsList = [abi, endowment, gas]
-      const errMsgList = ['请上传 ABI 文件', '请输入 endowment', '请输入 gas']
-      for (let i in paramsList) {
-        if (!paramsList[i] && paramsList[i] !== 0) {
-          addAutoCloseSnackWithParams(dispatch, typeEnum.ERROR, errMsgList[i])
-          return
-        }
-      }
-      setLoading(true)
-      deploy(abi, params, endowment, gas, cb)
-    } else {
-      let type = typeEnum.SUCCESS
-      let title = '添加成功'
-      if (await isContractExist(address)) {
-        console.log('contract address exist')
-        if (Object.keys(file).length < 1) {
-          console.log('need abi')
-          type = typeEnum.ERROR
-          title = '请上传 ABI 文件'
-        } else {
-          saveContract(address, { abi: file, parseAbi: new Abi(file) })
-        }
-      } else {
-        type = typeEnum.ERROR
-        title = 'Contract address not exist'
-        console.log('contract address not exist')
-      }
-      addAutoCloseSnackWithParams(dispatch, type, title)
     }
+    const paramsList = [abi, endowment, gas]
+    const errMsgList = ['请上传 ABI 文件', '请输入 endowment', '请输入 gas']
+    for (let i in paramsList) {
+      if (!paramsList[i] && paramsList[i] !== 0) {
+        addAutoCloseSnackWithParams(dispatch, typeEnum.ERROR, errMsgList[i])
+        return
+      }
+    }
+    setLoading(true)
+    deploy(abi, params, endowment, gas, cb)
   }
 
   const saveContract = (address, _abi) => {
@@ -152,70 +125,50 @@ export default function({
         confirm={() => _deploy(abi, name, params, endowment, gas)}
         loading={loading}
       >
-        {isnew && (
-          <>
-            <CurrentAccount />
-            <InputWithLabel
-              label="Code hash for this contract"
-              value={abi.codeHash}
-              disabled={true}
+        <InputWithLabel
+          label="Code hash for this contract"
+          value={abi.codeHash}
+          disabled={true}
+        />
+        <InputWithLabel
+          label="Contract name"
+          value={name}
+          onChange={e => setName(e.target.value)}
+        />
+        <div className="constructor-area">
+          <span className="label">Constructor params</span>
+          {abi.parseAbi.abi.contract.constructors[0].args.map((item, i) => (
+            <input
+              key={i}
+              type="text"
+              value={params[i]}
+              onChange={e => {
+                const newParams = Array.from(params)
+                const newValue = e.target.value
+                newParams.splice(i, 1, newValue)
+                setParams(newParams)
+              }}
+              placeholder={
+                abi.parseAbi.abi.contract.constructors[0].args[i].name +
+                ': ' +
+                abi.parseAbi.abi.contract.constructors[0].args[i].type
+                  .displayName
+              }
             />
-            <InputWithLabel
-              label="Contract name"
-              value={name}
-              onChange={e => setName(e.target.value)}
-            />
-            <div className="constructor-area">
-              <span className="label">Constructor params</span>
-              {abi.parseAbi.abi.contract.constructors[0].args.map((item, i) => (
-                <input
-                  key={i}
-                  type="text"
-                  value={params[i]}
-                  onChange={e => {
-                    const newParams = Array.from(params)
-                    const newValue = e.target.value
-                    newParams.splice(i, 1, newValue)
-                    setParams(newParams)
-                  }}
-                  placeholder={
-                    abi.parseAbi.abi.contract.constructors[0].args[i].name +
-                    ': ' +
-                    abi.parseAbi.abi.contract.constructors[0].args[i].type
-                      .displayName
-                  }
-                />
-              ))}
-            </div>
-            <InputWithLabel
-              label="Endowment"
-              value={endowment}
-              onChange={e => setEndowment(e.target.value)}
-              type="number"
-            />
-            <InputWithLabel
-              label="Maximum gas allowed"
-              value={gas}
-              onChange={e => setGas(e.target.value)}
-              type="number"
-            />
-          </>
-        )}
-        {!isnew && (
-          <>
-            <InputWithLabel
-              label="Contract address"
-              value={address}
-              onChange={e => setAddress(e.target.value)}
-            />
-            <InputWithLabel
-              label="Contract name"
-              value={name}
-              onChange={e => setName(e.target.value)}
-            />
-            <UploadFile accept="json" file={file} setFile={setFile} />
-          </>
-        )}
+          ))}
+        </div>
+        <InputWithLabel
+          label="Endowment"
+          value={endowment}
+          onChange={e => setEndowment(e.target.value)}
+          type="number"
+        />
+        <InputWithLabel
+          label="Maximum gas allowed"
+          value={gas}
+          onChange={e => setGas(e.target.value)}
+          type="number"
+        />
       </Confirm>
     </div>
   )

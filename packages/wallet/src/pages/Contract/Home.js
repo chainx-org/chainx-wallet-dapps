@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { PrimaryButton, DefaultButton } from '@chainx/ui'
+import React, { useEffect, useState } from 'react'
+import { DefaultButton } from '@chainx/ui'
 import DeployContract from '../../components/Contract/DeployContract'
 import ContractCard from '../../components/Contract/ContractCard'
 import ContractHeader from '../../components/Contract/ContractHeader'
@@ -12,7 +12,6 @@ function Home(props) {
   const { abiList, contractList } = useSelector(state => state.local)
   const [update, setUpdate] = useState(new Date())
   const [showDeploy, setShowDeploy] = useState(false)
-  const [isnew, setIsnew] = useState(true)
   const dispatch = useDispatch()
 
   const [showAddContract, setShowAddContract] = useState(false)
@@ -35,22 +34,11 @@ function Home(props) {
           props={props}
           abi={abiList[0]}
           setShowDeploy={setShowDeploy}
-          isnew={isnew}
+          isnew={true}
           setUpdate={setUpdate}
         />
       )}
       <div className="button-area">
-        {abiList.length > 0 && (
-          <PrimaryButton
-            className="contract-wide-button"
-            onClick={() => {
-              setShowDeploy(true)
-              setIsnew(true)
-            }}
-          >
-            Deploy a code hash
-          </PrimaryButton>
-        )}
         <DefaultButton
           className="contract-wide-button last-button"
           onClick={() => {
