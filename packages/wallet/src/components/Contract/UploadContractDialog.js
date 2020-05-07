@@ -63,6 +63,14 @@ export default function({ handleClose }) {
       setNameErrMsg('Please input code bundle name')
       return
     }
+    const codeHash = blake2AsU8a(file.data).reduce((result, i) => {
+      return result + ('0' + i.toString(16)).slice(-2)
+    }, '0x')
+    const existed = await isCodeHashExist(codeHash)
+    if (existed) {
+      setAbiErrMsg('Code hash already existed on chain')
+      return
+    }
 
     let parsedAbi = {}
     try {
@@ -74,15 +82,6 @@ export default function({ handleClose }) {
     }
 
     const chainx = getChainx()
-    const codeHash = blake2AsU8a(file.data).reduce((result, i) => {
-      return result + ('0' + i.toString(16)).slice(-2)
-    }, '0x')
-    const existed = await isCodeHashExist(codeHash)
-    if (existed) {
-      setAbiErrMsg('Code hash not existed on chain')
-      return
-    }
-
     const args = [gas, compactAddLength(file.data)]
     const ex = chainx.api.tx.xContracts['putCode'](...args)
 
