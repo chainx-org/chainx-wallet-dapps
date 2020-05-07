@@ -8,14 +8,9 @@ import {
   typeEnum
 } from '../../reducers/snackSlice'
 import store from 'store'
+import { showSnack } from '../../utils/chainxProvider'
 
-export default function({
-  props,
-  abi,
-  setShowDeploy,
-  setUpdate,
-  isnew = true
-}) {
+export default function({ props, abi, setShowDeploy, setUpdate }) {
   const [name, setName] = useState((abi && abi.name) || '')
   const [params, setParams] = useState(
     abi && Array(abi.parseAbi.abi.contract.constructors[0].args.length).fill('')
@@ -25,51 +20,6 @@ export default function({
   const [loading, setLoading] = useState(false)
 
   const dispatch = useDispatch()
-
-  const cb = resp => {
-    if (resp.reject) {
-      console.log('tx was rejected')
-      addAutoCloseSnackWithParams(dispatch, typeEnum.ERROR, '交易被拒绝')
-      setLoading(false)
-      return
-    }
-    if (resp.err) {
-      console.log('error occurs ', resp.err)
-      addAutoCloseSnackWithParams(
-        dispatch,
-        typeEnum.ERROR,
-        '交易失败',
-        resp.err.message || resp.err.msg
-      )
-      setLoading(false)
-    } else {
-      console.log(resp.status)
-      const result = resp.status
-      let type = typeEnum.SUCCESS
-      let title = '合约部署成功'
-      if (result.status === 'Broadcast') {
-        addAutoCloseSnackWithParams(dispatch, type, '交易已发送')
-      } else if (result.status === 'Finalized') {
-        if (result.result === 'ExtrinsicSuccess') {
-          const event =
-            result.events &&
-            result.events.find(item => {
-              return item.method === 'Instantiated'
-            })
-          if (event) {
-            // event name "Instantiated", data[0] 为发送人地址，data[1] 为合约地址
-            const address = event.event.data[1]
-            saveContract(address, abi)
-          }
-        } else {
-          type = typeEnum.ERROR
-          title = '合约部署失败'
-          setLoading(false)
-        }
-        addAutoCloseSnackWithParams(dispatch, type, title)
-      }
-    }
-  }
 
   const _deploy = async (abi, name, params, endowment, gas) => {
     console.log('deploy contract ', abi, name, params, endowment, gas)
@@ -100,7 +50,34 @@ export default function({
       }
     }
     setLoading(true)
-    deploy(abi, params, endowment, gas, cb)
+    try {
+      const status = await deploy(abi, params, endowment, gas)
+      console.log('status', status)
+
+      const messages = {
+        successTitle: 'Success',
+        failTitle: 'Fail',
+        successMessage: 'Success to deploy contract',
+        failMessage: 'Fail to deploy contract'
+      }
+
+      await showSnack(status, messages, dispatch)
+      const event =
+        status.events &&
+        status.events.find(item => {
+          return item.method === 'Instantiated'
+        })
+      if (event) {
+        // event name "Instantiated", data[0] 为发送人地址，data[1] 为合约地址
+        const address = event.event.data[1]
+        saveContract(address, abi)
+      }
+    } catch (e) {
+      if (e) {
+        console.error(e)
+      }
+      setLoading(false)
+    }
   }
 
   const saveContract = (address, _abi) => {
@@ -115,12 +92,10 @@ export default function({
     props.history.push('/contract')
   }
 
-  const title = isnew ? 'Deploy a new contract' : 'Add an existing contract'
-
   return (
     <div className="upload">
       <Confirm
-        title={title}
+        title="Deploy a new contract"
         cancel={() => setShowDeploy(false)}
         confirm={() => _deploy(abi, name, params, endowment, gas)}
         loading={loading}

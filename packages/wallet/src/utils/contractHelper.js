@@ -153,10 +153,9 @@ export async function uploadContract(file, gas, cb) {
   ex.signAndSend(Alice, convertCb(cb))
 }
 
-export async function deploy(_abi, params, endowment, gas, cb) {
+export async function deploy(_abi, params, endowment, gas) {
   const chainx = getChainx()
   const abi = new Abi(_abi.abi)
-  const method = 'instantiate'
   if (abi.constructors[0].args.length !== params.length) {
     console.log('params length is not correct', params)
     return
@@ -171,12 +170,10 @@ export async function deploy(_abi, params, endowment, gas, cb) {
       abi.constructors[0](...params).slice(2)
   ]
   console.log('deploy abi in utils ', abi, args, params)
-  const ex = chainx.api.tx.xContracts[method](...args)
-  if (enableExtension) {
-    contractApi(ex.toHex(), cb)
-    return
-  }
-  ex.signAndSend(Alice, convertCb(cb))
+  const ex = chainx.api.tx.xContracts['instantiate'](...args)
+  const accountAddress = addressSelector(store.getState())
+  const status = await signAndSendExtrinsic(accountAddress, ex.toHex())
+  return status
 }
 
 async function signAndSend(hex) {
