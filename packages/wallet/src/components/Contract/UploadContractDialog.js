@@ -81,9 +81,8 @@ export default function({ handleClose }) {
       return
     }
 
-    const chainx = getChainx()
     const args = [gas, compactAddLength(file.data)]
-    const ex = chainx.api.tx.xContracts['putCode'](...args)
+    const ex = getChainx().api.tx.xContracts['putCode'](...args)
 
     const status = await signAndSendExtrinsic(accountAddress, ex.toHex())
 
