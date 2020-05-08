@@ -2,7 +2,6 @@ import { Dialog, PrimaryButton, TextInput } from '@chainx/ui'
 import styled from 'styled-components'
 import React, { useEffect, useState } from 'react'
 import UploadFile from './UploadFile'
-import InputWithLabel from './InputWithLabel'
 import $t from '../../locale'
 import { Abi } from '@chainx/api-contract'
 import { getChainx } from '../../services/chainx'
@@ -15,6 +14,7 @@ import { useDispatch } from 'react-redux'
 import localStore from 'store'
 import { fetchAbiAndContractList } from '../../reducers/localSlice'
 import { compactAddLength } from '@chainx/util'
+import LabelAmountInput from './LabelAmountInput'
 
 const StyledDialog = styled(Dialog)`
   div.wrapper {
@@ -124,13 +124,11 @@ export default function({ handleClose }) {
         />
         <UploadFile accept="json" file={contractAbi} setFile={setContractAbi} />
         {abiErrMsg && <span className="error">{abiErrMsg}</span>}
-        <InputWithLabel
+        <LabelAmountInput
           label="Maximum gas allowed"
           value={gas}
-          onChange={e => setGas(e.target.value)}
-          type="number"
+          onChange={setGas}
         />
-
         <PrimaryButton size="fullWidth" onClick={upload}>
           {$t('COMMON_CONFIRM')}
         </PrimaryButton>

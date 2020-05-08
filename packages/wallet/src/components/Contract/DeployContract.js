@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Confirm from './Confirm'
-import InputWithLabel from './InputWithLabel'
 import { deploy } from '../../utils/contractHelper'
 import { useDispatch } from 'react-redux'
 import {
@@ -9,6 +8,9 @@ import {
 } from '../../reducers/snackSlice'
 import store from 'store'
 import { showSnack } from '../../utils/chainxProvider'
+import LabelAmountInput from './LabelAmountInput'
+import LabelTextInput from './LabelTextInput'
+import { TextInput } from '@chainx/ui/dist'
 
 export default function({ props, abi, setShowDeploy, setUpdate }) {
   const [name, setName] = useState((abi && abi.name) || '')
@@ -100,27 +102,21 @@ export default function({ props, abi, setShowDeploy, setUpdate }) {
         confirm={() => _deploy(abi, name, params, endowment, gas)}
         loading={loading}
       >
-        <InputWithLabel
+        <LabelTextInput
           label="Code hash for this contract"
           value={abi.codeHash}
           disabled={true}
         />
-        <InputWithLabel
-          label="Contract name"
-          value={name}
-          onChange={e => setName(e.target.value)}
-        />
+        <LabelTextInput label="Contract name" value={name} onChange={setName} />
         <div className="constructor-area">
           <span className="label">Constructor params</span>
           {abi.parseAbi.abi.contract.constructors[0].args.map((item, i) => (
-            <input
+            <TextInput
               key={i}
-              type="text"
               value={params[i]}
-              onChange={e => {
+              onChange={value => {
                 const newParams = Array.from(params)
-                const newValue = e.target.value
-                newParams.splice(i, 1, newValue)
+                newParams.splice(i, 1, value)
                 setParams(newParams)
               }}
               placeholder={
@@ -132,17 +128,15 @@ export default function({ props, abi, setShowDeploy, setUpdate }) {
             />
           ))}
         </div>
-        <InputWithLabel
+        <LabelAmountInput
           label="Endowment"
           value={endowment}
-          onChange={e => setEndowment(e.target.value)}
-          type="number"
+          onChange={setEndowment}
         />
-        <InputWithLabel
+        <LabelAmountInput
           label="Maximum gas allowed"
           value={gas}
-          onChange={e => setGas(e.target.value)}
-          type="number"
+          onChange={setGas}
         />
       </Confirm>
     </div>
