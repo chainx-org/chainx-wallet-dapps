@@ -5,17 +5,33 @@ import {
   addAutoCloseSnackWithParams,
   typeEnum
 } from '../../reducers/snackSlice'
-import { PrimaryButton } from '@chainx/ui'
-import Draggable from 'react-draggable'
+import { Dialog, PrimaryButton } from '@chainx/ui'
 import ExecuteMessageItem from './ExecuteMessageItem'
 import Confirm from './Confirm'
 import InputWithLabel from './InputWithLabel'
 import { call, send } from '../../utils/contractHelper'
-import closeGrayIcon from '../../static/close_gray.svg'
 import closeIcon from '../../static/close.svg'
 import deleteIcon from '../../static/delete.svg'
 import deployIcon from '../../static/deploy.svg'
 import ClipBoard from '../ClipBoard'
+import LabelTextInput from './LabelTextInput'
+import styled from 'styled-components'
+
+const StyledDialog = styled(Dialog)`
+  div.wrapper {
+    padding: 0 16px 16px;
+
+    & > button {
+      margin-top: 20px;
+    }
+
+    & > span.error {
+      color: #de071c;
+      font-size: 12px;
+      margin-left: 8px;
+    }
+  }
+`
 
 export default function(props) {
   const { item, setAbi, setShowDeploy, setUpdate, type } = props
@@ -153,16 +169,12 @@ export default function(props) {
         />
       )}
       {showSubmitForm && (
-        <Draggable cancel=".not-draggable">
-          <div className="contract-call-form">
-            <div className="contract-call-form-header">
-              <span>{contractItem.name}</span>
-              <img
-                src={closeGrayIcon}
-                alt="closeIcon"
-                onClick={() => closeSubmitForm()}
-              />
-            </div>
+        <StyledDialog
+          title={contractItem.name}
+          open
+          handleClose={closeSubmitForm}
+        >
+          <div className="wrapper">
             {contractItem.args &&
               contractItem.args.map(({ name, type }, index) => (
                 <InputWithLabel
@@ -176,25 +188,25 @@ export default function(props) {
                   }}
                 />
               ))}
-            <InputWithLabel
+            <LabelTextInput
               label="gasLimit"
               placeholder="gasLimit: u64"
               value={gasLimit}
-              onChange={e => setGasLimit(e.target.value)}
+              onChange={setGasLimit}
             />
             {contractItem.mutates && (
-              <InputWithLabel
+              <LabelTextInput
                 label="value(PCX)"
                 placeholder="value: Balance"
                 value={value}
-                onChange={e => setValue(e.target.value)}
+                onChange={setValue}
               />
             )}
-            <PrimaryButton onClick={click} className="contract-submit-button">
+            <PrimaryButton onClick={click} size="fullWidth">
               Execute
             </PrimaryButton>
           </div>
-        </Draggable>
+        </StyledDialog>
       )}
       <div className="contract-card-main">
         <div className="header">
