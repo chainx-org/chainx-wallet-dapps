@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Confirm from './Confirm'
 import { deploy } from '../../utils/contractHelper'
 import { useDispatch } from 'react-redux'
 import {
@@ -11,6 +10,26 @@ import { showSnack } from '../../utils/chainxProvider'
 import LabelAmountInput from './LabelAmountInput'
 import LabelTextInput from './LabelTextInput'
 import { TextInput } from '@chainx/ui/dist'
+import styled from 'styled-components'
+import { Dialog, PrimaryButton } from '@chainx/ui'
+import $t from '../../locale'
+
+const StyledDialog = styled(Dialog)`
+  div.wrapper {
+    padding: 0 16px 16px;
+
+    & > button {
+      margin-top: 20px;
+    }
+
+    .constructor-area .label {
+      height: 36px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+    }
+  }
+`
 
 export default function({ props, abi, setShowDeploy, setUpdate }) {
   const [name, setName] = useState((abi && abi.name) || '')
@@ -95,13 +114,12 @@ export default function({ props, abi, setShowDeploy, setUpdate }) {
   }
 
   return (
-    <div className="upload">
-      <Confirm
-        title="Deploy a new contract"
-        cancel={() => setShowDeploy(false)}
-        confirm={() => _deploy(abi, name, params, endowment, gas)}
-        loading={loading}
-      >
+    <StyledDialog
+      title="Deploy a new contract"
+      open
+      handleClose={() => setShowDeploy(false)}
+    >
+      <div className="wrapper">
         <LabelTextInput
           label="Code hash for this contract"
           value={abi.codeHash}
@@ -125,6 +143,7 @@ export default function({ props, abi, setShowDeploy, setUpdate }) {
                 abi.parseAbi.abi.contract.constructors[0].args[i].type
                   .displayName
               }
+              showClear={false}
             />
           ))}
         </div>
@@ -138,7 +157,14 @@ export default function({ props, abi, setShowDeploy, setUpdate }) {
           value={gas}
           onChange={setGas}
         />
-      </Confirm>
-    </div>
+        <PrimaryButton
+          size="fullWidth"
+          onClick={() => _deploy(abi, name, params, endowment, gas)}
+          disabled={loading}
+        >
+          {$t('COMMON_CONFIRM')}
+        </PrimaryButton>
+      </div>
+    </StyledDialog>
   )
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { DefaultButton, PrimaryButton } from '@chainx/ui'
-import DeployContract from '../../components/Contract/DeployContract'
+import DeployContract from '../../components/Contract/DeployContractDialog'
 import ContractCard from '../../components/Contract/ContractCard'
 import ContractHeader from '../../components/Contract/ContractHeader'
 import { useDispatch, useSelector } from 'react-redux'
