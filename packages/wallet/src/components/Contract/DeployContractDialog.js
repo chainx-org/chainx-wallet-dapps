@@ -143,7 +143,6 @@ export default function({ props, abi, setShowDeploy, setUpdate }) {
                 abi.parseAbi.abi.contract.constructors[0].args[i].type
                   .displayName
               }
-              showClear={false}
             />
           ))}
         </div>
