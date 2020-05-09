@@ -46,24 +46,22 @@ const Nav = styled.span`
   cursor: pointer;
 `
 
-export default function({ i }) {
+export default function() {
   return (
     <ContractHeader>
       <div className="logo">
         <img src={logo} alt="contract-logo" />
       </div>
-      <>
-        <Nav>
-          <NavLink exact activeClassName="active" to="/contract">
-            {$t('CONTRACT')}
-          </NavLink>
-        </Nav>
-        <Nav className="last-nav">
-          <NavLink exact activeClassName="active" to="/contract/code">
-            {$t('CODE')}
-          </NavLink>
-        </Nav>
-      </>
+      <Nav>
+        <NavLink exact activeClassName="active" to="/contract">
+          {$t('CONTRACT')}
+        </NavLink>
+      </Nav>
+      <Nav className="last-nav">
+        <NavLink exact activeClassName="active" to="/contract/code">
+          {$t('CODE')}
+        </NavLink>
+      </Nav>
     </ContractHeader>
   )
 }
