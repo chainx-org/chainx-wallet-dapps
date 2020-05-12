@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { DefaultButton } from '@chainx/ui'
-import DeployContract from '../../components/Contract/DeployContractDialog'
 import ContractCard from '../../components/Contract/ContractCard'
 import ContractHeader from '../../components/Contract/ContractHeader'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,7 +10,6 @@ import AddExistedContractDialog from '../../components/Contract/AddExistedContra
 function Contract(props) {
   const { abiList, contractList } = useSelector(state => state.local)
   const [update, setUpdate] = useState(new Date())
-  const [showDeploy, setShowDeploy] = useState(false)
   const dispatch = useDispatch()
 
   const [showAddContract, setShowAddContract] = useState(false)
@@ -27,15 +25,6 @@ function Contract(props) {
         <AddExistedContractDialog
           handleClose={() => setShowAddContract(false)}
           abi={abiList[0]}
-        />
-      )}
-      {showDeploy && (
-        <DeployContract
-          props={props}
-          abi={abiList[0]}
-          setShowDeploy={setShowDeploy}
-          isnew={true}
-          setUpdate={setUpdate}
         />
       )}
       <div className="button-area">
