@@ -5,10 +5,10 @@ import ContractCard from '../../components/Contract/ContractCard'
 import ContractHeader from '../../components/Contract/ContractHeader'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAbiAndContractList } from '../../reducers/localSlice'
-import './Home.scss'
+import './Contract.scss'
 import AddExistedContractDialog from '../../components/Contract/AddExistedContractDialog'
 
-function Home(props) {
+function Contract(props) {
   const { abiList, contractList } = useSelector(state => state.local)
   const [update, setUpdate] = useState(new Date())
   const [showDeploy, setShowDeploy] = useState(false)
@@ -68,4 +68,4 @@ function Home(props) {
   )
 }
 
-export default Home
+export default Contract
