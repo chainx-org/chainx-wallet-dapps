@@ -7,7 +7,7 @@ import { fetchAbiAndContractList } from '../../reducers/localSlice'
 import './Contract.scss'
 import AddExistedContractDialog from '../../components/Contract/AddExistedContractDialog'
 
-function Contract(props) {
+function Contract() {
   const { abiList, contractList } = useSelector(state => state.local)
   const [update, setUpdate] = useState(new Date())
   const dispatch = useDispatch()
