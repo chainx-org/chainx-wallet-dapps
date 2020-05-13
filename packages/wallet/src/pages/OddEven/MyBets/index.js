@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux'
 import { myBetsSelector } from '../../../reducers/oddevenSlice'
 import evenLogo from './even.svg'
 import oddLogo from './odd.svg'
+import { pcxPrecisionSelector } from '../../selectors/assets'
+import { toPrecision } from '../../../utils'
 
 export const Wrapper = styled.section`
   width: 300px;
@@ -51,6 +53,7 @@ export const Wrapper = styled.section`
 
 export default function() {
   const myBets = useSelector(myBetsSelector)
+  const precision = useSelector(pcxPrecisionSelector)
 
   return (
     <Wrapper>
@@ -59,7 +62,7 @@ export default function() {
         {myBets.map((bet, index) => (
           <li key={index}>
             <img src={bet.parity ? evenLogo : oddLogo} alt="logo" />
-            <span>{bet.bet_balance} PCX</span>
+            <span>{toPrecision(bet.bet_balance, precision)} PCX</span>
           </li>
         ))}
       </ol>

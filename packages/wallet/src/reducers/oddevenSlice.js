@@ -21,7 +21,6 @@ const initialState = {
   btcHeaderHash:
     '0000000000000000000ffba85d088a8640bd83785034727dc31d926ed41d87c2',
   betHeight: 700000,
-  dealHeight: 627992,
   status: betStatusEnum.ON,
   bets: {
     odd: 246382.72737627,
@@ -54,6 +53,10 @@ const oddEvenSlice = createSlice({
     },
     setBets(state, { payload }) {
       state.myBets = payload
+    },
+    setNowBtc(state, { payload: { height, hash } }) {
+      state.btcHeight = height
+      state.btcHeaderHash = hash
     }
   }
 })
@@ -62,7 +65,8 @@ export const {
   setBetHeight,
   setEvenBets,
   setOddBets,
-  setBets
+  setBets,
+  setNowBtc
 } = oddEvenSlice.actions
 
 async function contractGet(address, method, params = []) {
@@ -104,8 +108,17 @@ export const fetchBetRecords = address => async dispatch => {
     // TODO: change to account address
     ['5GoNkf6WdbxCFnPdAnYYQyCjAKPJgLNxXwPjwTh6DGg6gN3E']
   )
-  console.log('data', data)
   dispatch(setBets(data))
+}
+
+export const fetchNowBtcStatus = isTestNet => async dispatch => {
+  const response = await window.fetch(
+    `https://api.chainx.org.cn/bitx/${
+      isTestNet ? 'testnet' : 'mainnet'
+    }/block/tip`
+  )
+  const result = await response.json()
+  dispatch(setNowBtc({ height: result.height, hash: result.hash }))
 }
 
 export const nowBtcSelector = state => {
@@ -118,7 +131,6 @@ export const nowBtcSelector = state => {
 export const betStatusSelector = state => state.oddEven.status
 export const betHeightSelector = state => state.oddEven.betHeight
 export const betsSelector = state => state.oddEven.bets
-export const dealHeightSelector = state => state.oddEven.dealHeight
 export const myBetsSelector = state => state.oddEven.myBets
 
 export default oddEvenSlice.reducer

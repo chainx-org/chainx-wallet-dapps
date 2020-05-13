@@ -2,6 +2,8 @@ import { useSelector } from 'react-redux'
 import { betsSelector } from '../../reducers/oddevenSlice'
 import styled from 'styled-components'
 import React from 'react'
+import { pcxPrecisionSelector } from '../selectors/assets'
+import { toPrecision } from '../../utils'
 
 const Wrapper = styled.div`
   margin-top: 20px;
@@ -44,6 +46,7 @@ const Wrapper = styled.div`
 export default function() {
   const { odd, even } = useSelector(betsSelector)
   const sum = odd + even
+  const precision = useSelector(pcxPrecisionSelector)
 
   return (
     <Wrapper>
@@ -58,8 +61,8 @@ export default function() {
         />
       </div>
       <div className="detail">
-        <span>{odd} PCX</span>
-        <span>{even} PCX</span>
+        <span>{toPrecision(odd, precision)} PCX</span>
+        <span>{toPrecision(even, precision)} PCX</span>
       </div>
     </Wrapper>
   )

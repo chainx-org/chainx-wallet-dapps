@@ -6,10 +6,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   betHeightSelector,
   betStatusSelector,
-  dealHeightSelector,
   fetchBetBtcHeight,
   fetchBetRecords,
   fetchEvenBets,
+  fetchNowBtcStatus,
   fetchOddBets,
   nowBtcSelector
 } from '../../reducers/oddevenSlice'
@@ -20,14 +20,15 @@ import MyBets from './MyBets'
 import BetDialog from './BetDialog'
 import { openBetBetDialogSelector } from '../../reducers/runStatusSlice'
 import { addressSelector } from '../../reducers/addressSlice'
+import { isTestNetSelector } from '../../reducers/settingsSlice'
 
 export default function() {
   const btc = useSelector(nowBtcSelector)
   const betHeight = useSelector(betHeightSelector)
   const status = useSelector(betStatusSelector)
-  const dealHeight = useSelector(dealHeightSelector)
   const openBetBetDialog = useSelector(openBetBetDialogSelector)
   const address = useSelector(addressSelector)
+  const isTestNet = useSelector(isTestNetSelector)
 
   const dispatch = useDispatch()
 
@@ -37,6 +38,10 @@ export default function() {
     dispatch(fetchEvenBets(address))
     dispatch(fetchBetRecords(address))
   }, [address, dispatch])
+
+  useEffect(() => {
+    dispatch(fetchNowBtcStatus(isTestNet))
+  }, [dispatch, isTestNet])
 
   return (
     <Wrapper>
