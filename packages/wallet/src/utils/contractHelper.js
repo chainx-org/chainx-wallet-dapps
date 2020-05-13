@@ -56,6 +56,8 @@ export async function call(abi, address, method, gas, params) {
         returnType = typeObj.type
       } else if (returnType === 'H256Wrapper') {
         returnType = 'H256'
+      } else {
+        returnType = typeObj.type
       }
       let data = createType(
         returnType.replace('{ "elems": "Vec" }<u8>', 'Text'),
