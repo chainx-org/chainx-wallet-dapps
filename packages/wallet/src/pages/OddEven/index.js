@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BetArea, Header, Main, Wrapper } from './styledComponents'
 import Logo from './odd-even-logo.svg'
 import BtcHash from './components/BtcHash'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   betHeightSelector,
   betStatusSelector,
   dealHeightSelector,
+  fetchBetBtcHeight,
   nowBtcSelector
 } from '../../reducers/oddevenSlice'
 import Status from './Status'
@@ -15,6 +16,7 @@ import NowBets from './NowBets'
 import MyBets from './MyBets'
 import BetDialog from './BetDialog'
 import { openBetBetDialogSelector } from '../../reducers/runStatusSlice'
+import { addressSelector } from '../../reducers/addressSlice'
 
 export default function() {
   const btc = useSelector(nowBtcSelector)
@@ -22,6 +24,13 @@ export default function() {
   const status = useSelector(betStatusSelector)
   const dealHeight = useSelector(dealHeightSelector)
   const openBetBetDialog = useSelector(openBetBetDialogSelector)
+  const address = useSelector(addressSelector)
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchBetBtcHeight(address))
+  }, [address, dispatch])
 
   return (
     <Wrapper>

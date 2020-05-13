@@ -28,3 +28,6 @@ export const testNetDemoAccount = {
     name: '体验账户'
   }
 }
+
+export const oddEvenContractAddress =
+  '5Cz5t8Xm94jEPCAWq21U4nuYM1ZTEb8WAECwEyYxeNzQ65aX'

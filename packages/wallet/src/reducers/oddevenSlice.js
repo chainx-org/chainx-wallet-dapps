@@ -1,4 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { oddEvenContractAddress } from '../utils/constants'
+import contractAbiObj from '../utils/oddEvenAbi'
+import { Abi } from '@chainx/api-contract'
+import { getChainx } from '../services/chainx'
+import { stringCamelCase } from '@chainx/util'
+import { parseValue } from '../utils/contract'
+
+const contractAbi = new Abi(contractAbiObj)
 
 export const betStatusEnum = {
   ON: 'betting', // 投注中
@@ -33,8 +41,36 @@ const initialState = {
 const oddEvenSlice = createSlice({
   name: 'oddEven',
   initialState,
-  reducers: {}
+  reducers: {
+    setBetHeight(state, { payload }) {
+      state.betHeight = payload
+    }
+  }
 })
+
+export const { setBetHeight } = oddEvenSlice.actions
+
+async function contractGet(address, method, params = null) {
+  const chainx = getChainx()
+  const result = await chainx.api.rpc.chainx.contractCall({
+    origin: address,
+    dest: oddEvenContractAddress,
+    gasLimit: 500000,
+    inputData: contractAbi.messages[stringCamelCase(method)]()
+  })
+
+  return parseValue(
+    contractAbi.messages[stringCamelCase(method)].type,
+    result.data
+  )
+}
+
+export const fetchBetBtcHeight = address => async dispatch => {
+  const data = await contractGet(address, 'get_bet_block_height')
+  dispatch(setBetHeight(data))
+}
+
+export const fetchOddBets = address => async dispatch => {}
 
 export const nowBtcSelector = state => {
   return {
