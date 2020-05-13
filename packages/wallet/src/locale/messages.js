@@ -30,7 +30,7 @@ const contract = {
   },
   CODE: {
     en: 'Contract Code',
-    zh: '上传合约'
+    zh: '合约部署'
   }
 }
 

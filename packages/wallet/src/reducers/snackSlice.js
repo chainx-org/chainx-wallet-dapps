@@ -18,12 +18,7 @@ const snackSlice = createSlice({
   },
   reducers: {
     addSnack: {
-      reducer(
-        state,
-        {
-          payload: { id, type, title, message }
-        }
-      ) {
+      reducer(state, { payload: { id, type, title, message } }) {
         if (!types.includes(type)) {
           console.error('invalid snack type')
           return
@@ -62,8 +57,7 @@ export const addAutoCloseSnackWithParams = (
   seconds = 5
 ) => {
   const data = {}
-  const id = generateId()
-  data.id = id
+  data.id = generateId()
   data.type = type
   data.title = title
   data.message = message || ''
