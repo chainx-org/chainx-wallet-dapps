@@ -8,6 +8,8 @@ import {
   betStatusSelector,
   dealHeightSelector,
   fetchBetBtcHeight,
+  fetchEvenBets,
+  fetchOddBets,
   nowBtcSelector
 } from '../../reducers/oddevenSlice'
 import Status from './Status'
@@ -30,6 +32,8 @@ export default function() {
 
   useEffect(() => {
     dispatch(fetchBetBtcHeight(address))
+    dispatch(fetchOddBets(address))
+    dispatch(fetchEvenBets(address))
   }, [address, dispatch])
 
   return (

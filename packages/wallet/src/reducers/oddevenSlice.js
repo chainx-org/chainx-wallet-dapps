@@ -44,11 +44,17 @@ const oddEvenSlice = createSlice({
   reducers: {
     setBetHeight(state, { payload }) {
       state.betHeight = payload
+    },
+    setOddBets(state, { payload }) {
+      state.bets.odd = payload
+    },
+    setEvenBets(state, { payload }) {
+      state.bets.even = payload
     }
   }
 })
 
-export const { setBetHeight } = oddEvenSlice.actions
+export const { setBetHeight, setEvenBets, setOddBets } = oddEvenSlice.actions
 
 async function contractGet(address, method, params = null) {
   const chainx = getChainx()
@@ -70,7 +76,15 @@ export const fetchBetBtcHeight = address => async dispatch => {
   dispatch(setBetHeight(data))
 }
 
-export const fetchOddBets = address => async dispatch => {}
+export const fetchOddBets = address => async dispatch => {
+  const data = await contractGet(address, 'get_odd_bet_balance')
+  dispatch(setOddBets(data))
+}
+
+export const fetchEvenBets = address => async dispatch => {
+  const data = await contractGet(address, 'get_even_bet_balance')
+  dispatch(setEvenBets(data))
+}
 
 export const nowBtcSelector = state => {
   return {
