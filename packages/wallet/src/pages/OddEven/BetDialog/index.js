@@ -10,6 +10,7 @@ import $t from '../../../locale'
 import { Label, Value } from '../../AssetManagement/components'
 import { toPrecision } from '../../../utils'
 import { pcxFreeSelector } from '../../AssetManagement/PcxCard/selectors'
+import { maxBetSelector } from '../../../reducers/oddevenSlice'
 
 export default function() {
   const dispatch = useDispatch()
@@ -24,6 +25,10 @@ export default function() {
   const [activeDefault, setActiveDefault] = useState(amounts[0])
   const [amount, setAmount] = useState('')
   const { free: pcxFree, precision } = useSelector(pcxFreeSelector) || {}
+
+  const maxBet = useSelector(maxBetSelector)
+
+  const maxPcx = toPrecision(maxBet, precision, false)
 
   const selectDefault = amount => {
     if (!amounts.includes(amount)) {
@@ -66,13 +71,15 @@ export default function() {
             )
           })}
         </ol>
-        <p className="others">其它金额</p>
+        <p className="others">
+          其它金额({toPrecision(maxBet, precision, false)} PCX max)
+        </p>
         <div className="amount">
           <div>
             <AmountInput
               value={amount}
               onChange={setInputAmount}
-              placeholder={'0.5 - 1000 PCX'}
+              placeholder={`0.5 - ${maxPcx} PCX`}
               precision={precision}
             />
           </div>

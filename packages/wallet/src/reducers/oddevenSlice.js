@@ -21,6 +21,7 @@ const initialState = {
   btcHeaderHash:
     '0000000000000000000ffba85d088a8640bd83785034727dc31d926ed41d87c2',
   betHeight: 700000,
+  maxBet: 12000000000,
   status: betStatusEnum.ON,
   bets: {
     odd: 246382.72737627,
@@ -57,6 +58,9 @@ const oddEvenSlice = createSlice({
     setNowBtc(state, { payload: { height, hash } }) {
       state.btcHeight = height
       state.btcHeaderHash = hash
+    },
+    setMaxBet(state, { payload }) {
+      state.maxBet = payload
     }
   }
 })
@@ -66,7 +70,8 @@ export const {
   setEvenBets,
   setOddBets,
   setBets,
-  setNowBtc
+  setNowBtc,
+  setMaxBet
 } = oddEvenSlice.actions
 
 async function contractGet(address, method, params = []) {
@@ -101,6 +106,11 @@ export const fetchEvenBets = address => async dispatch => {
   dispatch(setEvenBets(data))
 }
 
+export const fetchMaxBet = address => async dispatch => {
+  const data = await contractGet(address, 'get_max_bet')
+  dispatch(setMaxBet(data))
+}
+
 export const fetchBetRecords = address => async dispatch => {
   const data = await contractGet(
     address,
@@ -132,5 +142,6 @@ export const betStatusSelector = state => state.oddEven.status
 export const betHeightSelector = state => state.oddEven.betHeight
 export const betsSelector = state => state.oddEven.bets
 export const myBetsSelector = state => state.oddEven.myBets
+export const maxBetSelector = state => state.oddEven.maxBet
 
 export default oddEvenSlice.reducer
