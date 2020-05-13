@@ -8,6 +8,7 @@ import {
   betStatusSelector,
   dealHeightSelector,
   fetchBetBtcHeight,
+  fetchBetRecords,
   fetchEvenBets,
   fetchOddBets,
   nowBtcSelector
@@ -34,6 +35,7 @@ export default function() {
     dispatch(fetchBetBtcHeight(address))
     dispatch(fetchOddBets(address))
     dispatch(fetchEvenBets(address))
+    dispatch(fetchBetRecords(address))
   }, [address, dispatch])
 
   return (
@@ -64,7 +66,7 @@ export default function() {
               <Bet />
               <NowBets />
             </div>
-            <footer>投注时间截止至 Bitcoin 块高 {dealHeight}</footer>
+            <footer>投注时间截止至 Bitcoin 块高 {betHeight - 5}</footer>
           </main>
         </BetArea>
         <MyBets />

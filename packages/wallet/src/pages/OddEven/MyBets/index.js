@@ -58,8 +58,8 @@ export default function() {
       <ol>
         {myBets.map((bet, index) => (
           <li key={index}>
-            <img src={bet.isEven ? evenLogo : oddLogo} alt="logo" />
-            <span>{bet.amount} PCX</span>
+            <img src={bet.parity ? evenLogo : oddLogo} alt="logo" />
+            <span>{bet.bet_balance} PCX</span>
           </li>
         ))}
       </ol>

@@ -136,7 +136,7 @@ async function signAndSend(hex) {
   return signAndSendExtrinsic(accountAddress, hex)
 }
 
-const parseParams = (args, params) => {
+export const parseParams = (args, params) => {
   args.forEach((arg, i) => {
     const t = arg.type.type
     if (t.startsWith('u')) {

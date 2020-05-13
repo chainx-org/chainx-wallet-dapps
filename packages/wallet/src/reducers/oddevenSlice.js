@@ -5,6 +5,7 @@ import { Abi } from '@chainx/api-contract'
 import { getChainx } from '../services/chainx'
 import { stringCamelCase } from '@chainx/util'
 import { parseValue } from '../utils/contract'
+import { parseParams } from '../utils/contractHelper'
 
 const contractAbi = new Abi(contractAbiObj)
 
@@ -28,12 +29,12 @@ const initialState = {
   },
   myBets: [
     {
-      isEven: true,
-      amount: 62.62736273
+      parity: true,
+      bet_balance: 62.62736273
     },
     {
-      isEven: false,
-      amount: 100
+      parity: false,
+      bet_balance: 100
     }
   ]
 }
@@ -50,19 +51,29 @@ const oddEvenSlice = createSlice({
     },
     setEvenBets(state, { payload }) {
       state.bets.even = payload
+    },
+    setBets(state, { payload }) {
+      state.myBets = payload
     }
   }
 })
 
-export const { setBetHeight, setEvenBets, setOddBets } = oddEvenSlice.actions
+export const {
+  setBetHeight,
+  setEvenBets,
+  setOddBets,
+  setBets
+} = oddEvenSlice.actions
 
-async function contractGet(address, method, params = null) {
+async function contractGet(address, method, params = []) {
+  parseParams(contractAbi.messages[stringCamelCase(method)].args, params)
+
   const chainx = getChainx()
   const result = await chainx.api.rpc.chainx.contractCall({
     origin: address,
     dest: oddEvenContractAddress,
     gasLimit: 500000,
-    inputData: contractAbi.messages[stringCamelCase(method)]()
+    inputData: contractAbi.messages[stringCamelCase(method)](...params)
   })
 
   return parseValue(
@@ -84,6 +95,17 @@ export const fetchOddBets = address => async dispatch => {
 export const fetchEvenBets = address => async dispatch => {
   const data = await contractGet(address, 'get_even_bet_balance')
   dispatch(setEvenBets(data))
+}
+
+export const fetchBetRecords = address => async dispatch => {
+  const data = await contractGet(
+    address,
+    'get_game_result_from_account',
+    // TODO: change to account address
+    ['5GoNkf6WdbxCFnPdAnYYQyCjAKPJgLNxXwPjwTh6DGg6gN3E']
+  )
+  console.log('data', data)
+  dispatch(setBets(data))
 }
 
 export const nowBtcSelector = state => {
