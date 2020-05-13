@@ -112,12 +112,9 @@ export const fetchMaxBet = address => async dispatch => {
 }
 
 export const fetchBetRecords = address => async dispatch => {
-  const data = await contractGet(
-    address,
-    'get_game_result_from_account',
-    // TODO: change to account address
-    ['5GoNkf6WdbxCFnPdAnYYQyCjAKPJgLNxXwPjwTh6DGg6gN3E']
-  )
+  const data = await contractGet(address, 'get_game_result_from_account', [
+    address
+  ])
   dispatch(setBets(data))
 }
 
