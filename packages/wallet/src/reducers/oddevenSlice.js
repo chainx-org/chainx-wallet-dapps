@@ -112,10 +112,11 @@ export const fetchMaxBet = address => async dispatch => {
 }
 
 export const fetchBetRecords = address => async dispatch => {
-  const data = await contractGet(address, 'get_game_result_from_account', [
+  const bets = await contractGet(address, 'get_game_result_from_account', [
     address
   ])
-  dispatch(setBets(data))
+  bets.sort((a, b) => b.start_time - a.start_time)
+  dispatch(setBets(bets))
 }
 
 export const fetchNowBtcStatus = isTestNet => async dispatch => {
