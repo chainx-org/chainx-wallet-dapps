@@ -21,7 +21,8 @@ import MyBets from './MyBets'
 import BetDialog from './BetDialog'
 import { openBetBetDialogSelector } from '../../reducers/runStatusSlice'
 import { addressSelector } from '../../reducers/addressSlice'
-import { isTestNetSelector } from '../../reducers/settingsSlice'
+import { isTestNetSelector, localeSelector } from '../../reducers/settingsSlice'
+import $t from '../../locale'
 
 export default function() {
   const btc = useSelector(nowBtcSelector)
@@ -30,6 +31,7 @@ export default function() {
   const openBetBetDialog = useSelector(openBetBetDialogSelector)
   const address = useSelector(addressSelector)
   const isTestNet = useSelector(isTestNetSelector)
+  const locale = useSelector(localeSelector)
 
   const dispatch = useDispatch()
 
@@ -50,9 +52,9 @@ export default function() {
       <Header>
         <img src={Logo} alt="logo" />
         <dl>
-          <dt>当前 Bitcoin 块高:</dt>
+          <dt>{$t('PREDICT_NOW_BTC_HEIGHT')}</dt>
           <dd>{btc.height}</dd>
-          <dt>哈希:</dt>
+          <dt>{$t('PREDICT_NOW_BTC_HASH')}</dt>
           <dd>
             <BtcHash>{btc.hash}</BtcHash>
           </dd>
@@ -61,19 +63,28 @@ export default function() {
       <Main>
         <BetArea>
           <header>
-            <span>块高 {betHeight}</span>
+            <span>{$t('PREDICT_BET_HEIGHT', { height: betHeight })}</span>
             <Status>{status}</Status>
           </header>
           <main>
             <div>
-              <h3>
-                对 Bitcoin 块高 <span className="height">{betHeight}</span>{' '}
-                的交易哈希的 <span>奇/偶</span> 进行投注！
-              </h3>
+              {locale === 'en' ? (
+                <h3>
+                  Bet <span>Odd/Even</span> of Bitcoin Block{' '}
+                  <span className="height">{betHeight}</span> Header Hash
+                </h3>
+              ) : (
+                <h3>
+                  对 Bitcoin 块高 <span className="height">{betHeight}</span>{' '}
+                  的交易哈希的 <span>奇/偶</span> 进行投注！
+                </h3>
+              )}
               <Bet />
               <NowBets />
             </div>
-            <footer>投注时间截止至 Bitcoin 块高 {betHeight - 5}</footer>
+            <footer>
+              {$t('PREDICT_DEAL_HEIGHT', { height: betHeight - 5 })}
+            </footer>
           </main>
         </BetArea>
         <MyBets />

@@ -17,3 +17,7 @@ export default function $t(key, args) {
   const msg = message ? message : reversedValue ? reversedValue : ''
   return format(msg, args)
 }
+
+export function getLocale() {
+  return store.getState().settings.locale
+}

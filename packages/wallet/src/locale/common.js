@@ -86,5 +86,9 @@ export default {
   COMMON_AMOUNT_ERROR: {
     en: 'Invalid amount',
     zh: '金额错误'
+  },
+  COMMON_FREE: {
+    en: 'Free:',
+    zh: '余额：'
   }
 }

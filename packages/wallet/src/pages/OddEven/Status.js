@@ -1,13 +1,15 @@
 import { betStatusEnum } from '../../reducers/oddevenSlice'
+import { getLocale } from '../../locale'
 
 export default function({ children }) {
+  const isZh = getLocale() !== 'en'
   switch (children) {
     case betStatusEnum.ON:
-      return '投注中'
+      return isZh ? '投注中' : 'Betting'
     case betStatusEnum.FILL:
-      return '已结束'
+      return isZh ? '已结束' : 'Finished'
     case betStatusEnum.TO_FILL:
-      return '等待开奖'
+      return isZh ? '等待开奖' : 'Waiting reward'
     case betStatusEnum.CLOSE:
     default:
       return '敬请期待'

@@ -92,12 +92,12 @@ export default function() {
 
   return (
     <StyledDialog
-      title={`投注${betOdd ? '奇' : '偶'}数`}
+      title={$t(betOdd ? 'PREDICT_BET_ODD' : 'PREDICT_BET_EVEN')}
       open
       handleClose={closeDialog}
     >
       <div className="wrapper">
-        <p>投注金额</p>
+        <p>{$t('PREDICT_DEFAULT_AMOUNT')}</p>
         <ol>
           {amounts.map((amount, index) => {
             return (
@@ -113,7 +113,8 @@ export default function() {
           })}
         </ol>
         <p className="others">
-          其它金额({toPrecision(maxBet, precision, false)} PCX max)
+          {$t('PREDICT_OTHER_AMOUNT')}({toPrecision(maxBet, precision, false)}{' '}
+          PCX max)
         </p>
         <div className="amount">
           <div>
@@ -128,7 +129,7 @@ export default function() {
           </div>
           {precision && (
             <div>
-              <Label>{$t('ASSET_BALANCE')}</Label>
+              <Label>{$t('COMMON_FREE')}</Label>
               <Value>{toPrecision(pcxFree, precision)} PCX</Value>
             </div>
           )}

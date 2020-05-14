@@ -6,6 +6,7 @@ import evenLogo from './even.svg'
 import oddLogo from './odd.svg'
 import { pcxPrecisionSelector } from '../../selectors/assets'
 import { toPrecision } from '../../../utils'
+import $t from '../../../locale'
 
 export const Wrapper = styled.section`
   width: 300px;
@@ -57,7 +58,7 @@ export default function() {
 
   return (
     <Wrapper>
-      <header>我的竞猜</header>
+      <header>{$t('PREDICT_MY_BETS')}</header>
       <ol>
         {myBets.map((bet, index) => (
           <li key={index}>

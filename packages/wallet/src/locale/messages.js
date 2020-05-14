@@ -7,6 +7,7 @@ import pseduIntention from './pseduIntention'
 import notification from './notification'
 import txs from './txs'
 import common from './common'
+import predict from './predict'
 
 const intention = {
   INTENTION_VALIDATOR: {
@@ -146,5 +147,6 @@ export default {
   ...trade,
   ...chain,
   ...notification,
-  ...txs
+  ...txs,
+  ...predict
 }
