@@ -1,13 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { oddEvenContractAddress } from '../utils/constants'
-import contractAbiObj from '../utils/oddEvenAbi'
-import { Abi } from '@chainx/api-contract'
 import { getChainx } from '../services/chainx'
 import { stringCamelCase } from '@chainx/util'
-import { parseValue } from '../utils/contract'
+import { parseValue, contractAbi } from '../utils/contract'
 import { parseParams } from '../utils/contractHelper'
-
-const contractAbi = new Abi(contractAbiObj)
 
 export const betStatusEnum = {
   ON: 'betting', // 投注中

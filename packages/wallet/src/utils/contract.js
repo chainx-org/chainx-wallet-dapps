@@ -1,6 +1,10 @@
 import { u8aToU8a } from '@chainx/util'
 import { littleEndianToBigEndian } from './index'
 import { createType } from '@chainx/types'
+import contractAbiObj from './oddEvenAbi'
+import { Abi } from '@chainx/api-contract'
+
+export const contractAbi = new Abi(contractAbiObj)
 
 export function parseValue(typeObj, origin) {
   let returnType = typeObj.displayName
