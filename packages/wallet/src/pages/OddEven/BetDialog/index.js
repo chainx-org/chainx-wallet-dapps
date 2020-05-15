@@ -9,17 +9,24 @@ import { stringCamelCase } from '@chainx/util'
 import { AmountInput, PrimaryButton } from '@chainx/ui'
 import $t from '../../../locale'
 import { Label, Value } from '../../AssetManagement/components'
-import { toPrecision } from '../../../utils'
+import { retry, toPrecision } from '../../../utils'
 import { pcxFreeSelector } from '../../AssetManagement/PcxCard/selectors'
-import { maxBetSelector } from '../../../reducers/oddevenSlice'
+import {
+  fetchBetRecords,
+  fetchEvenBets,
+  fetchOddBets,
+  maxBetSelector,
+  minBetSelector
+} from '../../../reducers/oddevenSlice'
 import { getChainx } from '../../../services/chainx'
 import { contractAbi } from '../../../utils/contract'
 import { oddEvenContractAddress } from '../../../utils/constants'
 import { parseParams } from '../../../utils/contractHelper'
 import { addressSelector } from '../../../reducers/addressSlice'
-import { signAndSendExtrinsic } from '../../../utils/chainxProvider'
+import { showSnack, signAndSendExtrinsic } from '../../../utils/chainxProvider'
 import BigNumber from 'bignumber.js'
 import { isDemoSelector } from '../../../selectors'
+import { fetchAccountAssets } from '../../../reducers/assetSlice'
 
 export default function() {
   const isDemoAddr = useSelector(isDemoSelector)
@@ -30,7 +37,7 @@ export default function() {
 
   const betOdd = useSelector(betOddSelector)
   const accountAddress = useSelector(addressSelector)
-  const amounts = [1, 10, 20, 50, 100, 200, 500, 1000]
+  const amounts = [1, 10, 20, 30, 50, 60, 80, 100]
 
   const [useDefaultAmount, setUseDefaultAmount] = useState(true)
   const [activeDefault, setActiveDefault] = useState(amounts[0])
@@ -40,8 +47,10 @@ export default function() {
   const [disabled, setDisabled] = useState(false)
 
   const maxBet = useSelector(maxBetSelector)
+  const minBet = useSelector(minBetSelector)
 
   const maxPcx = toPrecision(maxBet, precision, false)
+  const minPcx = toPrecision(minBet, precision, false)
 
   const selectDefault = amount => {
     if (!amounts.includes(amount)) {
@@ -55,26 +64,33 @@ export default function() {
 
   const setInputAmount = value => {
     setUseDefaultAmount(false)
+    setAmountErrMsg('')
     setAmount(value)
   }
 
   const bet = async () => {
-    if (isNaN(parseFloat(amount))) {
+    const targetAmount = useDefaultAmount ? activeDefault : amount
+    if (isNaN(parseFloat(targetAmount))) {
       setAmountErrMsg($t('COMMON_AMOUNT_ERROR'))
       return
     }
 
-    const realAmount = BigNumber(amount)
+    const realAmount = BigNumber(targetAmount)
       .multipliedBy(Math.pow(10, precision))
       .toNumber()
 
+    if (realAmount < minBet || realAmount > maxBet) {
+      setAmountErrMsg($t('COMMON_AMOUNT_ERROR'))
+      return
+    }
+
     const method = 'bet'
     const parity = !betOdd
-    const params = [parity, realAmount]
+    const params = [parity]
     parseParams(contractAbi.messages[stringCamelCase(method)].args, params)
     const args = [
       oddEvenContractAddress,
-      0,
+      realAmount,
       500000,
       contractAbi.messages[stringCamelCase(method)](...params)
     ]
@@ -84,7 +100,27 @@ export default function() {
       const ex = getChainx().api.tx.xContracts.call(...args)
       const status = await signAndSendExtrinsic(accountAddress, ex.toHex())
 
-      console.log('status', status)
+      const messages = {
+        successTitle: $t('COMMON_MSG_SUCCESS', { msg: $t('PREDICT_BET') }),
+        failTitle: $t('COMMON_MSG_Fail', { msg: $t('PREDICT_BET') }),
+        successMessage: `${$t('NOTIFICATION_TX_HASH')} ${status.txHash}`,
+        failMessage: `${$t('NOTIFICATION_TX_HASH')} ${status.txHash}`
+      }
+
+      await showSnack(status, messages, dispatch)
+      closeDialog()
+      retry(
+        () => {
+          Promise.all([
+            dispatch(fetchOddBets(accountAddress)),
+            dispatch(fetchEvenBets(accountAddress)),
+            dispatch(fetchBetRecords(accountAddress)),
+            dispatch(fetchAccountAssets(accountAddress))
+          ])
+        },
+        5,
+        2
+      ).then(() => console.log('Refresh assets 5 times after transfer'))
     } finally {
       setDisabled(false)
     }
@@ -121,7 +157,7 @@ export default function() {
             <AmountInput
               value={amount}
               onChange={setInputAmount}
-              placeholder={`0.5 - ${maxPcx} PCX`}
+              placeholder={`${minPcx} - ${maxPcx} PCX`}
               precision={precision}
               error={!!amountErrMsg}
               errorText={amountErrMsg}

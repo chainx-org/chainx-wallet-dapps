@@ -17,12 +17,15 @@
       "ink_primitives",
       "is_bet_set",
       "bet_block_height",
+      "bet_pause_signal",
+      "block_stop_height",
       "owner",
       "AccountId",
       "env",
       "types",
       "game_pool_balance",
       "max_bet_value",
+      "min_bet_value",
       "game_join_user",
       "Vec",
       "collections",
@@ -59,18 +62,25 @@
       "get_game_number",
       "u32",
       "get_max_bet",
+      "get_min_bet",
       "set_max_bet_value",
       "max_value",
-      "is_game_start",
+      "set_min_bet_value",
+      "min_value",
+      "set_block_bet_height",
+      "block_height",
+      "stop_bet",
+      "signal",
       "bool",
+      "is_game_start",
       "get_bet_block_height",
+      "get_block_stop_height",
       "get_even_bet_balance",
       "get_odd_bet_balance",
       "get_person_bets_value",
       "start_new_bet",
       "allot_reward",
       "bet",
-      "bet_value",
       "get_game_result_from_account",
       "account",
       "get_game_join_user",
@@ -85,13 +95,13 @@
       "get_asset_balance",
       "StratNewGameEvent",
       "EndGameEvent",
-      "block_height",
       "UserBetEvent",
       "Option",
       "None",
       "Some",
       "time",
-      "Timestamp"
+      "Timestamp",
+      "bet_result"
     ],
     "types": [
       {
@@ -116,30 +126,42 @@
             },
             {
               "name": 17,
+              "type": 8
+            },
+            {
+              "name": 18,
+              "type": 2
+            },
+            {
+              "name": 19,
               "type": 11
             },
             {
-              "name": 21,
-              "type": 14
-            },
-            {
-              "name": 22,
-              "type": 14
-            },
-            {
               "name": 23,
+              "type": 14
+            },
+            {
+              "name": 24,
+              "type": 14
+            },
+            {
+              "name": 25,
+              "type": 14
+            },
+            {
+              "name": 26,
               "type": 17
             },
             {
-              "name": 34,
+              "name": 37,
               "type": 19
             },
             {
-              "name": 51,
+              "name": 54,
               "type": 14
             },
             {
-              "name": 52,
+              "name": 55,
               "type": 14
             }
           ]
@@ -251,8 +273,8 @@
       },
       {
         "id": {
-          "custom.name": 18,
-          "custom.namespace": [7, 19, 20],
+          "custom.name": 20,
+          "custom.namespace": [7, 21, 22],
           "custom.params": []
         },
         "def": {
@@ -310,18 +332,18 @@
       },
       {
         "id": {
-          "custom.name": 24,
-          "custom.namespace": [7, 8, 25, 26, 27],
+          "custom.name": 27,
+          "custom.namespace": [7, 8, 28, 29, 30],
           "custom.params": [12]
         },
         "def": {
           "struct.fields": [
             {
-              "name": 28,
+              "name": 31,
               "type": 2
             },
             {
-              "name": 29,
+              "name": 32,
               "type": 18
             }
           ]
@@ -329,14 +351,14 @@
       },
       {
         "id": {
-          "custom.name": 30,
-          "custom.namespace": [7, 8, 31, 32, 31],
+          "custom.name": 33,
+          "custom.namespace": [7, 8, 34, 35, 34],
           "custom.params": [12]
         },
         "def": {
           "struct.fields": [
             {
-              "name": 33,
+              "name": 36,
               "type": 5
             }
           ]
@@ -344,18 +366,18 @@
       },
       {
         "id": {
-          "custom.name": 35,
-          "custom.namespace": [7, 8, 25, 36, 27],
+          "custom.name": 38,
+          "custom.namespace": [7, 8, 28, 39, 30],
           "custom.params": [12, 20]
         },
         "def": {
           "struct.fields": [
             {
-              "name": 28,
+              "name": 31,
               "type": 2
             },
             {
-              "name": 44,
+              "name": 47,
               "type": 23
             }
           ]
@@ -363,14 +385,14 @@
       },
       {
         "id": {
-          "custom.name": 24,
+          "custom.name": 27,
           "custom.namespace": [],
           "custom.params": [21]
         },
         "def": {
           "struct.fields": [
             {
-              "name": 43,
+              "name": 46,
               "type": 22
             }
           ]
@@ -378,7 +400,7 @@
       },
       {
         "id": {
-          "custom.name": 37,
+          "custom.name": 40,
           "custom.namespace": [2, 2],
           "custom.params": []
         },
@@ -389,23 +411,23 @@
               "type": 3
             },
             {
-              "name": 38,
+              "name": 41,
               "type": 12
             },
             {
-              "name": 39,
+              "name": 42,
               "type": 15
             },
             {
-              "name": 40,
+              "name": 43,
               "type": 9
             },
             {
-              "name": 41,
+              "name": 44,
               "type": 15
             },
             {
-              "name": 42,
+              "name": 45,
               "type": 3
             }
           ]
@@ -419,14 +441,14 @@
       },
       {
         "id": {
-          "custom.name": 30,
-          "custom.namespace": [7, 8, 31, 32, 31],
+          "custom.name": 33,
+          "custom.namespace": [7, 8, 34, 35, 34],
           "custom.params": [24]
         },
         "def": {
           "struct.fields": [
             {
-              "name": 33,
+              "name": 36,
               "type": 5
             }
           ]
@@ -434,36 +456,36 @@
       },
       {
         "id": {
-          "custom.name": 45,
-          "custom.namespace": [7, 8, 25, 36, 27],
+          "custom.name": 48,
+          "custom.namespace": [7, 8, 28, 39, 30],
           "custom.params": [12, 20]
         },
         "def": {
           "enum.variants": [
             {
-              "tuple_struct_variant.name": 46,
+              "tuple_struct_variant.name": 49,
               "tuple_struct_variant.types": [25]
             },
             {
-              "unit_variant.name": 50
+              "unit_variant.name": 53
             }
           ]
         }
       },
       {
         "id": {
-          "custom.name": 47,
-          "custom.namespace": [7, 8, 25, 36, 27],
+          "custom.name": 50,
+          "custom.namespace": [7, 8, 28, 39, 30],
           "custom.params": [12, 20]
         },
         "def": {
           "struct.fields": [
             {
-              "name": 48,
+              "name": 51,
               "type": 12
             },
             {
-              "name": 49,
+              "name": 52,
               "type": 20
             }
           ]
@@ -475,14 +497,14 @@
       },
       {
         "id": {
-          "custom.name": 24,
+          "custom.name": 27,
           "custom.namespace": [],
           "custom.params": [12]
         },
         "def": {
           "struct.fields": [
             {
-              "name": 43,
+              "name": 46,
               "type": 28
             }
           ]
@@ -496,14 +518,14 @@
       },
       {
         "id": {
-          "custom.name": 24,
+          "custom.name": 27,
           "custom.namespace": [],
           "custom.params": [30]
         },
         "def": {
           "struct.fields": [
             {
-              "name": 43,
+              "name": 46,
               "type": 31
             }
           ]
@@ -511,8 +533,8 @@
       },
       {
         "id": {
-          "custom.name": 77,
-          "custom.namespace": [78],
+          "custom.name": 87,
+          "custom.namespace": [88],
           "custom.params": []
         },
         "def": {
@@ -527,17 +549,17 @@
       },
       {
         "id": {
-          "custom.name": 87,
+          "custom.name": 96,
           "custom.namespace": [],
           "custom.params": [12]
         },
         "def": {
           "enum.variants": [
             {
-              "unit_variant.name": 88
+              "unit_variant.name": 97
             },
             {
-              "tuple_struct_variant.name": 89,
+              "tuple_struct_variant.name": 98,
               "tuple_struct_variant.types": [12]
             }
           ]
@@ -599,46 +621,46 @@
       {
         "name": 17,
         "layout": {
-          "struct.type": 11,
+          "struct.type": 8,
           "struct.fields": [
             {
               "name": 10,
               "layout": {
                 "range.offset": "0x0000000000000000000000000000000000000000000000000000000000000003",
                 "range.len": 1,
-                "range.elem_type": 12
+                "range.elem_type": 9
               }
             }
           ]
         }
       },
       {
-        "name": 21,
+        "name": 18,
         "layout": {
-          "struct.type": 14,
+          "struct.type": 2,
           "struct.fields": [
             {
               "name": 10,
               "layout": {
                 "range.offset": "0x0000000000000000000000000000000000000000000000000000000000000004",
                 "range.len": 1,
-                "range.elem_type": 15
+                "range.elem_type": 3
               }
             }
           ]
         }
       },
       {
-        "name": 22,
+        "name": 19,
         "layout": {
-          "struct.type": 14,
+          "struct.type": 11,
           "struct.fields": [
             {
               "name": 10,
               "layout": {
                 "range.offset": "0x0000000000000000000000000000000000000000000000000000000000000005",
                 "range.len": 1,
-                "range.elem_type": 15
+                "range.elem_type": 12
               }
             }
           ]
@@ -647,76 +669,12 @@
       {
         "name": 23,
         "layout": {
-          "struct.type": 17,
-          "struct.fields": [
-            {
-              "name": 28,
-              "layout": {
-                "struct.type": 2,
-                "struct.fields": [
-                  {
-                    "name": 10,
-                    "layout": {
-                      "range.offset": "0x0000000000000000000000000000000000000000000000000000000000000006",
-                      "range.len": 1,
-                      "range.elem_type": 3
-                    }
-                  }
-                ]
-              }
-            },
-            {
-              "name": 29,
-              "layout": {
-                "range.offset": "0x0000000000000000000000000000000000000000000000000000000000000007",
-                "range.len": 4294967295,
-                "range.elem_type": 12
-              }
-            }
-          ]
-        }
-      },
-      {
-        "name": 34,
-        "layout": {
-          "struct.type": 19,
-          "struct.fields": [
-            {
-              "name": 28,
-              "layout": {
-                "struct.type": 2,
-                "struct.fields": [
-                  {
-                    "name": 10,
-                    "layout": {
-                      "range.offset": "0x0000000000000000000000000000000000000000000000000000000100000006",
-                      "range.len": 1,
-                      "range.elem_type": 3
-                    }
-                  }
-                ]
-              }
-            },
-            {
-              "name": 44,
-              "layout": {
-                "range.offset": "0x0000000000000000000000000000000000000000000000000000000100000007",
-                "range.len": 4294967295,
-                "range.elem_type": 24
-              }
-            }
-          ]
-        }
-      },
-      {
-        "name": 51,
-        "layout": {
           "struct.type": 14,
           "struct.fields": [
             {
               "name": 10,
               "layout": {
-                "range.offset": "0x0000000000000000000000000000000000000000000000000000000200000006",
+                "range.offset": "0x0000000000000000000000000000000000000000000000000000000000000006",
                 "range.len": 1,
                 "range.elem_type": 15
               }
@@ -725,14 +683,126 @@
         }
       },
       {
-        "name": 52,
+        "name": 24,
         "layout": {
           "struct.type": 14,
           "struct.fields": [
             {
               "name": 10,
               "layout": {
-                "range.offset": "0x0000000000000000000000000000000000000000000000000000000200000007",
+                "range.offset": "0x0000000000000000000000000000000000000000000000000000000000000007",
+                "range.len": 1,
+                "range.elem_type": 15
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": 25,
+        "layout": {
+          "struct.type": 14,
+          "struct.fields": [
+            {
+              "name": 10,
+              "layout": {
+                "range.offset": "0x0000000000000000000000000000000000000000000000000000000000000008",
+                "range.len": 1,
+                "range.elem_type": 15
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": 26,
+        "layout": {
+          "struct.type": 17,
+          "struct.fields": [
+            {
+              "name": 31,
+              "layout": {
+                "struct.type": 2,
+                "struct.fields": [
+                  {
+                    "name": 10,
+                    "layout": {
+                      "range.offset": "0x0000000000000000000000000000000000000000000000000000000000000009",
+                      "range.len": 1,
+                      "range.elem_type": 3
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": 32,
+              "layout": {
+                "range.offset": "0x000000000000000000000000000000000000000000000000000000000000000a",
+                "range.len": 4294967295,
+                "range.elem_type": 12
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": 37,
+        "layout": {
+          "struct.type": 19,
+          "struct.fields": [
+            {
+              "name": 31,
+              "layout": {
+                "struct.type": 2,
+                "struct.fields": [
+                  {
+                    "name": 10,
+                    "layout": {
+                      "range.offset": "0x0000000000000000000000000000000000000000000000000000000100000009",
+                      "range.len": 1,
+                      "range.elem_type": 3
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": 47,
+              "layout": {
+                "range.offset": "0x000000000000000000000000000000000000000000000000000000010000000a",
+                "range.len": 4294967295,
+                "range.elem_type": 24
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": 54,
+        "layout": {
+          "struct.type": 14,
+          "struct.fields": [
+            {
+              "name": 10,
+              "layout": {
+                "range.offset": "0x0000000000000000000000000000000000000000000000000000000200000009",
+                "range.len": 1,
+                "range.elem_type": 15
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": 55,
+        "layout": {
+          "struct.type": 14,
+          "struct.fields": [
+            {
+              "name": 10,
+              "layout": {
+                "range.offset": "0x000000000000000000000000000000000000000000000000000000020000000a",
                 "range.len": 1,
                 "range.elem_type": 15
               }
@@ -746,14 +816,21 @@
     "name": 2,
     "constructors": [
       {
-        "name": 53,
+        "name": 56,
         "selector": "[\"0x5E\",\"0xBD\",\"0x88\",\"0xD6\"]",
         "args": [
           {
-            "name": 22,
+            "name": 24,
             "type": {
               "ty": 15,
-              "display_name": [54]
+              "display_name": [57]
+            }
+          },
+          {
+            "name": 25,
+            "type": {
+              "ty": 15,
+              "display_name": [57]
             }
           }
         ],
@@ -764,48 +841,59 @@
     ],
     "messages": [
       {
-        "name": 55,
+        "name": 58,
         "selector": "[\"0xBD\",\"0xB7\",\"0x06\",\"0xF4\"]",
         "mutates": false,
         "args": [],
         "return_type": {
           "ty": 15,
-          "display_name": [54]
-        },
-        "docs": []
-      },
-      {
-        "name": 56,
-        "selector": "[\"0x78\",\"0x2E\",\"0xDE\",\"0x9A\"]",
-        "mutates": false,
-        "args": [],
-        "return_type": {
-          "ty": 3,
           "display_name": [57]
         },
         "docs": []
       },
       {
-        "name": 58,
+        "name": 59,
+        "selector": "[\"0x78\",\"0x2E\",\"0xDE\",\"0x9A\"]",
+        "mutates": false,
+        "args": [],
+        "return_type": {
+          "ty": 3,
+          "display_name": [60]
+        },
+        "docs": []
+      },
+      {
+        "name": 61,
         "selector": "[\"0xBC\",\"0x29\",\"0x0A\",\"0x56\"]",
         "mutates": false,
         "args": [],
         "return_type": {
           "ty": 15,
-          "display_name": [54]
+          "display_name": [57]
         },
         "docs": []
       },
       {
-        "name": 59,
+        "name": 62,
+        "selector": "[\"0xD2\",\"0x75\",\"0x0C\",\"0x2B\"]",
+        "mutates": false,
+        "args": [],
+        "return_type": {
+          "ty": 15,
+          "display_name": [57]
+        },
+        "docs": []
+      },
+      {
+        "name": 63,
         "selector": "[\"0x7D\",\"0xE3\",\"0xD6\",\"0x79\"]",
         "mutates": true,
         "args": [
           {
-            "name": 60,
+            "name": 64,
             "type": {
               "ty": 15,
-              "display_name": [54]
+              "display_name": [57]
             }
           }
         ],
@@ -813,51 +901,110 @@
         "docs": []
       },
       {
-        "name": 61,
+        "name": 65,
+        "selector": "[\"0x38\",\"0x7C\",\"0xFD\",\"0x2C\"]",
+        "mutates": true,
+        "args": [
+          {
+            "name": 66,
+            "type": {
+              "ty": 15,
+              "display_name": [57]
+            }
+          }
+        ],
+        "return_type": null,
+        "docs": []
+      },
+      {
+        "name": 67,
+        "selector": "[\"0x66\",\"0xD5\",\"0xDD\",\"0x34\"]",
+        "mutates": true,
+        "args": [
+          {
+            "name": 68,
+            "type": {
+              "ty": 3,
+              "display_name": [60]
+            }
+          }
+        ],
+        "return_type": null,
+        "docs": []
+      },
+      {
+        "name": 69,
+        "selector": "[\"0xC2\",\"0x9B\",\"0x06\",\"0x2D\"]",
+        "mutates": true,
+        "args": [
+          {
+            "name": 70,
+            "type": {
+              "ty": 9,
+              "display_name": [71]
+            }
+          }
+        ],
+        "return_type": null,
+        "docs": []
+      },
+      {
+        "name": 72,
         "selector": "[\"0x0E\",\"0x7E\",\"0xDA\",\"0x32\"]",
         "mutates": false,
         "args": [],
         "return_type": {
           "ty": 9,
-          "display_name": [62]
+          "display_name": [71]
         },
         "docs": []
       },
       {
-        "name": 63,
+        "name": 73,
         "selector": "[\"0xD6\",\"0x06\",\"0x8C\",\"0xA2\"]",
         "mutates": false,
         "args": [],
         "return_type": {
           "ty": 3,
-          "display_name": [57]
+          "display_name": [60]
         },
         "docs": []
       },
       {
-        "name": 64,
+        "name": 74,
+        "selector": "[\"0x4F\",\"0xDE\",\"0xAD\",\"0xE5\"]",
+        "mutates": false,
+        "args": [],
+        "return_type": {
+          "ty": 3,
+          "display_name": [60]
+        },
+        "docs": []
+      },
+      {
+        "name": 75,
         "selector": "[\"0x34\",\"0xB0\",\"0xCA\",\"0xE7\"]",
         "mutates": false,
         "args": [],
         "return_type": {
           "ty": 15,
-          "display_name": [54]
+          "display_name": [57]
         },
         "docs": []
       },
       {
-        "name": 65,
+        "name": 76,
         "selector": "[\"0x07\",\"0x9D\",\"0x0E\",\"0x8D\"]",
         "mutates": false,
         "args": [],
         "return_type": {
           "ty": 15,
-          "display_name": [54]
+          "display_name": [57]
         },
         "docs": []
       },
       {
-        "name": 66,
+        "name": 77,
         "selector": "[\"0xAD\",\"0x4A\",\"0x8D\",\"0xF8\"]",
         "mutates": false,
         "args": [],
@@ -870,7 +1017,7 @@
         ]
       },
       {
-        "name": 67,
+        "name": 78,
         "selector": "[\"0x68\",\"0x0A\",\"0x17\",\"0xAF\"]",
         "mutates": true,
         "args": [
@@ -878,159 +1025,152 @@
             "name": 16,
             "type": {
               "ty": 3,
-              "display_name": [57]
+              "display_name": [60]
             }
           }
         ],
         "return_type": {
           "ty": 9,
-          "display_name": [62]
-        },
-        "docs": []
-      },
-      {
-        "name": 68,
-        "selector": "[\"0x96\",\"0x37\",\"0xE6\",\"0xF8\"]",
-        "mutates": true,
-        "args": [],
-        "return_type": {
-          "ty": 9,
-          "display_name": [62]
-        },
-        "docs": []
-      },
-      {
-        "name": 69,
-        "selector": "[\"0x87\",\"0x3E\",\"0x69\",\"0xF7\"]",
-        "mutates": true,
-        "args": [
-          {
-            "name": 40,
-            "type": {
-              "ty": 9,
-              "display_name": [62]
-            }
-          },
-          {
-            "name": 70,
-            "type": {
-              "ty": 15,
-              "display_name": [54]
-            }
-          }
-        ],
-        "return_type": {
-          "ty": 9,
-          "display_name": [62]
-        },
-        "docs": []
-      },
-      {
-        "name": 71,
-        "selector": "[\"0xE4\",\"0x5B\",\"0x75\",\"0x69\"]",
-        "mutates": false,
-        "args": [
-          {
-            "name": 72,
-            "type": {
-              "ty": 12,
-              "display_name": [18]
-            }
-          }
-        ],
-        "return_type": {
-          "ty": 20,
-          "display_name": [24]
-        },
-        "docs": []
-      },
-      {
-        "name": 73,
-        "selector": "[\"0x51\",\"0x23\",\"0x4D\",\"0x1D\"]",
-        "mutates": false,
-        "args": [],
-        "return_type": {
-          "ty": 27,
-          "display_name": [24]
-        },
-        "docs": []
-      },
-      {
-        "name": 74,
-        "selector": "[\"0x59\",\"0xE1\",\"0xD0\",\"0x20\"]",
-        "mutates": false,
-        "args": [],
-        "return_type": {
-          "ty": 20,
-          "display_name": [24]
-        },
-        "docs": []
-      },
-      {
-        "name": 75,
-        "selector": "[\"0x0E\",\"0x48\",\"0x36\",\"0x76\"]",
-        "mutates": false,
-        "args": [
-          {
-            "name": 76,
-            "type": {
-              "ty": 3,
-              "display_name": [57]
-            }
-          }
-        ],
-        "return_type": {
-          "ty": 29,
-          "display_name": [24]
+          "display_name": [71]
         },
         "docs": []
       },
       {
         "name": 79,
-        "selector": "[\"0xA8\",\"0xC3\",\"0x9D\",\"0x9B\"]",
-        "mutates": false,
-        "args": [
-          {
-            "name": 76,
-            "type": {
-              "ty": 3,
-              "display_name": [57]
-            }
-          }
-        ],
+        "selector": "[\"0x96\",\"0x37\",\"0xE6\",\"0xF8\"]",
+        "mutates": true,
+        "args": [],
         "return_type": {
           "ty": 9,
-          "display_name": [62]
+          "display_name": [71]
         },
         "docs": []
       },
       {
         "name": 80,
+        "selector": "[\"0x87\",\"0x3E\",\"0x69\",\"0xF7\"]",
+        "mutates": true,
+        "args": [
+          {
+            "name": 43,
+            "type": {
+              "ty": 9,
+              "display_name": [71]
+            }
+          }
+        ],
+        "return_type": {
+          "ty": 9,
+          "display_name": [71]
+        },
+        "docs": []
+      },
+      {
+        "name": 81,
+        "selector": "[\"0xE4\",\"0x5B\",\"0x75\",\"0x69\"]",
+        "mutates": false,
+        "args": [
+          {
+            "name": 82,
+            "type": {
+              "ty": 12,
+              "display_name": [20]
+            }
+          }
+        ],
+        "return_type": {
+          "ty": 20,
+          "display_name": [27]
+        },
+        "docs": []
+      },
+      {
+        "name": 83,
+        "selector": "[\"0x51\",\"0x23\",\"0x4D\",\"0x1D\"]",
+        "mutates": false,
+        "args": [],
+        "return_type": {
+          "ty": 27,
+          "display_name": [27]
+        },
+        "docs": []
+      },
+      {
+        "name": 84,
+        "selector": "[\"0x59\",\"0xE1\",\"0xD0\",\"0x20\"]",
+        "mutates": false,
+        "args": [],
+        "return_type": {
+          "ty": 20,
+          "display_name": [27]
+        },
+        "docs": []
+      },
+      {
+        "name": 85,
+        "selector": "[\"0x0E\",\"0x48\",\"0x36\",\"0x76\"]",
+        "mutates": false,
+        "args": [
+          {
+            "name": 86,
+            "type": {
+              "ty": 3,
+              "display_name": [60]
+            }
+          }
+        ],
+        "return_type": {
+          "ty": 29,
+          "display_name": [27]
+        },
+        "docs": []
+      },
+      {
+        "name": 89,
+        "selector": "[\"0xA8\",\"0xC3\",\"0x9D\",\"0x9B\"]",
+        "mutates": false,
+        "args": [
+          {
+            "name": 86,
+            "type": {
+              "ty": 3,
+              "display_name": [60]
+            }
+          }
+        ],
+        "return_type": {
+          "ty": 9,
+          "display_name": [71]
+        },
+        "docs": []
+      },
+      {
+        "name": 90,
         "selector": "[\"0x50\",\"0x28\",\"0xC6\",\"0xBD\"]",
         "mutates": false,
         "args": [],
         "return_type": {
           "ty": 30,
-          "display_name": [81]
+          "display_name": [91]
         },
         "docs": []
       },
       {
-        "name": 82,
+        "name": 92,
         "selector": "[\"0x15\",\"0x37\",\"0xD0\",\"0x92\"]",
         "mutates": false,
         "args": [
           {
-            "name": 72,
+            "name": 82,
             "type": {
               "ty": 12,
-              "display_name": [18]
+              "display_name": [20]
             }
           }
         ],
         "return_type": {
           "ty": 15,
-          "display_name": [54]
+          "display_name": [57]
         },
         "docs": [
           "Returns the account balance, read directly from runtime storage"
@@ -1039,14 +1179,14 @@
     ],
     "events": [
       {
-        "name": 83,
+        "name": 93,
         "args": [
           {
             "name": 5,
             "indexed": false,
             "type": {
               "ty": 3,
-              "display_name": [57]
+              "display_name": [60]
             },
             "docs": []
           }
@@ -1054,23 +1194,23 @@
         "docs": []
       },
       {
-        "name": 84,
+        "name": 94,
         "args": [
           {
             "name": 5,
             "indexed": false,
             "type": {
               "ty": 3,
-              "display_name": [57]
+              "display_name": [60]
             },
             "docs": []
           },
           {
-            "name": 85,
+            "name": 68,
             "indexed": false,
             "type": {
               "ty": 3,
-              "display_name": [57]
+              "display_name": [60]
             },
             "docs": []
           }
@@ -1078,50 +1218,59 @@
         "docs": []
       },
       {
-        "name": 86,
+        "name": 95,
         "args": [
           {
-            "name": 72,
+            "name": 82,
             "indexed": true,
             "type": {
               "ty": 32,
-              "display_name": [87]
+              "display_name": [96]
             },
             "docs": []
           },
           {
-            "name": 39,
+            "name": 42,
             "indexed": false,
             "type": {
               "ty": 15,
-              "display_name": [54]
-            },
-            "docs": []
-          },
-          {
-            "name": 90,
-            "indexed": false,
-            "type": {
-              "ty": 15,
-              "display_name": [91]
-            },
-            "docs": []
-          },
-          {
-            "name": 85,
-            "indexed": false,
-            "type": {
-              "ty": 3,
               "display_name": [57]
             },
             "docs": []
           },
           {
-            "name": 40,
+            "name": 99,
+            "indexed": false,
+            "type": {
+              "ty": 15,
+              "display_name": [100]
+            },
+            "docs": []
+          },
+          {
+            "name": 68,
+            "indexed": false,
+            "type": {
+              "ty": 3,
+              "display_name": [60]
+            },
+            "docs": []
+          },
+          {
+            "name": 43,
             "indexed": false,
             "type": {
               "ty": 9,
-              "display_name": [62]
+              "display_name": [71]
+            },
+            "docs": []
+          },
+          {
+            "name": 101,
+            "indexed": false,
+            "type": {
+              "ty": 9,
+              "display_name": [71]
             },
             "docs": []
           }

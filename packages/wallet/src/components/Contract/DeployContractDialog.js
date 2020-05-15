@@ -73,7 +73,6 @@ export default function({ props, abi, setShowDeploy, setUpdate }) {
     setLoading(true)
     try {
       const status = await deploy(abi, params, endowment, gas)
-      console.log('status', status)
 
       const messages = {
         successTitle: 'Success',

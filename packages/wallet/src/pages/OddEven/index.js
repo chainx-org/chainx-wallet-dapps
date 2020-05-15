@@ -10,6 +10,7 @@ import {
   fetchBetRecords,
   fetchEvenBets,
   fetchMaxBet,
+  fetchMinBet,
   fetchNowBtcStatus,
   fetchOddBets,
   nowBtcSelector
@@ -41,6 +42,7 @@ export default function() {
     dispatch(fetchEvenBets(address))
     dispatch(fetchBetRecords(address))
     dispatch(fetchMaxBet(address))
+    dispatch(fetchMinBet(address))
   }, [address, dispatch])
 
   useEffect(() => {
