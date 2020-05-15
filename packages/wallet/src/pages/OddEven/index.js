@@ -98,7 +98,9 @@ export default function() {
         <MyBets />
       </Main>
       {openBetBetDialog && <BetDialog />}
-      {openRuleDialog && <RuleDialog />}
+      {openRuleDialog && (
+        <RuleDialog handleClose={() => setOpenRuleDialog(false)} />
+      )}
     </Wrapper>
   )
 }
