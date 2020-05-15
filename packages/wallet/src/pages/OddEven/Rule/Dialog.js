@@ -13,11 +13,11 @@ export const StyledDialog = styled(Dialog)`
       padding: 0;
     }
     li {
-      opacity: 0.72;
-      font-size: 12px;
+      opacity: 0.56;
+      font-size: 14px;
       color: #000000;
-      letter-spacing: 0.2px;
-      line-height: 16px;
+      letter-spacing: 0.12px;
+      line-height: 20px;
       &:not(:first-of-type) {
         margin-top: 5px;
       }
