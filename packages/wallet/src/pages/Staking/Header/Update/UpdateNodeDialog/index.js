@@ -140,7 +140,7 @@ export default function({ handleClose = noneFunc }) {
 
         <div className="about">
           <TextInput
-            placeholder="简介（256 字符以内）"
+            placeholder="简介（128 字符以内）"
             multiline={true}
             rows={3}
             value={about}
