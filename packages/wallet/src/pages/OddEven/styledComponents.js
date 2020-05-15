@@ -11,9 +11,14 @@ export const Wrapper = styled.div`
 
 export const Header = styled.header`
   display: flex;
+  justify-content: space-between;
   background: rgba(255, 255, 255, 0.85);
   height: 56px;
   padding: 0 16px;
+
+  & > div {
+    display: flex;
+  }
 
   dl,
   dt,

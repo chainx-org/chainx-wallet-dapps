@@ -46,5 +46,9 @@ export default {
   PREDICT_MY_BETS: {
     zh: '我的竞猜',
     en: 'My Bets'
+  },
+  PREDICT_RULE: {
+    zh: '游戏规则',
+    en: 'Rules'
   }
 }

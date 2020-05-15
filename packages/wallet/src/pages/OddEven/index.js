@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BetArea, Header, Main, Wrapper } from './styledComponents'
 import Logo from './odd-even-logo.svg'
 import BtcHash from './components/BtcHash'
@@ -24,6 +24,8 @@ import { openBetBetDialogSelector } from '../../reducers/runStatusSlice'
 import { addressSelector } from '../../reducers/addressSlice'
 import { isTestNetSelector, localeSelector } from '../../reducers/settingsSlice'
 import $t from '../../locale'
+import Rule from './Rule'
+import RuleDialog from './Rule/Dialog'
 
 export default function() {
   const btc = useSelector(nowBtcSelector)
@@ -33,6 +35,7 @@ export default function() {
   const address = useSelector(addressSelector)
   const isTestNet = useSelector(isTestNetSelector)
   const locale = useSelector(localeSelector)
+  const [openRuleDialog, setOpenRuleDialog] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -52,15 +55,18 @@ export default function() {
   return (
     <Wrapper>
       <Header>
-        <img src={Logo} alt="logo" />
-        <dl>
-          <dt>{$t('PREDICT_NOW_BTC_HEIGHT')}</dt>
-          <dd>{btc.height}</dd>
-          <dt>{$t('PREDICT_NOW_BTC_HASH')}</dt>
-          <dd>
-            <BtcHash>{btc.hash}</BtcHash>
-          </dd>
-        </dl>
+        <div>
+          <img src={Logo} alt="logo" />
+          <dl>
+            <dt>{$t('PREDICT_NOW_BTC_HEIGHT')}</dt>
+            <dd>{btc.height}</dd>
+            <dt>{$t('PREDICT_NOW_BTC_HASH')}</dt>
+            <dd>
+              <BtcHash>{btc.hash}</BtcHash>
+            </dd>
+          </dl>
+        </div>
+        <Rule onClick={() => setOpenRuleDialog(true)} />
       </Header>
       <Main>
         <BetArea>
@@ -92,6 +98,7 @@ export default function() {
         <MyBets />
       </Main>
       {openBetBetDialog && <BetDialog />}
+      {openRuleDialog && <RuleDialog />}
     </Wrapper>
   )
 }
