@@ -61,6 +61,9 @@ const oddEvenSlice = createSlice({
     },
     setMinBet(state, { payload }) {
       state.minBet = payload
+    },
+    setBetStatus(state, { payload }) {
+      state.status = payload ? betStatusEnum.ON : betStatusEnum.TO_FILL
     }
   }
 })
@@ -72,7 +75,8 @@ export const {
   setBets,
   setNowBtc,
   setMaxBet,
-  setMinBet
+  setMinBet,
+  setBetStatus
 } = oddEvenSlice.actions
 
 async function contractGet(address, method, params = []) {
@@ -95,6 +99,11 @@ async function contractGet(address, method, params = []) {
 export const fetchBetBtcHeight = address => async dispatch => {
   const data = await contractGet(address, 'get_bet_block_height')
   dispatch(setBetHeight(data))
+}
+
+export const fetchBetStatus = address => async dispatch => {
+  const data = await contractGet(address, 'is_game_start')
+  dispatch(setBetStatus(data))
 }
 
 export const fetchOddBets = address => async dispatch => {
