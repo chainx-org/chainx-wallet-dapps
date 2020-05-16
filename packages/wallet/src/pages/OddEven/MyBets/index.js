@@ -7,6 +7,8 @@ import oddLogo from './odd.svg'
 import { pcxPrecisionSelector } from '../../selectors/assets'
 import { toPrecision } from '../../../utils'
 import $t from '../../../locale'
+import moment from 'moment'
+import { timeFormat } from '../../../utils/constants'
 
 export const Wrapper = styled.section`
   width: 300px;
@@ -34,15 +36,29 @@ export const Wrapper = styled.section`
 
     li {
       display: flex;
-      align-items: center;
+      flex-direction: column;
       padding: 10px 16px;
-      span {
-        margin-left: 6px;
-        opacity: 0.72;
+      div.time {
+        opacity: 0.32;
         font-size: 12px;
         color: #000000;
         letter-spacing: 0.2px;
         line-height: 16px;
+      }
+
+      div.bet {
+        margin-top: 4px;
+        display: flex;
+        align-items: center;
+
+        span {
+          margin-left: 6px;
+          opacity: 0.72;
+          font-size: 12px;
+          color: #000000;
+          letter-spacing: 0.2px;
+          line-height: 16px;
+        }
       }
 
       &:not(:last-of-type) {
@@ -62,8 +78,13 @@ export default function() {
       <ol>
         {myBets.map((bet, index) => (
           <li key={index}>
-            <img src={bet.parity ? evenLogo : oddLogo} alt="logo" />
-            <span>{toPrecision(bet.bet_balance, precision)} PCX</span>
+            <div className="time">
+              {moment(bet.start_time * 1000).format(timeFormat)}
+            </div>
+            <div className="bet">
+              <img src={bet.parity ? evenLogo : oddLogo} alt="logo" />
+              <span>{toPrecision(bet.bet_balance, precision)} PCX</span>
+            </div>
           </li>
         ))}
       </ol>
