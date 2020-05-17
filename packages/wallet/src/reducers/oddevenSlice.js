@@ -65,10 +65,15 @@ const oddEvenSlice = createSlice({
       state.minBet = payload
     },
     setBetStatus(state, { payload }) {
-      state.status = payload ? betStatusEnum.ON : betStatusEnum.TO_FILL
+      if (state.status !== betStatusEnum.FILL) {
+        state.status = payload
+      }
     },
-    setRewarded(state, { payload }) {
-      state.rewarded = payload
+    setRewarded(state, { payload: rewarded }) {
+      state.rewarded = rewarded
+      if (rewarded) {
+        state.status = betStatusEnum.FILL
+      }
     },
     setWinValue(state, { payload }) {
       state.winValue = payload
@@ -112,8 +117,10 @@ export const fetchBetBtcHeight = address => async dispatch => {
 }
 
 export const fetchBetStatus = address => async dispatch => {
-  const data = await contractGet(address, 'is_game_start')
-  dispatch(setBetStatus(data))
+  const started = await contractGet(address, 'is_game_start')
+  if (started) {
+    dispatch(setBetStatus(betStatusEnum.ON))
+  }
 }
 
 export const fetchOddBets = address => async dispatch => {
@@ -151,7 +158,7 @@ export const fetchIsRewarded = address => async dispatch => {
 
 export const fetchWinValue = address => async dispatch => {
   const data = await contractGet(address, 'get_lottery_result', [address])
-  dispatch(setRewarded(data))
+  dispatch(setWinValue(data))
 }
 
 export const fetchNowBtcStatus = isTestNet => async dispatch => {
@@ -177,7 +184,7 @@ export const betsSelector = state => state.oddEven.bets
 export const myBetsSelector = state => state.oddEven.myBets
 export const maxBetSelector = state => state.oddEven.maxBet
 export const minBetSelector = state => state.oddEven.minBet
-export const isRewardedSelector = state => state.oddEven.isRewarded
+export const isRewardedSelector = state => state.oddEven.rewarded
 export const winValueSelector = state => state.oddEven.winValue
 
 export default oddEvenSlice.reducer
