@@ -54,5 +54,9 @@ export default {
   PREDICT_WIN_VALUE: {
     zh: '赢取金额',
     en: 'Win'
+  },
+  PREDICT_NO_BETS: {
+    zh: '暂无投注记录',
+    en: 'No Bets'
   }
 }

@@ -9,6 +9,7 @@ import { toPrecision } from '../../../utils'
 import $t from '../../../locale'
 import moment from 'moment'
 import { timeFormat } from '../../../utils/constants'
+import { Empty } from '../../../components'
 
 export const Wrapper = styled.section`
   width: 300px;
@@ -75,19 +76,23 @@ export default function() {
   return (
     <Wrapper>
       <header>{$t('PREDICT_MY_BETS')}</header>
-      <ol>
-        {myBets.map((bet, index) => (
-          <li key={index}>
-            <div className="time">
-              {moment(bet.start_time * 1000).format(timeFormat)}
-            </div>
-            <div className="bet">
-              <img src={bet.parity ? evenLogo : oddLogo} alt="logo" />
-              <span>{toPrecision(bet.bet_balance, precision)} PCX</span>
-            </div>
-          </li>
-        ))}
-      </ol>
+      {myBets.length > 0 ? (
+        <ol>
+          {myBets.map((bet, index) => (
+            <li key={index}>
+              <div className="time">
+                {moment(bet.start_time * 1000).format(timeFormat)}
+              </div>
+              <div className="bet">
+                <img src={bet.parity ? evenLogo : oddLogo} alt="logo" />
+                <span>{toPrecision(bet.bet_balance, precision)} PCX</span>
+              </div>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <Empty style={{ marginTop: 20 }} text={$t('PREDICT_NO_BETS')} />
+      )}
     </Wrapper>
   )
 }
