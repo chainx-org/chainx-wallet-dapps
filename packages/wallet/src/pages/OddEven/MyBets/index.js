@@ -64,6 +64,7 @@ export default function() {
           <li key={index}>
             <img src={bet.parity ? evenLogo : oddLogo} alt="logo" />
             <span>{toPrecision(bet.bet_balance, precision)} PCX</span>
+            <span>{bet.start_time}</span>
           </li>
         ))}
       </ol>
