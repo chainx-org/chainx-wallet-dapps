@@ -26,7 +26,11 @@ export const detailedRecordsSelector = createSelector(
         }
       })
       .filter(record => {
-        return record.info.nomination > 0 || record.interest > 0
+        return (
+          record.info.nomination > 0 ||
+          record.info.revocations.length > 0 ||
+          record.interest > 0
+        )
       })
   }
 )
