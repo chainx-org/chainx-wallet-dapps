@@ -8,6 +8,7 @@ import {
   betStatusSelector,
   fetchBetBtcHeight,
   fetchBetRecords,
+  fetchBetStatus,
   fetchEvenBets,
   fetchMaxBet,
   fetchMinBet,
@@ -46,6 +47,7 @@ export default function() {
     dispatch(fetchBetRecords(address))
     dispatch(fetchMaxBet(address))
     dispatch(fetchMinBet(address))
+    dispatch(fetchBetStatus(address))
   }, [address, dispatch])
 
   useEffect(() => {
