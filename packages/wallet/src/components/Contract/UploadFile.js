@@ -25,6 +25,8 @@ const InputWithLabel = styled.div`
     border: 1px solid #dce0e2;
     border-radius: 6px;
     min-height: 28px;
+    max-height: 100px;
+    overflow-y: auto;
     width: 446px;
     padding: 10px;
     span {

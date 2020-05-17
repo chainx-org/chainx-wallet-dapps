@@ -50,5 +50,9 @@ export default {
   PREDICT_RULE: {
     zh: '游戏规则',
     en: 'Rules'
+  },
+  PREDICT_WIN_VALUE: {
+    zh: '赢取金额',
+    en: 'Win'
   }
 }

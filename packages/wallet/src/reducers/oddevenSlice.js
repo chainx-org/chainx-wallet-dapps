@@ -20,6 +20,8 @@ const initialState = {
   maxBet: 10000000000,
   minBet: 50000000,
   status: betStatusEnum.ON,
+  rewarded: false,
+  winValue: 0,
   bets: {
     odd: 246382.72737627,
     even: 24632.72737627
@@ -52,12 +54,7 @@ const oddEvenSlice = createSlice({
     setBets(state, { payload }) {
       state.myBets = payload
     },
-    setNowBtc(
-      state,
-      {
-        payload: { height, hash }
-      }
-    ) {
+    setNowBtc(state, { payload: { height, hash } }) {
       state.btcHeight = height
       state.btcHeaderHash = hash
     },
@@ -69,6 +66,12 @@ const oddEvenSlice = createSlice({
     },
     setBetStatus(state, { payload }) {
       state.status = payload ? betStatusEnum.ON : betStatusEnum.TO_FILL
+    },
+    setRewarded(state, { payload }) {
+      state.rewarded = payload
+    },
+    setWinValue(state, { payload }) {
+      state.winValue = payload
     }
   }
 })
@@ -81,7 +84,9 @@ export const {
   setNowBtc,
   setMaxBet,
   setMinBet,
-  setBetStatus
+  setBetStatus,
+  setRewarded,
+  setWinValue
 } = oddEvenSlice.actions
 
 async function contractGet(address, method, params = []) {
@@ -139,6 +144,16 @@ export const fetchBetRecords = address => async dispatch => {
   dispatch(setBets(bets))
 }
 
+export const fetchIsRewarded = address => async dispatch => {
+  const data = await contractGet(address, 'get_allot_reward ')
+  dispatch(setRewarded(data))
+}
+
+export const fetchWinValue = address => async dispatch => {
+  const data = await contractGet(address, 'get_lottery_result', [address])
+  dispatch(setRewarded(data))
+}
+
 export const fetchNowBtcStatus = isTestNet => async dispatch => {
   const response = await window.fetch(
     `https://api.chainx.org.cn/bitx/${
@@ -162,5 +177,7 @@ export const betsSelector = state => state.oddEven.bets
 export const myBetsSelector = state => state.oddEven.myBets
 export const maxBetSelector = state => state.oddEven.maxBet
 export const minBetSelector = state => state.oddEven.minBet
+export const isRewardedSelector = state => state.oddEven.isRewarded
+export const winValueSelector = state => state.oddEven.winValue
 
 export default oddEvenSlice.reducer

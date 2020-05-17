@@ -12,6 +12,8 @@ import { Label, Value } from '../../AssetManagement/components'
 import { retry, toPrecision } from '../../../utils'
 import { pcxFreeSelector } from '../../AssetManagement/PcxCard/selectors'
 import {
+  betStatusEnum,
+  betStatusSelector,
   fetchBetRecords,
   fetchEvenBets,
   fetchOddBets,
@@ -30,6 +32,7 @@ import { fetchAccountAssets } from '../../../reducers/assetSlice'
 
 export default function() {
   const isDemoAddr = useSelector(isDemoSelector)
+  const status = useSelector(betStatusSelector)
   const dispatch = useDispatch()
   const closeDialog = () => {
     dispatch(setOpenBetBtcDialog({ open: false }))
@@ -173,7 +176,7 @@ export default function() {
 
         <div className="buttons-line">
           <PrimaryButton
-            disabled={isDemoAddr || disabled}
+            disabled={isDemoAddr || disabled || status !== betStatusEnum.ON}
             size="fullWidth"
             onClick={bet}
           >

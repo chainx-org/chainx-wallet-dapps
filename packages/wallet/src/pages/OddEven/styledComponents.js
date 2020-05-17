@@ -57,6 +57,18 @@ export const Main = styled.main`
 
   display: flex;
   flex: 1;
+
+  div.value {
+    margin-top: 20px;
+    p {
+      font-weight: 500;
+      font-size: 20px;
+      color: #000000;
+      letter-spacing: 0.15px;
+      text-align: center;
+      line-height: 32px;
+    }
+  }
 `
 
 export const BetArea = styled.section`

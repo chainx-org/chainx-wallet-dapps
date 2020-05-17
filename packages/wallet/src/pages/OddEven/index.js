@@ -10,11 +10,15 @@ import {
   fetchBetRecords,
   fetchBetStatus,
   fetchEvenBets,
+  fetchIsRewarded,
   fetchMaxBet,
   fetchMinBet,
   fetchNowBtcStatus,
   fetchOddBets,
-  nowBtcSelector
+  fetchWinValue,
+  isRewardedSelector,
+  nowBtcSelector,
+  winValueSelector
 } from '../../reducers/oddevenSlice'
 import Status from './Status'
 import Bet from './Bet'
@@ -27,6 +31,8 @@ import { isTestNetSelector, localeSelector } from '../../reducers/settingsSlice'
 import $t from '../../locale'
 import Rule from './Rule'
 import RuleDialog from './Rule/Dialog'
+import { pcxPrecisionSelector } from '../selectors/assets'
+import { toPrecision } from '../../utils'
 
 export default function() {
   const btc = useSelector(nowBtcSelector)
@@ -38,6 +44,10 @@ export default function() {
   const locale = useSelector(localeSelector)
   const [openRuleDialog, setOpenRuleDialog] = useState(false)
 
+  const isRewarded = useSelector(isRewardedSelector)
+  const winValue = useSelector(winValueSelector)
+  const precision = useSelector(pcxPrecisionSelector)
+
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -48,7 +58,14 @@ export default function() {
     dispatch(fetchMaxBet(address))
     dispatch(fetchMinBet(address))
     dispatch(fetchBetStatus(address))
+    dispatch(fetchIsRewarded(address))
   }, [address, dispatch])
+
+  useEffect(() => {
+    if (isRewarded) {
+      dispatch(fetchWinValue(address))
+    }
+  }, [dispatch, isRewarded, address])
 
   useEffect(() => {
     dispatch(fetchNowBtcStatus(isTestNet))
@@ -91,6 +108,14 @@ export default function() {
               )}
               <Bet />
               <NowBets />
+              {isRewarded && (
+                <div className="value">
+                  <p>
+                    {$t('PREDICT_WIN_VALUE')}{' '}
+                    <span>{toPrecision(winValue, precision)} PCX</span>
+                  </p>
+                </div>
+              )}
             </div>
             <footer>
               {$t('PREDICT_DEAL_HEIGHT', { height: betHeight - 5 })}
