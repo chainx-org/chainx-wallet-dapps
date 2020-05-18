@@ -53,11 +53,15 @@ export default function() {
       <div className="chart">
         <span
           className="odd"
-          style={{ width: `calc(${(odd / sum) * 100}% - 2px)` }}
+          style={{
+            width: `calc(${(sum === 0 ? 0.5 : odd / sum) * 100}% - 2px)`
+          }}
         />
         <span
           className="even"
-          style={{ width: `calc(${(even / sum) * 100}% - 2px)` }}
+          style={{
+            width: `calc(${(sum === 0 ? 0.5 : even / sum) * 100}% - 2px)`
+          }}
         />
       </div>
       <div className="detail">
