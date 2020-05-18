@@ -19,18 +19,15 @@ import {
   lbtcInterestSelector
 } from '../LbtcCard/selectors'
 import { addressSelector } from '../../../reducers/addressSlice'
-import { signAndSendExtrinsic } from '../../../utils/chainxProvider'
-import {
-  addSnack,
-  generateId,
-  removeSnackInSeconds,
-  typeEnum
-} from '../../../reducers/snackSlice'
+import { showSnack, signAndSendExtrinsic } from '../../../utils/chainxProvider'
 import { pcxPrecisionSelector } from '../../selectors/assets'
 import { fetchPseduNominationRecords } from '../../../reducers/intentionSlice'
 import { isDemoSelector } from '../../../selectors'
 import { getChainx } from '../../../services/chainx'
-import { canRequestSign, retry } from '../../../utils'
+import { canRequestSign, retry, toPrecision } from '../../../utils'
+import { fetchAccountAssets } from '../../../reducers/assetSlice'
+import $t from '../../../locale'
+import { useIsMounted } from '../../../utils/hooks'
 
 export default function({ token }) {
   const accountAddress = useSelector(addressSelector)
@@ -67,6 +64,8 @@ export default function({ token }) {
 
   const chainx = getChainx()
 
+  const mounted = useIsMounted()
+
   async function claim(token) {
     if (!canRequestSign()) {
       return
@@ -83,29 +82,43 @@ export default function({ token }) {
         accountAddress,
         extrinsic.toHex()
       )
-      let type = typeEnum.SUCCESS
-      let title = status.result === 'ExtrinsicSuccess' ? '提息成功' : '提息失败'
-      let message = `交易hash ${status.txHash}`
 
-      if (status.result === 'ExtrinsicFailed') {
-        type = typeEnum.ERROR
+      const claimedMsg = do {
+        if (status.result === 'ExtrinsicFailed') {
+          return null
+        } else {
+          const {
+            event: { data: dataArr = [] }
+          } = status.events.find(e => e.method === 'DepositorClaim')
+          $t('PSEDU_CLAIM_AMOUNT', {
+            amount: toPrecision(dataArr[dataArr.length - 1], precision, false)
+          })
+        }
       }
 
-      setDisabled(false)
-      let id = generateId()
-      dispatch(addSnack({ id, type, title, message }))
-      removeSnackInSeconds(dispatch, id, 5)
+      let hashMsg = `交易hash ${status.txHash}`
+      const messages = {
+        successTitle: $t('COMMON_MSG_SUCCESS', { msg: $t('STAKING_CLAIM') }),
+        failTitle: $t('COMMON_MSG_Fail', { msg: $t('STAKING_CLAIM') }),
+        successMessage: claimedMsg,
+        failMessage: hashMsg
+      }
+      await showSnack(status, messages, dispatch)
+
       retry(
         () => {
           dispatch(fetchPseduNominationRecords(accountAddress))
+          dispatch(fetchAccountAssets(accountAddress))
         },
         5,
         2
       ).then(() =>
         console.log('Refresh psedu nomination records 5 times after claim')
       )
-    } catch (e) {
-      setDisabled(false)
+    } finally {
+      if (mounted.current) {
+        setDisabled(false)
+      }
     }
   }
 

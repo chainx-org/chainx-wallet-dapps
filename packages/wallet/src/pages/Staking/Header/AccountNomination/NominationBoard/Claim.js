@@ -44,12 +44,19 @@ export default function({ record, interest }) {
         extrinsic.toHex()
       )
 
-      const {
-        event: { data }
-      } = status.events.find(e => e.method === 'Claim')
-      const claimedMsg = $t('STAKING_CLAIM_AMOUNT', {
-        amount: toPrecision(data[2], precision, false)
-      })
+      const claimedMsg = do {
+        if (status.result === 'ExtrinsicFailed') {
+          return null
+        } else {
+          const {
+            event: { data }
+          } = status.events.find(e => e.method === 'Claim')
+
+          $t('STAKING_CLAIM_AMOUNT', {
+            amount: toPrecision(data[2], precision, false)
+          })
+        }
+      }
 
       const hashMsg = $t('COMMON_TX_HASH', { hash: status.txHash })
       const messages = {
