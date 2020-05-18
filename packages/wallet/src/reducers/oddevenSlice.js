@@ -16,26 +16,17 @@ const initialState = {
   btcHeight: 627966,
   btcHeaderHash:
     '0000000000000000000ffba85d088a8640bd83785034727dc31d926ed41d87c2',
-  betHeight: 700000,
+  betHeight: 0,
   maxBet: 10000000000,
-  minBet: 50000000,
+  minBet: 100000000,
   status: betStatusEnum.CLOSE,
   rewarded: false,
   winValue: 0,
   bets: {
-    odd: 246382.72737627,
-    even: 24632.72737627
+    odd: 0,
+    even: 0
   },
-  myBets: [
-    {
-      parity: true,
-      bet_balance: 62.62736273
-    },
-    {
-      parity: false,
-      bet_balance: 100
-    }
-  ]
+  myBets: []
 }
 
 const oddEvenSlice = createSlice({
