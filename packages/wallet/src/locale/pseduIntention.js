@@ -51,5 +51,9 @@ export default {
   PSEDU_TO_ADD_VOTE: {
     en: 'Estimated votes to add',
     zh: '预估需要增加投票冻结'
+  },
+  PSEDU_CLAIM_AMOUNT: {
+    en: '{amount} PCX claimed',
+    zh: '提息{amount}PCX'
   }
 }

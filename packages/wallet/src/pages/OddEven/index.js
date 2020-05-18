@@ -119,7 +119,7 @@ export default function() {
             </div>
             <footer>
               {$t('PREDICT_DEAL_HEIGHT', {
-                height: betHeight - 5 < 0 ? 0 : betHeight - 5
+                height: betHeight - 20 < 0 ? 0 : betHeight - 20
               })}
             </footer>
           </main>

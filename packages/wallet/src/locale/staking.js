@@ -122,6 +122,10 @@ const staking = {
   STAKING_REVOCATION_LIMIT: {
     en: 'Meanwhile at most 10 revocations (now {myRevocationCount})',
     zh: '同时赎回不能超过 10 笔（当前 {amount} 笔）'
+  },
+  STAKING_CLAIM_AMOUNT: {
+    en: '{amount} PCX claimed',
+    zh: '提息{amount}PCX'
   }
 }
 
