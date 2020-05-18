@@ -19,7 +19,7 @@ const initialState = {
   betHeight: 700000,
   maxBet: 10000000000,
   minBet: 50000000,
-  status: betStatusEnum.ON,
+  status: betStatusEnum.CLOSE,
   rewarded: false,
   winValue: 0,
   bets: {
