@@ -13,9 +13,10 @@ import {
 import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
 import { isDemoSelector } from '../../../../../selectors'
 import $t from '../../../../../locale'
-import { canRequestSign, retry } from '../../../../../utils'
+import { canRequestSign, retry, toPrecision } from '../../../../../utils'
 import { getChainx } from '../../../../../services/chainx'
 import { useIsMounted } from '../../../../../utils/hooks'
+import { pcxPrecisionSelector } from '../../../../selectors/assets'
 
 export default function({ record, interest }) {
   const { account } = record.intention || {}
@@ -26,6 +27,7 @@ export default function({ record, interest }) {
 
   const dispatch = useDispatch()
   const chainx = getChainx()
+  const precision = useSelector(pcxPrecisionSelector)
 
   const mounted = useIsMounted()
 
@@ -42,11 +44,18 @@ export default function({ record, interest }) {
         extrinsic.toHex()
       )
 
+      const {
+        event: { data }
+      } = status.events.find(e => e.method === 'Claim')
+      const claimedMsg = $t('STAKING_CLAIM_AMOUNT', {
+        amount: toPrecision(data[2], precision, false)
+      })
+
       const hashMsg = $t('COMMON_TX_HASH', { hash: status.txHash })
       const messages = {
         successTitle: $t('COMMON_MSG_SUCCESS', { msg: $t('STAKING_CLAIM') }),
         failTitle: $t('COMMON_MSG_Fail', { msg: $t('STAKING_CLAIM') }),
-        successMessage: hashMsg,
+        successMessage: claimedMsg,
         failMessage: hashMsg
       }
 
