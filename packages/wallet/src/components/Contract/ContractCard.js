@@ -41,7 +41,7 @@ export default function(props) {
   const [showResultArea, setShowResultArea] = useState(false)
   const [result, setResult] = useState([])
   const [params, setParams] = useState([])
-  const [gasLimit, setGasLimit] = useState(500000)
+  const [gasLimit, setGasLimit] = useState(5000000)
   const [value, setValue] = useState(0)
 
   const dispatch = useDispatch()

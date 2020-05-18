@@ -45,7 +45,12 @@ const oddEvenSlice = createSlice({
     setBets(state, { payload }) {
       state.myBets = payload
     },
-    setNowBtc(state, { payload: { height, hash } }) {
+    setNowBtc(
+      state,
+      {
+        payload: { height, hash }
+      }
+    ) {
       state.btcHeight = height
       state.btcHeaderHash = hash
     },
@@ -92,7 +97,7 @@ async function contractGet(address, method, params = []) {
   const result = await chainx.api.rpc.chainx.contractCall({
     origin: address,
     dest: oddEvenContractAddress,
-    gasLimit: 500000,
+    gasLimit: 5000000,
     inputData: contractAbi.messages[stringCamelCase(method)](...params)
   })
 

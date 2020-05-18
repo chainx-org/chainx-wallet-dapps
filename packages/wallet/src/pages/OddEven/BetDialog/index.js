@@ -94,7 +94,7 @@ export default function() {
     const args = [
       oddEvenContractAddress,
       realAmount,
-      500000,
+      5000000,
       contractAbi.messages[stringCamelCase(method)](...params)
     ]
 
