@@ -58,5 +58,9 @@ export default {
   PREDICT_NO_BETS: {
     zh: '暂无投注记录',
     en: 'No Bets'
+  },
+  PREDICT_NO_GAS: {
+    zh: '下注太大，余额不够gas费用',
+    en: 'Please leave enough gas'
   }
 }

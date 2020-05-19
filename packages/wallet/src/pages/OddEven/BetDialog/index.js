@@ -87,6 +87,11 @@ export default function() {
       return
     }
 
+    if (pcxFree < realAmount + 5000000) {
+      setAmountErrMsg($t('PREDICT_NO_GAS'))
+      return
+    }
+
     const method = 'bet'
     const parity = !betOdd
     const params = [parity]
