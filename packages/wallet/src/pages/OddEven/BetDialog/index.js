@@ -87,7 +87,7 @@ export default function() {
       return
     }
 
-    if (pcxFree < realAmount + 5000000) {
+    if (pcxFree < realAmount + 26000000) {
       setAmountErrMsg($t('PREDICT_NO_GAS'))
       return
     }
