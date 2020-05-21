@@ -17,8 +17,7 @@ import {
   fetchOddBets,
   fetchWinValue,
   isRewardedSelector,
-  nowBtcSelector,
-  winValueSelector
+  nowBtcSelector
 } from '../../reducers/oddevenSlice'
 import Status from './Status'
 import Bet from './Bet'
@@ -31,8 +30,6 @@ import { isTestNetSelector, localeSelector } from '../../reducers/settingsSlice'
 import $t from '../../locale'
 import Rule from './Rule'
 import RuleDialog from './Rule/Dialog'
-import { pcxPrecisionSelector } from '../selectors/assets'
-import { toPrecision } from '../../utils'
 
 export default function() {
   const btc = useSelector(nowBtcSelector)
@@ -45,8 +42,8 @@ export default function() {
   const [openRuleDialog, setOpenRuleDialog] = useState(false)
 
   const isRewarded = useSelector(isRewardedSelector)
-  const winValue = useSelector(winValueSelector)
-  const precision = useSelector(pcxPrecisionSelector)
+  // const winValue = useSelector(winValueSelector)
+  // const precision = useSelector(pcxPrecisionSelector)
 
   const dispatch = useDispatch()
 
@@ -119,10 +116,10 @@ export default function() {
                     奇数
                   </a>
                 </p>
-                <p>
-                  {$t('PREDICT_WIN_VALUE')}{' '}
-                  <span>{toPrecision(winValue, precision)} PCX</span>
-                </p>
+                {/*<p>*/}
+                {/*  {$t('PREDICT_WIN_VALUE')}{' '}*/}
+                {/*  <span>{toPrecision(winValue, precision)} PCX</span>*/}
+                {/*</p>*/}
               </div>
             </div>
             <footer>
