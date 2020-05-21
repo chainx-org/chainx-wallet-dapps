@@ -30,6 +30,7 @@ import { isTestNetSelector, localeSelector } from '../../reducers/settingsSlice'
 import $t from '../../locale'
 import Rule from './Rule'
 import RuleDialog from './Rule/Dialog'
+import winValues from './constant'
 
 export default function() {
   const btc = useSelector(nowBtcSelector)
@@ -42,6 +43,9 @@ export default function() {
   const [openRuleDialog, setOpenRuleDialog] = useState(false)
 
   const isRewarded = useSelector(isRewardedSelector)
+  const winValue = (
+    winValues.find(v => v.account === address) || { win_balance: 0 }
+  ).win_balance
   // const winValue = useSelector(winValueSelector)
   // const precision = useSelector(pcxPrecisionSelector)
 
@@ -116,10 +120,11 @@ export default function() {
                     奇数
                   </a>
                 </p>
-                {/*<p>*/}
-                {/*  {$t('PREDICT_WIN_VALUE')}{' '}*/}
-                {/*  <span>{toPrecision(winValue, precision)} PCX</span>*/}
-                {/*</p>*/}
+                <p>
+                  {$t('PREDICT_WIN_VALUE')}
+                  {': '}
+                  <span>{winValue} PCX</span>
+                </p>
               </div>
             </div>
             <footer>
