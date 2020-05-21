@@ -2,7 +2,7 @@ import { getLocale } from '../../locale'
 
 export default function({ children }) {
   const isZh = getLocale() !== 'en'
-  return isZh ? '等待开奖' : 'Waiting reward'
+  return isZh ? '已结束' : 'Finished'
   // switch (children) {
   //   case betStatusEnum.ON:
   //     return isZh ? '投注中' : 'Betting'
