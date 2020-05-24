@@ -25,7 +25,8 @@ import Hash from '../../components/Hash'
 import { ensure0xPrefix } from '../../utils'
 import { localeSelector } from '../../reducers/settingsSlice'
 import { enCallNameMap, zhCallNameMap } from './callNameMap'
-import getDetailedArgs from './detailedArgs'
+import DetailedArgs from './detailedArgs'
+import { fetchIntentions } from '../../reducers/intentionSlice'
 
 function getOperation(module, call, locale) {
   const callNameMap = locale === 'zh' ? zhCallNameMap : enCallNameMap
@@ -45,6 +46,7 @@ export default function() {
   const txs = useSelector(historyTxsSelector)
 
   useEffect(() => {
+    dispatch(fetchIntentions())
     dispatch(fetchHistoryTxs(accountId, 0))
   }, [dispatch, accountId])
 
@@ -88,12 +90,7 @@ export default function() {
                       {getOperation(tx.module, tx.call, locale)}
                     </BaseCell>
                     <BaseCell style={{ textAlign: 'right' }}>
-                      {getDetailedArgs(tx).reduce((result, item, index) => {
-                        return (
-                          result +
-                          `${index <= 0 ? '' : ','}${item.label}: ${item.value}`
-                        )
-                      }, '')}
+                      <DetailedArgs tx={tx} />
                     </BaseCell>
                   </TableRow>
                 )
