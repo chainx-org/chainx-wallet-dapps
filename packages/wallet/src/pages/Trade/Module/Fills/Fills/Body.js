@@ -12,6 +12,7 @@ import {
   normalizedCurrentFillsSelector
 } from '../../selectors'
 import styled from 'styled-components'
+import { timeFormat } from '../../../../../utils/constants'
 
 const Wrapper = styled.div`
   height: 360px;
@@ -35,7 +36,9 @@ export default function() {
             const price = Number(
               toPrecision(fill.price, pair.precision)
             ).toFixed(precision - unitPrecision)
-            const time = moment(fill['block.time']).format('HH:mm:ss')
+            const m = moment(fill['block.time'])
+            const time = m.format('HH:mm:ss')
+            const fullTime = m.format(timeFormat)
 
             return (
               <TableRow key={index}>
@@ -53,7 +56,9 @@ export default function() {
                   precision={asset && asset.precision}
                   style={{ width: '42%' }}
                 />
-                <TimeCell style={{ width: '28%' }}>{time}</TimeCell>
+                <TimeCell style={{ width: '28%' }} title={fullTime}>
+                  {time}
+                </TimeCell>
               </TableRow>
             )
           })}
