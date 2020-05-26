@@ -4,7 +4,7 @@ import { getApi } from '../services/api'
 const powerSlice = createSlice({
   name: 'power',
   initialState: {
-    power: {},
+    power: [],
     status: {}
   },
   reducers: {
@@ -27,22 +27,24 @@ export const statusSelector = state => state.power.status
 export const { setPower, setStatus } = powerSlice.actions
 
 export const fetchPower = () => async dispatch => {
-  const resp = await window.fetch(`${getApi()}power_percent`)
+  const resp = await window.fetch(`${getApi()}power_percent_v2`)
   const data = await resp.json()
-  dispatch(
-    setPower({
-      'S-DOT': data.find(({ token }) => token === 'SDOT').power,
-      'X-BTC': data.find(({ token }) => token === 'X-BTC').power,
-      'L-BTC': data.find(({ token }) => token === 'L-BTC').power,
-      PCX: data.find(({ token }) => token === 'PCX').power
-    })
-  )
+  dispatch(setPower(data))
 }
 
 export const fetchChainStatus = () => async dispatch => {
   const resp = await window.fetch(`${getApi()}chain/status`)
   const data = await resp.json()
   dispatch(setStatus(data))
+}
+
+export const powerObjectSelector = state => {
+  const powerArr = state.power.power
+
+  return powerArr.reduce((result, p) => {
+    result[p.name] = p.power
+    return result
+  }, {})
 }
 
 export default powerSlice.reducer

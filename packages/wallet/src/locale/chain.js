@@ -9,7 +9,7 @@ const chain = {
   },
   CHAIN_POWER_PERCENTAGE: {
     en: 'Power',
-    zh: '算力占比'
+    zh: '挖矿收益分配'
   }
 }
 

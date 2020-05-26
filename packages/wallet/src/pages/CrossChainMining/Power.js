@@ -1,11 +1,15 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchPower, fetchChainStatus } from '../../reducers/powerSlice'
-import { powerSelector, statusSelector } from '../../reducers/powerSlice'
+import {
+  fetchChainStatus,
+  fetchPower,
+  powerSelector,
+  statusSelector
+} from '../../reducers/powerSlice'
 import NumberFormat from '../../components/NumberFormat'
 
-import { Paper, LinearProgress } from '@chainx/ui'
+import { LinearProgress, Paper } from '@chainx/ui'
 import styled from 'styled-components'
 import $t from '../../locale'
 
@@ -86,25 +90,23 @@ class Piechart {
     ctx.fill()
   }
 
-  draw = data => {
+  draw = (data = []) => {
+    if (data.length <= 0) {
+      return
+    }
+
     const centerX = this.canvas.width / 2
     const centerY = this.canvas.height / 2
     const ctx = this.ctx
     const radius = Math.min(centerX, centerY)
 
-    var totalValue = 0
-    var colorIndex = 0
+    const totalValue = data.reduce((result, item) => result + item, 0)
+    let colorIndex = 0
+    let startAngle = Math.PI
 
-    for (var categ in data) {
-      var val = data[categ]
-      totalValue += val
-    }
-
-    var startAngle = Math.PI
-
-    for (categ in data) {
-      val = data[categ]
-      var sliceAngle = (2 * Math.PI * val) / totalValue
+    for (let categ in data) {
+      const val = data[categ]
+      const sliceAngle = (2 * Math.PI * val) / totalValue
 
       this.drawPieSlice(
         ctx,
@@ -144,6 +146,21 @@ export default function Power() {
   const dispatch = useDispatch()
   const power = useSelector(powerSelector)
   const status = useSelector(statusSelector)
+  const colors = [
+    '#F6C94A',
+    '#C2C2C2',
+    '#46AEE2',
+    '#34C69A',
+    '#D64CAB',
+    '#F7931B'
+  ]
+
+  const powersWithColor = power.map((p, index) => {
+    return {
+      color: colors[index],
+      ...p
+    }
+  })
 
   useEffect(() => {
     dispatch(fetchPower())
@@ -156,13 +173,14 @@ export default function Power() {
       canvas.height = 188
       const chart = new Piechart({
         canvas: canvas,
-        colors: ['#EA754B', '#34C69A', '#46AEE2', '#F6C94A'],
+        colors,
         width: 40
       })
 
-      chart.draw(power)
+      const percents = power.map(p => p.power)
+      chart.draw(percents)
     }
-  }, [power])
+  }, [power, colors])
 
   return (
     <PowerPaper>
@@ -194,34 +212,17 @@ export default function Power() {
         <canvas ref={canvasRef} />
       </div>
       <ListWrapper>
-        <ListItem>
-          <div>
-            <Circle color="#F6C94A" />
-            PCX
-          </div>
-          <div>{(power.PCX * 100).toFixed(2)}%</div>
-        </ListItem>
-        <ListItem>
-          <div>
-            <Circle color="#46AEE2" />
-            L-BTC
-          </div>
-          <div>{(power['L-BTC'] * 100).toFixed(2)}%</div>
-        </ListItem>
-        <ListItem>
-          <div>
-            <Circle color="#34C69A" />
-            X-BTC
-          </div>
-          <div>{(power['X-BTC'] * 100).toFixed(2)}%</div>
-        </ListItem>
-        <ListItem>
-          <div>
-            <Circle color="#EA754B" />
-            S-DOT
-          </div>
-          <div>{(power['S-DOT'] * 100).toFixed(2)}%</div>
-        </ListItem>
+        {powersWithColor.map(p => {
+          return (
+            <ListItem key={p.name}>
+              <div>
+                <Circle color={p.color} />
+                {p.name}
+              </div>
+              <div>{(p.power * 100).toFixed(2)}%</div>
+            </ListItem>
+          )
+        })}
       </ListWrapper>
     </PowerPaper>
   )
