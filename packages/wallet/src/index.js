@@ -18,6 +18,7 @@ import initStore, { defaultMainNetNode, defaultTestNetNode } from './store'
 import { connectSigner, disconnectSigner } from './services/signer'
 import { isTestNetSelector } from './reducers/settingsSlice'
 import { setNode, urlSelector } from './reducers/nodeSlice'
+import { setOpenSignerDownloadDialog } from './reducers/runStatusSlice'
 
 export let store
 
@@ -42,8 +43,26 @@ export async function setDemoAccount(store) {
   )
 }
 
+function getParameterByName(name, url) {
+  if (!url) url = window.location.href
+  name = name.replace(/[[\]]/g, '\\$&')
+  const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+    results = regex.exec(url)
+  if (!results) return null
+  if (!results[2]) return ''
+  return decodeURIComponent(results[2].replace(/\+/g, ' '))
+}
+
+function checkAndOpenSignerDownloadDialog() {
+  if (getParameterByName('open-signer-downloader') === '1') {
+    store.dispatch(setOpenSignerDownloadDialog(true))
+  }
+}
+
 store = initStore()
 window.onload = async () => {
+  checkAndOpenSignerDownloadDialog()
+
   const state = store.getState()
 
   const isDemo = isDemoSelector(state)
