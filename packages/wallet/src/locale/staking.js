@@ -52,8 +52,8 @@ const staking = {
     zh: '总得票数'
   },
   STAKING_CHECK_DROP_OUT: {
-    en: 'View drop out intentions',
-    zh: '查看退选节点'
+    en: 'View more intentions',
+    zh: '查看更多节点'
   },
   STAKING_REGISTER_INTENTION: {
     en: 'Register Intention',
