@@ -129,9 +129,8 @@ export const BetArea = styled.section`
     }
 
     footer {
-      opacity: 0.56;
       font-size: 14px;
-      color: #000000;
+      color: rgba(0, 0, 0, 0.56);
       letter-spacing: 0.12px;
       text-align: center;
       line-height: 20px;

@@ -34,6 +34,7 @@ import { pcxPrecisionSelector } from '../selectors/assets'
 import { toPrecision } from '../../utils'
 import OddEvenHeader from './Head'
 import Rankings from './Rankings'
+import Rule from './Rule'
 
 export default function() {
   const betHeight = useSelector(betHeightSelector)
@@ -112,9 +113,12 @@ export default function() {
               )}
             </div>
             <footer>
-              {$t('PREDICT_DEAL_HEIGHT', {
-                height: betHeight - 20 < 0 ? 0 : betHeight - 20
-              })}
+              <p style={{ marginBottom: 8 }}>
+                {$t('PREDICT_DEAL_HEIGHT', {
+                  height: betHeight - 20 < 0 ? 0 : betHeight - 20
+                })}
+              </p>
+              <Rule onClick={() => setOpenRuleDialog(true)} />
             </footer>
           </main>
         </BetArea>
