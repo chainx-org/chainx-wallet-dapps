@@ -26,7 +26,9 @@ const initialState = {
     odd: 0,
     even: 0
   },
-  myBets: []
+  myBets: [],
+  evenRankingList: [],
+  oddRankingList: []
 }
 
 const oddEvenSlice = createSlice({
@@ -68,6 +70,12 @@ const oddEvenSlice = createSlice({
     },
     setWinValue(state, { payload }) {
       state.winValue = payload
+    },
+    setEvenRankingList(state, { payload }) {
+      state.evenRankingList = payload
+    },
+    setOddRankingList(state, { payload }) {
+      state.oddRankingList = payload
     }
   }
 })
@@ -82,7 +90,9 @@ export const {
   setMinBet,
   setBetStatus,
   setRewarded,
-  setWinValue
+  setWinValue,
+  setEvenRankingList,
+  setOddRankingList
 } = oddEvenSlice.actions
 
 async function contractGet(address, method, params = []) {
@@ -150,6 +160,16 @@ export const fetchIsRewarded = address => async dispatch => {
 export const fetchWinValue = address => async dispatch => {
   const data = await contractGet(address, 'get_lottery_result', [address])
   dispatch(setWinValue(data))
+}
+
+export const fetchEvenRankingList = address => async dispatch => {
+  const data = await contractGet(address, 'get_even_ranking_list')
+  dispatch(setEvenRankingList(data))
+}
+
+export const fetchOddRankingList = address => async dispatch => {
+  const data = await contractGet(address, 'get_odd_ranking_list')
+  dispatch(setOddRankingList(data))
 }
 
 export const fetchNowBtcStatus = () => async dispatch => {

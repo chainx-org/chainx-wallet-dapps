@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { BetArea, Header, Main, Wrapper } from './styledComponents'
-import Logo from './odd-even-logo.svg'
-import BtcHash from './components/BtcHash'
+import { BetArea, Main, Wrapper } from './styledComponents'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   betHeightSelector,
@@ -11,14 +9,15 @@ import {
   fetchBetRecords,
   fetchBetStatus,
   fetchEvenBets,
+  fetchEvenRankingList,
   fetchIsRewarded,
   fetchMaxBet,
   fetchMinBet,
   fetchNowBtcStatus,
   fetchOddBets,
+  fetchOddRankingList,
   fetchWinValue,
   isRewardedSelector,
-  nowBtcSelector,
   winValueSelector
 } from '../../reducers/oddevenSlice'
 import Status from './Status'
@@ -30,13 +29,12 @@ import { openBetBetDialogSelector } from '../../reducers/runStatusSlice'
 import { addressSelector } from '../../reducers/addressSlice'
 import { isTestNetSelector, localeSelector } from '../../reducers/settingsSlice'
 import $t from '../../locale'
-import Rule from './Rule'
 import RuleDialog from './Rule/Dialog'
 import { pcxPrecisionSelector } from '../selectors/assets'
 import { toPrecision } from '../../utils'
+import OddEvenHeader from './Head'
 
 export default function() {
-  const btc = useSelector(nowBtcSelector)
   const betHeight = useSelector(betHeightSelector)
   const status = useSelector(betStatusSelector)
   const openBetBetDialog = useSelector(openBetBetDialogSelector)
@@ -63,6 +61,9 @@ export default function() {
     dispatch(fetchMinBet(address))
     dispatch(fetchBetStatus(address))
     dispatch(fetchIsRewarded(address))
+
+    dispatch(fetchEvenRankingList(address))
+    dispatch(fetchOddRankingList(address))
   }, [address, dispatch])
 
   useEffect(() => {
@@ -77,20 +78,7 @@ export default function() {
 
   return (
     <Wrapper>
-      <Header>
-        <div>
-          <img src={Logo} alt="logo" />
-          <dl>
-            <dt>{$t('PREDICT_NOW_BTC_HEIGHT')}</dt>
-            <dd>{btc.height}</dd>
-            <dt>{$t('PREDICT_NOW_BTC_HASH')}</dt>
-            <dd>
-              <BtcHash>{btc.hash}</BtcHash>
-            </dd>
-          </dl>
-        </div>
-        <Rule onClick={() => setOpenRuleDialog(true)} />
-      </Header>
+      <OddEvenHeader setOpenRuleDialog={setOpenRuleDialog} />
       <Main>
         <BetArea>
           <header>
