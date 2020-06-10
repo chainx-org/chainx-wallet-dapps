@@ -5,17 +5,7 @@ import {
   betHeightSelector,
   betStatusEnum,
   betStatusSelector,
-  fetchBetBtcHeight,
-  fetchBetRecords,
-  fetchBetStatus,
-  fetchEvenBets,
-  fetchEvenRankingList,
-  fetchIsRewarded,
-  fetchMaxBet,
-  fetchMinBet,
   fetchNowBtcStatus,
-  fetchOddBets,
-  fetchOddRankingList,
   fetchWinValue,
   isRewardedSelector,
   winValueSelector
@@ -35,6 +25,7 @@ import { toPrecision } from '../../utils'
 import OddEvenHeader from './Head'
 import Rankings from './Rankings'
 import Rule from './Rule'
+import { useFetchOddEvenInfo } from './utils'
 
 export default function() {
   const betHeight = useSelector(betHeightSelector)
@@ -53,20 +44,7 @@ export default function() {
   const precision = useSelector(pcxPrecisionSelector)
 
   const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(fetchBetBtcHeight(address))
-    dispatch(fetchOddBets(address))
-    dispatch(fetchEvenBets(address))
-    dispatch(fetchBetRecords(address))
-    dispatch(fetchMaxBet(address))
-    dispatch(fetchMinBet(address))
-    dispatch(fetchBetStatus(address))
-    dispatch(fetchIsRewarded(address))
-
-    dispatch(fetchEvenRankingList(address))
-    dispatch(fetchOddRankingList(address))
-  }, [address, dispatch])
+  useFetchOddEvenInfo()
 
   useEffect(() => {
     if (isRewarded) {
