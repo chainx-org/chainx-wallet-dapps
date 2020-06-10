@@ -33,6 +33,7 @@ import RuleDialog from './Rule/Dialog'
 import { pcxPrecisionSelector } from '../selectors/assets'
 import { toPrecision } from '../../utils'
 import OddEvenHeader from './Head'
+import Rankings from './Rankings'
 
 export default function() {
   const betHeight = useSelector(betHeightSelector)
@@ -117,6 +118,7 @@ export default function() {
             </footer>
           </main>
         </BetArea>
+        <Rankings />
         <MyBets />
       </Main>
       {openBetBetDialog && <BetDialog />}

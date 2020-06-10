@@ -199,5 +199,7 @@ export const maxBetSelector = state => state.oddEven.maxBet
 export const minBetSelector = state => state.oddEven.minBet
 export const isRewardedSelector = state => state.oddEven.rewarded
 export const winValueSelector = state => state.oddEven.winValue
+export const oddRankingSelector = state => state.oddEven.oddRankingList
+export const evenRankingSelector = state => state.oddEven.evenRankingList
 
 export default oddEvenSlice.reducer
