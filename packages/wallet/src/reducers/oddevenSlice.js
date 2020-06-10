@@ -45,12 +45,7 @@ const oddEvenSlice = createSlice({
     setBets(state, { payload }) {
       state.myBets = payload
     },
-    setNowBtc(
-      state,
-      {
-        payload: { height, hash }
-      }
-    ) {
+    setNowBtc(state, { payload: { height, hash } }) {
       state.btcHeight = height
       state.btcHeaderHash = hash
     },
@@ -157,10 +152,12 @@ export const fetchWinValue = address => async dispatch => {
   dispatch(setWinValue(data))
 }
 
-export const fetchNowBtcStatus = isTestNet => async dispatch => {
+export const fetchNowBtcStatus = () => async dispatch => {
+  const useBtcMainNet = true
+
   const response = await window.fetch(
     `https://api.chainx.org.cn/bitx/${
-      isTestNet ? 'testnet' : 'mainnet'
+      useBtcMainNet ? 'mainnet' : 'testnet'
     }/block/tip`
   )
   const result = await response.json()

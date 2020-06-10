@@ -59,6 +59,12 @@
       "even_amount",
       "max_user_count",
       "max_num_per_user",
+      "user_game_avalibale_balance",
+      "withdraw_history_list",
+      "WithdrawItem",
+      "user",
+      "withdraw_balance",
+      "status",
       "new",
       "u64",
       "get_game_pool_balance",
@@ -87,12 +93,22 @@
       "get_block_stop_height",
       "get_even_bet_balance",
       "get_odd_bet_balance",
+      "get_all_withdraw_history",
+      "get_withdraw_history_from_account",
+      "account",
+      "recharge",
+      "recharge_balance",
+      "dest",
+      "get_user_game_balance",
+      "withdraw",
       "get_person_bets_value",
+      "get_even_ranking_list",
+      "get_odd_ranking_list",
       "start_new_bet",
       "allot_reward",
       "get_lottery_result",
-      "account",
       "bet",
+      "bet_value",
       "get_game_result_from_account",
       "get_game_join_user",
       "get_game_result_all",
@@ -106,6 +122,7 @@
       "get_asset_balance",
       "compute_dividend",
       "user_balance",
+      "u128",
       "total_balance",
       "win_lottery",
       "StratNewGameEvent",
@@ -116,7 +133,12 @@
       "Some",
       "time",
       "Timestamp",
-      "bet_result"
+      "bet_result",
+      "RechargeEvent",
+      "balance",
+      "WithDrawEvent",
+      "from",
+      "to"
     ],
     "types": [
       {
@@ -190,6 +212,14 @@
             {
               "name": 58,
               "type": 2
+            },
+            {
+              "name": 59,
+              "type": 26
+            },
+            {
+              "name": 60,
+              "type": 30
             }
           ]
         }
@@ -519,6 +549,163 @@
         }
       },
       {
+        "id": {
+          "custom.name": 38,
+          "custom.namespace": [7, 8, 28, 39, 30],
+          "custom.params": [12, 15]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 31,
+              "type": 2
+            },
+            {
+              "name": 47,
+              "type": 27
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 33,
+          "custom.namespace": [7, 8, 34, 35, 34],
+          "custom.params": [28]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 36,
+              "type": 5
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 48,
+          "custom.namespace": [7, 8, 28, 39, 30],
+          "custom.params": [12, 15]
+        },
+        "def": {
+          "enum.variants": [
+            {
+              "tuple_struct_variant.name": 49,
+              "tuple_struct_variant.types": [29]
+            },
+            {
+              "unit_variant.name": 53
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 50,
+          "custom.namespace": [7, 8, 28, 39, 30],
+          "custom.params": [12, 15]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 51,
+              "type": 12
+            },
+            {
+              "name": 52,
+              "type": 15
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 27,
+          "custom.namespace": [7, 8, 28, 29, 30],
+          "custom.params": [31]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 31,
+              "type": 2
+            },
+            {
+              "name": 32,
+              "type": 32
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 61,
+          "custom.namespace": [2, 2],
+          "custom.params": []
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 5,
+              "type": 3
+            },
+            {
+              "name": 62,
+              "type": 12
+            },
+            {
+              "name": 63,
+              "type": 15
+            },
+            {
+              "name": 64,
+              "type": 3
+            },
+            {
+              "name": 44,
+              "type": 15
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 33,
+          "custom.namespace": [7, 8, 34, 35, 34],
+          "custom.params": [31]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 36,
+              "type": 5
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 27,
+          "custom.namespace": [],
+          "custom.params": [31]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 46,
+              "type": 34
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "slice.type": 31
+        },
+        "def": "builtin"
+      },
+      {
         "id": [15, 15, 15],
         "def": "builtin"
       },
@@ -532,7 +719,7 @@
           "struct.fields": [
             {
               "name": 46,
-              "type": 28
+              "type": 37
             }
           ]
         }
@@ -547,21 +734,21 @@
         "id": {
           "custom.name": 27,
           "custom.namespace": [],
-          "custom.params": [30]
+          "custom.params": [39]
         },
         "def": {
           "struct.fields": [
             {
               "name": 46,
-              "type": 31
+              "type": 40
             }
           ]
         }
       },
       {
         "id": {
-          "custom.name": 98,
-          "custom.namespace": [99],
+          "custom.name": 114,
+          "custom.namespace": [115],
           "custom.params": []
         },
         "def": {
@@ -570,23 +757,27 @@
       },
       {
         "id": {
-          "slice.type": 30
+          "slice.type": 39
         },
         "def": "builtin"
       },
       {
+        "id": "u128",
+        "def": "builtin"
+      },
+      {
         "id": {
-          "custom.name": 111,
+          "custom.name": 128,
           "custom.namespace": [],
           "custom.params": [12]
         },
         "def": {
           "enum.variants": [
             {
-              "unit_variant.name": 112
+              "unit_variant.name": 129
             },
             {
-              "tuple_struct_variant.name": 113,
+              "tuple_struct_variant.name": 130,
               "tuple_struct_variant.types": [12]
             }
           ]
@@ -884,6 +1075,70 @@
             }
           ]
         }
+      },
+      {
+        "name": 59,
+        "layout": {
+          "struct.type": 26,
+          "struct.fields": [
+            {
+              "name": 31,
+              "layout": {
+                "struct.type": 2,
+                "struct.fields": [
+                  {
+                    "name": 10,
+                    "layout": {
+                      "range.offset": "0x000000000000000000000000000000000000000000000000000000020000000e",
+                      "range.len": 1,
+                      "range.elem_type": 3
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": 47,
+              "layout": {
+                "range.offset": "0x000000000000000000000000000000000000000000000000000000020000000f",
+                "range.len": 4294967295,
+                "range.elem_type": 28
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": 60,
+        "layout": {
+          "struct.type": 30,
+          "struct.fields": [
+            {
+              "name": 31,
+              "layout": {
+                "struct.type": 2,
+                "struct.fields": [
+                  {
+                    "name": 10,
+                    "layout": {
+                      "range.offset": "0x000000000000000000000000000000000000000000000000000000030000000e",
+                      "range.len": 1,
+                      "range.elem_type": 3
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": 32,
+              "layout": {
+                "range.offset": "0x000000000000000000000000000000000000000000000000000000030000000f",
+                "range.len": 4294967295,
+                "range.elem_type": 31
+              }
+            }
+          ]
+        }
       }
     ]
   },
@@ -891,21 +1146,21 @@
     "name": 2,
     "constructors": [
       {
-        "name": 59,
+        "name": 65,
         "selector": "[\"0x5E\",\"0xBD\",\"0x88\",\"0xD6\"]",
         "args": [
           {
             "name": 24,
             "type": {
               "ty": 15,
-              "display_name": [60]
+              "display_name": [66]
             }
           },
           {
             "name": 25,
             "type": {
               "ty": 15,
-              "display_name": [60]
+              "display_name": [66]
             }
           }
         ],
@@ -916,124 +1171,70 @@
     ],
     "messages": [
       {
-        "name": 61,
+        "name": 67,
         "selector": "[\"0xBD\",\"0xB7\",\"0x06\",\"0xF4\"]",
         "mutates": false,
         "args": [],
         "return_type": {
           "ty": 15,
-          "display_name": [60]
-        },
-        "docs": []
-      },
-      {
-        "name": 62,
-        "selector": "[\"0x78\",\"0x2E\",\"0xDE\",\"0x9A\"]",
-        "mutates": false,
-        "args": [],
-        "return_type": {
-          "ty": 3,
-          "display_name": [63]
-        },
-        "docs": []
-      },
-      {
-        "name": 64,
-        "selector": "[\"0xBC\",\"0x29\",\"0x0A\",\"0x56\"]",
-        "mutates": false,
-        "args": [],
-        "return_type": {
-          "ty": 15,
-          "display_name": [60]
-        },
-        "docs": []
-      },
-      {
-        "name": 65,
-        "selector": "[\"0xD2\",\"0x75\",\"0x0C\",\"0x2B\"]",
-        "mutates": false,
-        "args": [],
-        "return_type": {
-          "ty": 15,
-          "display_name": [60]
-        },
-        "docs": []
-      },
-      {
-        "name": 66,
-        "selector": "[\"0xAD\",\"0x86\",\"0x83\",\"0xA5\"]",
-        "mutates": false,
-        "args": [],
-        "return_type": {
-          "ty": 9,
-          "display_name": [67]
+          "display_name": [66]
         },
         "docs": []
       },
       {
         "name": 68,
-        "selector": "[\"0x7D\",\"0xE3\",\"0xD6\",\"0x79\"]",
-        "mutates": true,
-        "args": [
-          {
-            "name": 69,
-            "type": {
-              "ty": 15,
-              "display_name": [60]
-            }
-          }
-        ],
-        "return_type": null,
-        "docs": []
-      },
-      {
-        "name": 70,
-        "selector": "[\"0x38\",\"0x7C\",\"0xFD\",\"0x2C\"]",
-        "mutates": true,
-        "args": [
-          {
-            "name": 71,
-            "type": {
-              "ty": 15,
-              "display_name": [60]
-            }
-          }
-        ],
-        "return_type": null,
-        "docs": []
-      },
-      {
-        "name": 72,
-        "selector": "[\"0x9F\",\"0xD4\",\"0x5C\",\"0x0E\"]",
+        "selector": "[\"0x78\",\"0x2E\",\"0xDE\",\"0x9A\"]",
         "mutates": false,
         "args": [],
         "return_type": {
           "ty": 3,
-          "display_name": [63]
+          "display_name": [69]
         },
         "docs": []
       },
       {
-        "name": 73,
-        "selector": "[\"0x56\",\"0x6B\",\"0xC6\",\"0xBB\"]",
+        "name": 70,
+        "selector": "[\"0xBC\",\"0x29\",\"0x0A\",\"0x56\"]",
         "mutates": false,
         "args": [],
         "return_type": {
-          "ty": 3,
-          "display_name": [63]
+          "ty": 15,
+          "display_name": [66]
+        },
+        "docs": []
+      },
+      {
+        "name": 71,
+        "selector": "[\"0xD2\",\"0x75\",\"0x0C\",\"0x2B\"]",
+        "mutates": false,
+        "args": [],
+        "return_type": {
+          "ty": 15,
+          "display_name": [66]
+        },
+        "docs": []
+      },
+      {
+        "name": 72,
+        "selector": "[\"0xAD\",\"0x86\",\"0x83\",\"0xA5\"]",
+        "mutates": false,
+        "args": [],
+        "return_type": {
+          "ty": 9,
+          "display_name": [73]
         },
         "docs": []
       },
       {
         "name": 74,
-        "selector": "[\"0x68\",\"0x48\",\"0xC9\",\"0x54\"]",
+        "selector": "[\"0x7D\",\"0xE3\",\"0xD6\",\"0x79\"]",
         "mutates": true,
         "args": [
           {
             "name": 75,
             "type": {
-              "ty": 3,
-              "display_name": [63]
+              "ty": 15,
+              "display_name": [66]
             }
           }
         ],
@@ -1042,14 +1243,14 @@
       },
       {
         "name": 76,
-        "selector": "[\"0x6A\",\"0x76\",\"0xD0\",\"0x90\"]",
+        "selector": "[\"0x38\",\"0x7C\",\"0xFD\",\"0x2C\"]",
         "mutates": true,
         "args": [
           {
             "name": 77,
             "type": {
-              "ty": 3,
-              "display_name": [63]
+              "ty": 15,
+              "display_name": [66]
             }
           }
         ],
@@ -1058,30 +1259,36 @@
       },
       {
         "name": 78,
-        "selector": "[\"0x66\",\"0xD5\",\"0xDD\",\"0x34\"]",
-        "mutates": true,
-        "args": [
-          {
-            "name": 79,
-            "type": {
-              "ty": 3,
-              "display_name": [63]
-            }
-          }
-        ],
-        "return_type": null,
+        "selector": "[\"0x9F\",\"0xD4\",\"0x5C\",\"0x0E\"]",
+        "mutates": false,
+        "args": [],
+        "return_type": {
+          "ty": 3,
+          "display_name": [69]
+        },
+        "docs": []
+      },
+      {
+        "name": 79,
+        "selector": "[\"0x56\",\"0x6B\",\"0xC6\",\"0xBB\"]",
+        "mutates": false,
+        "args": [],
+        "return_type": {
+          "ty": 3,
+          "display_name": [69]
+        },
         "docs": []
       },
       {
         "name": 80,
-        "selector": "[\"0xC2\",\"0x9B\",\"0x06\",\"0x2D\"]",
+        "selector": "[\"0x68\",\"0x48\",\"0xC9\",\"0x54\"]",
         "mutates": true,
         "args": [
           {
             "name": 81,
             "type": {
-              "ty": 9,
-              "display_name": [67]
+              "ty": 3,
+              "display_name": [69]
             }
           }
         ],
@@ -1090,66 +1297,204 @@
       },
       {
         "name": 82,
+        "selector": "[\"0x6A\",\"0x76\",\"0xD0\",\"0x90\"]",
+        "mutates": true,
+        "args": [
+          {
+            "name": 83,
+            "type": {
+              "ty": 3,
+              "display_name": [69]
+            }
+          }
+        ],
+        "return_type": null,
+        "docs": []
+      },
+      {
+        "name": 84,
+        "selector": "[\"0x66\",\"0xD5\",\"0xDD\",\"0x34\"]",
+        "mutates": true,
+        "args": [
+          {
+            "name": 85,
+            "type": {
+              "ty": 3,
+              "display_name": [69]
+            }
+          }
+        ],
+        "return_type": null,
+        "docs": []
+      },
+      {
+        "name": 86,
+        "selector": "[\"0xC2\",\"0x9B\",\"0x06\",\"0x2D\"]",
+        "mutates": true,
+        "args": [
+          {
+            "name": 87,
+            "type": {
+              "ty": 9,
+              "display_name": [73]
+            }
+          }
+        ],
+        "return_type": null,
+        "docs": []
+      },
+      {
+        "name": 88,
         "selector": "[\"0x0E\",\"0x7E\",\"0xDA\",\"0x32\"]",
         "mutates": false,
         "args": [],
         "return_type": {
           "ty": 9,
-          "display_name": [67]
+          "display_name": [73]
         },
         "docs": []
       },
       {
-        "name": 83,
+        "name": 89,
         "selector": "[\"0xD6\",\"0x06\",\"0x8C\",\"0xA2\"]",
         "mutates": false,
         "args": [],
         "return_type": {
           "ty": 3,
-          "display_name": [63]
+          "display_name": [69]
         },
         "docs": []
       },
       {
-        "name": 84,
+        "name": 90,
         "selector": "[\"0x4F\",\"0xDE\",\"0xAD\",\"0xE5\"]",
         "mutates": false,
         "args": [],
         "return_type": {
           "ty": 3,
-          "display_name": [63]
+          "display_name": [69]
         },
         "docs": []
       },
       {
-        "name": 85,
+        "name": 91,
         "selector": "[\"0x34\",\"0xB0\",\"0xCA\",\"0xE7\"]",
         "mutates": false,
         "args": [],
         "return_type": {
           "ty": 15,
-          "display_name": [60]
+          "display_name": [66]
         },
         "docs": []
       },
       {
-        "name": 86,
+        "name": 92,
         "selector": "[\"0x07\",\"0x9D\",\"0x0E\",\"0x8D\"]",
         "mutates": false,
         "args": [],
         "return_type": {
           "ty": 15,
-          "display_name": [60]
+          "display_name": [66]
         },
         "docs": []
       },
       {
-        "name": 87,
+        "name": 93,
+        "selector": "[\"0xDA\",\"0x1B\",\"0x6B\",\"0xC2\"]",
+        "mutates": false,
+        "args": [],
+        "return_type": {
+          "ty": 33,
+          "display_name": [27]
+        },
+        "docs": []
+      },
+      {
+        "name": 94,
+        "selector": "[\"0x56\",\"0xF9\",\"0xDF\",\"0xA4\"]",
+        "mutates": false,
+        "args": [
+          {
+            "name": 95,
+            "type": {
+              "ty": 12,
+              "display_name": [20]
+            }
+          }
+        ],
+        "return_type": {
+          "ty": 33,
+          "display_name": [27]
+        },
+        "docs": []
+      },
+      {
+        "name": 96,
+        "selector": "[\"0x0D\",\"0x19\",\"0xFE\",\"0xB4\"]",
+        "mutates": true,
+        "args": [
+          {
+            "name": 97,
+            "type": {
+              "ty": 15,
+              "display_name": [66]
+            }
+          },
+          {
+            "name": 98,
+            "type": {
+              "ty": 12,
+              "display_name": [20]
+            }
+          }
+        ],
+        "return_type": {
+          "ty": 9,
+          "display_name": [73]
+        },
+        "docs": []
+      },
+      {
+        "name": 99,
+        "selector": "[\"0xAF\",\"0xE7\",\"0xA0\",\"0x64\"]",
+        "mutates": false,
+        "args": [],
+        "return_type": {
+          "ty": 15,
+          "display_name": [66]
+        },
+        "docs": []
+      },
+      {
+        "name": 100,
+        "selector": "[\"0xB8\",\"0xB9\",\"0xAB\",\"0xA0\"]",
+        "mutates": true,
+        "args": [
+          {
+            "name": 63,
+            "type": {
+              "ty": 15,
+              "display_name": [66]
+            }
+          },
+          {
+            "name": 98,
+            "type": {
+              "ty": 12,
+              "display_name": [20]
+            }
+          }
+        ],
+        "return_type": null,
+        "docs": []
+      },
+      {
+        "name": 101,
         "selector": "[\"0xAD\",\"0x4A\",\"0x8D\",\"0xF8\"]",
         "mutates": false,
         "args": [],
         "return_type": {
-          "ty": 26,
+          "ty": 35,
           "display_name": []
         },
         "docs": [
@@ -1157,7 +1502,29 @@
         ]
       },
       {
-        "name": 88,
+        "name": 102,
+        "selector": "[\"0xEA\",\"0x21\",\"0x94\",\"0x3F\"]",
+        "mutates": false,
+        "args": [],
+        "return_type": {
+          "ty": 20,
+          "display_name": [27]
+        },
+        "docs": []
+      },
+      {
+        "name": 103,
+        "selector": "[\"0x38\",\"0x46\",\"0x20\",\"0x89\"]",
+        "mutates": false,
+        "args": [],
+        "return_type": {
+          "ty": 20,
+          "display_name": [27]
+        },
+        "docs": []
+      },
+      {
+        "name": 104,
         "selector": "[\"0x68\",\"0x0A\",\"0x17\",\"0xAF\"]",
         "mutates": true,
         "args": [
@@ -1165,34 +1532,34 @@
             "name": 16,
             "type": {
               "ty": 3,
-              "display_name": [63]
+              "display_name": [69]
             }
           }
         ],
         "return_type": {
           "ty": 9,
-          "display_name": [67]
+          "display_name": [73]
         },
         "docs": []
       },
       {
-        "name": 89,
+        "name": 105,
         "selector": "[\"0x96\",\"0x37\",\"0xE6\",\"0xF8\"]",
         "mutates": true,
         "args": [],
         "return_type": {
           "ty": 9,
-          "display_name": [67]
+          "display_name": [73]
         },
         "docs": []
       },
       {
-        "name": 90,
+        "name": 106,
         "selector": "[\"0x3A\",\"0x10\",\"0xEC\",\"0x5C\"]",
         "mutates": false,
         "args": [
           {
-            "name": 91,
+            "name": 95,
             "type": {
               "ty": 12,
               "display_name": [20]
@@ -1201,12 +1568,12 @@
         ],
         "return_type": {
           "ty": 15,
-          "display_name": [60]
+          "display_name": [66]
         },
         "docs": []
       },
       {
-        "name": 92,
+        "name": 107,
         "selector": "[\"0x87\",\"0x3E\",\"0x69\",\"0xF7\"]",
         "mutates": true,
         "args": [
@@ -1214,23 +1581,30 @@
             "name": 43,
             "type": {
               "ty": 9,
-              "display_name": [67]
+              "display_name": [73]
+            }
+          },
+          {
+            "name": 108,
+            "type": {
+              "ty": 15,
+              "display_name": [66]
             }
           }
         ],
         "return_type": {
           "ty": 9,
-          "display_name": [67]
+          "display_name": [73]
         },
         "docs": []
       },
       {
-        "name": 93,
+        "name": 109,
         "selector": "[\"0xE4\",\"0x5B\",\"0x75\",\"0x69\"]",
         "mutates": false,
         "args": [
           {
-            "name": 91,
+            "name": 95,
             "type": {
               "ty": 12,
               "display_name": [20]
@@ -1244,18 +1618,18 @@
         "docs": []
       },
       {
-        "name": 94,
+        "name": 110,
         "selector": "[\"0x51\",\"0x23\",\"0x4D\",\"0x1D\"]",
         "mutates": false,
         "args": [],
         "return_type": {
-          "ty": 27,
+          "ty": 36,
           "display_name": [27]
         },
         "docs": []
       },
       {
-        "name": 95,
+        "name": 111,
         "selector": "[\"0x59\",\"0xE1\",\"0xD0\",\"0x20\"]",
         "mutates": false,
         "args": [],
@@ -1266,61 +1640,61 @@
         "docs": []
       },
       {
-        "name": 96,
+        "name": 112,
         "selector": "[\"0x0E\",\"0x48\",\"0x36\",\"0x76\"]",
         "mutates": false,
         "args": [
           {
-            "name": 97,
+            "name": 113,
             "type": {
               "ty": 3,
-              "display_name": [63]
+              "display_name": [69]
             }
           }
         ],
         "return_type": {
-          "ty": 29,
+          "ty": 38,
           "display_name": [27]
         },
         "docs": []
       },
       {
-        "name": 100,
+        "name": 116,
         "selector": "[\"0xA8\",\"0xC3\",\"0x9D\",\"0x9B\"]",
         "mutates": false,
         "args": [
           {
-            "name": 97,
+            "name": 113,
             "type": {
               "ty": 3,
-              "display_name": [63]
+              "display_name": [69]
             }
           }
         ],
         "return_type": {
           "ty": 9,
-          "display_name": [67]
+          "display_name": [73]
         },
         "docs": []
       },
       {
-        "name": 101,
+        "name": 117,
         "selector": "[\"0x50\",\"0x28\",\"0xC6\",\"0xBD\"]",
         "mutates": false,
         "args": [],
         "return_type": {
-          "ty": 30,
-          "display_name": [102]
+          "ty": 39,
+          "display_name": [118]
         },
         "docs": []
       },
       {
-        "name": 103,
+        "name": 119,
         "selector": "[\"0x15\",\"0x37\",\"0xD0\",\"0x92\"]",
         "mutates": false,
         "args": [
           {
-            "name": 91,
+            "name": 95,
             "type": {
               "ty": 12,
               "display_name": [20]
@@ -1329,42 +1703,42 @@
         ],
         "return_type": {
           "ty": 15,
-          "display_name": [60]
+          "display_name": [66]
         },
         "docs": [
           "Returns the account balance, read directly from runtime storage"
         ]
       },
       {
-        "name": 104,
+        "name": 120,
         "selector": "[\"0x27\",\"0x4C\",\"0xCF\",\"0xD7\"]",
         "mutates": false,
         "args": [
           {
-            "name": 105,
+            "name": 121,
             "type": {
-              "ty": 15,
-              "display_name": [60]
+              "ty": 41,
+              "display_name": [122]
             }
           },
           {
-            "name": 106,
+            "name": 123,
             "type": {
-              "ty": 15,
-              "display_name": [60]
+              "ty": 41,
+              "display_name": [122]
             }
           },
           {
-            "name": 107,
+            "name": 124,
             "type": {
-              "ty": 15,
-              "display_name": [60]
+              "ty": 41,
+              "display_name": [122]
             }
           }
         ],
         "return_type": {
           "ty": 15,
-          "display_name": [60]
+          "display_name": [66]
         },
         "docs": [
           "Compute the dividend by a ration of source_vote_weight/target_vote_weight * total_balance"
@@ -1373,14 +1747,14 @@
     ],
     "events": [
       {
-        "name": 108,
+        "name": 125,
         "args": [
           {
             "name": 5,
             "indexed": false,
             "type": {
               "ty": 3,
-              "display_name": [63]
+              "display_name": [69]
             },
             "docs": []
           }
@@ -1388,14 +1762,14 @@
         "docs": []
       },
       {
-        "name": 109,
+        "name": 126,
         "args": [
           {
             "name": 5,
             "indexed": false,
             "type": {
               "ty": 3,
-              "display_name": [63]
+              "display_name": [69]
             },
             "docs": []
           },
@@ -1404,7 +1778,7 @@
             "indexed": false,
             "type": {
               "ty": 3,
-              "display_name": [63]
+              "display_name": [69]
             },
             "docs": []
           }
@@ -1412,23 +1786,23 @@
         "docs": []
       },
       {
-        "name": 110,
+        "name": 127,
         "args": [
           {
             "name": 5,
             "indexed": false,
             "type": {
               "ty": 3,
-              "display_name": [63]
+              "display_name": [69]
             },
             "docs": []
           },
           {
-            "name": 91,
+            "name": 95,
             "indexed": true,
             "type": {
-              "ty": 32,
-              "display_name": [111]
+              "ty": 42,
+              "display_name": [128]
             },
             "docs": []
           },
@@ -1437,16 +1811,16 @@
             "indexed": false,
             "type": {
               "ty": 15,
-              "display_name": [60]
+              "display_name": [66]
             },
             "docs": []
           },
           {
-            "name": 114,
+            "name": 131,
             "indexed": false,
             "type": {
               "ty": 15,
-              "display_name": [115]
+              "display_name": [132]
             },
             "docs": []
           },
@@ -1455,7 +1829,7 @@
             "indexed": false,
             "type": {
               "ty": 3,
-              "display_name": [63]
+              "display_name": [69]
             },
             "docs": []
           },
@@ -1464,16 +1838,73 @@
             "indexed": false,
             "type": {
               "ty": 9,
-              "display_name": [67]
+              "display_name": [73]
             },
             "docs": []
           },
           {
-            "name": 116,
+            "name": 133,
             "indexed": false,
             "type": {
               "ty": 9,
-              "display_name": [67]
+              "display_name": [73]
+            },
+            "docs": []
+          }
+        ],
+        "docs": []
+      },
+      {
+        "name": 134,
+        "args": [
+          {
+            "name": 98,
+            "indexed": false,
+            "type": {
+              "ty": 12,
+              "display_name": [20]
+            },
+            "docs": []
+          },
+          {
+            "name": 135,
+            "indexed": false,
+            "type": {
+              "ty": 15,
+              "display_name": [66]
+            },
+            "docs": []
+          }
+        ],
+        "docs": []
+      },
+      {
+        "name": 136,
+        "args": [
+          {
+            "name": 137,
+            "indexed": false,
+            "type": {
+              "ty": 12,
+              "display_name": [20]
+            },
+            "docs": []
+          },
+          {
+            "name": 138,
+            "indexed": false,
+            "type": {
+              "ty": 12,
+              "display_name": [20]
+            },
+            "docs": []
+          },
+          {
+            "name": 135,
+            "indexed": false,
+            "type": {
+              "ty": 15,
+              "display_name": [66]
             },
             "docs": []
           }

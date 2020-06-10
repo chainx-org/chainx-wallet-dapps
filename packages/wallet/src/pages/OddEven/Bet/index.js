@@ -5,6 +5,7 @@ import { setOpenBetBtcDialog } from '../../../reducers/runStatusSlice'
 import $t from '../../../locale'
 
 const Btn = styled.button`
+  border: none;
   font-weight: 600;
   font-size: 20px;
   color: #ffffff;

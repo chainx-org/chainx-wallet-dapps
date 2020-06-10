@@ -5,6 +5,7 @@ import BtcHash from './components/BtcHash'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   betHeightSelector,
+  betStatusEnum,
   betStatusSelector,
   fetchBetBtcHeight,
   fetchBetRecords,
@@ -17,7 +18,8 @@ import {
   fetchOddBets,
   fetchWinValue,
   isRewardedSelector,
-  nowBtcSelector
+  nowBtcSelector,
+  winValueSelector
 } from '../../reducers/oddevenSlice'
 import Status from './Status'
 import Bet from './Bet'
@@ -30,7 +32,8 @@ import { isTestNetSelector, localeSelector } from '../../reducers/settingsSlice'
 import $t from '../../locale'
 import Rule from './Rule'
 import RuleDialog from './Rule/Dialog'
-import winValues from './constant'
+import { pcxPrecisionSelector } from '../selectors/assets'
+import { toPrecision } from '../../utils'
 
 export default function() {
   const btc = useSelector(nowBtcSelector)
@@ -43,11 +46,11 @@ export default function() {
   const [openRuleDialog, setOpenRuleDialog] = useState(false)
 
   const isRewarded = useSelector(isRewardedSelector)
-  const winValue = (
-    winValues.find(v => v.account === address) || { win_balance: 0 }
-  ).win_balance
-  // const winValue = useSelector(winValueSelector)
-  // const precision = useSelector(pcxPrecisionSelector)
+  // const winValue = (
+  //   winValues.find(v => v.account === address) || { win_balance: 0 }
+  // ).win_balance
+  const winValue = useSelector(winValueSelector)
+  const precision = useSelector(pcxPrecisionSelector)
 
   const dispatch = useDispatch()
 
@@ -69,7 +72,7 @@ export default function() {
   }, [dispatch, isRewarded, address])
 
   useEffect(() => {
-    dispatch(fetchNowBtcStatus(isTestNet))
+    dispatch(fetchNowBtcStatus())
   }, [dispatch, isTestNet])
 
   return (
@@ -109,23 +112,15 @@ export default function() {
               )}
               <Bet />
               <NowBets />
-              <div className="value">
-                <p>
-                  开奖结果：
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://live.blockcypher.com/btc-testnet/block/00000000000000a21081531259cbcc60b4d1aebca35983d06a3ffa37fa514247"
-                  >
-                    奇数
-                  </a>
-                </p>
-                <p>
-                  {$t('PREDICT_WIN_VALUE')}
-                  {': '}
-                  <span>{winValue} PCX</span>
-                </p>
-              </div>
+              {status === betStatusEnum.FILL && (
+                <div className="value">
+                  <p>
+                    {$t('PREDICT_WIN_VALUE')}
+                    {': '}
+                    <span>{toPrecision(winValue, precision)} PCX</span>
+                  </p>
+                </div>
+              )}
             </div>
             <footer>
               {$t('PREDICT_DEAL_HEIGHT', {
