@@ -1,5 +1,11 @@
 import React from 'react'
-import { EvenPanel, OddPanel, Wrapper } from './styledComponents'
+import {
+  EvenPanel,
+  OddPanel,
+  Wrapper,
+  OddBadge,
+  EvenBadge
+} from './styledComponents'
 import { useSelector } from 'react-redux'
 import {
   evenRankingSelector,
@@ -21,6 +27,9 @@ export default function() {
       <OddPanel>
         <header>
           <span>奇数投注</span>
+          <OddBadge>
+            <span>{oddRankingList.length}</span>
+          </OddBadge>
         </header>
         {oddRankingList.length <= 0 && (
           <Empty style={{ marginTop: 20 }} text={$t('PREDICT_NO_BETS')} />
@@ -39,6 +48,9 @@ export default function() {
       <EvenPanel>
         <header>
           <span>偶数投注</span>
+          <EvenBadge>
+            <span>{evenRankingList.length}</span>
+          </EvenBadge>
         </header>
         {evenRankingList.length <= 0 && (
           <Empty style={{ marginTop: 20 }} text={$t('PREDICT_NO_BETS')} />

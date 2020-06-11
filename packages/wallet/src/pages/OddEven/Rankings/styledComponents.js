@@ -27,7 +27,9 @@ export const Panel = styled.div`
   border-radius: 10px;
 
   & > header {
-    span {
+    display: flex;
+    justify-content: space-between;
+    & > span {
       opacity: 0.72;
       font-weight: 600;
       font-size: 14px;
@@ -60,6 +62,38 @@ export const Panel = styled.div`
       }
     }
   }
+`
+
+export const Badge = styled.div`
+  display: inline-block;
+  padding: 0 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.1px;
+  line-height: 16px;
+  span {
+    display: inline-flex;
+    align-items: center;
+  }
+  span:before {
+    content: '';
+    display: inline-block;
+    background-color: #fff;
+    width: 4px;
+    height: 4px;
+    border-radius: 4px;
+    margin-right: 4px;
+  }
+`
+
+export const OddBadge = styled(Badge)`
+  background-color: #e05300;
+`
+
+export const EvenBadge = styled(Badge)`
+  background-color: #0086dc;
 `
 
 export const EvenPanel = styled(Panel)`
