@@ -8,7 +8,7 @@ import { nowBtcSelector } from '../../reducers/oddevenSlice'
 import Balance from './Balance'
 import DepositAndWithdraw from './DepositAndWithdraw'
 
-export default function({ withdraw }) {
+export default function({ withdraw, deposit }) {
   const btc = useSelector(nowBtcSelector)
 
   return (
@@ -26,7 +26,7 @@ export default function({ withdraw }) {
       </div>
       <div className="right">
         <Balance />
-        <DepositAndWithdraw withdraw={withdraw} />
+        <DepositAndWithdraw withdraw={withdraw} deposit={deposit} />
       </div>
     </Header>
   )

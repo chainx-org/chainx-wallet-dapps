@@ -27,6 +27,7 @@ import Rankings from './Rankings'
 import Rule from './Rule'
 import { useFetchOddEvenInfo } from './utils'
 import WithDrawDialog from './WithdrawDialog'
+import DepositDialog from './DepositDialog'
 
 export default function() {
   const betHeight = useSelector(betHeightSelector)
@@ -37,6 +38,7 @@ export default function() {
   const locale = useSelector(localeSelector)
   const [openRuleDialog, setOpenRuleDialog] = useState(false)
   const [openWithdrawDialog, setOpenWithdrawDialog] = useState(false)
+  const [openDepositDialog, setOpenDepositDialog] = useState(false)
 
   const isRewarded = useSelector(isRewardedSelector)
   // const winValue = (
@@ -60,7 +62,10 @@ export default function() {
 
   return (
     <Wrapper>
-      <OddEvenHeader withdraw={() => setOpenWithdrawDialog(true)} />
+      <OddEvenHeader
+        withdraw={() => setOpenWithdrawDialog(true)}
+        deposit={() => setOpenDepositDialog(true)}
+      />
       <Main>
         <BetArea>
           <header>
@@ -111,6 +116,9 @@ export default function() {
       )}
       {openWithdrawDialog && (
         <WithDrawDialog handleClose={() => setOpenWithdrawDialog(false)} />
+      )}
+      {openDepositDialog && (
+        <DepositDialog handleClose={() => setOpenDepositDialog(false)} />
       )}
     </Wrapper>
   )
