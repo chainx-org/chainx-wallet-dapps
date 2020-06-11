@@ -13,9 +13,12 @@ import { retry, toPrecision } from '../../../utils'
 import {
   betStatusEnum,
   betStatusSelector,
+  fetchBalance,
   fetchBetRecords,
   fetchEvenBets,
+  fetchEvenRankingList,
   fetchOddBets,
+  fetchOddRankingList,
   maxBetSelector,
   minBetSelector,
   oddEvenBalanceSelector
@@ -89,7 +92,7 @@ export default function() {
       return
     }
 
-    if (pcxFree < realAmount + 26000000) {
+    if (pcxFree < realAmount) {
       setAmountErrMsg($t('PREDICT_NO_GAS'))
       return
     }
@@ -125,7 +128,10 @@ export default function() {
             dispatch(fetchOddBets(accountAddress)),
             dispatch(fetchEvenBets(accountAddress)),
             dispatch(fetchBetRecords(accountAddress)),
-            dispatch(fetchAccountAssets(accountAddress))
+            dispatch(fetchAccountAssets(accountAddress)),
+            dispatch(fetchEvenRankingList(accountAddress)),
+            dispatch(fetchOddRankingList(accountAddress)),
+            dispatch(fetchBalance(accountAddress))
           ])
         },
         5,

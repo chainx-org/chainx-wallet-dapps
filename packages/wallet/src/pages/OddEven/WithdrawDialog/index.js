@@ -2,10 +2,13 @@ import $t from '../../../locale'
 import { StyledDialog } from './styledComponents'
 import React, { useEffect, useState } from 'react'
 import { AmountInput, PrimaryButton, TextInput } from '@chainx/ui'
-import { useSelector } from 'react-redux'
-import { oddEvenBalanceSelector } from '../../../reducers/oddevenSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  fetchBalance,
+  oddEvenBalanceSelector
+} from '../../../reducers/oddevenSlice'
 import { pcxPrecisionSelector } from '../../selectors/assets'
-import { toPrecision } from '../../../utils'
+import { retry, toPrecision } from '../../../utils'
 import { Label, Value } from '../../AssetManagement/components'
 import { isDemoSelector } from '../../../selectors'
 import { decodeAddress } from '@chainx/keyring/address'
@@ -16,7 +19,7 @@ import { contractAbi } from '../../../utils/contract'
 import { Account } from 'chainx.js'
 import { oddEvenContractAddress } from '../../../utils/constants'
 import { getChainx } from '../../../services/chainx'
-import { signAndSendExtrinsic } from '../../../utils/chainxProvider'
+import { showSnack, signAndSendExtrinsic } from '../../../utils/chainxProvider'
 import { addressSelector } from '../../../reducers/addressSlice'
 
 function isMainNetAddress(address) {
@@ -53,6 +56,8 @@ export default function({ handleClose }) {
     setAmount(toPrecision(balance, precision))
   }, [balance, precision])
 
+  const dispatch = useDispatch()
+
   const sign = async () => {
     if (!isMainNetAddress(address)) {
       setAddressErrMsg('地址错误，请设置ChainX主网地址')
@@ -80,7 +85,23 @@ export default function({ handleClose }) {
       const ex = getChainx().api.tx.xContracts.call(...args)
       const status = await signAndSendExtrinsic(accountAddress, ex.toHex())
 
-      console.log(status)
+      const messages = {
+        successTitle: '申请提现成功',
+        failTitle: '申请提现失败',
+        successMessage: `稍后请检查您的目的主网地址`,
+        failMessage: `${$t('NOTIFICATION_TX_HASH')} ${status.txHash}`
+      }
+
+      await showSnack(status, messages, dispatch)
+      handleClose()
+
+      retry(
+        () => {
+          Promise.all([dispatch(fetchBalance(address))])
+        },
+        5,
+        2
+      ).then(() => console.log('Refresh assets 5 times after transfer'))
     } finally {
       setDisabled(false)
     }
