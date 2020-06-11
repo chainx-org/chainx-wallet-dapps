@@ -4,8 +4,10 @@
   "private": true,
   "dependencies": {
     "@babel/core": "7.6.0",
+    "@chainx/keyring": "^2.22.31",
     "@chainx/signer-connector": "^1.0.11",
     "@chainx/ui": "0.1.4",
+    "@chainx/util": "^2.22.31",
     "@polkadot/util": "^1.6.1",
     "@reduxjs/toolkit": "^1.0.4",
     "@svgr/webpack": "4.3.2",
@@ -17,6 +19,7 @@
     "babel-plugin-named-asset-import": "^0.3.4",
     "babel-preset-react-app": "^9.0.2",
     "bignumber.js": "^9.0.0",
+    "bs58": "^4.0.1",
     "camelcase": "^5.2.0",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "chainx.js": "2.22.32",

@@ -13,6 +13,7 @@ export const betStatusEnum = {
 }
 
 const initialState = {
+  balance: 0,
   btcHeight: 627966,
   btcHeaderHash:
     '0000000000000000000ffba85d088a8640bd83785034727dc31d926ed41d87c2',
@@ -76,6 +77,9 @@ const oddEvenSlice = createSlice({
     },
     setOddRankingList(state, { payload }) {
       state.oddRankingList = payload
+    },
+    setBalance(state, { payload }) {
+      state.balance = payload
     }
   }
 })
@@ -92,7 +96,8 @@ export const {
   setRewarded,
   setWinValue,
   setEvenRankingList,
-  setOddRankingList
+  setOddRankingList,
+  setBalance
 } = oddEvenSlice.actions
 
 async function contractGet(address, method, params = []) {
@@ -172,6 +177,11 @@ export const fetchOddRankingList = address => async dispatch => {
   dispatch(setOddRankingList(data))
 }
 
+export const fetchBalance = address => async dispatch => {
+  const data = await contractGet(address, 'get_user_game_balance')
+  dispatch(setBalance(data))
+}
+
 export const fetchNowBtcStatus = () => async dispatch => {
   const useBtcMainNet = true
 
@@ -201,5 +211,6 @@ export const isRewardedSelector = state => state.oddEven.rewarded
 export const winValueSelector = state => state.oddEven.winValue
 export const oddRankingSelector = state => state.oddEven.oddRankingList
 export const evenRankingSelector = state => state.oddEven.evenRankingList
+export const oddEvenBalanceSelector = state => state.oddEven.balance
 
 export default oddEvenSlice.reducer

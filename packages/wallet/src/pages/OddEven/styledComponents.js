@@ -18,6 +18,10 @@ export const Header = styled.header`
 
   & > div {
     display: flex;
+
+    &.right {
+      align-items: center;
+    }
   }
 
   dl,

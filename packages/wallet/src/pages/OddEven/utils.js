@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import {
+  fetchBalance,
   fetchBetBtcHeight,
   fetchBetRecords,
   fetchBetStatus,
@@ -30,5 +31,7 @@ export function useFetchOddEvenInfo() {
 
     dispatch(fetchEvenRankingList(address))
     dispatch(fetchOddRankingList(address))
+
+    dispatch(fetchBalance(address))
   }, [address, dispatch])
 }

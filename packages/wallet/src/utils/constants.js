@@ -31,3 +31,6 @@ export const testNetDemoAccount = {
 
 export const oddEvenContractAddress =
   '5EBfgfo2YEWSCe8AK3B2AdMuJ47Hw99fSLxdM5z1usaqqDqt'
+
+export const oddEvenDepositAddress =
+  '5Q6MrbwbkU1PFnM4DFX49QWNCKavTmAhtvLh5gXXNukWXYjr'

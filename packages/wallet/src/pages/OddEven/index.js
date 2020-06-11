@@ -26,6 +26,7 @@ import OddEvenHeader from './Head'
 import Rankings from './Rankings'
 import Rule from './Rule'
 import { useFetchOddEvenInfo } from './utils'
+import WithDrawDialog from './WithdrawDialog'
 
 export default function() {
   const betHeight = useSelector(betHeightSelector)
@@ -35,6 +36,7 @@ export default function() {
   const isTestNet = useSelector(isTestNetSelector)
   const locale = useSelector(localeSelector)
   const [openRuleDialog, setOpenRuleDialog] = useState(false)
+  const [openWithdrawDialog, setOpenWithdrawDialog] = useState(false)
 
   const isRewarded = useSelector(isRewardedSelector)
   // const winValue = (
@@ -58,7 +60,7 @@ export default function() {
 
   return (
     <Wrapper>
-      <OddEvenHeader setOpenRuleDialog={setOpenRuleDialog} />
+      <OddEvenHeader withdraw={() => setOpenWithdrawDialog(true)} />
       <Main>
         <BetArea>
           <header>
@@ -106,6 +108,9 @@ export default function() {
       {openBetBetDialog && <BetDialog />}
       {openRuleDialog && (
         <RuleDialog handleClose={() => setOpenRuleDialog(false)} />
+      )}
+      {openWithdrawDialog && (
+        <WithDrawDialog handleClose={() => setOpenWithdrawDialog(false)} />
       )}
     </Wrapper>
   )

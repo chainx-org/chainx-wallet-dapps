@@ -5,8 +5,10 @@ import BtcHash from './components/BtcHash'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { nowBtcSelector } from '../../reducers/oddevenSlice'
+import Balance from './Balance'
+import DepositAndWithdraw from './DepositAndWithdraw'
 
-export default function() {
+export default function({ withdraw }) {
   const btc = useSelector(nowBtcSelector)
 
   return (
@@ -21,6 +23,10 @@ export default function() {
             <BtcHash>{btc.hash}</BtcHash>
           </dd>
         </dl>
+      </div>
+      <div className="right">
+        <Balance />
+        <DepositAndWithdraw withdraw={withdraw} />
       </div>
     </Header>
   )
