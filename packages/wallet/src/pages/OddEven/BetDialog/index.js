@@ -10,7 +10,6 @@ import { AmountInput, PrimaryButton } from '@chainx/ui'
 import $t from '../../../locale'
 import { Label, Value } from '../../AssetManagement/components'
 import { retry, toPrecision } from '../../../utils'
-import { pcxFreeSelector } from '../../AssetManagement/PcxCard/selectors'
 import {
   betStatusEnum,
   betStatusSelector,
@@ -18,7 +17,8 @@ import {
   fetchEvenBets,
   fetchOddBets,
   maxBetSelector,
-  minBetSelector
+  minBetSelector,
+  oddEvenBalanceSelector
 } from '../../../reducers/oddevenSlice'
 import { getChainx } from '../../../services/chainx'
 import { contractAbi } from '../../../utils/contract'
@@ -29,6 +29,7 @@ import { showSnack, signAndSendExtrinsic } from '../../../utils/chainxProvider'
 import BigNumber from 'bignumber.js'
 import { isDemoSelector } from '../../../selectors'
 import { fetchAccountAssets } from '../../../reducers/assetSlice'
+import { pcxPrecisionSelector } from '../../selectors/assets'
 
 export default function() {
   const isDemoAddr = useSelector(isDemoSelector)
@@ -46,8 +47,9 @@ export default function() {
   const [activeDefault, setActiveDefault] = useState(amounts[0])
   const [amount, setAmount] = useState('')
   const [amountErrMsg, setAmountErrMsg] = useState('')
-  const { free: pcxFree, precision } = useSelector(pcxFreeSelector) || {}
   const [disabled, setDisabled] = useState(false)
+  const pcxFree = useSelector(oddEvenBalanceSelector)
+  const precision = useSelector(pcxPrecisionSelector)
 
   const maxBet = useSelector(maxBetSelector)
   const minBet = useSelector(minBetSelector)
@@ -94,11 +96,11 @@ export default function() {
 
     const method = 'bet'
     const parity = !betOdd
-    const params = [parity]
+    const params = [parity, realAmount]
     parseParams(contractAbi.messages[stringCamelCase(method)].args, params)
     const args = [
       oddEvenContractAddress,
-      realAmount,
+      0,
       5000000,
       contractAbi.messages[stringCamelCase(method)](...params)
     ]
