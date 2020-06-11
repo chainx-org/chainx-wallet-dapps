@@ -76,7 +76,7 @@ export default function() {
     <Table>
       <TableBody>
         {orders.map((order, index) => {
-          const currencyPair = order['pair.currency_pair']
+          const currencyPair = order['pair.currency_pair'] || {}
           const amount = toPrecision(order.amount, assetPrecision)
           const precision = order['pair.precision']
           const unitPrecision = order['pair.unit_precision']
@@ -98,9 +98,9 @@ export default function() {
                 </div>
               </TimeCell>
               <IndexCell style={{ width: '5%' }}>{order.id}</IndexCell>
-              <PairCell style={{ width: '8%' }}>{`${currencyPair[0]} / ${
-                currencyPair[1]
-              }`}</PairCell>
+              <PairCell
+                style={{ width: '8%' }}
+              >{`${currencyPair[0]} / ${currencyPair[1]}`}</PairCell>
               <NumberCell style={{ width: '11%' }}>
                 {price + ' '}
                 <span>{currencyPair[1]}</span>
