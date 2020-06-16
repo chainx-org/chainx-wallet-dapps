@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import StyledDialog from './StyledDialog'
 import { noneFunc, retry } from '../../../../../utils'
 import { useDispatch, useSelector } from 'react-redux'
@@ -17,6 +17,7 @@ import {
   signAndSendExtrinsic
 } from '../../../../../utils/chainxProvider'
 import { fetchIntentions } from '../../../../../reducers/intentionSlice'
+import ErrorText from '../../../../../components/ErrorText'
 
 export default function({ handleClose = noneFunc }) {
   const intention = useSelector(myIntentionSelector)
@@ -28,6 +29,7 @@ export default function({ handleClose = noneFunc }) {
   } = intention
 
   const [wantToRun, setWantToRun] = useState(!!isActive)
+  const [wantToRunErrMsg, setWantToRunErrMsg] = useState('')
 
   const chainx = getChainx()
   const sessionAddress = chainx.account.encodeAddress(sessionKey)
@@ -45,6 +47,17 @@ export default function({ handleClose = noneFunc }) {
 
   const accountAddress = useSelector(addressSelector)
   const dispatch = useDispatch()
+
+  const [minimumSelfVote, setMinimumSelfVote] = useState(0)
+  const [minimumAllVote, setMinimumAllVote] = useState(0)
+
+  useEffect(() => {
+    const chainx = getChainx()
+    chainx.api.query.xStaking.minimumCandidateThreshold().then(data => {
+      setMinimumSelfVote(data[0].toNumber())
+      setMinimumAllVote(data[1].toNumber())
+    })
+  }, [])
 
   const checkKeyAndHasError = () => {
     return !(
@@ -67,6 +80,18 @@ export default function({ handleClose = noneFunc }) {
 
     if (checkTextLengthAndHasError(about, 256, setAboutErrMsg)) {
       return
+    }
+
+    if (wantToRun && intention.selfVote < minimumSelfVote) {
+      return setWantToRunErrMsg(
+        $t('STAKING_MINIMUM_SELF_VOTE', { amount: minimumSelfVote })
+      )
+    }
+
+    if (wantToRun && intention.totalNomination < minimumAllVote) {
+      return setWantToRunErrMsg(
+        $t('STAKING_MINIMUM_NOMINATION', { amount: minimumAllVote })
+      )
     }
 
     setDisabled(true)
@@ -164,6 +189,7 @@ export default function({ handleClose = noneFunc }) {
             onChange={checked => setWantToRun(checked)}
           />
         </div>
+        {wantToRunErrMsg && <ErrorText>{wantToRunErrMsg}</ErrorText>}
 
         <div className="confirm">
           <PrimaryButton disabled={disabled} size="fullWidth" onClick={refresh}>

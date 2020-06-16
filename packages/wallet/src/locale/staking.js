@@ -126,6 +126,14 @@ const staking = {
   STAKING_CLAIM_AMOUNT: {
     en: '{amount} PCX claimed',
     zh: '提息{amount}PCX'
+  },
+  STAKING_MINIMUM_SELF_VOTE: {
+    en: 'At least {amount} PCX self vote',
+    zh: '参选需至少自抵押{amount}PCX'
+  },
+  STAKING_MINIMUM_NOMINATION: {
+    zh: '参选需总得票{amount}PCX',
+    en: 'At least {amount} PCX nomination'
   }
 }
 

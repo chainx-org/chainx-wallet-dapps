@@ -10,6 +10,7 @@ import Address from './Address'
 import Loading from './Loading'
 import MiniLoading from './MiniLoading'
 import LoadingWithText from './LoadingWithText'
+import ErrorText from './ErrorText'
 
 export {
   SignDialog,
@@ -23,5 +24,6 @@ export {
   Address,
   Loading,
   MiniLoading,
-  LoadingWithText
+  LoadingWithText,
+  ErrorText
 }
