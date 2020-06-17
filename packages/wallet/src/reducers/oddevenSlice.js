@@ -4,6 +4,7 @@ import { getChainx } from '../services/chainx'
 import { stringCamelCase } from '@chainx/util'
 import { parseValue, contractAbi } from '../utils/contract'
 import { parseParams } from '../utils/contractHelper'
+import { testNetAddrToMain } from '../utils'
 
 export const betStatusEnum = {
   ON: 'betting', // 投注中
@@ -29,7 +30,8 @@ const initialState = {
   },
   myBets: [],
   evenRankingList: [],
-  oddRankingList: []
+  oddRankingList: [],
+  withdrawRecords: [] // 提现记录
 }
 
 const oddEvenSlice = createSlice({
@@ -80,6 +82,9 @@ const oddEvenSlice = createSlice({
     },
     setBalance(state, { payload }) {
       state.balance = payload
+    },
+    setWithdrawRecords(state, { payload }) {
+      state.withdrawRecords = payload
     }
   }
 })
@@ -97,7 +102,8 @@ export const {
   setWinValue,
   setEvenRankingList,
   setOddRankingList,
-  setBalance
+  setBalance,
+  setWithdrawRecords
 } = oddEvenSlice.actions
 
 async function contractGet(address, method, params = []) {
@@ -182,6 +188,14 @@ export const fetchBalance = address => async dispatch => {
   dispatch(setBalance(data))
 }
 
+export const fetchWithdrawRecords = address => async dispatch => {
+  const data = await contractGet(address, 'get_withdraw_history_from_account', [
+    address
+  ])
+  console.log(data)
+  dispatch(setWithdrawRecords(data))
+}
+
 export const fetchNowBtcStatus = () => async dispatch => {
   const useBtcMainNet = true
 
@@ -212,5 +226,13 @@ export const winValueSelector = state => state.oddEven.winValue
 export const oddRankingSelector = state => state.oddEven.oddRankingList
 export const evenRankingSelector = state => state.oddEven.evenRankingList
 export const oddEvenBalanceSelector = state => state.oddEven.balance
+export const oddEvenWithdrawRecordsSelector = state => {
+  const records = state.oddEven.withdrawRecords
+
+  return records.map(record => ({
+    ...record,
+    dest_account: testNetAddrToMain(record.dest_account)
+  }))
+}
 
 export default oddEvenSlice.reducer

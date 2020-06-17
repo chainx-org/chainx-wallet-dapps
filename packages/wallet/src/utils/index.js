@@ -2,6 +2,8 @@ import BigNumber from 'bignumber.js'
 import chunk from 'lodash.chunk'
 import { store } from '../index'
 import { isExtensionSelector, isSignerSelector } from '../reducers/addressSlice'
+import { Account } from 'chainx.js'
+import { encodeAddress } from '@chainx/keyring/address'
 
 export function toPrecision(value, precision = 0, paddingZero = true) {
   precision = Number(precision)
@@ -97,4 +99,9 @@ export const sleep = (seconds = 3) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => reject({ timeout: true }), seconds * 1000)
   })
+}
+
+export const testNetAddrToMain = testNetAddr => {
+  const id = Account.decodeAddress(testNetAddr, false, 42)
+  return encodeAddress(id, 44)
 }

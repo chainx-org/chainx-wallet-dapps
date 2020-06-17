@@ -7,9 +7,13 @@ import linkHighlight from '../static/link-highlight.svg'
 import React from 'react'
 import LinkWrapper from './common/LinkWrapper'
 
-export default function({ address = '', length = 5 }) {
+export default function({ address = '', length = 5, mainnet = null }) {
   const network = useSelector(networkSelector)
-  const host = network === 'testnet' ? testNetExplorer : mainNetExplorer
+  let host = network === 'testnet' ? testNetExplorer : mainNetExplorer
+  if (typeof mainnet === 'boolean' && mainnet) {
+    host = mainNetExplorer
+  }
+
   const chainx = getChainx()
   const accountId = chainx.account.decodeAddress(address)
   const url = `${host}accounts/${accountId}`
