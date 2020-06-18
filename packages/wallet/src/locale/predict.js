@@ -62,5 +62,17 @@ export default {
   PREDICT_NO_GAS: {
     zh: '下注太大，余额不够gas费用',
     en: 'Please leave enough gas'
+  },
+  PREDICT_WITHDRAW_RECORDS: {
+    zh: '提现记录',
+    en: 'Withdraw records'
+  },
+  PREDICT_WITHDRAW_MAINNET_ADDR: {
+    zh: '主网地址',
+    en: 'Mainnet Address'
+  },
+  PREDICT_STATUS: {
+    en: 'Status',
+    zh: '状态'
   }
 }

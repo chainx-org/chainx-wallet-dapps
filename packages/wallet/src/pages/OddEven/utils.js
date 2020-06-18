@@ -10,7 +10,8 @@ import {
   fetchMaxBet,
   fetchMinBet,
   fetchOddBets,
-  fetchOddRankingList
+  fetchOddRankingList,
+  fetchWithdrawRecords
 } from '../../reducers/oddevenSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { addressSelector } from '../../reducers/addressSlice'
@@ -28,6 +29,7 @@ export function useFetchOddEvenInfo() {
     dispatch(fetchMinBet(address))
     dispatch(fetchBetStatus(address))
     dispatch(fetchIsRewarded(address))
+    dispatch(fetchWithdrawRecords(address))
 
     dispatch(fetchEvenRankingList(address))
     dispatch(fetchOddRankingList(address))
