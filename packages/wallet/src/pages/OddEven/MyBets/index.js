@@ -13,12 +13,17 @@ import { Empty } from '../../../components'
 
 export const Wrapper = styled.section`
   width: 300px;
-
   margin-left: 16px;
-
   background: #ffffff;
   border: 1px solid #dce0e2;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+
+  & > div {
+    flex: 1;
+    overflow-y: auto;
+  }
 
   & > header {
     padding: 10px 16px;
@@ -76,23 +81,25 @@ export default function() {
   return (
     <Wrapper>
       <header>{$t('PREDICT_MY_BETS')}</header>
-      {myBets.length > 0 ? (
-        <ol>
-          {myBets.map((bet, index) => (
-            <li key={index}>
-              <div className="time">
-                {moment(bet.start_time * 1000).format(timeFormat)}
-              </div>
-              <div className="bet">
-                <img src={bet.parity ? evenLogo : oddLogo} alt="logo" />
-                <span>{toPrecision(bet.bet_balance, precision)} PCX</span>
-              </div>
-            </li>
-          ))}
-        </ol>
-      ) : (
-        <Empty style={{ marginTop: 20 }} text={$t('PREDICT_NO_BETS')} />
-      )}
+      <div>
+        {myBets.length > 0 ? (
+          <ol>
+            {myBets.map((bet, index) => (
+              <li key={index}>
+                <div className="time">
+                  {moment(bet.start_time * 1000).format(timeFormat)}
+                </div>
+                <div className="bet">
+                  <img src={bet.parity ? evenLogo : oddLogo} alt="logo" />
+                  <span>{toPrecision(bet.bet_balance, precision)} PCX</span>
+                </div>
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <Empty style={{ marginTop: 20 }} text={$t('PREDICT_NO_BETS')} />
+        )}
+      </div>
     </Wrapper>
   )
 }
