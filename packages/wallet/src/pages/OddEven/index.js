@@ -16,7 +16,7 @@ import MyBets from './MyBets'
 import BetDialog from './BetDialog'
 import { openBetBetDialogSelector } from '../../reducers/runStatusSlice'
 import { addressSelector } from '../../reducers/addressSlice'
-import { isTestNetSelector, localeSelector } from '../../reducers/settingsSlice'
+import { isTestNetSelector } from '../../reducers/settingsSlice'
 import $t from '../../locale'
 import RuleDialog from './Rule/Dialog'
 import { pcxPrecisionSelector } from '../selectors/assets'
@@ -28,6 +28,7 @@ import { useFetchOddEvenInfo } from './utils'
 import WithDrawDialog from './WithdrawDialog'
 import DepositDialog from './DepositDialog'
 import BetAreaHeader from './BetAreaHeader'
+import Desc from './BetArea/Desc'
 
 export default function() {
   const betHeight = useSelector(betHeightSelector)
@@ -35,7 +36,6 @@ export default function() {
   const openBetBetDialog = useSelector(openBetBetDialogSelector)
   const address = useSelector(addressSelector)
   const isTestNet = useSelector(isTestNetSelector)
-  const locale = useSelector(localeSelector)
   const [openRuleDialog, setOpenRuleDialog] = useState(false)
   const [openWithdrawDialog, setOpenWithdrawDialog] = useState(false)
   const [openDepositDialog, setOpenDepositDialog] = useState(false)
@@ -70,18 +70,8 @@ export default function() {
         <BetArea>
           <BetAreaHeader />
           <main>
+            <Desc />
             <div>
-              {locale === 'en' ? (
-                <h3>
-                  Bet <span>Odd/Even</span> of Bitcoin Block{' '}
-                  <span className="height">{betHeight}</span> Header Hash
-                </h3>
-              ) : (
-                <h3>
-                  对 Bitcoin 块高 <span className="height">{betHeight}</span>{' '}
-                  的交易哈希的 <span>奇/偶</span> 进行投注！
-                </h3>
-              )}
               <Bet />
               <NowBets />
               {status === betStatusEnum.FILL && (

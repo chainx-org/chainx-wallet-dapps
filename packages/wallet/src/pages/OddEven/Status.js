@@ -43,7 +43,7 @@ function BettingStatus() {
   const betHeight = useSelector(betHeightSelector)
   const btc = useSelector(nowBtcSelector)
 
-  const minutes = (betHeight - btc.height) * 10
+  const minutes = (betHeight - btc.height - 20) * 10
   const duration = moment.duration(minutes, 'minutes').format('hh:mm:ss')
 
   return (
