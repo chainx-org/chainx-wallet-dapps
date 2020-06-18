@@ -25,6 +25,14 @@ export const Panel = styled.div`
   background: #ffffff;
   border: 1px solid #dce0e2;
   border-radius: 10px;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+
+  & > div {
+    flex: 1;
+    overflow-y: auto;
+  }
 
   & > header {
     display: flex;

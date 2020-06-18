@@ -64,6 +64,7 @@ export const Main = styled.main`
 
   display: flex;
   flex: 1;
+  overflow-y: auto;
 
   div.value {
     margin-top: 20px;
