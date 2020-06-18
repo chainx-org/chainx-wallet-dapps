@@ -10,7 +10,6 @@ import {
   isRewardedSelector,
   winValueSelector
 } from '../../reducers/oddevenSlice'
-import Status from './Status'
 import Bet from './Bet'
 import NowBets from './NowBets'
 import MyBets from './MyBets'
@@ -28,6 +27,7 @@ import Rule from './Rule'
 import { useFetchOddEvenInfo } from './utils'
 import WithDrawDialog from './WithdrawDialog'
 import DepositDialog from './DepositDialog'
+import BetAreaHeader from './BetAreaHeader'
 
 export default function() {
   const betHeight = useSelector(betHeightSelector)
@@ -68,10 +68,7 @@ export default function() {
       />
       <Main>
         <BetArea>
-          <header>
-            <span>{$t('PREDICT_BET_HEIGHT', { height: betHeight })}</span>
-            <Status>{status}</Status>
-          </header>
+          <BetAreaHeader />
           <main>
             <div>
               {locale === 'en' ? (

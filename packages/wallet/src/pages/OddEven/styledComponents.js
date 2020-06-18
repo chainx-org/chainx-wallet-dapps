@@ -88,22 +88,6 @@ export const BetArea = styled.section`
   border: 1px solid #dce0e2;
   border-radius: 10px;
 
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 16px;
-    height: 40px;
-    background-image: linear-gradient(270deg, #cebe9e 1%, #bba383 98%);
-    border-radius: 10px 10px 0 0;
-
-    font-weight: 600;
-    font-size: 16px;
-    color: #ffffff;
-    letter-spacing: 0.12px;
-    line-height: 24px;
-  }
-
   main {
     flex: 1;
     padding-bottom: 24px;
