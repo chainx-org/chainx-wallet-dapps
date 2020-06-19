@@ -103,23 +103,6 @@ export const BetArea = styled.section`
       align-items: center;
     }
 
-    h3 {
-      max-width: 266px;
-      margin: 56px 0;
-      font-weight: 600;
-      font-size: 20px;
-      color: #000000;
-      letter-spacing: 0.15px;
-      text-align: center;
-      line-height: 32px;
-      & > span {
-        color: #af9471;
-        &.height {
-          color: #0088cc;
-        }
-      }
-    }
-
     footer {
       font-size: 14px;
       color: rgba(0, 0, 0, 0.56);

@@ -192,7 +192,6 @@ export const fetchWithdrawRecords = address => async dispatch => {
   const data = await contractGet(address, 'get_withdraw_history_from_account', [
     address
   ])
-  console.log(data)
   dispatch(setWithdrawRecords(data))
 }
 

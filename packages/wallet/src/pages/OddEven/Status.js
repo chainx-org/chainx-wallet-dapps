@@ -6,7 +6,7 @@ import {
 } from '../../reducers/oddevenSlice'
 import { useSelector } from 'react-redux'
 import moment from 'moment'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import momentDurationFormatSetup from 'moment-duration-format'
 
@@ -42,9 +42,35 @@ const Hint = styled.span`
 function BettingStatus() {
   const betHeight = useSelector(betHeightSelector)
   const btc = useSelector(nowBtcSelector)
+  const [blockMinutes, setBlockMinutes] = useState(
+    (betHeight - btc.height - 20) * 10
+  )
+  const [duration, setDuration] = useState(
+    moment.duration(blockMinutes, 'minutes').format('hh:mm:ss')
+  )
+  const [timerSeconds, setTimerSeconds] = useState(0)
 
-  const minutes = (betHeight - btc.height - 20) * 10
-  const duration = moment.duration(minutes, 'minutes').format('hh:mm:ss')
+  useEffect(() => {
+    setTimerSeconds(0)
+  }, [btc.height])
+
+  useEffect(() => {
+    setTimeout(() => {
+      setTimerSeconds(timerSeconds + 1)
+    }, 1000)
+  }, [timerSeconds])
+
+  useEffect(() => {
+    setBlockMinutes((betHeight - btc.height - 20) * 10)
+  }, [betHeight, btc.height])
+
+  useEffect(() => {
+    setDuration(
+      moment
+        .duration(blockMinutes * 60 - timerSeconds, 'seconds')
+        .format('hh:mm:ss')
+    )
+  }, [timerSeconds, blockMinutes])
 
   return (
     <BettingWrapper>
