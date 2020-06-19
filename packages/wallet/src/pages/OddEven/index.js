@@ -84,15 +84,15 @@ export default function() {
                 </div>
               )}
             </div>
-            <footer>
-              <p style={{ marginBottom: 8 }}>
-                {$t('PREDICT_DEAL_HEIGHT', {
-                  height: betHeight - 20 < 0 ? 0 : betHeight - 20
-                })}
-              </p>
-              <Rule onClick={() => setOpenRuleDialog(true)} />
-            </footer>
           </main>
+          <footer>
+            <p>
+              {$t('PREDICT_DEAL_HEIGHT', {
+                height: betHeight - 20 < 0 ? 0 : betHeight - 20
+              })}
+            </p>
+            <Rule onClick={() => setOpenRuleDialog(true)} />
+          </footer>
         </BetArea>
         <Rankings />
         <MyBets />

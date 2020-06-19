@@ -95,20 +95,25 @@ export const BetArea = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
 
     & > div {
       display: flex;
       flex-direction: column;
       align-items: center;
     }
+  }
 
-    footer {
-      font-size: 14px;
-      color: rgba(0, 0, 0, 0.56);
-      letter-spacing: 0.12px;
-      text-align: center;
-      line-height: 20px;
-    }
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    padding: 0 16px;
+
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.56);
+    letter-spacing: 0.12px;
+    text-align: center;
+    line-height: 20px;
   }
 `
