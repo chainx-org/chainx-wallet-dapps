@@ -48,13 +48,13 @@ const Item = styled.li`
 
 export default function() {
   const macUrl =
-    'https://chainx-signer-release.oss-cn-hangzhou.aliyuncs.com/1.0.9/ChainX-Signer-1.0.9.dmg'
+    'https://chainx-signer-release.oss-cn-hangzhou.aliyuncs.com/1.1.0/ChainX-Signer-1.1.0.dmg'
   const win64Url =
-    'https://chainx-signer-release.oss-cn-hangzhou.aliyuncs.com/1.0.9/ChainX-Signer-Setup-1.0.9.exe'
+    'https://chainx-signer-release.oss-cn-hangzhou.aliyuncs.com/1.1.0/ChainX-Signer-Setup-1.1.0.exe'
   const win32Url =
     'https://chainx-signer-release.oss-cn-hangzhou.aliyuncs.com/1.0.9/ChainX-Signer-1.0.9-ia32-win.zip'
   const linuxUrl =
-    'https://chainx-signer-release.oss-cn-hangzhou.aliyuncs.com/1.0.9/ChainX-Signer-1.0.9.AppImage'
+    'https://chainx-signer-release.oss-cn-hangzhou.aliyuncs.com/1.1.0/ChainX-Signer-1.1.0.AppImage'
 
   return (
     <Download>
