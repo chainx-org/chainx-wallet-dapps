@@ -16,7 +16,7 @@ export default function({ status }) {
   return (
     <Wrapper>
       {status.value === 'Confirming'
-        ? `(${status.confirm}/${status.confirm})`
+        ? `(${status.confirm}/${status.totalConfirm})`
         : ''}
       {$t(`TRUST_STATUS_${(status.value || '').toUpperCase()}`)}
     </Wrapper>
