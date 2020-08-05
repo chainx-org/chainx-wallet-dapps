@@ -65,7 +65,9 @@ export default function(props) {
         ) : null}
       </span>
       <PrimaryButton
-        disabled={!canClaim || disabled}
+        disabled={
+          !canClaim || disabled || [token.LBTC, token.SDOT].includes(token)
+        }
         size="small"
         onClick={() => claim(token)}
       >
