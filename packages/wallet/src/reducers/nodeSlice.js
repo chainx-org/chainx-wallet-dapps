@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 const nodeSlice = createSlice({
   name: 'node',
   initialState: {
-    name: 'w1.cn',
-    url: 'wss://w1.chainx.org.cn/ws'
+    name: '47.114.131.193',
+    url: 'ws://47.114.131.193:9000'
   },
   reducers: {
     setNode(state, action) {

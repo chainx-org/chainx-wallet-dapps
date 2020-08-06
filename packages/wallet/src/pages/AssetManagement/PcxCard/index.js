@@ -6,14 +6,14 @@ import {
   fetchAccountAssets,
   fetchAssetsInfo
 } from '../../../reducers/assetSlice'
-import { pcxDetailsSelector, pcxFreeSelector } from './selectors'
 import AssetView from './AssetView'
 import $t from '../../../locale'
 import Logo from './Logo'
 import AccountInfo from './AccountInfo'
 import backgroundImg from './background.svg'
 import { WhiteButton } from '@chainx/ui'
-import TransferDialog from '../TransferDialog'
+import { addressSelector } from '../../../reducers/addressSlice'
+import { pcxAssetSelector } from '@reducers/assetSlice'
 
 const InnerWrapper = styled.div`
   position: relative;
@@ -54,11 +54,20 @@ const CornerBackground = styled.div`
 `
 
 export default function() {
-  const { address } = useSelector(state => state.address)
-  const pcxFree = useSelector(pcxFreeSelector)
-  const pcxDetails = useSelector(pcxDetailsSelector)
+  const address = useSelector(addressSelector)
+
+  const pcxAsset = useSelector(pcxAssetSelector)
+  console.log('pcxAsset', pcxAsset)
+
+  const { details: { free, reservedDexSpot } = {}, details, total, precision } =
+    pcxAsset || {}
+
+  // const pcxFree = useSelector(pcxFreeSelector)
+  // const pcxDetails = useSelector(pcxDetailsSelector)
   const dispatch = useDispatch()
-  const [transferOpen, setTransferOpen] = useState(false)
+  const [, setTransferOpen] = useState(false)
+
+  console.log('address', address)
 
   useEffect(() => {
     dispatch(fetchAccountAssets(address))
@@ -68,10 +77,10 @@ export default function() {
     dispatch(fetchAssetsInfo())
   }, [dispatch])
 
-  const handleTransferClose = extrinsic => {
-    setTransferOpen(false)
-  }
-
+  // const handleTransferClose = extrinsic => {
+  //   setTransferOpen(false)
+  // }
+  //
   return (
     <Card>
       <InnerWrapper>
@@ -80,12 +89,12 @@ export default function() {
           <AccountInfo />
         </header>
         <section className="free">
-          {pcxFree && (
+          {free && (
             <AssetView
               bold
               title={$t('ASSET_FREE')}
-              value={pcxFree.free}
-              precision={pcxFree.precision}
+              value={free}
+              precision={precision}
             />
           )}
           <WhiteButton
@@ -96,35 +105,35 @@ export default function() {
           </WhiteButton>
         </section>
         <section className="details">
-          {pcxDetails && (
+          {details && (
             <>
               <AssetView
                 title={$t('ASSET_TOTAL')}
-                value={pcxDetails.total}
-                precision={pcxFree.precision}
+                value={total}
+                precision={precision}
               />
               <AssetView
                 title={$t('ASSET_RESERVED_DEX_SPOT')}
-                value={pcxDetails.reservedDexSpot}
-                precision={pcxFree.precision}
+                value={reservedDexSpot}
+                precision={precision}
               />
-              <AssetView
-                title={$t('ASSET_RESERVED_STAKING')}
-                value={pcxDetails.reservedStaking}
-                precision={pcxFree.precision}
-              />
-              <AssetView
-                title={$t('ASSET_RESERVED_REVOCATION')}
-                value={pcxDetails.reservedStakingRevocation}
-                precision={pcxFree.precision}
-              />
+              {/*<AssetView*/}
+              {/*  title={$t('ASSET_RESERVED_STAKING')}*/}
+              {/*  value={pcxDetails.reservedStaking}*/}
+              {/*  precision={pcxFree.precision}*/}
+              {/*/>*/}
+              {/*<AssetView*/}
+              {/*  title={$t('ASSET_RESERVED_REVOCATION')}*/}
+              {/*  value={pcxDetails.reservedStakingRevocation}*/}
+              {/*  precision={pcxFree.precision}*/}
+              {/*/>*/}
             </>
           )}
         </section>
         <CornerBackground />
-        {transferOpen && (
-          <TransferDialog token="PCX" handleClose={handleTransferClose} />
-        )}
+        {/*{transferOpen && (*/}
+        {/*  <TransferDialog token="PCX" handleClose={handleTransferClose} />*/}
+        {/*)}*/}
       </InnerWrapper>
     </Card>
   )

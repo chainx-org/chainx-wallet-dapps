@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "7.6.0",
+    "@chainx-v2/api": "^0.0.12",
     "@chainx/keyring": "^2.22.31",
     "@chainx/signer-connector": "^1.0.11",
     "@chainx/ui": "0.1.4",

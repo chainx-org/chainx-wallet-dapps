@@ -4,7 +4,6 @@ import $t from '../../locale'
 import mainNetLogo from './logo.svg'
 import testNetLogoEn from './testnet-en.svg'
 import testNetLogoZh from './testnet-zh.svg'
-import txsIcon from './txs.svg'
 import { NavLink } from 'react-router-dom'
 import Name from './Name'
 import { useDispatch, useSelector } from 'react-redux'
@@ -102,50 +101,50 @@ export default function() {
             {$t('ASSET')}
           </NavLink>
         </Nav>
-        <Nav>
-          <NavLink exact activeClassName="active" to="/mining">
-            {$t('PSEDU_INTENTION')}
-          </NavLink>
-        </Nav>
-        <Nav>
-          <NavLink exact activeClassName="active" to="/staking">
-            {$t('STAKING')}
-          </NavLink>
-        </Nav>
-        <Nav>
-          <NavLink exact activeClassName="active" to="/trust">
-            {$t('TRUST')}
-          </NavLink>
-        </Nav>
-        <Nav>
-          <NavLink exact activeClassName="active" to="/trade">
-            {$t('TRADE')}
-          </NavLink>
-        </Nav>
-        {network === 'testnet' && (
-          <>
-            <Nav>
-              <NavLink activeClassName="active" to="/contract">
-                {$t('CONTRACTINDEX')}
-              </NavLink>
-            </Nav>
-          </>
-        )}
-        {network === 'testnet' && (
-          <Nav>
-            <NavLink exact activeClassName="active" to="/oddeven">
-              预测BTC
-            </NavLink>
-          </Nav>
-        )}
+        {/*<Nav>*/}
+        {/*  <NavLink exact activeClassName="active" to="/mining">*/}
+        {/*    {$t('PSEDU_INTENTION')}*/}
+        {/*  </NavLink>*/}
+        {/*</Nav>*/}
+        {/*<Nav>*/}
+        {/*  <NavLink exact activeClassName="active" to="/staking">*/}
+        {/*    {$t('STAKING')}*/}
+        {/*  </NavLink>*/}
+        {/*</Nav>*/}
+        {/*<Nav>*/}
+        {/*  <NavLink exact activeClassName="active" to="/trust">*/}
+        {/*    {$t('TRUST')}*/}
+        {/*  </NavLink>*/}
+        {/*</Nav>*/}
+        {/*<Nav>*/}
+        {/*  <NavLink exact activeClassName="active" to="/trade">*/}
+        {/*    {$t('TRADE')}*/}
+        {/*  </NavLink>*/}
+        {/*</Nav>*/}
+        {/*{network === 'testnet' && (*/}
+        {/*  <>*/}
+        {/*    <Nav>*/}
+        {/*      <NavLink activeClassName="active" to="/contract">*/}
+        {/*        {$t('CONTRACTINDEX')}*/}
+        {/*      </NavLink>*/}
+        {/*    </Nav>*/}
+        {/*  </>*/}
+        {/*)}*/}
+        {/*{network === 'testnet' && (*/}
+        {/*  <Nav>*/}
+        {/*    <NavLink exact activeClassName="active" to="/oddeven">*/}
+        {/*      预测BTC*/}
+        {/*    </NavLink>*/}
+        {/*  </Nav>*/}
+        {/*)}*/}
       </div>
       <div className="right">
-        <Nav>
-          <NavLink activeClassName="active" to="/txs">
-            <img src={txsIcon} alt="txs" />
-            {$t('HEADER_TXS')}
-          </NavLink>
-        </Nav>
+        {/*<Nav>*/}
+        {/*  <NavLink activeClassName="active" to="/txs">*/}
+        {/*    <img src={txsIcon} alt="txs" />*/}
+        {/*    {$t('HEADER_TXS')}*/}
+        {/*  </NavLink>*/}
+        {/*</Nav>*/}
         <Name onClick={() => setShowList(true)} />
       </div>
       {showList ? <AccountList close={() => setShowList(false)} /> : null}

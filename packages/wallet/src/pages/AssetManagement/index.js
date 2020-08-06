@@ -1,8 +1,6 @@
 import React from 'react'
 import PcxCard from './PcxCard'
-import Assets from './Assets'
 import styled from 'styled-components'
-import Records from './Records'
 
 const Wrapper = styled.div`
   display: flex;
@@ -28,11 +26,11 @@ function AssetManagement() {
     <Wrapper>
       <div className="left">
         <PcxCard />
-        <Assets />
+        {/*<Assets />*/}
       </div>
-      <div className="right">
-        <Records />
-      </div>
+      {/*<div className="right">*/}
+      {/*  <Records />*/}
+      {/*</div>*/}
     </Wrapper>
   )
 }

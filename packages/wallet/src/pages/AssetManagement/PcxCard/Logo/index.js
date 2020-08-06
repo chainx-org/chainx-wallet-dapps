@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { pcxInfoSelector } from '../selectors'
 import { useSelector } from 'react-redux'
 import logo from './chainx.svg'
+import { pcxInfoSelector } from '@reducers/assetSlice'
 
 const Wrapper = styled.div`
   display: flex;
@@ -41,13 +41,13 @@ const Desc = styled.span`
 `
 
 export default function() {
-  const { name, tokenName } = useSelector(pcxInfoSelector)
+  const { info: { token, tokenName } = {} } = useSelector(pcxInfoSelector)
 
   return (
     <Wrapper>
       <img src={logo} alt="chainx logo" />
       <section className="info">
-        <Title>{name}</Title>
+        <Title>{token}</Title>
         <Desc>{tokenName}</Desc>
       </section>
     </Wrapper>

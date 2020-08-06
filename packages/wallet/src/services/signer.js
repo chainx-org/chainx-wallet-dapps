@@ -9,12 +9,12 @@ import $t from '../locale'
 import { store } from '../index'
 import { setAccount } from '../reducers/addressSlice'
 import { setChainx } from './chainx'
-import { mainNetApi, setApi, testNetApi } from './api'
 import { networkChangeListener, nodeChangeListener } from '../connector'
 import _ from 'lodash'
 import { nonFunc } from '@chainx/signer-connector/dist/constants'
 import { setNetwork } from '../reducers/settingsSlice'
 import { sleep } from '../utils'
+import { networks } from '../utils/constants'
 
 export const signer = new Signer('dapp')
 
@@ -51,6 +51,17 @@ export async function connectSigner() {
   const linked = await Promise.race([signer.link(), sleep(20)])
 
   console.log(linked ? `connect successfully` : `failed to connect`)
+  const settings = await signer.getSettings()
+  if (![networks.mainnet, networks.testnet].includes(settings.network)) {
+    addAutoCloseSnackWithParams(
+      store.dispatch,
+      typeEnum.ERROR,
+      $t('HEADER_MSG_INVALID_NETWORK_TITLE'),
+      $t('HEADER_MSG_INVALID_NETWORK_DETAIL')
+    )
+
+    throw new Error('Invalid network')
+  }
 
   const account = await signer.getCurrentAccount()
 
@@ -82,10 +93,9 @@ export async function connectSigner() {
   }
   await setChainx(node.url)
 
-  const settings = await signer.getSettings()
   const isTestnet = settings.network === 'chainx-testnet'
   store.dispatch(setNetwork(isTestnet ? 'testnet' : 'mainnet'))
-  setApi(isTestnet ? testNetApi : mainNetApi)
+  // setApi(isTestnet ? testNetApi : mainNetApi)
 
   store.dispatch(setAccount({ ...account, isFromSigner: true }))
 

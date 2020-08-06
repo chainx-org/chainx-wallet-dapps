@@ -1007,6 +1007,13 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.10.3", "@babel/runtime@^7.10.4", "@babel/runtime@^7.10.5":
+  version "7.11.2"
+  resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.11.2.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40babel%2Fruntime%2Fdownload%2F%40babel%2Fruntime-7.11.2.tgz#f549c13c754cc40b87644b9fa9f09a6a95fe0736"
+  integrity sha1-9UnBPHVMxAuHZEufqfCaapX+BzY=
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/template@^7.4.0", "@babel/template@^7.6.0", "@babel/template@^7.8.3", "@babel/template@^7.8.6":
   version "7.8.6"
   resolved "https://registry.npmjs.org/@babel/template/-/template-7.8.6.tgz#86b22af15f828dfb086474f964dcc3e39c43ce2b"
@@ -1039,6 +1046,201 @@
     "@babel/helper-validator-identifier" "^7.9.5"
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
+
+"@chainx-v2/account@0.0.3-beta.26":
+  version "0.0.3-beta.26"
+  resolved "https://registry.npm.taobao.org/@chainx-v2/account/download/@chainx-v2/account-0.0.3-beta.26.tgz#5a86d7f380c281dc0ef1ddf720d9211583aa879d"
+  integrity sha1-WobX84DCgdwO8d33INkhFYOqh50=
+  dependencies:
+    "@chainx-v2/keyring" "0.0.3-beta.26"
+    "@types/node" "^14.0.23"
+    bip32 "^1.0.2"
+    bs58 "^4.0.1"
+    tweetnacl "^1.0.0"
+
+"@chainx-v2/api-derive@0.0.3-beta.26":
+  version "0.0.3-beta.26"
+  resolved "https://registry.npm.taobao.org/@chainx-v2/api-derive/download/@chainx-v2/api-derive-0.0.3-beta.26.tgz#1a5c5cce1e5ab7de22bc059dd0cfdfce91ece645"
+  integrity sha1-Glxczh5at94ivAWd0M/fzpHs5kU=
+  dependencies:
+    "@babel/runtime" "^7.10.3"
+    "@chainx-v2/api" "0.0.3-beta.26"
+    "@chainx-v2/crypto" "0.0.3-beta.26"
+    "@chainx-v2/rpc-core" "0.0.3-beta.26"
+    "@chainx-v2/rpc-provider" "0.0.3-beta.26"
+    "@chainx-v2/types" "0.0.3-beta.26"
+    "@chainx-v2/util" "0.0.3-beta.26"
+    bn.js "^5.1.2"
+    memoizee "^0.4.14"
+    rxjs "^6.5.5"
+
+"@chainx-v2/api@0.0.3-beta.26":
+  version "0.0.3-beta.26"
+  resolved "https://registry.npm.taobao.org/@chainx-v2/api/download/@chainx-v2/api-0.0.3-beta.26.tgz#5aff4d9f6bd7bf7b9f6f70fb713b876d328b3dae"
+  integrity sha1-Wv9Nn2vXv3ufb3D7cTuHbTKLPa4=
+  dependencies:
+    "@babel/runtime" "^7.10.3"
+    "@chainx-v2/account" "0.0.3-beta.26"
+    "@chainx-v2/api-derive" "0.0.3-beta.26"
+    "@chainx-v2/crypto" "0.0.3-beta.26"
+    "@chainx-v2/keyring" "0.0.3-beta.26"
+    "@chainx-v2/metadata" "0.0.3-beta.26"
+    "@chainx-v2/rpc-core" "0.0.3-beta.26"
+    "@chainx-v2/rpc-provider" "0.0.3-beta.26"
+    "@chainx-v2/types" "0.0.3-beta.26"
+    "@chainx-v2/types-known" "0.0.3-beta.26"
+    "@chainx-v2/util" "0.0.3-beta.26"
+    bn.js "^5.1.2"
+    eventemitter3 "^4.0.4"
+    rxjs "^6.5.5"
+
+"@chainx-v2/api@^0.0.12":
+  version "0.0.12"
+  resolved "https://registry.npm.taobao.org/@chainx-v2/api/download/@chainx-v2/api-0.0.12.tgz#ad912b6e30f6180e990f0d54ec8ba193e3f8982b"
+  integrity sha1-rZErbjD2GA6ZDw1U7Iuhk+P4mCs=
+  dependencies:
+    "@babel/runtime" "^7.10.3"
+    "@chainx-v2/account" "0.0.3-beta.26"
+    "@chainx-v2/api-derive" "0.0.3-beta.26"
+    "@chainx-v2/crypto" "0.0.3-beta.26"
+    "@chainx-v2/keyring" "0.0.3-beta.26"
+    "@chainx-v2/metadata" "0.0.3-beta.26"
+    "@chainx-v2/rpc-core" "0.0.3-beta.26"
+    "@chainx-v2/rpc-provider" "0.0.3-beta.26"
+    "@chainx-v2/types" "0.0.3-beta.26"
+    "@chainx-v2/types-known" "0.0.3-beta.26"
+    "@chainx-v2/util" "0.0.3-beta.26"
+    bn.js "^5.1.2"
+    eventemitter3 "^4.0.4"
+    rxjs "^6.5.5"
+
+"@chainx-v2/crypto@0.0.3-beta.26":
+  version "0.0.3-beta.26"
+  resolved "https://registry.npm.taobao.org/@chainx-v2/crypto/download/@chainx-v2/crypto-0.0.3-beta.26.tgz#6d73869b682655b2b9ecb31a654439c4c3a1f596"
+  integrity sha1-bXOGm2gmVbK57LMaZUQ5xMOh9ZY=
+  dependencies:
+    "@babel/runtime" "^7.10.5"
+    "@chainx-v2/util" "0.0.3-beta.22"
+    "@polkadot/util" "^2.18.1"
+    "@polkadot/wasm-crypto" "^1.2.1"
+    base-x "^3.0.8"
+    bip39 "^3.0.2"
+    blakejs "^1.1.0"
+    bn.js "^5.1.2"
+    elliptic "^6.5.3"
+    js-sha3 "^0.8.0"
+    pbkdf2 "^3.1.1"
+    tweetnacl "^1.0.3"
+    xxhashjs "^0.2.2"
+
+"@chainx-v2/keyring@0.0.3-beta.26":
+  version "0.0.3-beta.26"
+  resolved "https://registry.npm.taobao.org/@chainx-v2/keyring/download/@chainx-v2/keyring-0.0.3-beta.26.tgz#daed3abb9ad8739fca6f1a8c32afedb542b4305a"
+  integrity sha1-2u06u5rYc5/KbxqMMq/ttUK0MFo=
+  dependencies:
+    "@babel/runtime" "^7.10.5"
+    "@chainx-v2/crypto" "0.0.3-beta.26"
+    "@chainx-v2/util" "0.0.3-beta.16"
+
+"@chainx-v2/metadata@0.0.3-beta.26":
+  version "0.0.3-beta.26"
+  resolved "https://registry.npm.taobao.org/@chainx-v2/metadata/download/@chainx-v2/metadata-0.0.3-beta.26.tgz#61648adcf156fadd1227f527a6d454a0309d3b70"
+  integrity sha1-YWSK3PFW+t0SJ/UnptRUoDCdO3A=
+  dependencies:
+    "@babel/runtime" "^7.10.3"
+    "@chainx-v2/crypto" "0.0.3-beta.26"
+    "@chainx-v2/types" "0.0.3-beta.26"
+    "@chainx-v2/types-known" "0.0.3-beta.26"
+    "@chainx-v2/util" "0.0.3-beta.26"
+    bn.js "^5.1.2"
+
+"@chainx-v2/rpc-core@0.0.3-beta.26":
+  version "0.0.3-beta.26"
+  resolved "https://registry.npm.taobao.org/@chainx-v2/rpc-core/download/@chainx-v2/rpc-core-0.0.3-beta.26.tgz#eb81de51bbb885c7eb7c3b734e294bdf6a22ec4e"
+  integrity sha1-64HeUbu4hcfrfDtzTilL32oi7E4=
+  dependencies:
+    "@babel/runtime" "^7.10.3"
+    "@chainx-v2/metadata" "0.0.3-beta.26"
+    "@chainx-v2/rpc-provider" "0.0.3-beta.26"
+    "@chainx-v2/types" "0.0.3-beta.26"
+    "@chainx-v2/util" "0.0.3-beta.26"
+    memoizee "^0.4.14"
+    rxjs "^6.5.5"
+
+"@chainx-v2/rpc-provider@0.0.3-beta.26":
+  version "0.0.3-beta.26"
+  resolved "https://registry.npm.taobao.org/@chainx-v2/rpc-provider/download/@chainx-v2/rpc-provider-0.0.3-beta.26.tgz#687a254f5faa9cc368cb49a3ba2d07a24229d9c1"
+  integrity sha1-aHolT1+qnMNoy0mjui0HokIp2cE=
+  dependencies:
+    "@babel/runtime" "^7.10.3"
+    "@chainx-v2/crypto" "0.0.3-beta.26"
+    "@chainx-v2/metadata" "0.0.3-beta.26"
+    "@chainx-v2/types" "0.0.3-beta.26"
+    "@chainx-v2/util" "0.0.3-beta.26"
+    bn.js "^5.1.2"
+    eventemitter3 "^4.0.4"
+    isomorphic-fetch "^2.2.1"
+    websocket "^1.0.31"
+
+"@chainx-v2/types-known@0.0.3-beta.26":
+  version "0.0.3-beta.26"
+  resolved "https://registry.npm.taobao.org/@chainx-v2/types-known/download/@chainx-v2/types-known-0.0.3-beta.26.tgz#c3916215c7e8d4062e81d8ced4920f6bc18a6f58"
+  integrity sha1-w5FiFcfo1AYugdjO1JIPa8GKb1g=
+  dependencies:
+    "@babel/runtime" "^7.10.3"
+    "@chainx-v2/types" "0.0.3-beta.26"
+    "@chainx-v2/util" "0.0.3-beta.26"
+    bn.js "^5.1.2"
+
+"@chainx-v2/types@0.0.3-beta.26":
+  version "0.0.3-beta.26"
+  resolved "https://registry.npm.taobao.org/@chainx-v2/types/download/@chainx-v2/types-0.0.3-beta.26.tgz#b452e398ed273a81a4296e2d93f9e39a4833dc5e"
+  integrity sha1-tFLjmO0nOoGkKW4tk/njmkgz3F4=
+  dependencies:
+    "@babel/runtime" "^7.10.3"
+    "@chainx-v2/crypto" "0.0.3-beta.26"
+    "@chainx-v2/metadata" "0.0.3-beta.26"
+    "@chainx-v2/util" "0.0.3-beta.26"
+    "@types/bn.js" "^4.11.6"
+    bn.js "^5.1.2"
+    memoizee "^0.4.14"
+    rxjs "^6.5.5"
+
+"@chainx-v2/util@0.0.3-beta.16":
+  version "0.0.3-beta.16"
+  resolved "https://registry.npm.taobao.org/@chainx-v2/util/download/@chainx-v2/util-0.0.3-beta.16.tgz#8702bf4bb7a69bf704ca2058fc99eb77515fe284"
+  integrity sha1-hwK/S7emm/cEyiBY/Jnrd1Ff4oQ=
+  dependencies:
+    "@babel/runtime" "^7.10.5"
+    "@types/bn.js" "^4.11.6"
+    bn.js "^5.1.2"
+    camelcase "^5.3.1"
+    chalk "^4.1.0"
+    ip-regex "^4.1.0"
+
+"@chainx-v2/util@0.0.3-beta.22":
+  version "0.0.3-beta.22"
+  resolved "https://registry.npm.taobao.org/@chainx-v2/util/download/@chainx-v2/util-0.0.3-beta.22.tgz#1a41c3b4927fb9552323b8b3070a660d48a57152"
+  integrity sha1-GkHDtJJ/uVUjI7izBwpmDUilcVI=
+  dependencies:
+    "@babel/runtime" "^7.10.5"
+    "@types/bn.js" "^4.11.6"
+    bn.js "^5.1.2"
+    camelcase "^5.3.1"
+    chalk "^4.1.0"
+    ip-regex "^4.1.0"
+
+"@chainx-v2/util@0.0.3-beta.26":
+  version "0.0.3-beta.26"
+  resolved "https://registry.npm.taobao.org/@chainx-v2/util/download/@chainx-v2/util-0.0.3-beta.26.tgz#84f94e7e458fbe88fa5f68e163d070c176ce18a6"
+  integrity sha1-hPlOfkWPvoj6X2jhY9BwwXbOGKY=
+  dependencies:
+    "@babel/runtime" "^7.10.5"
+    "@types/bn.js" "^4.11.6"
+    bn.js "^5.1.2"
+    camelcase "^5.3.1"
+    chalk "^4.1.0"
+    ip-regex "^4.1.0"
 
 "@chainx/account@^2.22.31":
   version "2.22.31"
@@ -1537,6 +1739,23 @@
     ip-regex "^4.1.0"
     moment "^2.24.0"
 
+"@polkadot/util@^2.18.1":
+  version "2.18.1"
+  resolved "https://registry.npm.taobao.org/@polkadot/util/download/@polkadot/util-2.18.1.tgz#81380f21e47f3c5657ef09be7c477a72838d35eb"
+  integrity sha1-gTgPIeR/PFZX7wm+fEd6coONNes=
+  dependencies:
+    "@babel/runtime" "^7.10.4"
+    "@types/bn.js" "^4.11.6"
+    bn.js "^5.1.2"
+    camelcase "^5.3.1"
+    chalk "^4.1.0"
+    ip-regex "^4.1.0"
+
+"@polkadot/wasm-crypto@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.npm.taobao.org/@polkadot/wasm-crypto/download/@polkadot/wasm-crypto-1.2.1.tgz#2189702447acd28d763886359576c87562241767"
+  integrity sha1-IYlwJEes0o12OIY1lXbIdWIkF2c=
+
 "@reduxjs/toolkit@^1.0.4":
   version "1.3.4"
   resolved "https://registry.npmjs.org/@reduxjs/toolkit/-/toolkit-1.3.4.tgz#23abc4892310c75310224e0551d27b990d853a45"
@@ -1755,6 +1974,16 @@
   version "13.11.1"
   resolved "https://registry.npmjs.org/@types/node/-/node-13.11.1.tgz#49a2a83df9d26daacead30d0ccc8762b128d53c7"
   integrity sha512-eWQGP3qtxwL8FGneRrC5DwrJLGN4/dH1clNTuLfN81HCrxVtxRjygDTUoZJ5ASlDEeo0ppYFQjQIlXhtXpOn6g==
+
+"@types/node@11.11.6":
+  version "11.11.6"
+  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-11.11.6.tgz?cache=0&sync_timestamp=1596674473562&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-11.11.6.tgz#df929d1bb2eee5afdda598a41930fe50b43eaa6a"
+  integrity sha1-35KdG7Lu5a/dpZikGTD+ULQ+qmo=
+
+"@types/node@^14.0.23":
+  version "14.0.27"
+  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-14.0.27.tgz?cache=0&sync_timestamp=1596674473562&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-14.0.27.tgz#a151873af5a5e851b51b3b065c9e63390a9e0eb1"
+  integrity sha1-oVGHOvWl6FG1GzsGXJ5jOQqeDrE=
 
 "@types/node@^6.0.96":
   version "6.14.9"
@@ -2586,7 +2815,7 @@ balanced-match@^1.0.0:
   resolved "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
-base-x@^3.0.2, base-x@^3.0.4:
+base-x@^3.0.2, base-x@^3.0.4, base-x@^3.0.8:
   version "3.0.8"
   resolved "https://registry.npmjs.org/base-x/-/base-x-3.0.8.tgz#1e1106c2537f0162e8b52474a557ebb09000018d"
   integrity sha512-Rl/1AWP4J/zRrk54hhlxH4drNxPJXYUaKffODVI53/dAsV4t9fBxyxYKAVPU1XBHxYwOWP9h9H0hM2MVw4YfJA==
@@ -2673,6 +2902,16 @@ bip39@^2.5.0:
     safe-buffer "^5.0.1"
     unorm "^1.3.3"
 
+bip39@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.npm.taobao.org/bip39/download/bip39-3.0.2.tgz#2baf42ff3071fc9ddd5103de92e8f80d9257ee32"
+  integrity sha1-K69C/zBx/J3dUQPekuj4DZJX7jI=
+  dependencies:
+    "@types/node" "11.11.6"
+    create-hash "^1.1.0"
+    pbkdf2 "^3.0.9"
+    randombytes "^2.0.1"
+
 bip66@^1.1.0, bip66@^1.1.5:
   version "1.1.5"
   resolved "https://registry.npmjs.org/bip66/-/bip66-1.1.5.tgz#01fa8748785ca70955d5011217d1b3139969ca22"
@@ -2727,6 +2966,11 @@ bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.11.8, bn.js@^4.4.0:
   version "4.11.8"
   resolved "https://registry.npmjs.org/bn.js/-/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
   integrity sha512-ItfYfPLkWHUjckQCk8xC+LwxgK8NYcXywGigJgSwOP8Y2iyWT4f2vsZnoOXTTbo+o5yXmIUJ4gn5538SO5S3gA==
+
+bn.js@^5.1.2:
+  version "5.1.2"
+  resolved "https://registry.npm.taobao.org/bn.js/download/bn.js-5.1.2.tgz#c9686902d3c9a27729f43ab10f9d79c2004da7b0"
+  integrity sha1-yWhpAtPJoncp9DqxD515wgBNp7A=
 
 body-parser@1.19.0:
   version "1.19.0"
@@ -3133,6 +3377,14 @@ chalk@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/chalk/-/chalk-3.0.0.tgz#3f73c2bf526591f574cc492c51e2456349f844e4"
   integrity sha512-4D3B6Wf41KOYRFdszmDqMCGq5VV/uMAB273JILmO+3jAlh8X4qDtdtgCR3fxtbLEMzSx22QdhnDcJvu2u1fVwg==
+  dependencies:
+    ansi-styles "^4.1.0"
+    supports-color "^7.1.0"
+
+chalk@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.npm.taobao.org/chalk/download/chalk-4.1.0.tgz?cache=0&sync_timestamp=1591687183344&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fchalk%2Fdownload%2Fchalk-4.1.0.tgz#4e14870a618d9e2edd97dd8345fd9d9dc315646a"
+  integrity sha1-ThSHCmGNni7dl92DRf2dncMVZGo=
   dependencies:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
@@ -4363,6 +4615,19 @@ elliptic@^6.0.0, elliptic@^6.4.0, elliptic@^6.5.2:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
+elliptic@^6.5.3:
+  version "6.5.3"
+  resolved "https://registry.npm.taobao.org/elliptic/download/elliptic-6.5.3.tgz?cache=0&sync_timestamp=1592492827851&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Felliptic%2Fdownload%2Felliptic-6.5.3.tgz#cb59eb2efdaf73a0bd78ccd7015a62ad6e0f93d6"
+  integrity sha1-y1nrLv2vc6C9eMzXAVpirW4Pk9Y=
+  dependencies:
+    bn.js "^4.4.0"
+    brorand "^1.0.1"
+    hash.js "^1.0.0"
+    hmac-drbg "^1.0.0"
+    inherits "^2.0.1"
+    minimalistic-assert "^1.0.0"
+    minimalistic-crypto-utils "^1.0.0"
+
 emoji-regex@^7.0.1, emoji-regex@^7.0.2:
   version "7.0.3"
   resolved "https://registry.npmjs.org/emoji-regex/-/emoji-regex-7.0.3.tgz#933a04052860c85e83c122479c4748a8e4c72156"
@@ -4461,7 +4726,7 @@ es-to-primitive@^1.2.1:
     is-date-object "^1.0.1"
     is-symbol "^1.0.2"
 
-es5-ext@^0.10.35, es5-ext@^0.10.50:
+es5-ext@^0.10.35, es5-ext@^0.10.45, es5-ext@^0.10.46, es5-ext@^0.10.50, es5-ext@~0.10.14, es5-ext@~0.10.2, es5-ext@~0.10.46:
   version "0.10.53"
   resolved "https://registry.npmjs.org/es5-ext/-/es5-ext-0.10.53.tgz#93c5a3acfdbef275220ad72644ad02ee18368de1"
   integrity sha512-Xs2Stw6NiNHWypzRTY1MtaG/uJlwCk8kH81920ma8mvN8Xq1gsfhZvpkImLQArw8AHnv8MT2I45J3c0R8slE+Q==
@@ -4470,7 +4735,7 @@ es5-ext@^0.10.35, es5-ext@^0.10.50:
     es6-symbol "~3.1.3"
     next-tick "~1.0.0"
 
-es6-iterator@2.0.3, es6-iterator@~2.0.3:
+es6-iterator@2.0.3, es6-iterator@^2.0.3, es6-iterator@~2.0.3:
   version "2.0.3"
   resolved "https://registry.npmjs.org/es6-iterator/-/es6-iterator-2.0.3.tgz#a7de889141a05a94b0854403b2d0a0fbfa98f3b7"
   integrity sha1-p96IkUGgWpSwhUQDstCg+/qY87c=
@@ -4486,6 +4751,16 @@ es6-symbol@^3.1.1, es6-symbol@~3.1.3:
   dependencies:
     d "^1.0.1"
     ext "^1.1.2"
+
+es6-weak-map@^2.0.2:
+  version "2.0.3"
+  resolved "https://registry.npm.taobao.org/es6-weak-map/download/es6-weak-map-2.0.3.tgz#b6da1f16cc2cc0d9be43e6bdbfc5e7dfcdf31d53"
+  integrity sha1-ttofFswswNm+Q+a9v8Xn383zHVM=
+  dependencies:
+    d "1"
+    es5-ext "^0.10.46"
+    es6-iterator "^2.0.3"
+    es6-symbol "^3.1.1"
 
 escape-html@~1.0.3:
   version "1.0.3"
@@ -4727,6 +5002,14 @@ etag@~1.8.1:
   resolved "https://registry.npmjs.org/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
 
+event-emitter@^0.3.5:
+  version "0.3.5"
+  resolved "https://registry.npm.taobao.org/event-emitter/download/event-emitter-0.3.5.tgz#df8c69eef1647923c7157b9ce83840610b02cc39"
+  integrity sha1-34xp7vFkeSPHFXuc6DhAYQsCzDk=
+  dependencies:
+    d "1"
+    es5-ext "~0.10.14"
+
 eventemitter3@^3.1.0:
   version "3.1.2"
   resolved "https://registry.npmjs.org/eventemitter3/-/eventemitter3-3.1.2.tgz#2d3d48f9c346698fce83a85d7d664e98535df6e7"
@@ -4736,6 +5019,11 @@ eventemitter3@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/eventemitter3/-/eventemitter3-4.0.0.tgz#d65176163887ee59f386d64c82610b696a4a74eb"
   integrity sha512-qerSRB0p+UDEssxTtm6EDKcE7W4OaoisfIMl4CngyEhjpYglocpNg6UEqCvemdGhosAsg4sO2dXJOdyBifPGCg==
+
+eventemitter3@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.npm.taobao.org/eventemitter3/download/eventemitter3-4.0.4.tgz#b5463ace635a083d018bdc7c917b4c5f10a85384"
+  integrity sha1-tUY6zmNaCD0Bi9x8kXtMXxCoU4Q=
 
 events@^3.0.0:
   version "3.1.0"
@@ -6334,6 +6622,11 @@ is-plain-object@^2.0.1, is-plain-object@^2.0.3, is-plain-object@^2.0.4:
   dependencies:
     isobject "^3.0.1"
 
+is-promise@^2.1:
+  version "2.2.2"
+  resolved "https://registry.npm.taobao.org/is-promise/download/is-promise-2.2.2.tgz?cache=0&sync_timestamp=1588002456069&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fis-promise%2Fdownload%2Fis-promise-2.2.2.tgz#39ab959ccbf9a774cf079f7b40c7a26f763135f1"
+  integrity sha1-OauVnMv5p3TPB597QMeib3YxNfE=
+
 is-promise@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/is-promise/-/is-promise-2.1.0.tgz#79a2a9ece7f096e80f36d2b2f3bc16c1ff4bf3fa"
@@ -7507,6 +7800,13 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
+lru-queue@0.1:
+  version "0.1.0"
+  resolved "https://registry.npm.taobao.org/lru-queue/download/lru-queue-0.1.0.tgz#2738bd9f0d3cf4f84490c5736c48699ac632cda3"
+  integrity sha1-Jzi9nw089PhEkMVzbEhpmsYyzaM=
+  dependencies:
+    es5-ext "~0.10.2"
+
 make-dir@^2.0.0, make-dir@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/make-dir/-/make-dir-2.1.0.tgz#5f0310e18b8be898cc07009295a30ae41e91e6f5"
@@ -7595,6 +7895,20 @@ memoize-one@^5.0.0:
   version "5.1.1"
   resolved "https://registry.npmjs.org/memoize-one/-/memoize-one-5.1.1.tgz#047b6e3199b508eaec03504de71229b8eb1d75c0"
   integrity sha512-HKeeBpWvqiVJD57ZUAsJNm71eHTykffzcLZVYWiVfQeI1rJtuEaS7hQiEpWfVVk18donPwJEcFKIkCmPJNOhHA==
+
+memoizee@^0.4.14:
+  version "0.4.14"
+  resolved "https://registry.npm.taobao.org/memoizee/download/memoizee-0.4.14.tgz#07a00f204699f9a95c2d9e77218271c7cd610d57"
+  integrity sha1-B6APIEaZ+alcLZ53IYJxx81hDVc=
+  dependencies:
+    d "1"
+    es5-ext "^0.10.45"
+    es6-weak-map "^2.0.2"
+    event-emitter "^0.3.5"
+    is-promise "^2.1"
+    lru-queue "0.1"
+    next-tick "1"
+    timers-ext "^0.1.5"
 
 memory-fs@^0.4.1:
   version "0.4.1"
@@ -7924,6 +8238,11 @@ neo-async@^2.5.0, neo-async@^2.6.1:
   version "2.6.1"
   resolved "https://registry.npmjs.org/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
+
+next-tick@1:
+  version "1.1.0"
+  resolved "https://registry.npm.taobao.org/next-tick/download/next-tick-1.1.0.tgz#1836ee30ad56d67ef281b22bd199f709449b35eb"
+  integrity sha1-GDbuMK1W1n7ygbIr0Zn3CUSbNes=
 
 next-tick@~1.0.0:
   version "1.0.0"
@@ -8655,6 +8974,17 @@ pbkdf2@^3.0.17, pbkdf2@^3.0.3, pbkdf2@^3.0.9:
   version "3.0.17"
   resolved "https://registry.npmjs.org/pbkdf2/-/pbkdf2-3.0.17.tgz#976c206530617b14ebb32114239f7b09336e93a6"
   integrity sha512-U/il5MsrZp7mGg3mSQfn742na2T+1/vHDCG5/iTI3X9MKUuYUZVLQhyRsg06mCgDBTd57TxzgZt7P+fYfjRLtA==
+  dependencies:
+    create-hash "^1.1.2"
+    create-hmac "^1.1.4"
+    ripemd160 "^2.0.1"
+    safe-buffer "^5.0.1"
+    sha.js "^2.4.8"
+
+pbkdf2@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.npm.taobao.org/pbkdf2/download/pbkdf2-3.1.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fpbkdf2%2Fdownload%2Fpbkdf2-3.1.1.tgz#cb8724b0fada984596856d1a6ebafd3584654b94"
+  integrity sha1-y4cksPramEWWhW0abrr9NYRlS5Q=
   dependencies:
     create-hash "^1.1.2"
     create-hmac "^1.1.4"
@@ -10321,6 +10651,13 @@ rxjs@^6.3.3, rxjs@^6.4.0, rxjs@^6.5.3:
   dependencies:
     tslib "^1.9.0"
 
+rxjs@^6.5.5:
+  version "6.6.2"
+  resolved "https://registry.npm.taobao.org/rxjs/download/rxjs-6.6.2.tgz?cache=0&sync_timestamp=1596403006552&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Frxjs%2Fdownload%2Frxjs-6.6.2.tgz#8096a7ac03f2cc4fe5860ef6e572810d9e01c0d2"
+  integrity sha1-gJanrAPyzE/lhg725XKBDZ4BwNI=
+  dependencies:
+    tslib "^1.9.0"
+
 safe-buffer@5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.2"
   resolved "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.2.tgz#991ec69d296e0313747d59bdfd2b745c35f8828d"
@@ -11351,6 +11688,14 @@ timers-browserify@^2.0.4:
   dependencies:
     setimmediate "^1.0.4"
 
+timers-ext@^0.1.5:
+  version "0.1.7"
+  resolved "https://registry.npm.taobao.org/timers-ext/download/timers-ext-0.1.7.tgz#6f57ad8578e07a3fb9f91d9387d65647555e25c6"
+  integrity sha1-b1ethXjgej+5+R2Th9ZWR1VeJcY=
+  dependencies:
+    es5-ext "~0.10.46"
+    next-tick "1"
+
 timsort@^0.3.0:
   version "0.3.0"
   resolved "https://registry.npmjs.org/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
@@ -11507,7 +11852,7 @@ tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   resolved "https://registry.npmjs.org/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
   integrity sha1-WuaBd/GS1EViadEIr6k/+HQ/T2Q=
 
-tweetnacl@^1.0.0, tweetnacl@^1.0.1:
+tweetnacl@^1.0.0, tweetnacl@^1.0.1, tweetnacl@^1.0.3:
   version "1.0.3"
   resolved "https://registry.npmjs.org/tweetnacl/-/tweetnacl-1.0.3.tgz#ac0af71680458d8a6378d0d0d050ab1407d35596"
   integrity sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw==
@@ -11987,7 +12332,7 @@ websocket-extensions@>=0.1.1:
   resolved "https://registry.npmjs.org/websocket-extensions/-/websocket-extensions-0.1.3.tgz#5d2ff22977003ec687a4b87073dfbbac146ccf29"
   integrity sha512-nqHUnMXmBzT0w570r2JpJxfiSD1IzoI+HGVdd3aZ0yNi3ngvQ4jv1dtHt5VGxfI2yj5yqImPhOK4vmIh2xMbGg==
 
-websocket@^1.0.28:
+websocket@^1.0.28, websocket@^1.0.31:
   version "1.0.31"
   resolved "https://registry.npmjs.org/websocket/-/websocket-1.0.31.tgz#e5d0f16c3340ed87670e489ecae6144c79358730"
   integrity sha512-VAouplvGKPiKFDTeCCO65vYHsyay8DqoBSlzIO3fayrfOgU94lQN5a1uWVnFrMLceTJw/+fQXR5PGbUVRaHshQ==

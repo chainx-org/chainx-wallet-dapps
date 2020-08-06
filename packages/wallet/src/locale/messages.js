@@ -88,6 +88,14 @@ const header = {
     en: 'Extension store',
     zh: '去商店'
   },
+  HEADER_MSG_INVALID_NETWORK_TITLE: {
+    en: 'Invalid network',
+    zh: '网络非法'
+  },
+  HEADER_MSG_INVALID_NETWORK_DETAIL: {
+    en: 'Please switch Signer to ChainX 2.0 network',
+    zh: '请将Signer切换到ChainX 2.0网络'
+  },
   HEADER_MSG_NO_SIGNER_ACCOUNT_TITLE: {
     en: 'No Signer account',
     zh: 'Signer无账户'

@@ -1,18 +1,21 @@
-import ChainX from 'chainx.js'
+const { ApiPromise, WsProvider } = require('@chainx-v2/api')
 
-let chainx = null
+let api = null
+let provider = null
 
 export const setChainx = async url => {
-  const preChainx = chainx
+  console.log('url', url)
+  const wsProvider = new WsProvider(url)
+  api = new ApiPromise({ provider: wsProvider })
 
-  chainx = new ChainX(url)
-  await chainx.isRpcReady()
+  await api.isReady
 
-  if (preChainx) {
-    preChainx.provider.websocket.close()
+  if (provider) {
+    provider.disconnect()
   }
+  provider = wsProvider
 
-  return chainx
+  return api
 }
 
-export const getChainx = () => chainx
+export const getChainx = () => api

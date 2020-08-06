@@ -36,17 +36,26 @@ export default function() {
       if (isExtensionConnected) {
         listenExtension()
       }
+      console.log('e', e.message)
 
-      addAutoCloseSnackWithParams(
-        store.dispatch,
-        typeEnum.ERROR,
-        $t('HEADER_MSG_SIGNER_LINK_FAIL_TITLE'),
-        $t(
-          e && e.timeout
-            ? 'HEADER_MSG_SIGNER_LINK_TIMEOUT'
-            : 'HEADER_MSG_SIGNER_LINK_FAIL_DETAIL'
+      if (
+        ![
+          'Invalid network',
+          'No account in signer',
+          'Invalid node protocol'
+        ].includes(e.message)
+      ) {
+        addAutoCloseSnackWithParams(
+          store.dispatch,
+          typeEnum.ERROR,
+          $t('HEADER_MSG_SIGNER_LINK_FAIL_TITLE'),
+          $t(
+            e && e.timeout
+              ? 'HEADER_MSG_SIGNER_LINK_TIMEOUT'
+              : 'HEADER_MSG_SIGNER_LINK_FAIL_DETAIL'
+          )
         )
-      )
+      }
 
       signer.disconnect()
     } finally {

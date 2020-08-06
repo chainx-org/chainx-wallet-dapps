@@ -1,9 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit'
+import { pcxInfoSelector } from '@reducers/assetSlice'
 
-export const pcxPrecisionSelector = state => {
-  const pcxInfo = state.assets.assetsInfo.find(info => info.name === 'PCX')
-  return pcxInfo ? pcxInfo.precision : null
-}
+export const pcxPrecisionSelector = createSelector(
+  pcxInfoSelector,
+  ({ info }) => {
+    return info?.precision || null
+  }
+)
 
 export const pcxAssetSelector = state => {
   const asset = state.assets.assets.find(asset => asset.name === 'PCX')
@@ -37,9 +40,3 @@ export const pcxDetailsSelector = createSelector(
     return null
   }
 )
-
-export const pcxInfoSelector = state => {
-  const pcxInfo = state.assets.assetsInfo.find(info => info.name === 'PCX')
-
-  return pcxInfo || {}
-}

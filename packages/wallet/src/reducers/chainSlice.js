@@ -16,8 +16,7 @@ const chainSlice = createSlice({
 
 export const headSelector = state => state.chain.head
 
-export const blockNumberSelector = state =>
-  state.chain.head ? state.chain.head.number : null
+export const blockNumberSelector = state => state.chain.head
 
 export const { setHead } = chainSlice.actions
 

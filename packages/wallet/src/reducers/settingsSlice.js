@@ -4,7 +4,7 @@ const settingsSlice = createSlice({
   name: 'settings',
   initialState: {
     locale: 'zh',
-    network: 'mainnet'
+    network: 'testnet'
   },
   reducers: {
     setLocale(state, action) {

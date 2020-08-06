@@ -1,17 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { getChainx } from '../services/chainx'
 import { camelCaseKey } from './util'
 
 const emptyAsset = {
-  details: {
-    Free: 0,
-    ReservedCurrency: 0,
-    ReservedDexFuture: 0,
-    ReservedDexSpot: 0,
-    ReservedStaking: 0,
-    ReservedStakingRevocation: 0,
-    ReservedWithdrawal: 0
-  }
+  Free: '0',
+  Locked: '0',
+  ReservedDexSpot: '0',
+  ReservedWithdrawal: '0',
+  ReservedXRC20: '0'
 }
 
 const assetSlice = createSlice({
@@ -35,47 +31,71 @@ const assetSlice = createSlice({
 })
 
 export const fetchAccountAssets = address => async dispatch => {
-  const chainx = getChainx()
-  await chainx.isRpcReady()
-  const { asset } = chainx
-
-  if (!address) {
-    return
-  }
-
-  const { data } = await asset.getAssetsByAccount(address, 0, 100)
-  ;['PCX', 'BTC', 'L-BTC', 'SDOT'].forEach(token => {
-    if (!data.find(asset => asset.name === token)) {
-      data.push({
-        name: token,
-        ...emptyAsset
-      })
+  const api = getChainx()
+  const assets = await api.rpc.xassets.getAssetsByAccount(address)
+  const json = assets.toJSON()
+  const normalized = Object.keys(assets.toJSON()).map(id => {
+    return {
+      id,
+      details: json[id]
     }
   })
 
-  const assets = data.map(item => {
-    return { name: item.name, details: camelCaseKey(item.details) }
-  })
-
-  dispatch(setAssets(assets))
+  dispatch(setAssets(normalized))
 }
 
 export const fetchAssetsInfo = () => async dispatch => {
-  const chainx = getChainx()
-  await chainx.isRpcReady()
-  const { asset } = chainx
+  const api = getChainx()
+  const assets = await api.rpc.xassets.getAssets()
+  const json = assets.toJSON()
 
-  const resp = await asset.getAssets(0, 100)
-  const assetsInfo = resp.data.map(item => {
-    const details = camelCaseKey(item.details)
-    const limitProps = camelCaseKey(item.limitProps)
-
-    return { ...item, details, limitProps }
+  const normalized = Object.keys(json).map(id => {
+    return {
+      id,
+      ...json[id]
+    }
   })
 
-  dispatch(setInfo(assetsInfo))
+  dispatch(setInfo(normalized))
 }
 
 export const { setInfo, setAssets } = assetSlice.actions
+
+export const assetsInfoSelector = state => state.assets.assetsInfo
+export const assetsSelector = state => state.assets.assets
+
+export const normalizedAssetsSelector = createSelector(
+  assetsSelector,
+  assetsInfoSelector,
+  (assets, infoArr) => {
+    return infoArr.map(({ id, info: { token, precision } }) => {
+      const target = assets.find(a => a.id === id)
+      const details = target ? target.details : emptyAsset
+
+      const total = Object.values(details).reduce(
+        (sum, value) => sum + parseInt(value),
+        0
+      )
+
+      return {
+        total,
+        details: camelCaseKey(details),
+        token,
+        precision
+      }
+    })
+  }
+)
+
+export const pcxAssetSelector = createSelector(
+  normalizedAssetsSelector,
+  assets => {
+    return assets.find(asset => asset.token === 'PCX')
+  }
+)
+
+export const pcxInfoSelector = createSelector(assetsInfoSelector, infoArr => {
+  return infoArr.find(({ info }) => info.token === 'PCX') || {}
+})
 
 export default assetSlice.reducer

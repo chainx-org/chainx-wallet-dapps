@@ -34,3 +34,8 @@ export const oddEvenContractAddress =
 
 export const oddEvenDepositAddress =
   '5Q6MrbwbkU1PFnM4DFX49QWNCKavTmAhtvLh5gXXNukWXYjr'
+
+export const networks = {
+  testnet: 'chainx2-testnet',
+  mainnet: 'chainx2-mainnet'
+}

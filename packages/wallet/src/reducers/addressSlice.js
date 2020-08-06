@@ -21,20 +21,17 @@ const addressSlice = createSlice({
 export const { setAccount } = addressSlice.actions
 
 export const addressSelector = state => {
-  return state.address.account && state.address.account.address
+  return state.address.account?.address
 }
 
-export const accountIdSelector = createSelector(
-  addressSelector,
-  address => {
-    if (!address) {
-      return null
-    }
-
-    const chainx = getChainx()
-    return chainx.account.decodeAddress(address, false)
+export const accountIdSelector = createSelector(addressSelector, address => {
+  if (!address) {
+    return null
   }
-)
+
+  const chainx = getChainx()
+  return chainx.account.decodeAddress(address, false)
+})
 
 export const nameSelector = state =>
   state.address.account && state.address.account.name

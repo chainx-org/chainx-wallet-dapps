@@ -1,8 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
-import { getChainx } from '../../../services/chainx'
-import $t from '../../../locale'
 import { accountSelector } from '../../../reducers/addressSlice'
 
 const Wrapper = styled.div`
@@ -32,6 +30,7 @@ const Address = styled(BaseRow)`
   line-height: 20px;
 `
 
+// eslint-disable-next-line no-unused-vars
 const Roles = styled.p`
   margin-top: 4px;
   font-size: 14px;
@@ -40,26 +39,26 @@ const Roles = styled.p`
 
 export default function() {
   const account = useSelector(accountSelector)
-  const intentions = useSelector(state => state.intentions.intentions)
+  // const intentions = useSelector(state => state.intentions.intentions)
+  //
+  // const id = getChainx().account.decodeAddress(account.address, false)
+  // const validator = intentions.find(intention => intention.account === id)
+  // const isValidator = !!validator
+  // const isTrustee = validator && validator.isTrustee.length > 0
 
-  const id = getChainx().account.decodeAddress(account.address, false)
-  const validator = intentions.find(intention => intention.account === id)
-  const isValidator = !!validator
-  const isTrustee = validator && validator.isTrustee.length > 0
-
-  const roles = []
-  if (isTrustee) {
-    roles.push($t('INTENTION_TRUSTEE'))
-  }
-  if (isValidator) {
-    roles.push($t('INTENTION_VALIDATOR'))
-  }
+  // const roles = []
+  // if (isTrustee) {
+  //   roles.push($t('INTENTION_TRUSTEE'))
+  // }
+  // if (isValidator) {
+  //   roles.push($t('INTENTION_VALIDATOR'))
+  // }
 
   return (
     <Wrapper>
       <Title>{(account.name || '').toUpperCase()}</Title>
       <Address>{account.address}</Address>
-      <Roles>{roles.join('、')}</Roles>
+      {/*<Roles>{roles.join('、')}</Roles>*/}
     </Wrapper>
   )
 }
