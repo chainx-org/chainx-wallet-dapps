@@ -15,10 +15,9 @@ import { getChainx } from '../../services/chainx'
 import { addressSelector } from '../../reducers/addressSlice'
 import BigNumber from 'bignumber.js'
 import { sdotFreeSelector } from './Assets/selectors'
-import { pcxFreeSelector } from './PcxCard/selectors'
 import { Label, Value } from './components'
 import { showSnack, signAndSendExtrinsic } from '../../utils/chainxProvider'
-import { fetchAccountAssets } from '../../reducers/assetSlice'
+import { fetchAccountAssets, pcxAssetSelector } from '../../reducers/assetSlice'
 import {
   checkAmountAndHasError,
   checkMemoAndHasError
@@ -26,6 +25,7 @@ import {
 import { isDemoSelector } from '../../selectors'
 import { fetchTransfers } from '../../reducers/transactionSlice'
 import { accountIdSelector } from '../selectors/assets'
+import { pcxFreeSelector } from '@reducers/assetSlice'
 
 const StyledDialog = styled(Dialog)`
   div.wrapper {
@@ -59,26 +59,25 @@ export default function({ handleClose, token }) {
   const [amount, setAmount] = useState('')
   const [amountErrMsg, setAmountErrMsg] = useState('')
 
-  const { free: xbtcFree, precision: xbtcPrecision } = useSelector(
-    xbtcFreeSelector
-  )
-  const { free: sdotFree, precision: sdotPrecision } = useSelector(
-    sdotFreeSelector
-  )
+  const pcxFree = useSelector(pcxFreeSelector)
+  console.log('pcxFree', pcxFree)
+  const pcxAsset = useSelector(pcxAssetSelector)
+  console.log('pcxAsset', pcxAsset)
 
-  const { free: pcxFree, precision: pcxPrecision } = useSelector(
-    pcxFreeSelector
-  )
+  // const { free: xbtcFree, precision: xbtcPrecision } = useSelector(
+  //   xbtcFreeSelector
+  // )
+  //
+  // const { free: pcxFree, precision: pcxPrecision } = useSelector(
+  //   pcxFreeSelector
+  // )
 
-  let free = pcxFree
-  let precision = pcxPrecision
-  if (token === 'SDOT') {
-    free = sdotFree
-    precision = sdotPrecision
-  } else if (token === 'BTC') {
-    free = xbtcFree
-    precision = xbtcPrecision
-  }
+  let free = 0
+  let precision = 8
+  // if (token === 'BTC') {
+  //   free = xbtcFree
+  //   precision = xbtcPrecision
+  // }
 
   const [memo, setMemo] = useState('')
   const [memoErrMsg, setMemoErrMsg] = useState('')
@@ -89,7 +88,8 @@ export default function({ handleClose, token }) {
   const tokenName = token === 'BTC' ? 'X-BTC' : token
 
   const chainx = getChainx()
-  const accountId = useSelector(accountIdSelector)
+  // const accountId = useSelector(accountIdSelector)
+  const accountId = null
 
   const sign = async () => {
     const isAddressValid = chainx.account.isAddressValid(address)

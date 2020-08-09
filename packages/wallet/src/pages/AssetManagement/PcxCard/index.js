@@ -14,6 +14,7 @@ import backgroundImg from './background.svg'
 import { WhiteButton } from '@chainx/ui'
 import { addressSelector } from '../../../reducers/addressSlice'
 import { pcxAssetSelector } from '@reducers/assetSlice'
+import TransferDialog from '@pages/AssetManagement/TransferDialog'
 
 const InnerWrapper = styled.div`
   position: relative;
@@ -57,15 +58,11 @@ export default function() {
   const address = useSelector(addressSelector)
 
   const pcxAsset = useSelector(pcxAssetSelector)
-  console.log('pcxAsset', pcxAsset)
-
   const { details: { free, reservedDexSpot } = {}, details, total, precision } =
     pcxAsset || {}
 
-  // const pcxFree = useSelector(pcxFreeSelector)
-  // const pcxDetails = useSelector(pcxDetailsSelector)
   const dispatch = useDispatch()
-  const [, setTransferOpen] = useState(false)
+  const [transferOpen, setTransferOpen] = useState(false)
 
   console.log('address', address)
 
@@ -77,10 +74,10 @@ export default function() {
     dispatch(fetchAssetsInfo())
   }, [dispatch])
 
-  // const handleTransferClose = extrinsic => {
-  //   setTransferOpen(false)
-  // }
-  //
+  const handleTransferClose = () => {
+    setTransferOpen(false)
+  }
+
   return (
     <Card>
       <InnerWrapper>
@@ -131,9 +128,9 @@ export default function() {
           )}
         </section>
         <CornerBackground />
-        {/*{transferOpen && (*/}
-        {/*  <TransferDialog token="PCX" handleClose={handleTransferClose} />*/}
-        {/*)}*/}
+        {transferOpen && (
+          <TransferDialog token="PCX" handleClose={handleTransferClose} />
+        )}
       </InnerWrapper>
     </Card>
   )

@@ -94,6 +94,18 @@ export const pcxAssetSelector = createSelector(
   }
 )
 
+export const pcxFreeSelector = createSelector(pcxAssetSelector, asset => {
+  const { details: { free } = {} } = asset || {}
+  return free
+})
+
+export const pcxPrecisionSelector = createSelector(
+  assetsInfoSelector,
+  infoArr => {
+    return infoArr
+  }
+)
+
 export const pcxInfoSelector = createSelector(assetsInfoSelector, infoArr => {
   return infoArr.find(({ info }) => info.token === 'PCX') || {}
 })
