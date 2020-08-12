@@ -1,9 +1,15 @@
 import Card from '../../../components/Card'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import React from 'react'
 import $t from '../../../locale'
 
 const CardWrapper = styled(Card)`
+  ${props =>
+    props.disabled &&
+    css`
+      background: unset;
+    `}
+
   & > header {
     margin: 3px 0 16px;
     display: flex;
@@ -62,10 +68,10 @@ const Detail = styled.section`
 `
 
 export default function(props) {
-  const { intention } = props
+  const { intention, disabled } = props
 
   return (
-    <CardWrapper>
+    <CardWrapper disabled={disabled}>
       <header>{props.header}</header>
       <hr />
       <Detail>

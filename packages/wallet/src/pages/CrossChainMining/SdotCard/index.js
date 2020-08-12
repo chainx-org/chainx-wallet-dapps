@@ -8,5 +8,5 @@ import { token } from '../../../utils/constants'
 export default function() {
   const sdot = useSelector(normalizedSdotSelector)
   const header = <Header token={token.SDOT} />
-  return <CardWrapper header={header} intention={sdot} />
+  return <CardWrapper header={header} intention={sdot} disabled={true} />
 }
