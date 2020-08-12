@@ -224,7 +224,7 @@ export default function() {
 
       <div className="button">
         <DangerButton
-          disabled={isDemoAddr || disabled}
+          disabled={isDemoAddr || disabled || pairId === 1}
           size="fullWidth"
           onClick={sign}
         >
