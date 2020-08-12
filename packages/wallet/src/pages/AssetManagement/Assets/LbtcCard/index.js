@@ -36,12 +36,22 @@ export default function() {
   )
 
   return (
-    <AssetCard meta={meta} details={details} logo={lbtcLogo} footer={footer}>
+    <AssetCard
+      meta={meta}
+      details={details}
+      logo={lbtcLogo}
+      footer={footer}
+      disabled={true}
+    >
       <div className="details">
         {showDetails && (
           <DetailWrapper>
             <AssetLine>
-              <InfoView title={$t('ASSET_CHAIN')} info={meta.chain} />
+              <InfoView
+                title={$t('ASSET_CHAIN')}
+                info={meta.chain}
+                disabled={true}
+              />
               <AssetView
                 title={$t('ASSET_TOTAL')}
                 value={details.total}
