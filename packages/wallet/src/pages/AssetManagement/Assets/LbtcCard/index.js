@@ -19,6 +19,7 @@ export default function() {
   const footer = (
     <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
       <PrimaryButton
+        disabled={true}
         onClick={() => setLockOpen(true)}
         style={{ marginRight: 8 }}
       >
