@@ -247,7 +247,7 @@ export default function() {
 
       <div className="button">
         <SuccessButton
-          disabled={isDemoAddr || disabled}
+          disabled={isDemoAddr || disabled || pairId === 1}
           size="fullWidth"
           onClick={sign}
         >

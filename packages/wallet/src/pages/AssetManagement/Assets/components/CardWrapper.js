@@ -1,7 +1,13 @@
 import Card from '../../../../components/Card'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export default styled(Card)`
+  ${props =>
+    props.disabled &&
+    css`
+      background: unset;
+    `};
+
   height: 300px;
   position: relative;
 

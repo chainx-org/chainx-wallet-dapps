@@ -9,5 +9,5 @@ export default function() {
   const lbtc = useSelector(normalizedLbtcSelector)
   const header = <Header token={token.LBTC} />
 
-  return <CardWrapper header={header} intention={lbtc} />
+  return <CardWrapper header={header} intention={lbtc} disabled={true} />
 }

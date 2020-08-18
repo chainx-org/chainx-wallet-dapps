@@ -130,6 +130,7 @@ export default function({ token }) {
       {showInterest && (
         <Interest
           disabled={isDemo || disabled}
+          forbidden={[tokens.LBTC, tokens.SDOT].includes(token)}
           interest={interest}
           precision={precision}
           claim={() => claim(token)}

@@ -27,7 +27,7 @@ export const statusSelector = state => state.power.status
 export const { setPower, setStatus } = powerSlice.actions
 
 export const fetchPower = () => async dispatch => {
-  const resp = await window.fetch(`${getApi()}power_percent_v2`)
+  const resp = await window.fetch(`${getApi()}power_percent_v3`)
   const data = await resp.json()
   dispatch(setPower(data))
 }

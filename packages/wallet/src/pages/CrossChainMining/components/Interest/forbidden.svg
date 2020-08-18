@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Mask</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="02-01跨链挖矿备份-2" transform="translate(-916.000000, -245.000000)" fill="#FF3B30" fill-rule="nonzero">
+            <g id="跨链挖矿" transform="translate(16.000000, 223.000000)">
+                <path d="M908,22 C903.584,22 900,25.584 900,30 C900,34.416 903.584,38 908,38 C912.416,38 916,34.416 916,30 C916,25.584 912.416,22 908,22 Z M908,30 C907.45,30 907,29.625 907,29.1666667 L907,25.8333333 C907,25.375 907.45,25 908,25 C908.55,25 909,25.375 909,25.8333333 L909,29.1666667 C909,29.625 908.55,30 908,30 Z M909,34 L907,34 L907,32 L909,32 L909,34 Z"
+                      id="Mask"></path>
+            </g>
+        </g>
+    </g>
+</svg>
