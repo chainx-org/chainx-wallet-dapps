@@ -280,5 +280,9 @@ export default {
       '使用支持 OP_RETURN 的钱包向锁仓地址转账（转账金额即锁仓金额），并输入OP_RETURN 信息。',
     en:
       'Transfer BTC to the lock-up address that supports OP_RETURN,( transfer amount is lockup amount),and enter OP_RETURN information.'
+  },
+  asset_chainx_receive_addr: {
+    zh: 'ChainX 接收地址',
+    en: 'ChainX dest address'
   }
 }

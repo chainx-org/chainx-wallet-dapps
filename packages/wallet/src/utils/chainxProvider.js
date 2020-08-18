@@ -59,7 +59,7 @@ function handleExtrinsicResult(err, status, resolve, reject) {
   resolve(status)
 }
 
-export async function signAndSendWithSigner(address, hex) {
+export async function signAndSendWithSigner(address, data) {
   let resolve = noneFunc,
     reject = noneFunc
   const promise = new Promise((resolve1, reject1) => {
@@ -68,15 +68,21 @@ export async function signAndSendWithSigner(address, hex) {
   })
 
   const signResult = await signer
-    .signAndSendExtrinsic(address, hex, (err, status) => {
+    .signAndSendChainx2Extrinsic(address, data, (err, status) => {
       handleExtrinsicResult(err, status, resolve, reject)
     })
     .catch(e => {
-      if (e && e.code === 'sign-transaction-busy') {
+      const errorCodes = ['sign-transaction-busy', 'invalid-sign-data']
+
+      if (e && errorCodes.includes(e.code)) {
         addAutoCloseSnackWithParams(
           store.dispatch,
           typeEnum.ERROR,
-          $t('COMMON_TX_ERROR_TITLE'),
+          $t(
+            e.code === errorCodes[1]
+              ? 'sign_invalid_tx'
+              : 'COMMON_TX_ERROR_TITLE'
+          ),
           getMessage(e),
           8
         )

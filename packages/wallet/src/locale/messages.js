@@ -8,6 +8,7 @@ import notification from './notification'
 import txs from './txs'
 import common from './common'
 import predict from './predict'
+import sign from './sign'
 
 const intention = {
   INTENTION_VALIDATOR: {
@@ -156,5 +157,6 @@ export default {
   ...chain,
   ...notification,
   ...txs,
-  ...predict
+  ...predict,
+  ...sign
 }

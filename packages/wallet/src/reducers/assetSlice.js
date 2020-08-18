@@ -1,6 +1,8 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { getChainx } from '../services/chainx'
 import { camelCaseKey } from './util'
+import BigNumber from 'bignumber.js'
+import { setSS58Format } from '@chainx-v2/keyring'
 
 const emptyAsset = {
   Free: '0',
@@ -13,6 +15,17 @@ const emptyAsset = {
 const assetSlice = createSlice({
   name: 'asset',
   initialState: {
+    nativeTokenInfo: {
+      ss58Format: 42,
+      tokenDecimals: 8,
+      tokenSymbol: 'PCX'
+    },
+    nativeAsset: {
+      free: '0',
+      reserved: '0',
+      miscFrozen: '0',
+      feeFrozen: '0'
+    },
     assetsInfo: [],
     assets: []
   },
@@ -26,6 +39,12 @@ const assetSlice = createSlice({
       reducer(state, action) {
         state.assets = action.payload
       }
+    },
+    setNativeAsset(state, action) {
+      state.nativeAsset = action.payload
+    },
+    setNativeTokenInfo(state, action) {
+      state.nativeTokenInfo = action.payload
     }
   }
 })
@@ -59,7 +78,31 @@ export const fetchAssetsInfo = () => async dispatch => {
   dispatch(setInfo(normalized))
 }
 
-export const { setInfo, setAssets } = assetSlice.actions
+export const fetchChainx2NativeAssetInfo = () => async dispatch => {
+  const api = getChainx()
+  const systemProperties = await api.rpc.system.properties()
+  const properties = systemProperties.toJSON()
+  setSS58Format(properties.ss58Format)
+  dispatch(setNativeTokenInfo(properties))
+}
+
+export const fetchChainx2NativeAsset = address => async dispatch => {
+  const api = getChainx()
+  const asset = await api.query.system.account(address)
+  let nativeAsset = {}
+  for (let [key, value] of asset.data.entries()) {
+    nativeAsset[key] = value.toString()
+  }
+
+  dispatch(setNativeAsset(nativeAsset))
+}
+
+export const {
+  setInfo,
+  setAssets,
+  setNativeAsset,
+  setNativeTokenInfo
+} = assetSlice.actions
 
 export const assetsInfoSelector = state => state.assets.assetsInfo
 export const assetsSelector = state => state.assets.assets
@@ -87,24 +130,24 @@ export const normalizedAssetsSelector = createSelector(
   }
 )
 
-export const pcxAssetSelector = createSelector(
-  normalizedAssetsSelector,
-  assets => {
-    return assets.find(asset => asset.token === 'PCX')
+export const pcxAssetSelector = state => state.assets.nativeAsset
+export const pcxFreeSelector = createSelector(
+  pcxAssetSelector,
+  ({ free, miscFrozen, feeFrozen }) => {
+    return new BigNumber(free)
+      .minus(miscFrozen)
+      .minus(feeFrozen)
+      .toString()
   }
 )
-
-export const pcxFreeSelector = createSelector(pcxAssetSelector, asset => {
-  const { details: { free } = {} } = asset || {}
-  return free
-})
-
-export const pcxPrecisionSelector = createSelector(
-  assetsInfoSelector,
-  infoArr => {
-    return infoArr
+export const pcxTotalSelector = createSelector(
+  pcxAssetSelector,
+  ({ free, reserved }) => {
+    return new BigNumber(free).plus(reserved).toString()
   }
 )
+export const pcxPrecisionSelector = state =>
+  state.assets.nativeTokenInfo.tokenDecimals
 
 export const pcxInfoSelector = createSelector(assetsInfoSelector, infoArr => {
   return infoArr.find(({ info }) => info.token === 'PCX') || {}

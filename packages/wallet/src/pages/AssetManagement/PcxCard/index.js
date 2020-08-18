@@ -4,7 +4,8 @@ import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   fetchAccountAssets,
-  fetchAssetsInfo
+  fetchAssetsInfo,
+  pcxPrecisionSelector
 } from '../../../reducers/assetSlice'
 import AssetView from './AssetView'
 import $t from '../../../locale'
@@ -13,7 +14,13 @@ import AccountInfo from './AccountInfo'
 import backgroundImg from './background.svg'
 import { WhiteButton } from '@chainx/ui'
 import { addressSelector } from '../../../reducers/addressSlice'
-import { pcxAssetSelector } from '@reducers/assetSlice'
+import {
+  fetchChainx2NativeAsset,
+  fetchChainx2NativeAssetInfo,
+  pcxAssetSelector,
+  pcxFreeSelector,
+  pcxTotalSelector
+} from '@reducers/assetSlice'
 import TransferDialog from '@pages/AssetManagement/TransferDialog'
 
 const InnerWrapper = styled.div`
@@ -58,8 +65,11 @@ export default function() {
   const address = useSelector(addressSelector)
 
   const pcxAsset = useSelector(pcxAssetSelector)
-  const { details: { free, reservedDexSpot } = {}, details, total, precision } =
-    pcxAsset || {}
+  const pcxFree = useSelector(pcxFreeSelector)
+  const total = useSelector(pcxTotalSelector)
+  const precision = useSelector(pcxPrecisionSelector)
+  console.log('pcxAsset', pcxAsset)
+  const { details: { reservedDexSpot } = {}, details } = pcxAsset || {}
 
   const dispatch = useDispatch()
   const [transferOpen, setTransferOpen] = useState(false)
@@ -68,6 +78,8 @@ export default function() {
 
   useEffect(() => {
     dispatch(fetchAccountAssets(address))
+    dispatch(fetchChainx2NativeAssetInfo())
+    dispatch(fetchChainx2NativeAsset(address))
   }, [dispatch, address])
 
   useEffect(() => {
@@ -86,11 +98,11 @@ export default function() {
           <AccountInfo />
         </header>
         <section className="free">
-          {free && (
+          {pcxFree && (
             <AssetView
               bold
               title={$t('ASSET_FREE')}
-              value={free}
+              value={pcxFree}
               precision={precision}
             />
           )}
@@ -102,13 +114,15 @@ export default function() {
           </WhiteButton>
         </section>
         <section className="details">
+          {total && (
+            <AssetView
+              title={$t('ASSET_TOTAL')}
+              value={total}
+              precision={precision}
+            />
+          )}
           {details && (
             <>
-              <AssetView
-                title={$t('ASSET_TOTAL')}
-                value={total}
-                precision={precision}
-              />
               <AssetView
                 title={$t('ASSET_RESERVED_DEX_SPOT')}
                 value={reservedDexSpot}

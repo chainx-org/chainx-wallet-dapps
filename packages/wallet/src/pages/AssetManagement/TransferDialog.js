@@ -1,31 +1,22 @@
 import React, { useState } from 'react'
-import {
-  AmountInput,
-  Dialog,
-  PrimaryButton,
-  SelectInput,
-  TextInput
-} from '@chainx/ui'
+import { AmountInput, Dialog, PrimaryButton, SelectInput } from '@chainx/ui'
 import styled from 'styled-components'
 import $t from '../../locale'
 import { canRequestSign, retry, toPrecision } from '../../utils'
 import { useDispatch, useSelector } from 'react-redux'
-import { xbtcFreeSelector } from './Assets/XbtcCard/selectors'
-import { getChainx } from '../../services/chainx'
 import { addressSelector } from '../../reducers/addressSlice'
 import BigNumber from 'bignumber.js'
-import { sdotFreeSelector } from './Assets/selectors'
 import { Label, Value } from './components'
 import { showSnack, signAndSendExtrinsic } from '../../utils/chainxProvider'
-import { fetchAccountAssets, pcxAssetSelector } from '../../reducers/assetSlice'
 import {
-  checkAmountAndHasError,
-  checkMemoAndHasError
-} from '../../utils/errorCheck'
+  fetchAccountAssets,
+  pcxPrecisionSelector
+} from '../../reducers/assetSlice'
+import { checkAmountAndHasError } from '../../utils/errorCheck'
 import { isDemoSelector } from '../../selectors'
 import { fetchTransfers } from '../../reducers/transactionSlice'
-import { accountIdSelector } from '../selectors/assets'
 import { pcxFreeSelector } from '@reducers/assetSlice'
+import { Account } from '@chainx-v2/account'
 
 const StyledDialog = styled(Dialog)`
   div.wrapper {
@@ -60,39 +51,30 @@ export default function({ handleClose, token }) {
   const [amountErrMsg, setAmountErrMsg] = useState('')
 
   const pcxFree = useSelector(pcxFreeSelector)
-  console.log('pcxFree', pcxFree)
-  const pcxAsset = useSelector(pcxAssetSelector)
-  console.log('pcxAsset', pcxAsset)
+  const pcxPrecision = useSelector(pcxPrecisionSelector)
 
   // const { free: xbtcFree, precision: xbtcPrecision } = useSelector(
   //   xbtcFreeSelector
   // )
-  //
-  // const { free: pcxFree, precision: pcxPrecision } = useSelector(
-  //   pcxFreeSelector
-  // )
 
-  let free = 0
-  let precision = 8
+  let free = pcxFree
+  let precision = pcxPrecision
   // if (token === 'BTC') {
   //   free = xbtcFree
   //   precision = xbtcPrecision
   // }
 
-  const [memo, setMemo] = useState('')
-  const [memoErrMsg, setMemoErrMsg] = useState('')
   const [disabled, setDisabled] = useState(false)
 
   const dispatch = useDispatch()
 
   const tokenName = token === 'BTC' ? 'X-BTC' : token
 
-  const chainx = getChainx()
   // const accountId = useSelector(accountIdSelector)
   const accountId = null
 
   const sign = async () => {
-    const isAddressValid = chainx.account.isAddressValid(address)
+    const isAddressValid = Account.isAddressValid(address)
     if (!isAddressValid) {
       setAddressErrMsg($t('ASSET_TRANSFER_ADDR_ERROR'))
       return
@@ -100,7 +82,6 @@ export default function({ handleClose, token }) {
 
     if (
       checkAmountAndHasError(amount, free, precision, setAmountErrMsg) ||
-      checkMemoAndHasError(memo, setMemoErrMsg) ||
       !canRequestSign()
     ) {
       return
@@ -108,15 +89,15 @@ export default function({ handleClose, token }) {
 
     const realAmount = BigNumber(amount)
       .multipliedBy(Math.pow(10, precision))
-      .toNumber()
+      .toString()
 
     setDisabled(true)
     try {
-      const extrinsic = chainx.asset.transfer(address, token, realAmount, memo)
-      const status = await signAndSendExtrinsic(
-        accountAddress,
-        extrinsic.toHex()
-      )
+      const status = await signAndSendExtrinsic(accountAddress, {
+        section: 'balances',
+        method: 'transfer',
+        params: [address, realAmount]
+      })
 
       const messages = {
         successTitle: $t('NOTIFICATION_TRANSFER_SUCCESS'),
@@ -155,7 +136,7 @@ export default function({ handleClose, token }) {
         <div>
           <SelectInput
             value={address}
-            placeholder="ChainX 接收地址"
+            placeholder={$t('asset_chainx_receive_addr')}
             onChange={value => {
               setAddressErrMsg('')
               setAddress(value)
@@ -190,21 +171,6 @@ export default function({ handleClose, token }) {
               </Value>
             </div>
           ) : null}
-        </div>
-
-        <div>
-          <TextInput
-            value={memo}
-            onChange={value => {
-              setMemoErrMsg('')
-              setMemo(value)
-            }}
-            multiline={true}
-            rows={2}
-            placeholder={$t('COMMON_MEMO')}
-            error={!!memoErrMsg}
-            errorText={memoErrMsg}
-          />
         </div>
 
         <div>
