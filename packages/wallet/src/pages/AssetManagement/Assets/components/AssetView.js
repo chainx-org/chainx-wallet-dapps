@@ -22,13 +22,19 @@ const Value = styled.p`
       line-height: 24px;
       font-weight: 600;
     `}
+
+  ${props =>
+    props.disabled &&
+    css`
+      opacity: 0.32;
+    `}
 `
 
 export default React.memo(function(props) {
   return (
     <div className={props.className}>
       <Title>{props.title}</Title>
-      <Value bold={props.bold}>
+      <Value bold={props.bold} disabled={props.disabled}>
         {props.bold ? (
           toPrecision(props.value, props.precision)
         ) : (

@@ -150,8 +150,8 @@ export default function Power() {
     '#F6C94A',
     '#C2C2C2',
     '#46AEE2',
-    '#34C69A',
-    '#D64CAB',
+    // '#34C69A',
+    // '#D64CAB',
     '#F7931B'
   ]
 

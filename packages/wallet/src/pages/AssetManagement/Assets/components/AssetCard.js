@@ -9,14 +9,14 @@ const Hr = styled.hr`
 `
 
 export default function(props) {
-  const { meta, details, logo } = props
+  const { meta, details, logo, disabled } = props
   const showAsset =
     props.meta.precision && Object.keys(props.details).length > 0
 
   const name = meta.name === 'BTC' ? 'X-BTC' : meta.name
 
   return (
-    <Card>
+    <Card disabled={disabled}>
       <header>
         <Logo logo={logo} name={name} tokenName={meta.tokenName} />
       </header>
@@ -25,6 +25,7 @@ export default function(props) {
           title="Balance"
           value={details.free}
           precision={meta.precision}
+          disabled={disabled}
           bold
         />
       )}
