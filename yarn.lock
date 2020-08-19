@@ -1047,118 +1047,60 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@chainx-v2/account@0.0.3-beta.26":
-  version "0.0.3-beta.26"
-  resolved "https://registry.npm.taobao.org/@chainx-v2/account/download/@chainx-v2/account-0.0.3-beta.26.tgz#5a86d7f380c281dc0ef1ddf720d9211583aa879d"
-  integrity sha1-WobX84DCgdwO8d33INkhFYOqh50=
+"@chainx-v2/account@^0.0.16":
+  version "0.0.16"
+  resolved "https://registry.npmjs.org/@chainx-v2/account/-/account-0.0.16.tgz#4f553f18816e51610a64b69cf21db1a088181ce7"
+  integrity sha512-T9fh8Ma1BpiCjBYZK/4SMZ49mo0w0N5zyCMHRS9E3VMXA05wdeFimtgN+g+ABRUKIV/Ks81w46464B9OjrYfAQ==
   dependencies:
-    "@chainx-v2/keyring" "0.0.3-beta.26"
+    "@chainx-v2/keyring" "^0.0.16"
     "@types/node" "^14.0.23"
     bip32 "^1.0.2"
     bs58 "^4.0.1"
     tweetnacl "^1.0.0"
 
-"@chainx-v2/account@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.npmjs.org/@chainx-v2/account/-/account-0.0.13.tgz#ce3d6d13a42e722943981f04e1219f97d7209054"
-  integrity sha512-Q0BDEkMfKq6RBv82VpGh1pDYYPTc+7EreAp/bByQsqOdpaKgZLnX9CwQbb0R3L5Qrr/KWGef1cgQuSP7QSkj9w==
-  dependencies:
-    "@chainx-v2/keyring" "0.0.3-beta.26"
-    "@types/node" "^14.0.23"
-    bip32 "^1.0.2"
-    bs58 "^4.0.1"
-    tweetnacl "^1.0.0"
-
-"@chainx-v2/account@^0.0.14":
-  version "0.0.14"
-  resolved "https://registry.npmjs.org/@chainx-v2/account/-/account-0.0.14.tgz#80b5ecaf78f0fecf061056f83a2cc56e65d98ae8"
-  integrity sha512-gJ1xYvBd+q5O7hcG0Urx0GrE7iVOe1bCj7fdmQL7qqHvdWGQmRt5ZSDEwZip9fYTxg1OGOhfQwy7NYYgEDlD1w==
-  dependencies:
-    "@chainx-v2/keyring" "^0.0.13"
-    "@types/node" "^14.0.23"
-    bip32 "^1.0.2"
-    bs58 "^4.0.1"
-    tweetnacl "^1.0.0"
-
-"@chainx-v2/api-derive@0.0.3-beta.26":
-  version "0.0.3-beta.26"
-  resolved "https://registry.npm.taobao.org/@chainx-v2/api-derive/download/@chainx-v2/api-derive-0.0.3-beta.26.tgz#1a5c5cce1e5ab7de22bc059dd0cfdfce91ece645"
-  integrity sha1-Glxczh5at94ivAWd0M/fzpHs5kU=
+"@chainx-v2/api-derive@^0.0.16":
+  version "0.0.16"
+  resolved "https://registry.npmjs.org/@chainx-v2/api-derive/-/api-derive-0.0.16.tgz#193b167670c383a9b33368e4c25ce31ca1842943"
+  integrity sha512-8K46bRM7pRusSS+nJUMkq8pkLYM5MIb5+I7+VRdoxBPibHwnXG00glnGjEI6s0gjaXzFgF0f5Sn3VBT6nOW38w==
   dependencies:
     "@babel/runtime" "^7.10.3"
-    "@chainx-v2/api" "0.0.3-beta.26"
-    "@chainx-v2/crypto" "0.0.3-beta.26"
-    "@chainx-v2/rpc-core" "0.0.3-beta.26"
-    "@chainx-v2/rpc-provider" "0.0.3-beta.26"
-    "@chainx-v2/types" "0.0.3-beta.26"
-    "@chainx-v2/util" "0.0.3-beta.26"
+    "@chainx-v2/api" "^0.0.16"
+    "@chainx-v2/crypto" "^0.0.16"
+    "@chainx-v2/rpc-core" "^0.0.16"
+    "@chainx-v2/rpc-provider" "^0.0.16"
+    "@chainx-v2/types" "^0.0.16"
+    "@chainx-v2/util" "^0.0.16"
     bn.js "^5.1.2"
     memoizee "^0.4.14"
     rxjs "^6.5.5"
 
-"@chainx-v2/api-derive@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.npmjs.org/@chainx-v2/api-derive/-/api-derive-0.0.13.tgz#4835f1987fa2a938f964f8e9eb49704909399e5c"
-  integrity sha512-O2HO++7bCfRDzcx/cPJG20A1BvSINbRkMbxS2AuBmKTBzlKmrTxKFvEM5NvFTkOfTDhOJasNAIU/tYhnBWZtuQ==
+"@chainx-v2/api@^0.0.16":
+  version "0.0.16"
+  resolved "https://registry.npmjs.org/@chainx-v2/api/-/api-0.0.16.tgz#ae037a84c08f1a67566cab734538f83dba732989"
+  integrity sha512-klasrcaumdJMdqIfQdby49Rl5By2whgHO+SIbT46/lpgoR/r0On7mTyUig2a5giSt5nEMIG4lME0U0+Vy+l3Uw==
   dependencies:
     "@babel/runtime" "^7.10.3"
-    "@chainx-v2/api" "0.0.3-beta.26"
-    "@chainx-v2/crypto" "0.0.3-beta.26"
-    "@chainx-v2/rpc-core" "0.0.3-beta.26"
-    "@chainx-v2/rpc-provider" "0.0.3-beta.26"
-    "@chainx-v2/types" "0.0.3-beta.26"
-    "@chainx-v2/util" "0.0.3-beta.26"
-    bn.js "^5.1.2"
-    memoizee "^0.4.14"
-    rxjs "^6.5.5"
-
-"@chainx-v2/api@0.0.3-beta.26":
-  version "0.0.3-beta.26"
-  resolved "https://registry.npm.taobao.org/@chainx-v2/api/download/@chainx-v2/api-0.0.3-beta.26.tgz#5aff4d9f6bd7bf7b9f6f70fb713b876d328b3dae"
-  integrity sha1-Wv9Nn2vXv3ufb3D7cTuHbTKLPa4=
-  dependencies:
-    "@babel/runtime" "^7.10.3"
-    "@chainx-v2/account" "0.0.3-beta.26"
-    "@chainx-v2/api-derive" "0.0.3-beta.26"
-    "@chainx-v2/crypto" "0.0.3-beta.26"
-    "@chainx-v2/keyring" "0.0.3-beta.26"
-    "@chainx-v2/metadata" "0.0.3-beta.26"
-    "@chainx-v2/rpc-core" "0.0.3-beta.26"
-    "@chainx-v2/rpc-provider" "0.0.3-beta.26"
-    "@chainx-v2/types" "0.0.3-beta.26"
-    "@chainx-v2/types-known" "0.0.3-beta.26"
-    "@chainx-v2/util" "0.0.3-beta.26"
+    "@chainx-v2/account" "^0.0.16"
+    "@chainx-v2/api-derive" "^0.0.16"
+    "@chainx-v2/crypto" "^0.0.16"
+    "@chainx-v2/keyring" "^0.0.16"
+    "@chainx-v2/metadata" "^0.0.16"
+    "@chainx-v2/rpc-core" "^0.0.16"
+    "@chainx-v2/rpc-provider" "^0.0.16"
+    "@chainx-v2/types" "^0.0.16"
+    "@chainx-v2/types-known" "^0.0.16"
+    "@chainx-v2/util" "^0.0.16"
     bn.js "^5.1.2"
     eventemitter3 "^4.0.4"
     rxjs "^6.5.5"
 
-"@chainx-v2/api@^0.0.14":
-  version "0.0.14"
-  resolved "https://registry.npmjs.org/@chainx-v2/api/-/api-0.0.14.tgz#e0644a714ab611d559c8840277e0e6e6a1cf339d"
-  integrity sha512-YklP+5RY4CMa9iUKcToCRR2HGNVuzuvAS+CdLM1rV4+mQyCP1AAjLrqDGpYxuPF5RYa5guZ0d6HyzwA5hyaZgA==
-  dependencies:
-    "@babel/runtime" "^7.10.3"
-    "@chainx-v2/account" "^0.0.13"
-    "@chainx-v2/api-derive" "^0.0.13"
-    "@chainx-v2/crypto" "^0.0.13"
-    "@chainx-v2/keyring" "^0.0.13"
-    "@chainx-v2/metadata" "^0.0.13"
-    "@chainx-v2/rpc-core" "^0.0.13"
-    "@chainx-v2/rpc-provider" "^0.0.13"
-    "@chainx-v2/types" "^0.0.13"
-    "@chainx-v2/types-known" "^0.0.13"
-    "@chainx-v2/util" "^0.0.13"
-    bn.js "^5.1.2"
-    eventemitter3 "^4.0.4"
-    rxjs "^6.5.5"
-
-"@chainx-v2/crypto@0.0.3-beta.26":
-  version "0.0.3-beta.26"
-  resolved "https://registry.npm.taobao.org/@chainx-v2/crypto/download/@chainx-v2/crypto-0.0.3-beta.26.tgz#6d73869b682655b2b9ecb31a654439c4c3a1f596"
-  integrity sha1-bXOGm2gmVbK57LMaZUQ5xMOh9ZY=
+"@chainx-v2/crypto@^0.0.16":
+  version "0.0.16"
+  resolved "https://registry.npmjs.org/@chainx-v2/crypto/-/crypto-0.0.16.tgz#6e3f978522da2594aa32647b4200ba2d096f9e68"
+  integrity sha512-M//AfnbCJp/yhlp4nfEnIjBAlYiu2EhlFAsMv/Qnq5+sIB4d5qXv48aKRybp49Ld2aKHfn3DpL09heyfOGGrBQ==
   dependencies:
     "@babel/runtime" "^7.10.5"
-    "@chainx-v2/util" "0.0.3-beta.22"
+    "@chainx-v2/util" "^0.0.16"
     "@polkadot/util" "^2.18.1"
     "@polkadot/wasm-crypto" "^1.2.1"
     base-x "^3.0.8"
@@ -1171,220 +1113,83 @@
     tweetnacl "^1.0.3"
     xxhashjs "^0.2.2"
 
-"@chainx-v2/crypto@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.npmjs.org/@chainx-v2/crypto/-/crypto-0.0.13.tgz#09c3f154fda587f66d72a4db9d350337a8be9137"
-  integrity sha512-erRlCop66RSlgx1SuJP9HAQOpLRx/D6lF0OXDvrvbFR5ljFE+ti3TvtuIwD0tdSevdySq0qoG7Ky8KQgscsgWw==
+"@chainx-v2/keyring@^0.0.16":
+  version "0.0.16"
+  resolved "https://registry.npmjs.org/@chainx-v2/keyring/-/keyring-0.0.16.tgz#7b408f9115d4de130d5901a267b691a63e2e0358"
+  integrity sha512-wymaAQgLYx7aw5yT7sV6bfcDWMT4wZfwi+4XClOeeza9Ga4znMmCiuEKxXJkq13sL1b94fGqYngYFRHqwKBtFA==
   dependencies:
     "@babel/runtime" "^7.10.5"
-    "@chainx-v2/util" "0.0.3-beta.22"
-    "@polkadot/util" "^2.18.1"
-    "@polkadot/wasm-crypto" "^1.2.1"
-    base-x "^3.0.8"
-    bip39 "^3.0.2"
-    blakejs "^1.1.0"
-    bn.js "^5.1.2"
-    elliptic "^6.5.3"
-    js-sha3 "^0.8.0"
-    pbkdf2 "^3.1.1"
-    tweetnacl "^1.0.3"
-    xxhashjs "^0.2.2"
+    "@chainx-v2/crypto" "^0.0.16"
+    "@chainx-v2/util" "^0.0.16"
 
-"@chainx-v2/keyring@0.0.3-beta.26":
-  version "0.0.3-beta.26"
-  resolved "https://registry.npm.taobao.org/@chainx-v2/keyring/download/@chainx-v2/keyring-0.0.3-beta.26.tgz#daed3abb9ad8739fca6f1a8c32afedb542b4305a"
-  integrity sha1-2u06u5rYc5/KbxqMMq/ttUK0MFo=
-  dependencies:
-    "@babel/runtime" "^7.10.5"
-    "@chainx-v2/crypto" "0.0.3-beta.26"
-    "@chainx-v2/util" "0.0.3-beta.16"
-
-"@chainx-v2/keyring@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.npmjs.org/@chainx-v2/keyring/-/keyring-0.0.13.tgz#7d0d83f789fbaf79e238b753927eadae3d66755a"
-  integrity sha512-cyLOX+AXb1ustXzxw6rxmyZ4Ta6mwMh59JtDNeAAUU11vdSYif8wvuRFqFk1dIfLFjP8D0K8SKwcVnjzkHsI0A==
-  dependencies:
-    "@babel/runtime" "^7.10.5"
-    "@chainx-v2/crypto" "0.0.3-beta.26"
-    "@chainx-v2/util" "0.0.3-beta.16"
-
-"@chainx-v2/keyring@^0.0.14":
-  version "0.0.14"
-  resolved "https://registry.npmjs.org/@chainx-v2/keyring/-/keyring-0.0.14.tgz#1d7a6255d1ffaada20ff8199f5d0f8c88cea76e9"
-  integrity sha512-teIxLUoTagzatA1tUipiusBzoxVC9y63KHBe0m27G0uAGe9m+nPGZ4Xtq1RZbxBYhNvcw70f8d3xOHftprciUw==
-  dependencies:
-    "@babel/runtime" "^7.10.5"
-    "@chainx-v2/crypto" "^0.0.13"
-    "@chainx-v2/util" "^0.0.13"
-
-"@chainx-v2/metadata@0.0.3-beta.26":
-  version "0.0.3-beta.26"
-  resolved "https://registry.npm.taobao.org/@chainx-v2/metadata/download/@chainx-v2/metadata-0.0.3-beta.26.tgz#61648adcf156fadd1227f527a6d454a0309d3b70"
-  integrity sha1-YWSK3PFW+t0SJ/UnptRUoDCdO3A=
+"@chainx-v2/metadata@^0.0.16":
+  version "0.0.16"
+  resolved "https://registry.npmjs.org/@chainx-v2/metadata/-/metadata-0.0.16.tgz#896e4f29ddf0560881f0732bb1e613f245e3598f"
+  integrity sha512-Ss2BpWGoaZp7Mu5WehNlA11m+NQ2xekDLK92IEU8DUTkoeymBqYAtj6U7RGznGwP8Fsi9Fb8R/PttNrnO6S6kg==
   dependencies:
     "@babel/runtime" "^7.10.3"
-    "@chainx-v2/crypto" "0.0.3-beta.26"
-    "@chainx-v2/types" "0.0.3-beta.26"
-    "@chainx-v2/types-known" "0.0.3-beta.26"
-    "@chainx-v2/util" "0.0.3-beta.26"
+    "@chainx-v2/crypto" "^0.0.16"
+    "@chainx-v2/types" "^0.0.16"
+    "@chainx-v2/types-known" "^0.0.16"
+    "@chainx-v2/util" "^0.0.16"
     bn.js "^5.1.2"
 
-"@chainx-v2/metadata@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.npmjs.org/@chainx-v2/metadata/-/metadata-0.0.13.tgz#5f86d87a44d8eed5f59258b1537a2e7dc4cbc8ae"
-  integrity sha512-61x7RJfQYKS5mrmg9uJN7Co3P74yZXnj82iRG4cbHqAz+I2nlciN+QycndmS3LxdNGKkLK5KRM4xruO8k8OOmQ==
+"@chainx-v2/rpc-core@^0.0.16":
+  version "0.0.16"
+  resolved "https://registry.npmjs.org/@chainx-v2/rpc-core/-/rpc-core-0.0.16.tgz#b09ebec1dcf4b9f56b7cc34ba8bfec545d2a9f6e"
+  integrity sha512-N6zSdg8WkRFqsNYqVLXmZkJ/+q65WU60rbHjKtf/wg7r3mddolvU/DxtZqn5WXgPKurnj4jM682v6jAEYEIcMw==
   dependencies:
     "@babel/runtime" "^7.10.3"
-    "@chainx-v2/crypto" "0.0.3-beta.26"
-    "@chainx-v2/types" "0.0.3-beta.26"
-    "@chainx-v2/types-known" "0.0.3-beta.26"
-    "@chainx-v2/util" "0.0.3-beta.26"
-    bn.js "^5.1.2"
-
-"@chainx-v2/rpc-core@0.0.3-beta.26":
-  version "0.0.3-beta.26"
-  resolved "https://registry.npm.taobao.org/@chainx-v2/rpc-core/download/@chainx-v2/rpc-core-0.0.3-beta.26.tgz#eb81de51bbb885c7eb7c3b734e294bdf6a22ec4e"
-  integrity sha1-64HeUbu4hcfrfDtzTilL32oi7E4=
-  dependencies:
-    "@babel/runtime" "^7.10.3"
-    "@chainx-v2/metadata" "0.0.3-beta.26"
-    "@chainx-v2/rpc-provider" "0.0.3-beta.26"
-    "@chainx-v2/types" "0.0.3-beta.26"
-    "@chainx-v2/util" "0.0.3-beta.26"
+    "@chainx-v2/metadata" "^0.0.16"
+    "@chainx-v2/rpc-provider" "^0.0.16"
+    "@chainx-v2/types" "^0.0.16"
+    "@chainx-v2/util" "^0.0.16"
     memoizee "^0.4.14"
     rxjs "^6.5.5"
 
-"@chainx-v2/rpc-core@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.npmjs.org/@chainx-v2/rpc-core/-/rpc-core-0.0.13.tgz#7e6221debe61c93144a57c522b106832395f13b0"
-  integrity sha512-LSf85xqs/hoM4qtSZR0ULSLEqKdV7I40yxiWO7D3deFJPjnC1nK2YHeIJ1jlFY12kbqQbMN6H7Ua4CswRSIQHA==
+"@chainx-v2/rpc-provider@^0.0.16":
+  version "0.0.16"
+  resolved "https://registry.npmjs.org/@chainx-v2/rpc-provider/-/rpc-provider-0.0.16.tgz#c65cc020043425f76067cc520ac2afab404ed42f"
+  integrity sha512-UHfU/kE04NrhUsWTO1YAA+jkza6Y88/OwknLip0HGrSO4ldTil+daynW9FyTxAb3NuWe5+iE+xPFUxOmWjCjDQ==
   dependencies:
     "@babel/runtime" "^7.10.3"
-    "@chainx-v2/metadata" "0.0.3-beta.26"
-    "@chainx-v2/rpc-provider" "0.0.3-beta.26"
-    "@chainx-v2/types" "0.0.3-beta.26"
-    "@chainx-v2/util" "0.0.3-beta.26"
-    memoizee "^0.4.14"
-    rxjs "^6.5.5"
-
-"@chainx-v2/rpc-provider@0.0.3-beta.26":
-  version "0.0.3-beta.26"
-  resolved "https://registry.npm.taobao.org/@chainx-v2/rpc-provider/download/@chainx-v2/rpc-provider-0.0.3-beta.26.tgz#687a254f5faa9cc368cb49a3ba2d07a24229d9c1"
-  integrity sha1-aHolT1+qnMNoy0mjui0HokIp2cE=
-  dependencies:
-    "@babel/runtime" "^7.10.3"
-    "@chainx-v2/crypto" "0.0.3-beta.26"
-    "@chainx-v2/metadata" "0.0.3-beta.26"
-    "@chainx-v2/types" "0.0.3-beta.26"
-    "@chainx-v2/util" "0.0.3-beta.26"
+    "@chainx-v2/crypto" "^0.0.16"
+    "@chainx-v2/metadata" "^0.0.16"
+    "@chainx-v2/types" "^0.0.16"
+    "@chainx-v2/util" "^0.0.16"
     bn.js "^5.1.2"
     eventemitter3 "^4.0.4"
     isomorphic-fetch "^2.2.1"
     websocket "^1.0.31"
 
-"@chainx-v2/rpc-provider@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.npmjs.org/@chainx-v2/rpc-provider/-/rpc-provider-0.0.13.tgz#55763da0351b8c05443552e3d89a2d11409b872c"
-  integrity sha512-30E5xKXZR07IZPAHo7gBvQWDG+dKj7OVRl7xBY+Kxrl9C55QFGAV6h5ir5LYKw0PMzTVJK5IoR7CvNZGmGJbyQ==
+"@chainx-v2/types-known@^0.0.16":
+  version "0.0.16"
+  resolved "https://registry.npmjs.org/@chainx-v2/types-known/-/types-known-0.0.16.tgz#0dc992af339daa23792c6df3f1480b7d30f1b613"
+  integrity sha512-OVfVDA5U5oUo/s2L1ke5juyHRgJel1ohyF9R1xv7wsetYyBODsXX5QmQfhY2yvE2NRQBRzIG8j0YkajGD/7kLg==
   dependencies:
     "@babel/runtime" "^7.10.3"
-    "@chainx-v2/crypto" "0.0.3-beta.26"
-    "@chainx-v2/metadata" "0.0.3-beta.26"
-    "@chainx-v2/types" "0.0.3-beta.26"
-    "@chainx-v2/util" "0.0.3-beta.26"
-    bn.js "^5.1.2"
-    eventemitter3 "^4.0.4"
-    isomorphic-fetch "^2.2.1"
-    websocket "^1.0.31"
-
-"@chainx-v2/types-known@0.0.3-beta.26":
-  version "0.0.3-beta.26"
-  resolved "https://registry.npm.taobao.org/@chainx-v2/types-known/download/@chainx-v2/types-known-0.0.3-beta.26.tgz#c3916215c7e8d4062e81d8ced4920f6bc18a6f58"
-  integrity sha1-w5FiFcfo1AYugdjO1JIPa8GKb1g=
-  dependencies:
-    "@babel/runtime" "^7.10.3"
-    "@chainx-v2/types" "0.0.3-beta.26"
-    "@chainx-v2/util" "0.0.3-beta.26"
+    "@chainx-v2/types" "^0.0.16"
+    "@chainx-v2/util" "^0.0.16"
     bn.js "^5.1.2"
 
-"@chainx-v2/types-known@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.npmjs.org/@chainx-v2/types-known/-/types-known-0.0.13.tgz#defc050a824ff79c1f16b32aaf0919dbef873667"
-  integrity sha512-Fn5qlo9bKjD1QehyCOMBgtweAVEW2vmSRT9PxJCgHhWgULxfX/8Jgr1Y3pZSB8QPNXLdp2jzBjGyR2RTqgn3Fw==
+"@chainx-v2/types@^0.0.16":
+  version "0.0.16"
+  resolved "https://registry.npmjs.org/@chainx-v2/types/-/types-0.0.16.tgz#52698a21e3f61f40c7da6ca5002ab14a9daa223a"
+  integrity sha512-Wakyf70L2qijoCR2n92Va4UZo21zL7G1eRPOKuBrVom5hSQd+tdoA/087++mS6k1eo8/lyqncSm8n1HRd+qliA==
   dependencies:
     "@babel/runtime" "^7.10.3"
-    "@chainx-v2/types" "0.0.3-beta.26"
-    "@chainx-v2/util" "0.0.3-beta.26"
-    bn.js "^5.1.2"
-
-"@chainx-v2/types@0.0.3-beta.26":
-  version "0.0.3-beta.26"
-  resolved "https://registry.npm.taobao.org/@chainx-v2/types/download/@chainx-v2/types-0.0.3-beta.26.tgz#b452e398ed273a81a4296e2d93f9e39a4833dc5e"
-  integrity sha1-tFLjmO0nOoGkKW4tk/njmkgz3F4=
-  dependencies:
-    "@babel/runtime" "^7.10.3"
-    "@chainx-v2/crypto" "0.0.3-beta.26"
-    "@chainx-v2/metadata" "0.0.3-beta.26"
-    "@chainx-v2/util" "0.0.3-beta.26"
+    "@chainx-v2/crypto" "^0.0.16"
+    "@chainx-v2/metadata" "^0.0.16"
+    "@chainx-v2/util" "^0.0.16"
     "@types/bn.js" "^4.11.6"
     bn.js "^5.1.2"
     memoizee "^0.4.14"
     rxjs "^6.5.5"
 
-"@chainx-v2/types@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.npmjs.org/@chainx-v2/types/-/types-0.0.13.tgz#d53d973fb0c3247e8bdb1fdde63cf1ec1eda4564"
-  integrity sha512-VSAXinorVVaiOTDGv0TM6Nq2RGP7X5iEHw9Zq4dLNrG+kyqS+L2nqJoGXeNxQV2Czk9P7pZXyrzgZ5XnY4xtxg==
-  dependencies:
-    "@babel/runtime" "^7.10.3"
-    "@chainx-v2/crypto" "0.0.3-beta.26"
-    "@chainx-v2/metadata" "0.0.3-beta.26"
-    "@chainx-v2/util" "0.0.3-beta.26"
-    "@types/bn.js" "^4.11.6"
-    bn.js "^5.1.2"
-    memoizee "^0.4.14"
-    rxjs "^6.5.5"
-
-"@chainx-v2/util@0.0.3-beta.16":
-  version "0.0.3-beta.16"
-  resolved "https://registry.npm.taobao.org/@chainx-v2/util/download/@chainx-v2/util-0.0.3-beta.16.tgz#8702bf4bb7a69bf704ca2058fc99eb77515fe284"
-  integrity sha1-hwK/S7emm/cEyiBY/Jnrd1Ff4oQ=
-  dependencies:
-    "@babel/runtime" "^7.10.5"
-    "@types/bn.js" "^4.11.6"
-    bn.js "^5.1.2"
-    camelcase "^5.3.1"
-    chalk "^4.1.0"
-    ip-regex "^4.1.0"
-
-"@chainx-v2/util@0.0.3-beta.22":
-  version "0.0.3-beta.22"
-  resolved "https://registry.npm.taobao.org/@chainx-v2/util/download/@chainx-v2/util-0.0.3-beta.22.tgz#1a41c3b4927fb9552323b8b3070a660d48a57152"
-  integrity sha1-GkHDtJJ/uVUjI7izBwpmDUilcVI=
-  dependencies:
-    "@babel/runtime" "^7.10.5"
-    "@types/bn.js" "^4.11.6"
-    bn.js "^5.1.2"
-    camelcase "^5.3.1"
-    chalk "^4.1.0"
-    ip-regex "^4.1.0"
-
-"@chainx-v2/util@0.0.3-beta.26":
-  version "0.0.3-beta.26"
-  resolved "https://registry.npm.taobao.org/@chainx-v2/util/download/@chainx-v2/util-0.0.3-beta.26.tgz#84f94e7e458fbe88fa5f68e163d070c176ce18a6"
-  integrity sha1-hPlOfkWPvoj6X2jhY9BwwXbOGKY=
-  dependencies:
-    "@babel/runtime" "^7.10.5"
-    "@types/bn.js" "^4.11.6"
-    bn.js "^5.1.2"
-    camelcase "^5.3.1"
-    chalk "^4.1.0"
-    ip-regex "^4.1.0"
-
-"@chainx-v2/util@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.npmjs.org/@chainx-v2/util/-/util-0.0.13.tgz#5bb158d77d7499c0df40ba3470df2769c480cd5c"
-  integrity sha512-Itgc4hnjMvM6zH0rlOc5KxgaH+YrN+GpZeVcTojKexTfU2hHlzOznPSoWpCLv5OnX9iQctzw1kECFngO/ZAxow==
+"@chainx-v2/util@^0.0.16":
+  version "0.0.16"
+  resolved "https://registry.npmjs.org/@chainx-v2/util/-/util-0.0.16.tgz#2c1a530e902db838a6bf6cff112f0e7cbfb9f20c"
+  integrity sha512-5odJ4oJbUMcOED2ZMGJRt8eVLkaemr2PuIhg+olk6yiJ40q/ysQ/e1nVPZnsqlUU7v/CkfU4Wh1O41gSxSnWig==
   dependencies:
     "@babel/runtime" "^7.10.5"
     "@types/bn.js" "^4.11.6"
