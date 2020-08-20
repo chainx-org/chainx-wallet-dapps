@@ -3,8 +3,10 @@ import Card from '../../../components/Card'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import {
+  dexReserveSelector,
   fetchAccountAssets,
   fetchAssetsInfo,
+  locksSelector,
   pcxPrecisionSelector
 } from '../../../reducers/assetSlice'
 import AssetView from './AssetView'
@@ -17,7 +19,8 @@ import { addressSelector } from '../../../reducers/addressSlice'
 import {
   fetchChainx2NativeAsset,
   fetchChainx2NativeAssetInfo,
-  pcxAssetSelector,
+  fetchDexReserves,
+  fetchLocks,
   pcxFreeSelector,
   pcxTotalSelector
 } from '@reducers/assetSlice'
@@ -64,22 +67,26 @@ const CornerBackground = styled.div`
 export default function() {
   const address = useSelector(addressSelector)
 
-  const pcxAsset = useSelector(pcxAssetSelector)
   const pcxFree = useSelector(pcxFreeSelector)
   const total = useSelector(pcxTotalSelector)
   const precision = useSelector(pcxPrecisionSelector)
-  const { details: { reservedDexSpot } = {}, details } = pcxAsset || {}
+  const dexReserve = useSelector(dexReserveSelector)
+  const { Bonded: bonded, BondedWithdrawal: bondedWithdrawal } = useSelector(
+    locksSelector
+  )
 
   const dispatch = useDispatch()
   const [transferOpen, setTransferOpen] = useState(false)
 
   useEffect(() => {
     dispatch(fetchAccountAssets(address))
-    dispatch(fetchChainx2NativeAssetInfo())
     dispatch(fetchChainx2NativeAsset(address))
+    dispatch(fetchLocks(address))
+    dispatch(fetchDexReserves(address))
   }, [dispatch, address])
 
   useEffect(() => {
+    dispatch(fetchChainx2NativeAssetInfo())
     dispatch(fetchAssetsInfo())
   }, [dispatch])
 
@@ -118,25 +125,21 @@ export default function() {
               precision={precision}
             />
           )}
-          {details && (
-            <>
-              <AssetView
-                title={$t('ASSET_RESERVED_DEX_SPOT')}
-                value={reservedDexSpot}
-                precision={precision}
-              />
-              {/*<AssetView*/}
-              {/*  title={$t('ASSET_RESERVED_STAKING')}*/}
-              {/*  value={pcxDetails.reservedStaking}*/}
-              {/*  precision={pcxFree.precision}*/}
-              {/*/>*/}
-              {/*<AssetView*/}
-              {/*  title={$t('ASSET_RESERVED_REVOCATION')}*/}
-              {/*  value={pcxDetails.reservedStakingRevocation}*/}
-              {/*  precision={pcxFree.precision}*/}
-              {/*/>*/}
-            </>
-          )}
+          <AssetView
+            title={$t('ASSET_RESERVED_DEX_SPOT')}
+            value={dexReserve}
+            precision={precision}
+          />
+          <AssetView
+            title={$t('ASSET_RESERVED_STAKING')}
+            value={bonded}
+            precision={precision}
+          />
+          <AssetView
+            title={$t('ASSET_RESERVED_REVOCATION')}
+            value={bondedWithdrawal}
+            precision={precision}
+          />
         </section>
         <CornerBackground />
         {transferOpen && (

@@ -26,6 +26,11 @@ const assetSlice = createSlice({
       miscFrozen: '0',
       feeFrozen: '0'
     },
+    locks: {
+      Bonded: '0',
+      BondedWithdrawal: '0'
+    },
+    dexReserves: '0',
     assetsInfo: [],
     assets: []
   },
@@ -45,6 +50,12 @@ const assetSlice = createSlice({
     },
     setNativeTokenInfo(state, action) {
       state.nativeTokenInfo = action.payload
+    },
+    setLocks(state, { payload: { Bonded = '0', BondedWithdrawal = '0' } }) {
+      state.locks = { Bonded, BondedWithdrawal }
+    },
+    setDexReserves(state, { payload }) {
+      state.dexReserves = payload
     }
   }
 })
@@ -86,6 +97,18 @@ export const fetchChainx2NativeAssetInfo = () => async dispatch => {
   dispatch(setNativeTokenInfo(properties))
 }
 
+export const fetchLocks = address => async dispatch => {
+  const api = getChainx()
+  const locks = await api.query.xStaking.locks(address)
+  dispatch(setLocks(locks.toJSON()))
+}
+
+export const fetchDexReserves = address => async dispatch => {
+  const api = getChainx()
+  const reserve = await api.query.xSpot.nativeReserves(address)
+  dispatch(setDexReserves(reserve.toString()))
+}
+
 export const fetchChainx2NativeAsset = address => async dispatch => {
   const api = getChainx()
   const asset = await api.query.system.account(address)
@@ -101,7 +124,9 @@ export const {
   setInfo,
   setAssets,
   setNativeAsset,
-  setNativeTokenInfo
+  setNativeTokenInfo,
+  setLocks,
+  setDexReserves
 } = assetSlice.actions
 
 export const assetsInfoSelector = state => state.assets.assetsInfo
@@ -159,5 +184,8 @@ export const pcxPrecisionSelector = state =>
 export const pcxInfoSelector = createSelector(assetsInfoSelector, infoArr => {
   return infoArr.find(({ info }) => info.token === 'PCX') || {}
 })
+
+export const dexReserveSelector = state => state.assets.dexReserves
+export const locksSelector = state => state.assets.locks
 
 export default assetSlice.reducer
