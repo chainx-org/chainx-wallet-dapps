@@ -10,7 +10,7 @@ const Wrapper = styled.section`
 
     &.first-line {
       & > section {
-        width: calc(33% - 8px);
+        flex: 1;
 
         &:not(:first-of-type) {
           margin-left: 16px;

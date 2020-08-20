@@ -111,24 +111,31 @@ export const normalizedAssetsSelector = createSelector(
   assetsSelector,
   assetsInfoSelector,
   (assets, infoArr) => {
-    return infoArr.map(({ id, info: { token, precision } }) => {
-      const target = assets.find(a => a.id === id)
-      const details = target ? target.details : emptyAsset
+    return infoArr.map(
+      ({ id, info: { token, decimals: precision, chain } }) => {
+        const target = assets.find(a => a.id === id)
+        const details = target ? target.details : emptyAsset
 
-      const total = Object.values(details).reduce(
-        (sum, value) => sum + parseInt(value),
-        0
-      )
+        const total = Object.values(details).reduce(
+          (sum, value) => sum + parseInt(value),
+          0
+        )
 
-      return {
-        total,
-        details: camelCaseKey(details),
-        token,
-        precision
+        return {
+          total,
+          details: camelCaseKey(details),
+          token,
+          precision,
+          chain
+        }
       }
-    })
+    )
   }
 )
+
+export const xbtcSelector = createSelector(normalizedAssetsSelector, assets => {
+  return assets.find(asset => asset.token === 'XBTC')
+})
 
 export const pcxAssetSelector = state => state.assets.nativeAsset
 export const pcxFreeSelector = createSelector(

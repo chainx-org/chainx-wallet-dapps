@@ -30,7 +30,6 @@ export default function(props) {
         />
       )}
       {props.children}
-
       <Hr />
       <footer>{props.footer}</footer>
     </Card>

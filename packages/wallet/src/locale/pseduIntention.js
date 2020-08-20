@@ -1,4 +1,8 @@
 export default {
+  psedu_asset: {
+    en: 'CrossChain Assets',
+    zh: '跨链资产'
+  },
   PSEDU_INTENTION: {
     en: 'Mining',
     zh: '跨链挖矿'
