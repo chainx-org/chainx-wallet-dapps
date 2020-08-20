@@ -1,11 +1,7 @@
 import React from 'react'
 import Xbtc from './XbtcCard'
-import Lbtc from './LbtcCard'
-import Sdot from './SdotCard'
-import Xrc20Btc from './Xrc20BtcCard'
-import { useSelector } from 'react-redux'
-import { isTestNetSelector } from '../../../reducers/settingsSlice'
 import styled from 'styled-components'
+import Power from '@pages/AssetManagement/Power'
 
 const Wrapper = styled.section`
   & > div {
@@ -21,26 +17,16 @@ const Wrapper = styled.section`
         }
       }
     }
-
-    &.second-line {
-      & > section {
-        width: calc(33% - 40px);
-      }
-    }
   }
 `
 
 export default function() {
-  const isTestNet = useSelector(isTestNetSelector)
-
   return (
     <Wrapper>
       <div className="first-line">
         <Xbtc />
-        <Sdot />
-        <Lbtc />
+        <Power />
       </div>
-      <div className="second-line">{isTestNet && <Xrc20Btc />}</div>
     </Wrapper>
   )
 }

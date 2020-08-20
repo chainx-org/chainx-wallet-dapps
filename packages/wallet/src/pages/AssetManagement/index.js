@@ -1,6 +1,7 @@
 import React from 'react'
 import PcxCard from './PcxCard'
 import styled from 'styled-components'
+import Assets from './Assets'
 
 const Wrapper = styled.div`
   display: flex;
@@ -26,7 +27,7 @@ function AssetManagement() {
     <Wrapper>
       <div className="left">
         <PcxCard />
-        {/*<Assets />*/}
+        <Assets />
       </div>
       {/*<div className="right">*/}
       {/*  <Records />*/}
