@@ -105,10 +105,10 @@ export default function({ handleClose, token }) {
         successMessage: `${$t(
           'NOTIFICATION_TRANSFER_AMOUNT'
         )} ${amount} ${tokenName}`,
-        failMessage: `${$t('NOTIFICATION_TX_HASH')} ${status.txHash}`
+        failMessage: ``
       }
 
-      await showSnack(status, messages, dispatch)
+      showSnack(status, messages, dispatch)
       handleClose()
       retry(
         () => {
@@ -121,7 +121,7 @@ export default function({ handleClose, token }) {
         2
       ).then(() => console.log('Refresh assets 5 times after transfer'))
     } catch (e) {
-      console.log('sign transfer transaction error:', e)
+      console.error('sign transfer transaction error:', e)
       setDisabled(false)
     }
   }

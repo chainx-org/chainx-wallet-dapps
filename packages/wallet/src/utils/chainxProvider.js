@@ -10,7 +10,6 @@ import { exFailed, exSuccess } from './constants'
 import $t from '../locale'
 import { isExtensionSelector, isSignerSelector } from '../reducers/addressSlice'
 import { signer } from '../services/signer'
-import { noneFunc } from './index'
 
 function getMessage(err) {
   if (err.code === 'sign-transaction-busy') {
@@ -30,21 +29,14 @@ export function signAndSendExtrinsic(address, data) {
   } else if (isSigner) {
     return signAndSendWithSigner(address, data)
   } else {
+    console.error('hash error')
     throw new Error('Neither connected to signer nor extension')
   }
 }
 
 function handleExtrinsicResult(err, status, resolve, reject) {
   if (err) {
-    console.log('err', err)
-    addAutoCloseSnackWithParams(
-      store.dispatch,
-      typeEnum.ERROR,
-      $t('COMMON_TX_ERROR_TITLE'),
-      getMessage(err),
-      8
-    )
-    reject()
+    notifyError(err, reject)
     return
   }
 
@@ -59,43 +51,71 @@ function handleExtrinsicResult(err, status, resolve, reject) {
   resolve(status)
 }
 
-export async function signAndSendWithSigner(address, data) {
-  let resolve = noneFunc,
-    reject = noneFunc
-  const promise = new Promise((resolve1, reject1) => {
-    resolve = resolve1
-    reject = reject1
-  })
+function notifyError(err, reject) {
+  addAutoCloseSnackWithParams(
+    store.dispatch,
+    typeEnum.ERROR,
+    $t('COMMON_TX_ERROR_TITLE'),
+    getMessage(err),
+    8
+  )
 
-  const signResult = await signer
-    .signAndSendChainx2Extrinsic(address, data, (err, status) => {
-      handleExtrinsicResult(err, status, resolve, reject)
-    })
-    .catch(e => {
-      const errorCodes = ['sign-transaction-busy', 'invalid-sign-data']
+  reject()
+}
 
-      if (e && errorCodes.includes(e.code)) {
-        addAutoCloseSnackWithParams(
-          store.dispatch,
-          typeEnum.ERROR,
-          $t(
-            e.code === errorCodes[1]
-              ? 'sign_invalid_tx'
-              : 'COMMON_TX_ERROR_TITLE'
-          ),
-          getMessage(e),
-          8
-        )
-      }
-      reject()
-    })
-
-  if (signResult && signResult.reject) {
-    console.log('transaction sign and send request is rejected.')
-    reject()
+function handleSignerExtrinsicResult(
+  err,
+  { normalizedEvents, events = [], status },
+  resolve,
+  reject
+) {
+  if (err) {
+    notifyError(err, reject)
+    return
   }
 
-  return promise
+  const result = { events, status, normalizedEvents }
+  console.log('result', result)
+
+  if (!status?.Finalized) {
+    return
+  }
+
+  console.log('resolve', result)
+  resolve(result)
+}
+
+export async function signAndSendWithSigner(address, data) {
+  return new Promise(async (resolve, reject) => {
+    const signResult = await signer
+      .signAndSendChainx2Extrinsic(address, data, (err, status) => {
+        console.log('err: ', err, 'status:', status)
+        handleSignerExtrinsicResult(err, status, resolve, reject)
+      })
+      .catch(e => {
+        const errorCodes = ['sign-transaction-busy', 'invalid-sign-data']
+
+        if (e && errorCodes.includes(e.code)) {
+          addAutoCloseSnackWithParams(
+            store.dispatch,
+            typeEnum.ERROR,
+            $t(
+              e.code === errorCodes[1]
+                ? 'sign_invalid_tx'
+                : 'COMMON_TX_ERROR_TITLE'
+            ),
+            getMessage(e),
+            8
+          )
+        }
+        reject()
+      })
+
+    if (signResult && signResult.reject) {
+      console.log('transaction sign and send request is rejected.')
+      reject()
+    }
+  })
 }
 
 export function signAndSendWithExtension(address, data) {
@@ -116,14 +136,22 @@ export function signAndSendWithExtension(address, data) {
   })
 }
 
-export function showSnack(status, messages, dispatch) {
+export function showSnack(
+  { normalizedEvents: events = [], status },
+  messages,
+  dispatch
+) {
   const { successTitle, failTitle, successMessage, failMessage } = messages
 
   let type = typeEnum.SUCCESS
   let title = successTitle
   let message = successMessage
 
-  if (status.result === 'ExtrinsicFailed') {
+  const success = events.some(({ method, section }) => {
+    return section === 'system' && method === 'ExtrinsicSuccess'
+  })
+
+  if (!success) {
     type = typeEnum.ERROR
     title = failTitle
     message = failMessage
@@ -134,7 +162,7 @@ export function showSnack(status, messages, dispatch) {
     dispatch(addSnack({ id, type, title, message }))
     removeSnackInSeconds(dispatch, id, 8)
 
-    if (status.result === 'ExtrinsicSuccess') {
+    if (success) {
       resolve()
     } else {
       reject()

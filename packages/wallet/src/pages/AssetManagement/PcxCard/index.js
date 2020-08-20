@@ -68,13 +68,10 @@ export default function() {
   const pcxFree = useSelector(pcxFreeSelector)
   const total = useSelector(pcxTotalSelector)
   const precision = useSelector(pcxPrecisionSelector)
-  console.log('pcxAsset', pcxAsset)
   const { details: { reservedDexSpot } = {}, details } = pcxAsset || {}
 
   const dispatch = useDispatch()
   const [transferOpen, setTransferOpen] = useState(false)
-
-  console.log('address', address)
 
   useEffect(() => {
     dispatch(fetchAccountAssets(address))
