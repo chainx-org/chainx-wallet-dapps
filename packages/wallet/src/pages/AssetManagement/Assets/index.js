@@ -1,7 +1,5 @@
 import React from 'react'
 import Xbtc from './XbtcCard'
-import Lbtc from './LbtcCard'
-import Sdot from './SdotCard'
 import Xrc20Btc from './Xrc20BtcCard'
 import { useSelector } from 'react-redux'
 import { isTestNetSelector } from '../../../reducers/settingsSlice'
@@ -37,8 +35,6 @@ export default function() {
     <Wrapper>
       <div className="first-line">
         <Xbtc />
-        <Sdot />
-        <Lbtc />
       </div>
       <div className="second-line">{isTestNet && <Xrc20Btc />}</div>
     </Wrapper>
