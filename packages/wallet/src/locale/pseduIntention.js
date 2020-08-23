@@ -63,5 +63,9 @@ export default {
   psedu_forbidden_mining: {
     en: 'ChainX community voted that L-BTC and S-DOT mining are disabled.',
     zh: '由 ChainX 社区投票决定 ChainX 将不再支持 L-BTC 和 S-DOT 挖矿。'
+  },
+  PSEDU_MINING_INTEREST: {
+    en: 'Mining Interest',
+    zh: '挖矿利息'
   }
 }

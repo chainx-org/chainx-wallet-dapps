@@ -1,11 +1,11 @@
 import { useSelector } from 'react-redux'
 import { networkSelector } from '../reducers/settingsSlice'
 import { mainNetExplorer, testNetExplorer } from '../services/api'
-import { getChainx } from '../services/chainx'
 import link from '../static/link.svg'
 import linkHighlight from '../static/link-highlight.svg'
 import React from 'react'
 import LinkWrapper from './common/LinkWrapper'
+import { Account } from '@chainx-v2/account'
 
 export default function({ address = '', length = 5, mainnet = null }) {
   const network = useSelector(networkSelector)
@@ -14,8 +14,7 @@ export default function({ address = '', length = 5, mainnet = null }) {
     host = mainNetExplorer
   }
 
-  const chainx = getChainx()
-  const accountId = chainx.account.decodeAddress(address)
+  const accountId = Account.decodeAddress(address)
   const url = `${host}accounts/${accountId}`
 
   let result = address

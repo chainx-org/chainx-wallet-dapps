@@ -10,6 +10,7 @@ import { WhiteButton } from '@chainx/ui'
 import $t from '../../../locale'
 import { LoadingWithText } from '../../../components'
 import { loadingIntentionsSelector } from '../../../reducers/runStatusSlice'
+import { validatorChunksSelector } from '@reducers/validatorSlice'
 
 const Main = styled.main`
   overflow-y: auto;
@@ -51,8 +52,8 @@ const LoadingWrapper = styled.div`
 export default function() {
   const [showDropout, setShowDropout] = useState(false)
 
-  const intentionChunks = useSelector(activeIntentionChunksSelector)
-  const allIntentionChunks = useSelector(intentionChunksSelector)
+  const intentionChunks = useSelector(validatorChunksSelector)
+  const allIntentionChunks = useSelector(validatorChunksSelector)
   const loadingIntentions = useSelector(loadingIntentionsSelector)
 
   const chunks = showDropout ? allIntentionChunks : intentionChunks
@@ -67,14 +68,14 @@ export default function() {
 
   return (
     <Main>
-      {chunks.map((intentions, index) => {
+      {chunks.map((chunk, index) => {
         return (
           <div className="chunks" key={index}>
             <ul className="line">
-              {intentions.map(intention => {
+              {chunk.map(validator => {
                 return (
-                  <li key={intention.account}>
-                    <Intention intention={intention} />
+                  <li key={validator.account}>
+                    <Intention intention={validator} />
                   </li>
                 )
               })}

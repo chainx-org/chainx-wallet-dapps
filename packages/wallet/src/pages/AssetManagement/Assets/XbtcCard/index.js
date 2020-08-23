@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import xbtcLogo from '../../../../static/xbtc.svg'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import InfoView from '../components/InfoView'
 import $t from '../../../../locale'
 import AssetView from '../components/AssetView'
@@ -13,6 +13,13 @@ import Card from '@components/Card'
 import styled from 'styled-components'
 import Logo from '@pages/AssetManagement/Assets/components/Logo'
 import { xbtcSelector } from '@reducers/assetSlice'
+import { addressSelector } from '@reducers/addressSlice'
+import {
+  fetchAccountMinerLedger,
+  fetchInterestByAccount,
+  xbtcInterestSelector
+} from '@reducers/miningAssetSlice'
+import { toPrecision } from '../../../../utils'
 
 const XbtcCard = styled(Card)`
   display: flex;
@@ -56,6 +63,28 @@ const Line = styled.section`
 const Footer = styled.footer`
   border-top: 1px solid #eeeeee;
   min-height: 60px;
+  padding: 0 16px;
+
+  display: flex;
+  align-items: center;
+
+  span.label {
+    opacity: 0.32;
+    font-size: 12px;
+    color: #000000;
+    letter-spacing: 0.2px;
+    line-height: 16px;
+  }
+
+  span.interest {
+    margin-left: 16px;
+    opacity: 0.72;
+    font-weight: 600;
+    font-size: 16px;
+    color: #000000;
+    letter-spacing: 0.12px;
+    line-height: 24px;
+  }
 `
 
 export default function() {
@@ -63,6 +92,20 @@ export default function() {
   const [depositOpen, setDepositOpen] = useState(false)
   const [withdrawOpen, setWithdrawOpen] = useState(false)
   const { details, precision, chain, total } = useSelector(xbtcSelector) || {}
+  const dispatch = useDispatch()
+  const address = useSelector(addressSelector)
+
+  const xbtcInterest = useSelector(xbtcInterestSelector)
+
+  useEffect(() => {
+    dispatch(fetchAccountMinerLedger(address))
+
+    const intervalId = setInterval(() => {
+      dispatch(fetchInterestByAccount(address))
+    }, 6000)
+
+    return () => clearInterval(intervalId)
+  }, [dispatch, address])
 
   const handleTransferClose = () => setTransferOpen(false)
   const handleDepositClose = () => setDepositOpen(false)
@@ -132,7 +175,14 @@ export default function() {
           </>
         )}
       </Content>
-      <Footer></Footer>
+      <Footer>
+        <span className="info">
+          <span className="label">{$t('PSEDU_MINING_INTEREST')}</span>
+          <span className="interest">
+            {toPrecision(xbtcInterest, precision)} PCX
+          </span>
+        </span>
+      </Footer>
 
       {transferOpen && (
         <TransferDialog handleClose={handleTransferClose} token="BTC" />

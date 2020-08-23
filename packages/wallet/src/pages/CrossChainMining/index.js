@@ -11,6 +11,7 @@ import {
 } from '../../reducers/intentionSlice'
 import { fetchAssetsInfo } from '../../reducers/assetSlice'
 import { addressSelector } from '../../reducers/addressSlice'
+import { fetchMiningAssets } from '@reducers/miningAssetSlice'
 
 const Wrapper = styled.div`
   display: flex;
@@ -29,10 +30,14 @@ export default function() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(fetchPseduIntentions())
-    dispatch(fetchAssetsInfo())
     dispatch(fetchPseduNominationRecords(address))
   }, [dispatch, address])
+
+  useEffect(() => {
+    dispatch(fetchPseduIntentions())
+    dispatch(fetchAssetsInfo())
+    dispatch(fetchMiningAssets())
+  }, [dispatch])
 
   return (
     <Contained>

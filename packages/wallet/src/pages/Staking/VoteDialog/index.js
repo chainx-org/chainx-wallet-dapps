@@ -5,43 +5,41 @@ import $t from '../../../locale'
 import { Label, Value } from '../../AssetManagement/components'
 import { canRequestSign, retry, toPrecision } from '../../../utils'
 import { useDispatch, useSelector } from 'react-redux'
-import { pcxFreeSelector } from '../../AssetManagement/PcxCard/selectors'
-import {
-  fetchIntentions,
-  fetchNominationRecords,
-  nominationRecordsSelector
-} from '../../../reducers/intentionSlice'
+import { nominationRecordsSelector } from '../../../reducers/intentionSlice'
 import arrow from '../svg/arrow.svg'
 import darkArrow from '../svg/dark-arrow.svg'
 import { showSnack, signAndSendExtrinsic } from '../../../utils/chainxProvider'
-import {
-  accountIdSelector,
-  addressSelector
-} from '../../../reducers/addressSlice'
+import { addressSelector } from '../../../reducers/addressSlice'
 import { isDemoSelector } from '../../../selectors'
 import BigNumber from 'bignumber.js'
-import { fetchAccountAssets } from '../../../reducers/assetSlice'
+import {
+  pcxFreeSelector,
+  pcxPrecisionSelector
+} from '../../../reducers/assetSlice'
 import {
   checkAmountAndHasError,
   checkMemoAndHasError
 } from '../../../utils/errorCheck'
-import { getChainx } from '../../../services/chainx'
 import {
   setVoteOpen,
   voteIntentionSelector,
   voteOpenSelector
 } from '../../../reducers/runStatusSlice'
+import {
+  fetchAccountNominations,
+  fetchValidators
+} from '@reducers/validatorSlice'
+import { fetchChainx2NativeAssetInfo } from '@reducers/assetSlice'
 
 export default function() {
   const accountAddress = useSelector(addressSelector)
   const nominationRecords = useSelector(nominationRecordsSelector)
   const isDemoAddr = useSelector(isDemoSelector)
   const voteOpen = useSelector(voteOpenSelector)
-  const accountId = useSelector(accountIdSelector)
 
   const intention = useSelector(voteIntentionSelector) || {}
 
-  const isVoteSelf = intention.account === accountId
+  const isVoteSelf = intention.account === accountAddress
   const handleClose = () => dispatch(setVoteOpen(false))
 
   const record = (nominationRecords || []).find(
@@ -59,15 +57,14 @@ export default function() {
   const [memo, setMemo] = useState('')
   const [memoErrMsg, setMemoErrMsg] = useState('')
 
-  const { free, precision } = useSelector(pcxFreeSelector) || {}
+  const pcxFree = useSelector(pcxFreeSelector)
+  const precision = useSelector(pcxPrecisionSelector)
 
   const [disabled, setDisabled] = useState(false)
-
   const hasAmount = !amountErrMsg && amount
-  const chainx = getChainx()
 
   const sign = async () => {
-    if (checkAmountAndHasError(amount, free, precision, setAmountErrMsg)) {
+    if (checkAmountAndHasError(amount, pcxFree, precision, setAmountErrMsg)) {
       return
     }
 
@@ -81,32 +78,27 @@ export default function() {
 
     const realAmount = BigNumber(amount)
       .multipliedBy(Math.pow(10, precision))
-      .toNumber()
+      .toString()
 
-    if (
-      !isVoteSelf &&
-      intention.selfVote * 10 < intention.totalNomination + realAmount
-    ) {
+    const upperLimit = new BigNumber(intention.selfBonded).multipliedBy(10)
+    const afterVote = new BigNumber(intention.total).plus(realAmount)
+    if (!isVoteSelf && upperLimit.isLessThan(afterVote)) {
       setAmountErrMsg($t('STAKING_TOO_MUCH_NOMINATION'))
       return
     }
 
     setDisabled(true)
     try {
-      const extrinsic = chainx.stake.nominate(
-        intention.account,
-        realAmount,
-        memo
-      )
-      const status = await signAndSendExtrinsic(
-        accountAddress,
-        extrinsic.toHex()
-      )
+      const status = await signAndSendExtrinsic(accountAddress, {
+        section: 'xStaking',
+        method: 'bond',
+        params: [intention.account, realAmount, memo]
+      })
       const messages = {
         successTitle: $t('NOTIFICATION_VOTE_SUCCESS'),
         failTitle: $t('NOTIFICATION_VOTE_FAIL'),
         successMessage: `${$t('NOTIFICATION_VOTE_AMOUNT')} ${amount} PCX`,
-        failMessage: `${$t('NOTIFICATION_TX_HASH')} ${status.txHash}`
+        failMessage: ``
       }
 
       setDisabled(false)
@@ -114,9 +106,9 @@ export default function() {
       handleClose()
       await retry(
         () => {
-          dispatch(fetchNominationRecords(accountAddress))
-          dispatch(fetchAccountAssets(accountAddress))
-          dispatch(fetchIntentions())
+          dispatch(fetchChainx2NativeAssetInfo(accountAddress))
+          dispatch(fetchValidators())
+          dispatch(fetchAccountNominations(accountAddress))
         },
         5,
         2
@@ -146,7 +138,7 @@ export default function() {
           {precision ? (
             <div>
               <Label>{$t('ASSET_BALANCE')}</Label>
-              <Value>{toPrecision(free, precision)} PCX</Value>
+              <Value>{toPrecision(pcxFree, precision)} PCX</Value>
             </div>
           ) : null}
         </div>

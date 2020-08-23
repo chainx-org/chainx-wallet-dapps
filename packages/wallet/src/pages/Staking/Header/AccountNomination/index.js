@@ -1,15 +1,9 @@
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
-import {
-  interestLoadingSelector,
-  totalInterestSelector,
-  totalNominationBalanceSelector,
-  totalRevocationBalanceSelector
-} from './selectors'
+import { interestLoadingSelector } from './selectors'
 import { useSelector } from 'react-redux'
 import normalIcon from './normal.svg'
 import openIcon from './open.svg'
-import NominationBoard from './NominationBoard'
 import $t from '../../../../locale'
 import useOutsideClick from '../../../../utils/useClickOutside'
 import {
@@ -19,6 +13,9 @@ import {
   voteOpenSelector
 } from '../../../../reducers/runStatusSlice'
 import { LoadingWithText } from '../../../../components'
+import { totalNominationSelector } from '@reducers/validatorSlice'
+import { pcxPrecisionSelector } from '@reducers/assetSlice'
+import { toPrecision } from '../../../../utils'
 
 const Wrapper = styled.div`
   display: flex;
@@ -68,11 +65,14 @@ const Ul = styled.ul`
 `
 
 export default function() {
-  const loading = useSelector(interestLoadingSelector)
+  // const loading = useSelector(interestLoadingSelector)
 
-  const totalNomination = useSelector(totalNominationBalanceSelector)
-  const totalRevocation = useSelector(totalRevocationBalanceSelector)
-  const totalInterest = useSelector(totalInterestSelector)
+  const precision = useSelector(pcxPrecisionSelector)
+  const totalNomination = useSelector(totalNominationSelector)
+  // const totalRevocation = useSelector(totalRevocationBalanceSelector)
+  const totalRevocation = 0
+  // const totalInterest = useSelector(totalInterestSelector)
+  const totalInterest = 0
   const [open, setOpen] = useState(false)
 
   const voteOpen = useSelector(voteOpenSelector)
@@ -93,9 +93,9 @@ export default function() {
     }
   })
 
-  if (loading) {
-    return <LoadingWithText text={$t('STAKING_LOADING_INTEREST')} />
-  }
+  // if (loading) {
+  //   return <LoadingWithText text={$t('STAKING_LOADING_INTEREST')} />
+  // }
 
   return (
     <Wrapper ref={popup}>
@@ -106,7 +106,7 @@ export default function() {
         </li>
         <li>
           <label>{$t('STAKING_MY_NOMINATION')}</label>
-          <span>{totalNomination}</span>
+          <span>{toPrecision(totalNomination, precision)}</span>
         </li>
         <li>
           <label>{$t('STAKING_INTEREST')}</label>
@@ -118,7 +118,7 @@ export default function() {
         alt="open"
         onClick={() => setOpen(!open)}
       />
-      {open ? <NominationBoard close={() => setOpen(false)} /> : null}
+      {/*{open ? <NominationBoard close={() => setOpen(false)} /> : null}*/}
     </Wrapper>
   )
 }

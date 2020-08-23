@@ -22,6 +22,11 @@ import SwitchDialog from './SwitchDialog'
 import UnNominateDialog from './UnNominateDialog'
 import UnFreezeDialog from './UnfreezeDialog'
 import { getApi } from '../../services/api'
+import {
+  fetchAccountNominationInterest,
+  fetchAccountNominations,
+  fetchValidators
+} from '@reducers/validatorSlice'
 
 export const Wrapper = styled.div`
   display: flex;
@@ -36,42 +41,47 @@ export const Wrapper = styled.div`
 
 export default function() {
   const address = useSelector(addressSelector)
-  const unFreezeRecord = useSelector(unFreezeRecordSelector)
+  // const unFreezeRecord = useSelector(unFreezeRecordSelector)
   const voteOpen = useSelector(voteOpenSelector)
-  const switchNominationOpen = useSelector(switchNominationOpenSelector)
-  const unNominateOpen = useSelector(unNominateOpenSelector)
-  const api = getApi()
+  // const switchNominationOpen = useSelector(switchNominationOpenSelector)
+  // const unNominateOpen = useSelector(unNominateOpenSelector)
+  // const api = getApi()
 
   const dispatch = useDispatch()
 
+  // useEffect(() => {
+  //   dispatch(fetchSenators())
+  //   dispatch(fetchAssetsInfo())
+  //   dispatch(fetchLogos())
+  // }, [dispatch, api])
+  //
   useEffect(() => {
-    dispatch(fetchSenators())
-    dispatch(fetchAssetsInfo())
-    dispatch(fetchLogos())
-  }, [dispatch, api])
+    dispatch(fetchAccountNominations(address))
+    dispatch(fetchAccountNominationInterest(address))
+  }, [dispatch, address])
 
   useEffect(() => {
-    dispatch(fetchNominationRecords(address))
-  }, [dispatch, address])
+    dispatch(fetchValidators())
+  }, [dispatch])
 
   return (
     <Wrapper className="staking">
       <Header />
       <Validators />
       {voteOpen ? <VoteDialog /> : null}
-      {switchNominationOpen ? <SwitchDialog /> : null}
-      {unNominateOpen ? <UnNominateDialog /> : null}
-      <UnFreezeDialog
-        record={unFreezeRecord}
-        revocations={
-          unFreezeRecord &&
-          unFreezeRecord.info &&
-          unFreezeRecord.info.revocations
-        }
-        handleClose={() => {
-          dispatch(setUnFreezeOpen(false))
-        }}
-      />
+      {/*{switchNominationOpen ? <SwitchDialog /> : null}*/}
+      {/*{unNominateOpen ? <UnNominateDialog /> : null}*/}
+      {/*<UnFreezeDialog*/}
+      {/*  record={unFreezeRecord}*/}
+      {/*  revocations={*/}
+      {/*    unFreezeRecord &&*/}
+      {/*    unFreezeRecord.info &&*/}
+      {/*    unFreezeRecord.info.revocations*/}
+      {/*  }*/}
+      {/*  handleClose={() => {*/}
+      {/*    dispatch(setUnFreezeOpen(false))*/}
+      {/*  }}*/}
+      {/*/>*/}
     </Wrapper>
   )
 }

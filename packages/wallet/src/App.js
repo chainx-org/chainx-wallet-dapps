@@ -16,7 +16,14 @@ import { Loading } from './components'
 import { loadingSelector } from './reducers/runStatusSlice'
 import { addSnack, generateId, typeEnum } from './reducers/snackSlice'
 import $t from './locale'
-import { fetchAssetsInfo } from './reducers/assetSlice'
+import {
+  fetchAccountAssets,
+  fetchAssetsInfo,
+  fetchChainx2NativeAsset
+} from './reducers/assetSlice'
+import { fetchMiningAssets } from '@reducers/miningAssetSlice'
+import { fetchValidators } from '@reducers/validatorSlice'
+import Staking from '@pages/Staking'
 
 const isChrome =
   /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
@@ -34,13 +41,17 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchAssetsInfo())
+    dispatch(fetchMiningAssets())
+    dispatch(fetchValidators())
   }, [dispatch])
 
   useEffect(() => {
     // dispatch(fetchAccountAssets(address))
     // dispatch(fetchPseduNominationRecords(address))
-    // dispatch(fetchAssetsInfo())
     // dispatch(fetchBondingDuration())
+
+    dispatch(fetchAccountAssets(address))
+    dispatch(fetchChainx2NativeAsset(address))
 
     const api = getChainx()
     let unsubscribeNewHead = null
@@ -81,7 +92,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={AssetManagement} />
           {/*<Route exact path="/mining" component={CrossChainMining} />*/}
-          {/*<Route exact path="/staking" component={Staking} />*/}
+          <Route exact path="/staking" component={Staking} />
           {/*<Route exact path="/trust" component={Trust} />*/}
           {/*<Route exact path="/trade" component={Trade} />*/}
           {/*<Route exact path="/contract" component={Contract} />*/}

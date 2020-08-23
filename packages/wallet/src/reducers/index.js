@@ -18,6 +18,8 @@ import runStatusReducer from './runStatusSlice'
 import klineReducer from './klineSlice'
 import historyTxsReducer from './historyTxSlice'
 import oddEvenReducer from './oddevenSlice'
+import miningAssetReducer from './miningAssetSlice'
+import validatorReducer from './validatorSlice'
 
 export default combineReducers({
   test: testReducer,
@@ -38,5 +40,7 @@ export default combineReducers({
   runStatus: runStatusReducer,
   kline: klineReducer,
   historyTxs: historyTxsReducer,
-  oddEven: oddEvenReducer
+  oddEven: oddEvenReducer,
+  miningAsset: miningAssetReducer,
+  validator: validatorReducer
 })

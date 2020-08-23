@@ -35,7 +35,7 @@ const Footer = styled.footer`
 export default function(props) {
   const locale = useSelector(state => state.settings.locale)
 
-  const { isTrustee, isValidator, isActive, isSenator } = props.intention
+  const { isTrustee = [], isValidating, isChilled, isSenator } = props.intention
 
   const trusteeIcon = locale === 'zh' ? trusteeZhIcon : trusteeEnIcon
   const validatorIcon = locale === 'zh' ? validatorZhIcon : validatorEnIcon
@@ -43,10 +43,13 @@ export default function(props) {
   return (
     <Footer>
       {isTrustee.length > 0 ? <img src={trusteeIcon} alt="trustee" /> : null}
-      {isActive ? (
-        <img src={isValidator ? validatorIcon : syncNodeIcon} alt="validator" />
+      {!isChilled ? (
+        <img
+          src={isValidating ? validatorIcon : syncNodeIcon}
+          alt="validator"
+        />
       ) : null}
-      {!isActive ? (
+      {isChilled ? (
         <img
           src={locale === 'zh' ? dropoutZhIcon : dropoutIcon}
           alt="drop out"

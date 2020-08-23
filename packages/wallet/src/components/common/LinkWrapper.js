@@ -1,6 +1,9 @@
 import styled from 'styled-components'
 
 const LinkWrapper = styled.a`
+  display: inline-flex;
+  align-items: center;
+
   &:hover {
     color: #0088cc;
     opacity: 1;
@@ -20,6 +23,8 @@ const LinkWrapper = styled.a`
   text-decoration: none;
   img {
     margin-left: 6px;
+    width: 12px !important;
+    height: 12px !important;
   }
   img.link-highlight {
     display: none;

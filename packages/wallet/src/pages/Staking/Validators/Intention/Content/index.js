@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import defaultLogo from '../../../svg/default-logo.svg'
-import { pcxPrecisionSelector } from '../../../../selectors/assets'
 import { useDispatch, useSelector } from 'react-redux'
 import { toPrecision } from '../../../../../utils'
 import $t from '../../../../../locale'
@@ -9,12 +8,13 @@ import { DefaultButton } from '@chainx/ui'
 import LowSelfVote from '../../LowSelfVote'
 import DetailToggle from './DetailToggle'
 import Detail from './Detail'
-import { accountIdSelector } from '../../../../../reducers/addressSlice'
 import {
   setVoteIntention,
   setVoteOpen,
   voteOpenSelector
 } from '../../../../../reducers/runStatusSlice'
+import { accountAddressSelector } from '@reducers/addressSlice'
+import Address from '@components/Address'
 
 const Wrapper = styled.div`
   display: flex;
@@ -96,46 +96,39 @@ const Wrapper = styled.div`
 `
 
 export default function(props) {
-  const accountId = useSelector(accountIdSelector)
+  const address = useSelector(accountAddressSelector)
   const dispatch = useDispatch()
 
-  const {
-    name,
-    hasLogo,
-    logo,
-    selfVote,
-    totalNomination,
-    account
-  } = props.intention
-  const precision = useSelector(pcxPrecisionSelector)
+  const { selfBonded, total, account } = props.intention
+  const precision = 8
   const voteOpen = useSelector(voteOpenSelector)
 
   const [detailOpen, setDetailOpen] = useState(false)
-  const lowSelfVote = totalNomination >= selfVote * 10
+  const lowSelfVote = total >= selfBonded * 10
 
-  const isSelf = accountId === account
+  const isSelf = address === account
   const disabled = (!isSelf && lowSelfVote) || voteOpen
 
   return (
     <Wrapper>
       <div className="info">
-        <img src={hasLogo ? logo : defaultLogo} alt="validator logo" />
+        <img src={defaultLogo} alt="validator logo" />
         <div className="summary">
           <header>
-            <span className="name">{name}</span>
+            <Address address={account} />
             {lowSelfVote ? <LowSelfVote /> : null}
           </header>
           <ul>
             <li>
               <label>{$t('STAKING_TOTAL_NOMINATION')}</label>
               <span className="nomination">
-                {parseInt(toPrecision(totalNomination, precision))}
+                {parseInt(toPrecision(total, precision))}
               </span>
             </li>
             <li>
               <label>{$t('STAKING_SELF_VOTE')}</label>
               <span className="self-vote">
-                {parseInt(toPrecision(selfVote, precision))}
+                {parseInt(toPrecision(selfBonded, precision))}
               </span>
             </li>
           </ul>

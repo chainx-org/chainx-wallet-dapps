@@ -1,5 +1,6 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { getChainx } from '../services/chainx'
+import { Account } from '@chainx-v2/account'
 
 let initialState = {
   version: 1,
@@ -29,13 +30,13 @@ export const accountIdSelector = createSelector(addressSelector, address => {
     return null
   }
 
-  const chainx = getChainx()
-  return chainx.account.decodeAddress(address, false)
+  return Account.decodeAddress(address, false)
 })
 
 export const nameSelector = state =>
   state.address.account && state.address.account.name
 export const accountSelector = state => state.address.account
+export const accountAddressSelector = state => state.address.account?.address
 
 export const isExtensionSelector = state =>
   state.address.account?.isFromExtension
