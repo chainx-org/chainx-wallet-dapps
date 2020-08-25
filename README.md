@@ -6,5 +6,6 @@ yarn install
 
 ## run
 
-cd packages/wallet
-yarn run start
+* cd packages/wallet
+
+* yarn run start
