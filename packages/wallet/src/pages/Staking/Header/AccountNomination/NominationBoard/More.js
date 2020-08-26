@@ -3,13 +3,11 @@ import moreIcon from './more.svg'
 import styled from 'styled-components'
 import $t from '../../../../../locale'
 import useOutsideClick from '../../../../../utils/useClickOutside'
-import { useDispatch } from 'react-redux'
 import {
-  setSwitchNominationData,
-  setSwitchNominationOpen,
   setUnNominateOpen,
   setUnNominationData
-} from '../../../../../reducers/runStatusSlice'
+} from '@reducers/runStatusSlice'
+import { useDispatch } from 'react-redux'
 
 const Wrapper = styled.div`
   display: inline-flex;
@@ -51,11 +49,11 @@ const Wrapper = styled.div`
   }
 `
 
-export default function({ intention, record = {} }) {
+export default function({ intention }) {
   const [showMore, setShowMore] = useState(false)
   const dispatch = useDispatch()
 
-  const { nomination, revocations = [] } = record.info || {}
+  // const { nomination, revocations = [] } = record.info || {}
 
   const popup = useRef(null)
 
@@ -71,9 +69,12 @@ export default function({ intention, record = {} }) {
       <ul className={showMore ? 'show' : 'hide'} ref={popup}>
         <li
           onClick={() => {
-            dispatch(
-              setUnNominationData({ intention, nomination, revocations })
-            )
+            const data = {
+              target: intention.account,
+              nomination: intention.nomination.nomination
+            }
+
+            dispatch(setUnNominationData(data))
             dispatch(setUnNominateOpen(true))
             setShowMore(false)
           }}
@@ -82,13 +83,13 @@ export default function({ intention, record = {} }) {
         </li>
         <li
           onClick={() => {
-            dispatch(
-              setSwitchNominationData({
-                intention,
-                nomination
-              })
-            )
-            dispatch(setSwitchNominationOpen(true))
+            // dispatch(
+            //   setSwitchNominationData({
+            //     intention,
+            //     nomination
+            //   })
+            // )
+            // dispatch(setSwitchNominationOpen(true))
             setShowMore(false)
           }}
         >

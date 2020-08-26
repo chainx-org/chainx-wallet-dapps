@@ -24,6 +24,7 @@ import {
 import { fetchMiningAssets } from '@reducers/miningAssetSlice'
 import { fetchValidators } from '@reducers/validatorSlice'
 import Staking from '@pages/Staking'
+import { fetchLocks } from '@reducers/assetSlice'
 
 const isChrome =
   /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
@@ -51,6 +52,7 @@ function App() {
     // dispatch(fetchBondingDuration())
 
     dispatch(fetchAccountAssets(address))
+    dispatch(fetchLocks(address))
     dispatch(fetchChainx2NativeAsset(address))
 
     const api = getChainx()

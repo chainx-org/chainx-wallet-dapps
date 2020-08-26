@@ -2,12 +2,18 @@ import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { getChainx } from '../services/chainx'
 import { setLoadingIntentions } from '@reducers/runStatusSlice'
 import chunk from 'lodash.chunk'
+import BigNumber from 'bignumber.js'
 
 const validatorSlice = createSlice({
   name: 'validators',
   initialState: {
     validators: [],
-    nominationInfo: {}
+    nominationInfo: {},
+    interestInfo: {},
+    nominatorInfo: {
+      lastRebond: null,
+      unbondedChunks: []
+    }
   },
   reducers: {
     setValidators(state, { payload }) {
@@ -15,17 +21,33 @@ const validatorSlice = createSlice({
     },
     setNominationInfo(state, { payload }) {
       state.nominationInfo = payload
+    },
+    setInterestInfo(state, { payload }) {
+      state.interestInfo = payload
+    },
+    setNominatorInfo(state, { payload }) {
+      state.nominatorInfo = payload
     }
   }
 })
 
-export const { setValidators, setNominationInfo } = validatorSlice.actions
+export const {
+  setValidators,
+  setNominationInfo,
+  setInterestInfo,
+  setNominatorInfo
+} = validatorSlice.actions
+
+export const fetchNominatorInfo = address => async dispatch => {
+  const api = getChainx()
+  const nominator = await api.rpc.xstaking.getNominatorByAccount(address)
+  dispatch(setNominatorInfo(nominator.toJSON()))
+}
 
 export const fetchAccountNominations = address => async dispatch => {
   const api = getChainx()
   const nominationMap = await api.rpc.xstaking.getNominationByAccount(address)
 
-  console.log('nominationMap', nominationMap.toJSON())
   dispatch(setNominationInfo(nominationMap.toJSON()))
 }
 
@@ -33,7 +55,7 @@ export const fetchAccountNominationInterest = address => async dispatch => {
   const api = getChainx()
   const interestMap = await api.rpc.xstaking.getDividendByAccount(address)
 
-  console.log('interestMap', interestMap.toJSON())
+  dispatch(setInterestInfo(interestMap.toJSON()))
 }
 
 export const fetchValidators = (setLoading = false) => async dispatch => {
@@ -68,5 +90,43 @@ export const totalNominationSelector = createSelector(
     }, 0)
   }
 )
+
+export const interestInfoSelector = state => state.validator.interestInfo
+export const totalInterestSelector = createSelector(
+  interestInfoSelector,
+  info => {
+    return Object.values(info).reduce((result, value) => {
+      return new BigNumber(result).plus(value).toString()
+    }, 0)
+  }
+)
+
+export const nominationRecordsSelector = createSelector(
+  nominationInfoSelector,
+  validatorsSelector,
+  interestInfoSelector,
+  (nomination, validators, interestMap) => {
+    return Object.entries(nomination).reduce(
+      (result, [address, nomination]) => {
+        const validator = validators.find(v => v.account === address)
+        const interest = interestMap[address]
+
+        if (nomination && validator && interest) {
+          result.push({
+            account: address,
+            nomination,
+            validator,
+            interest
+          })
+        }
+
+        return result
+      },
+      []
+    )
+  }
+)
+
+export const nominatorInfoSelector = state => state.validator.nominatorInfo
 
 export default validatorSlice.reducer

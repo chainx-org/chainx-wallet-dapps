@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react'
 import Xbtc from './XbtcCard'
-import Lbtc from './LbtcCard'
-import Sdot from './SdotCard'
 import Power from './Power'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
@@ -43,8 +41,6 @@ export default function() {
     <Contained>
       <Wrapper>
         <Xbtc />
-        <Lbtc />
-        <Sdot />
       </Wrapper>
       <Power />
     </Contained>

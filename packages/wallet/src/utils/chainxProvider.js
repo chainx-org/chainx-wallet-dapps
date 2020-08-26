@@ -169,3 +169,11 @@ export function showSnack(
     }
   })
 }
+
+export function isExtrinsicSuccess(status) {
+  const { normalizedEvents: events = [] } = status
+
+  return events.some(({ method, section }) => {
+    return section === 'system' && method === 'ExtrinsicSuccess'
+  })
+}

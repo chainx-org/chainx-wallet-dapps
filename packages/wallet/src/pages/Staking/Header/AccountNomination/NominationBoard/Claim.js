@@ -3,54 +3,47 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addressSelector } from '../../../../../reducers/addressSlice'
 import { PrimaryButton } from '@chainx/ui'
 import {
+  isExtrinsicSuccess,
   showSnack,
   signAndSendExtrinsic
 } from '../../../../../utils/chainxProvider'
-import {
-  fetchIntentions,
-  fetchNominationRecords
-} from '../../../../../reducers/intentionSlice'
-import { fetchAccountAssets } from '../../../../../reducers/assetSlice'
 import { isDemoSelector } from '../../../../../selectors'
 import $t from '../../../../../locale'
 import { canRequestSign, retry, toPrecision } from '../../../../../utils'
-import { getChainx } from '../../../../../services/chainx'
 import { useIsMounted } from '../../../../../utils/hooks'
-import { pcxPrecisionSelector } from '../../../../selectors/assets'
+import { pcxPrecisionSelector } from '@reducers/assetSlice'
 
-export default function({ record, interest }) {
-  const { account } = record.intention || {}
+export default function({ target, interest }) {
   const isDemoAddr = useSelector(isDemoSelector)
 
   const accountAddress = useSelector(addressSelector)
   const [disabled, setDisabled] = useState(false)
 
   const dispatch = useDispatch()
-  const chainx = getChainx()
   const precision = useSelector(pcxPrecisionSelector)
 
   const mounted = useIsMounted()
 
-  const claim = async target => {
+  const claim = async () => {
     if (!canRequestSign()) {
       return
     }
 
     setDisabled(true)
     try {
-      const extrinsic = chainx.stake.voteClaim(target)
-      const status = await signAndSendExtrinsic(
-        accountAddress,
-        extrinsic.toHex()
-      )
+      const status = await signAndSendExtrinsic(accountAddress, {
+        section: 'xStaking',
+        method: 'claim',
+        params: [target]
+      })
 
       const claimedMsg = do {
-        if (status.result === 'ExtrinsicFailed') {
+        if (!isExtrinsicSuccess(status)) {
           return null
         } else {
-          const {
-            event: { data }
-          } = status.events.find(e => e.method === 'Claim')
+          const { data } = status.normalizedEvents.find(
+            e => e.method === 'Claim'
+          )
 
           $t('STAKING_CLAIM_AMOUNT', {
             amount: toPrecision(data[2], precision, false)
@@ -70,9 +63,9 @@ export default function({ record, interest }) {
       retry(
         () => {
           Promise.all([
-            dispatch(fetchNominationRecords(accountAddress)),
-            dispatch(fetchAccountAssets(accountAddress)),
-            dispatch(fetchIntentions())
+            // dispatch(fetchNominationRecords(accountAddress)),
+            // dispatch(fetchAccountAssets(accountAddress)),
+            // dispatch(fetchIntentions())
           ])
         },
         5,
@@ -90,7 +83,7 @@ export default function({ record, interest }) {
       disabled={isDemoAddr || interest <= 0 || disabled}
       size="small"
       style={{ marginRight: 8 }}
-      onClick={() => claim(account)}
+      onClick={() => claim()}
     >
       {$t('STAKING_CLAIM')}
     </PrimaryButton>

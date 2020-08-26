@@ -1,5 +1,4 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
-import { getChainx } from '../services/chainx'
 import { Account } from '@chainx-v2/account'
 
 let initialState = {

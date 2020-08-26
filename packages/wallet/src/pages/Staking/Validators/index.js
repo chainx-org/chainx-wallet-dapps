@@ -2,10 +2,6 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import Intention from './Intention'
-import {
-  activeIntentionChunksSelector,
-  intentionChunksSelector
-} from './selectors'
 import { WhiteButton } from '@chainx/ui'
 import $t from '../../../locale'
 import { LoadingWithText } from '../../../components'

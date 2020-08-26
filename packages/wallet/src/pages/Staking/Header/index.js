@@ -1,12 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import AccountNomination from './AccountNomination'
-import { useSelector } from 'react-redux'
-import { intentionsSelector } from '../../../reducers/intentionSlice'
-import { getChainx } from '../../../services/chainx'
-import { addressSelector } from '../../../reducers/addressSlice'
-import { accountIdSelector } from '@reducers/addressSlice'
-import { validatorsSelector } from '@reducers/validatorSlice'
 
 const Wrapper = styled.header`
   display: flex;

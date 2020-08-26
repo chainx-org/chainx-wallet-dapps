@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
-import { interestLoadingSelector } from './selectors'
 import { useSelector } from 'react-redux'
 import normalIcon from './normal.svg'
 import openIcon from './open.svg'
@@ -12,10 +11,13 @@ import {
   unNominateOpenSelector,
   voteOpenSelector
 } from '../../../../reducers/runStatusSlice'
-import { LoadingWithText } from '../../../../components'
-import { totalNominationSelector } from '@reducers/validatorSlice'
-import { pcxPrecisionSelector } from '@reducers/assetSlice'
+import {
+  totalInterestSelector,
+  totalNominationSelector
+} from '@reducers/validatorSlice'
+import { locksSelector, pcxPrecisionSelector } from '@reducers/assetSlice'
 import { toPrecision } from '../../../../utils'
+import NominationBoard from './NominationBoard'
 
 const Wrapper = styled.div`
   display: flex;
@@ -65,14 +67,10 @@ const Ul = styled.ul`
 `
 
 export default function() {
-  // const loading = useSelector(interestLoadingSelector)
-
   const precision = useSelector(pcxPrecisionSelector)
   const totalNomination = useSelector(totalNominationSelector)
-  // const totalRevocation = useSelector(totalRevocationBalanceSelector)
-  const totalRevocation = 0
-  // const totalInterest = useSelector(totalInterestSelector)
-  const totalInterest = 0
+  const bondedWithdrawal = useSelector(locksSelector).BondedWithdrawal
+  const totalInterest = useSelector(totalInterestSelector)
   const [open, setOpen] = useState(false)
 
   const voteOpen = useSelector(voteOpenSelector)
@@ -102,7 +100,7 @@ export default function() {
       <Ul onClick={() => setOpen(!open)}>
         <li>
           <label>{$t('STAKING_REVOCATION')}</label>
-          <span>{totalRevocation}</span>
+          <span>{toPrecision(bondedWithdrawal, precision)}</span>
         </li>
         <li>
           <label>{$t('STAKING_MY_NOMINATION')}</label>
@@ -110,7 +108,7 @@ export default function() {
         </li>
         <li>
           <label>{$t('STAKING_INTEREST')}</label>
-          <span>{totalInterest}</span>
+          <span>{toPrecision(totalInterest, precision)}</span>
         </li>
       </Ul>
       <img
@@ -118,7 +116,7 @@ export default function() {
         alt="open"
         onClick={() => setOpen(!open)}
       />
-      {/*{open ? <NominationBoard close={() => setOpen(false)} /> : null}*/}
+      {open ? <NominationBoard close={() => setOpen(false)} /> : null}
     </Wrapper>
   )
 }

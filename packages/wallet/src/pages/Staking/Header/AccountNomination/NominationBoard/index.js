@@ -1,21 +1,21 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
-import { sortedRecordsSelector } from './selectors'
 import defaultLogo from '../../../svg/default-logo.svg'
 import { DefaultButton } from '@chainx/ui'
 import { toPrecision } from '../../../../../utils'
-import { pcxPrecisionSelector } from '../../../../selectors/assets'
 import More from './More'
 import Claim from './Claim'
 import { Label, Value } from './components'
-import Unfreeze from './Unfreeze'
 import Empty from './Empty'
 import $t from '../../../../../locale'
 import {
   setVoteIntention,
   setVoteOpen
 } from '../../../../../reducers/runStatusSlice'
+import { nominationRecordsSelector } from '@reducers/validatorSlice'
+import Address from '@components/Address'
+import { pcxPrecisionSelector } from '@reducers/assetSlice'
 
 const Wrapper = styled.div`
   display: flex;
@@ -82,30 +82,34 @@ const Wrapper = styled.div`
 `
 
 export default function() {
-  const records = useSelector(sortedRecordsSelector)
   const precision = useSelector(pcxPrecisionSelector)
   const dispatch = useDispatch()
+  const records = useSelector(nominationRecordsSelector)
 
   return (
     <Wrapper>
       <ul>
         {records.map((record, index) => {
-          const { name, hasLogo, logo, jackpot = 0 } = record.intention || {}
-          const { nomination, revocations = [] } = record.info || {}
+          const { account, rewardPotBalance: jackpot = 0 } =
+            record.validator || {}
+          const { nomination } = record.nomination || {}
           const interest = record.interest
-          const unfreeze = revocations.reduce((result, revocation) => {
-            return result + revocation.value
-          }, 0)
+          // const unfreeze = revocations.reduce((result, revocation) => {
+          //   return result + revocation.value
+          // }, 0)
 
           return (
             <li key={index}>
               <header>
                 <div className="name">
-                  <img src={hasLogo ? logo : defaultLogo} alt="logo" />
-                  <span>{name}</span>
+                  <img src={defaultLogo} alt="logo" />
+                  <span>
+                    <Address address={account} />
+                  </span>
+                  {/*<span>{name}</span>*/}
                 </div>
                 <div className="operations">
-                  <Unfreeze revocations={revocations} record={record} />
+                  {/*<Unfreeze revocations={revocations} record={record} />*/}
                   <DefaultButton
                     size="small"
                     style={{ marginRight: 8 }}
@@ -116,8 +120,8 @@ export default function() {
                   >
                     {$t('STAKING_VOTE')}
                   </DefaultButton>
-                  <Claim record={record} interest={interest} />
-                  <More intention={record.intention} record={record} />
+                  <Claim target={account} />
+                  <More intention={record} />
                 </div>
               </header>
               <ul>
@@ -127,7 +131,7 @@ export default function() {
                 </li>
                 <li>
                   <Label>{$t('COMMON_UNFREEZE')}</Label>
-                  <Value>{toPrecision(unfreeze, precision)}</Value>
+                  {/*<Value>{toPrecision(unfreeze, precision)}</Value>*/}
                 </li>
                 <li>
                   <Label>{$t('STAKING_MY_NOMINATION')}</Label>

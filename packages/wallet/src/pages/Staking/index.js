@@ -1,32 +1,19 @@
 import React, { useEffect } from 'react'
 import Header from './Header'
 import Validators from './Validators'
-import {
-  fetchLogos,
-  fetchNominationRecords,
-  fetchSenators
-} from '../../reducers/intentionSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchAssetsInfo } from '../../reducers/assetSlice'
 import styled from 'styled-components'
 import { addressSelector } from '../../reducers/addressSlice'
-import {
-  setUnFreezeOpen,
-  switchNominationOpenSelector,
-  unFreezeRecordSelector,
-  unNominateOpenSelector,
-  voteOpenSelector
-} from '../../reducers/runStatusSlice'
+import { voteOpenSelector } from '../../reducers/runStatusSlice'
 import VoteDialog from './VoteDialog'
-import SwitchDialog from './SwitchDialog'
-import UnNominateDialog from './UnNominateDialog'
-import UnFreezeDialog from './UnfreezeDialog'
-import { getApi } from '../../services/api'
 import {
   fetchAccountNominationInterest,
   fetchAccountNominations,
+  fetchNominatorInfo,
   fetchValidators
 } from '@reducers/validatorSlice'
+import { unNominateOpenSelector } from '@reducers/runStatusSlice'
+import UnNominateDialog from './UnNominateDialog'
 
 export const Wrapper = styled.div`
   display: flex;
@@ -44,7 +31,7 @@ export default function() {
   // const unFreezeRecord = useSelector(unFreezeRecordSelector)
   const voteOpen = useSelector(voteOpenSelector)
   // const switchNominationOpen = useSelector(switchNominationOpenSelector)
-  // const unNominateOpen = useSelector(unNominateOpenSelector)
+  const unNominateOpen = useSelector(unNominateOpenSelector)
   // const api = getApi()
 
   const dispatch = useDispatch()
@@ -57,7 +44,15 @@ export default function() {
   //
   useEffect(() => {
     dispatch(fetchAccountNominations(address))
-    dispatch(fetchAccountNominationInterest(address))
+    dispatch(fetchNominatorInfo(address))
+  }, [dispatch, address])
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      dispatch(fetchAccountNominationInterest(address))
+    }, 6000)
+
+    return () => window.clearInterval(intervalId)
   }, [dispatch, address])
 
   useEffect(() => {
@@ -70,7 +65,7 @@ export default function() {
       <Validators />
       {voteOpen ? <VoteDialog /> : null}
       {/*{switchNominationOpen ? <SwitchDialog /> : null}*/}
-      {/*{unNominateOpen ? <UnNominateDialog /> : null}*/}
+      {unNominateOpen ? <UnNominateDialog /> : null}
       {/*<UnFreezeDialog*/}
       {/*  record={unFreezeRecord}*/}
       {/*  revocations={*/}

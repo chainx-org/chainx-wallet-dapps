@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import StyledDialog from './StyledDialog'
 import { AmountInput, PrimaryButton, TextInput } from '@chainx/ui'
 import { useDispatch, useSelector } from 'react-redux'
-import { pcxPrecisionSelector } from '../../selectors/assets'
 import $t from '../../../locale'
 import { canRequestSign, retry, toPrecision } from '../../../utils'
 import arrow from '../svg/arrow.svg'
@@ -10,14 +9,12 @@ import darkArrow from '../svg/dark-arrow.svg'
 import BigNumber from 'bignumber.js'
 import { showSnack, signAndSendExtrinsic } from '../../../utils/chainxProvider'
 import { addressSelector } from '../../../reducers/addressSlice'
-import { fetchNominationRecords } from '../../../reducers/intentionSlice'
-import { fetchAccountAssets } from '../../../reducers/assetSlice'
+import { fetchChainx2NativeAssetInfo } from '../../../reducers/assetSlice'
 import {
   checkAmountAndHasError,
   checkMemoAndHasError
 } from '../../../utils/errorCheck'
 import { isDemoSelector } from '../../../selectors'
-import { getChainx } from '../../../services/chainx'
 import {
   setUnNominateOpen,
   unNominateOpenSelector,
@@ -28,6 +25,11 @@ import {
   intentionBondingDaysSelector,
   isUnNominationFromSelfIntention
 } from './selectors'
+import { pcxPrecisionSelector } from '@reducers/assetSlice'
+import {
+  fetchAccountNominations,
+  fetchValidators
+} from '@reducers/validatorSlice'
 
 export default function() {
   const accountAddress = useSelector(addressSelector)
@@ -42,10 +44,9 @@ export default function() {
   const [disabled, setDisabled] = useState(false)
   const hasAmount = !amountErrMsg && amount
   const dispatch = useDispatch()
-  const chainx = getChainx()
 
   const unNominationData = useSelector(unNominationDataSelector)
-  const intention = unNominationData && unNominationData.intention
+  const target = unNominationData && unNominationData.target
   const nomination = unNominationData && unNominationData.nomination
   const revocations = unNominationData ? unNominationData.revocations || [] : []
 
@@ -85,15 +86,14 @@ export default function() {
 
     setDisabled(true)
     try {
-      const extrinsic = chainx.stake.unnominate(
-        intention.account,
-        realAmount,
-        memo
-      )
-      const status = await signAndSendExtrinsic(
-        accountAddress,
-        extrinsic.toHex()
-      )
+      const status = await signAndSendExtrinsic(accountAddress, {
+        section: 'xStaking',
+        method: 'unbond',
+        params: [target, realAmount, memo]
+      })
+
+      console.log('status', status)
+
       const messages = {
         successTitle: $t('NOTIFICATION_UN_NOMINATION_SUCCESS'),
         failTitle: $t('NOTIFICATION_UN_NOMINATION_FAIL'),
@@ -108,8 +108,9 @@ export default function() {
       handleClose()
       await retry(
         () => {
-          dispatch(fetchNominationRecords(accountAddress))
-          dispatch(fetchAccountAssets(accountAddress))
+          dispatch(fetchChainx2NativeAssetInfo(accountAddress))
+          dispatch(fetchValidators())
+          dispatch(fetchAccountNominations(accountAddress))
         },
         5,
         2
