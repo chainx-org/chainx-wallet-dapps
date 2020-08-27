@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { SelectInput } from '@chainx/ui'
-import { intentionsSelector } from '../../../reducers/intentionSlice'
+import { validatorsSelector } from '@reducers/validatorSlice'
 
 export default function({
   value,
@@ -11,14 +11,11 @@ export default function({
   error,
   errorText
 }) {
-  const intentions = useSelector(intentionsSelector)
-  const filteredIntentions = intentions.filter(intention =>
-    intention.name.toLowerCase().includes(value)
-  )
-  const intentionNames = filteredIntentions.map(intention => intention.name)
-  const channelOptions = intentionNames.map(name => ({
-    value: name,
-    label: name
+  const validators = useSelector(validatorsSelector)
+  const accounts = validators.map(v => v.account)
+  const channelOptions = accounts.map(account => ({
+    value: account,
+    label: account
   }))
 
   return (

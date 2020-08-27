@@ -1,5 +1,5 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
-import { getChainx } from '../services/chainx'
+import { getChainxPromised } from '../services/chainx'
 import { getApi } from '../services/api'
 import { remove0xPrefix } from '../utils'
 
@@ -48,13 +48,16 @@ export const {
 } = tradeSlice.actions
 
 export const fetchTradePairs = () => async dispatch => {
-  const chainx = getChainx()
-  await chainx.isRpcReady()
-  const { trade } = chainx
+  const api = await getChainxPromised()
 
-  const pairs = await trade.getTradingPairs()
-  dispatch(setPairs(pairs))
-  dispatch(setCurrentPair(pairs[0]))
+  const pairs = await api.rpc.xspot.getTradingPairs()
+  console.log('pairs', pairs)
+  // await chainx.isRpcReady()
+  // const { trade } = chainx
+  //
+  // const pairs = await trade.getTradingPairs()
+  // dispatch(setPairs(pairs))
+  // dispatch(setCurrentPair(pairs[0]))
 }
 
 export const fetchFills = (pairId, count = 20) => async dispatch => {
@@ -94,16 +97,13 @@ export const fetchHistoryOrders = accountId => async dispatch => {
 
 export const pairsSelector = state => state.trade.pairs
 export const currentPairSelector = state => state.trade.currentPair
-export let currentPairIdSelector = createSelector(
-  currentPairSelector,
-  pair => {
-    if (!pair) {
-      return null
-    }
-
-    return pair.id
+export let currentPairIdSelector = createSelector(currentPairSelector, pair => {
+  if (!pair) {
+    return null
   }
-)
+
+  return pair.id
+})
 
 export const fillsSelector = state => state.trade.fills
 export const asksSelector = state => state.trade.quotations.asks

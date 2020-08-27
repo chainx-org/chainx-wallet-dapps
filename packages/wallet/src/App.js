@@ -25,6 +25,7 @@ import { fetchMiningAssets } from '@reducers/miningAssetSlice'
 import { fetchValidators } from '@reducers/validatorSlice'
 import Staking from '@pages/Staking'
 import { fetchLocks } from '@reducers/assetSlice'
+import Trade from '@pages/Trade'
 
 const isChrome =
   /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
@@ -96,7 +97,7 @@ function App() {
           {/*<Route exact path="/mining" component={CrossChainMining} />*/}
           <Route exact path="/staking" component={Staking} />
           {/*<Route exact path="/trust" component={Trust} />*/}
-          {/*<Route exact path="/trade" component={Trade} />*/}
+          <Route exact path="/trade" component={Trade} />
           {/*<Route exact path="/contract" component={Contract} />*/}
           {/*<Route exact path="/txs" component={HistoryTransactions} />*/}
           {/*<Route exact path="/contract/code" component={ContractCode} />*/}

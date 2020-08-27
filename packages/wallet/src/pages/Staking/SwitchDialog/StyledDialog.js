@@ -6,13 +6,6 @@ export default styled(Dialog)`
     padding: 0 16px 20px;
     & > div {
       margin-top: 16px;
-      &.intention {
-        display: flex;
-        justify-content: space-between;
-        & > div {
-          width: 50%;
-        }
-      }
 
       &.info {
         display: flex;

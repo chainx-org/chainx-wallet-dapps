@@ -1,38 +1,31 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import StyledDialog from './StyledDialog'
 import { AmountInput, PrimaryButton, TextInput } from '@chainx/ui'
 import $t from '../../../locale'
 import { useDispatch, useSelector } from 'react-redux'
-import { pcxPrecisionSelector } from '../../selectors/assets'
 import { retry, toPrecision } from '../../../utils'
 import arrow from '../svg/arrow.svg'
 import darkArrow from '../svg/dark-arrow.svg'
 import BigNumber from 'bignumber.js'
 import { showSnack, signAndSendExtrinsic } from '../../../utils/chainxProvider'
-import {
-  accountIdSelector,
-  addressSelector
-} from '../../../reducers/addressSlice'
+import { addressSelector } from '../../../reducers/addressSlice'
 import IntentionSelect from './IntentionSelect'
-import {
-  fetchNextRenominateByAccount,
-  fetchNominationRecords,
-  intentionsSelector,
-  nextRenominateHeightSelector
-} from '../../../reducers/intentionSlice'
+import { fetchNominationRecords } from '../../../reducers/intentionSlice'
 import { fetchAccountAssets } from '../../../reducers/assetSlice'
 import { checkMemoAndHasError } from '../../../utils/errorCheck'
 import { isDemoSelector } from '../../../selectors'
-import { getChainx } from '../../../services/chainx'
 import {
   setSwitchNominationOpen,
-  switchNominationDataSelector,
   switchNominationOpenSelector
 } from '../../../reducers/runStatusSlice'
 import {
   nextRenominateTimeSelector,
   reachNexRenominateSelector
 } from './selectors'
+import { switchNominationFromSelector } from '@reducers/runStatusSlice'
+import { nominationInfoSelector } from '@reducers/validatorSlice'
+import { pcxPrecisionSelector } from '@reducers/assetSlice'
+import { nextRenominateHeightSelector } from '@pages/Staking/SwitchDialog/selectors'
 
 export default function() {
   const accountAddress = useSelector(addressSelector)
@@ -41,15 +34,17 @@ export default function() {
   const nextRenominateTime = useSelector(nextRenominateTimeSelector)
   const nextRenominateHeight = useSelector(nextRenominateHeightSelector)
 
+  const nominationInfo = useSelector(nominationInfoSelector)
+
   const switchNominationOpen = useSelector(switchNominationOpenSelector)
-  const switchNominationData = useSelector(switchNominationDataSelector)
-  const intention = switchNominationData.intention
-  const nomination = switchNominationData.nomination
   const handleClose = () => dispatch(setSwitchNominationOpen(false))
+
+  const validatorFrom = useSelector(switchNominationFromSelector)
+  const nowNomination = nominationInfo[validatorFrom]?.nomination
 
   const [memo, setMemo] = useState('')
   const [memoErrMsg, setMemoErrMsg] = useState('')
-  const [targetIntentionName, setTargetIntentionName] = useState('')
+  const [targetAccount, setTargetAccount] = useState('')
 
   const [amount, setAmount] = useState('')
   const [amountErrMsg, setAmountErrMsg] = useState('')
@@ -58,10 +53,6 @@ export default function() {
   const [disabled, setDisabled] = useState(false)
   const hasAmount = !amountErrMsg && amount
 
-  const intentions = useSelector(intentionsSelector)
-  const targetIntention = (intentions || []).find(
-    item => item.name === targetIntentionName
-  )
   const dispatch = useDispatch()
 
   const precision = useSelector(pcxPrecisionSelector)
@@ -72,20 +63,13 @@ export default function() {
       .toNumber()
   }
 
-  const chainx = getChainx()
-  const accountId = useSelector(accountIdSelector)
-
-  useEffect(() => {
-    dispatch(fetchNextRenominateByAccount(accountId))
-  }, [accountId, dispatch])
-
   const checkAmountAndHasError = value => {
     if (isNaN(parseFloat(value))) {
       setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_ERROR'))
       return true
     }
 
-    if (realAmount > nomination) {
+    if (realAmount > nowNomination) {
       setAmountErrMsg($t('ASSET_TRANSFER_AMOUNT_TOO_MUCH_ERROR'))
       return true
     }
@@ -94,12 +78,12 @@ export default function() {
   }
 
   const checkIntentionAndHasError = () => {
-    if (!targetIntention) {
+    if (!targetAccount) {
       setIntentionErrMsg('必填')
       return true
     }
 
-    if (targetIntention.account === intention.account) {
+    if (targetAccount === validatorFrom) {
       setIntentionErrMsg('不能切换到相同节点')
       return true
     }
@@ -126,16 +110,7 @@ export default function() {
 
     setDisabled(true)
     try {
-      const extrinsic = chainx.stake.renominate(
-        intention.account,
-        targetIntention.account,
-        realAmount,
-        memo
-      )
-      const status = await signAndSendExtrinsic(
-        accountAddress,
-        extrinsic.toHex()
-      )
+      const status = await signAndSendExtrinsic(accountAddress, '')
       const messages = {
         successTitle: $t('NOTIFICATION_SWITCH_SUCCESS'),
         failTitle: $t('NOTIFICATION_SWITCH_FAIL'),
@@ -166,37 +141,34 @@ export default function() {
       handleClose={handleClose}
     >
       <main className="content">
-        <div className="intention">
-          <div>
-            <IntentionSelect
-              style={{ marginRight: 8 }}
-              value={targetIntentionName}
-              onChange={value => {
-                setDisabled(false)
-                setIntentionErrMsg('')
-                setTargetIntentionName(value)
-              }}
-              placeholder={'新节点'}
-              error={!!intentionErrorMsg}
-              errorText={intentionErrorMsg}
-            />
-          </div>
-          <div>
-            <AmountInput
-              style={{ marginLeft: 8 }}
-              value={amount}
-              onChange={value => {
-                setDisabled(false)
-                setAmountErrMsg('')
-                setAmount(value)
-                checkAmountAndHasError(value)
-              }}
-              placeholder={'数量'}
-              precision={precision}
-              error={!!amountErrMsg}
-              errorText={amountErrMsg}
-            />
-          </div>
+        <div>
+          <IntentionSelect
+            style={{ marginRight: 8 }}
+            value={targetAccount}
+            onChange={value => {
+              setDisabled(false)
+              setIntentionErrMsg('')
+              setTargetAccount(value)
+            }}
+            placeholder={'新节点'}
+            error={!!intentionErrorMsg}
+            errorText={intentionErrorMsg}
+          />
+        </div>
+        <div>
+          <AmountInput
+            value={amount}
+            onChange={value => {
+              setDisabled(false)
+              setAmountErrMsg('')
+              setAmount(value)
+              checkAmountAndHasError(value)
+            }}
+            placeholder={'数量'}
+            precision={precision}
+            error={!!amountErrMsg}
+            errorText={amountErrMsg}
+          />
         </div>
 
         <div>
@@ -217,7 +189,7 @@ export default function() {
         <div className="info">
           <section className="now">
             <h4>{$t('STAKING_NOW_NOMINATION')}</h4>
-            <p>{toPrecision(nomination, precision)} PCX</p>
+            <p>{toPrecision(nowNomination, precision)} PCX</p>
           </section>
           <img src={hasAmount ? arrow : darkArrow} alt="arrow" />
           <section className="after">
@@ -226,7 +198,7 @@ export default function() {
               {!hasAmount
                 ? '-'
                 : `${toPrecision(
-                    nomination - amount * Math.pow(10, precision),
+                    nowNomination - amount * Math.pow(10, precision),
                     precision
                   )} PCX`}
             </p>

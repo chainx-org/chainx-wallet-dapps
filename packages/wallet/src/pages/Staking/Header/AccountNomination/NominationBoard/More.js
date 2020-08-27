@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import $t from '../../../../../locale'
 import useOutsideClick from '../../../../../utils/useClickOutside'
 import {
+  setSwitchNominationFrom,
+  setSwitchNominationOpen,
   setUnNominateOpen,
   setUnNominationData
 } from '@reducers/runStatusSlice'
@@ -53,6 +55,7 @@ export default function({ intention }) {
   const [showMore, setShowMore] = useState(false)
   const dispatch = useDispatch()
 
+  console.log('intention', intention)
   // const { nomination, revocations = [] } = record.info || {}
 
   const popup = useRef(null)
@@ -83,13 +86,8 @@ export default function({ intention }) {
         </li>
         <li
           onClick={() => {
-            // dispatch(
-            //   setSwitchNominationData({
-            //     intention,
-            //     nomination
-            //   })
-            // )
-            // dispatch(setSwitchNominationOpen(true))
+            dispatch(setSwitchNominationOpen(true))
+            dispatch(setSwitchNominationFrom(intention?.account))
             setShowMore(false)
           }}
         >

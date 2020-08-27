@@ -9,11 +9,16 @@ import VoteDialog from './VoteDialog'
 import {
   fetchAccountNominationInterest,
   fetchAccountNominations,
+  fetchBondingDuration,
   fetchNominatorInfo,
   fetchValidators
 } from '@reducers/validatorSlice'
-import { unNominateOpenSelector } from '@reducers/runStatusSlice'
+import {
+  switchNominationOpenSelector,
+  unNominateOpenSelector
+} from '@reducers/runStatusSlice'
 import UnNominateDialog from './UnNominateDialog'
+import SwitchDialog from './SwitchDialog'
 
 export const Wrapper = styled.div`
   display: flex;
@@ -30,7 +35,7 @@ export default function() {
   const address = useSelector(addressSelector)
   // const unFreezeRecord = useSelector(unFreezeRecordSelector)
   const voteOpen = useSelector(voteOpenSelector)
-  // const switchNominationOpen = useSelector(switchNominationOpenSelector)
+  const switchNominationOpen = useSelector(switchNominationOpenSelector)
   const unNominateOpen = useSelector(unNominateOpenSelector)
   // const api = getApi()
 
@@ -57,6 +62,7 @@ export default function() {
 
   useEffect(() => {
     dispatch(fetchValidators())
+    dispatch(fetchBondingDuration())
   }, [dispatch])
 
   return (
@@ -64,7 +70,7 @@ export default function() {
       <Header />
       <Validators />
       {voteOpen ? <VoteDialog /> : null}
-      {/*{switchNominationOpen ? <SwitchDialog /> : null}*/}
+      {switchNominationOpen ? <SwitchDialog /> : null}
       {unNominateOpen ? <UnNominateDialog /> : null}
       {/*<UnFreezeDialog*/}
       {/*  record={unFreezeRecord}*/}

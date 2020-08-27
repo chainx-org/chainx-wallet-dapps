@@ -1,5 +1,5 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
-import { getChainx } from '../services/chainx'
+import { getChainx, getChainxPromised } from '../services/chainx'
 import { setLoadingIntentions } from '@reducers/runStatusSlice'
 import chunk from 'lodash.chunk'
 import BigNumber from 'bignumber.js'
@@ -13,7 +13,8 @@ const validatorSlice = createSlice({
     nominatorInfo: {
       lastRebond: null,
       unbondedChunks: []
-    }
+    },
+    bondingDuration: null
   },
   reducers: {
     setValidators(state, { payload }) {
@@ -27,6 +28,9 @@ const validatorSlice = createSlice({
     },
     setNominatorInfo(state, { payload }) {
       state.nominatorInfo = payload
+    },
+    setBondingDuration(state, { payload }) {
+      state.bondingDuration = payload
     }
   }
 })
@@ -35,8 +39,15 @@ export const {
   setValidators,
   setNominationInfo,
   setInterestInfo,
-  setNominatorInfo
+  setNominatorInfo,
+  setBondingDuration
 } = validatorSlice.actions
+
+export const fetchBondingDuration = () => async dispatch => {
+  const api = await getChainxPromised()
+  const duration = await api.query.xStaking.bondingDuration()
+  dispatch(setBondingDuration(duration.toNumber()))
+}
 
 export const fetchNominatorInfo = address => async dispatch => {
   const api = getChainx()
@@ -128,5 +139,6 @@ export const nominationRecordsSelector = createSelector(
 )
 
 export const nominatorInfoSelector = state => state.validator.nominatorInfo
+export const bondingDurationSelector = state => state.validator.bondingDuration
 
 export default validatorSlice.reducer

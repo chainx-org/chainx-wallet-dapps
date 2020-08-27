@@ -1,4 +1,5 @@
-const { ApiPromise, WsProvider } = require('@chainx-v2/api')
+import { ApiPromise, WsProvider } from '@chainx-v2/api'
+import types from './types'
 
 let api = null
 let provider = null
@@ -6,7 +7,7 @@ let provider = null
 export const setChainx = async url => {
   console.log('url', url)
   const wsProvider = new WsProvider(url)
-  api = new ApiPromise({ provider: wsProvider })
+  api = new ApiPromise({ provider: wsProvider, types })
 
   await api.isReady
 
@@ -19,3 +20,8 @@ export const setChainx = async url => {
 }
 
 export const getChainx = () => api
+
+export const getChainxPromised = async () => {
+  await api.isReady
+  return api
+}

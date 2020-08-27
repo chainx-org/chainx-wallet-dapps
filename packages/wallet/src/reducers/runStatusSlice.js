@@ -9,6 +9,7 @@ const runStatusSlice = createSlice({
     voteIntention: null,
     unFreezeOpen: false,
     switchNominationData: {},
+    switchNominationFrom: null,
     unNominationData: {},
     unFreezeRecord: {},
     loading: false,
@@ -36,6 +37,9 @@ const runStatusSlice = createSlice({
     },
     setSwitchNominationData(state, action) {
       state.switchNominationData = action.payload
+    },
+    setSwitchNominationFrom(state, { payload }) {
+      state.switchNominationFrom = payload
     },
     setUnNominationData(state, action) {
       state.unNominationData = action.payload
@@ -69,6 +73,7 @@ export const {
   setUnFreezeOpen,
   setVoteIntention,
   setSwitchNominationData,
+  setSwitchNominationFrom,
   setUnNominationData,
   setUnFreezeRecord,
   setLoading,
@@ -78,6 +83,8 @@ export const {
   setOpenBetBtcDialog
 } = runStatusSlice.actions
 
+export const switchNominationFromSelector = state =>
+  state.runStatus.switchNominationFrom
 export const unNominateOpenSelector = state => state.runStatus.unNominateOpen
 export const switchNominationOpenSelector = state =>
   state.runStatus.switchNominationOpen
