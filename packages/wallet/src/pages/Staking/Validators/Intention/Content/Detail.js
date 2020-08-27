@@ -2,12 +2,11 @@ import React, { useRef } from 'react'
 import styled from 'styled-components'
 import { BoldValue, Label } from './components'
 import { useSelector } from 'react-redux'
-import { pcxPrecisionSelector } from '../../../../selectors/assets'
 import { noneFunc, toPrecision } from '../../../../../utils'
-import { getChainx } from '../../../../../services/chainx'
 import useOutsideClick from '../../../../../utils/useClickOutside'
 import $t from '../../../../../locale'
 import Address from '../../../../../components/Address'
+import { pcxPrecisionSelector } from '@reducers/assetSlice'
 
 const Wrapper = styled.div`
   position: absolute;
@@ -59,21 +58,15 @@ const Wrapper = styled.div`
 
 export default function({ intention, close = noneFunc }) {
   const {
-    name,
-    about,
-    selfVote,
-    totalNomination,
-    jackpot,
-    jackpotAccount,
+    total,
+    selfBonded,
+    rewardPotAccount,
+    rewardPotBalance,
     account
   } = intention
   const precision = useSelector(pcxPrecisionSelector)
 
   const popup = useRef(null)
-
-  const chainx = getChainx()
-  const jackpotAddress = chainx.account.encodeAddress(jackpotAccount, false)
-  const accountAddress = chainx.account.encodeAddress(account, false)
 
   useOutsideClick(popup, () => {
     close()
@@ -82,30 +75,30 @@ export default function({ intention, close = noneFunc }) {
   return (
     <Wrapper>
       <div className="intention-detail" ref={popup}>
-        <h3>
-          <span>{name}</span>
-        </h3>
-        <p>{about}</p>
+        {/*<h3>*/}
+        {/*  <span>{name}</span>*/}
+        {/*</h3>*/}
+        {/*<p>{about}</p>*/}
         <ul>
           <li>
             <Label>{$t('STAKING_SELF_VOTE_NUMBER')}</Label>
-            <BoldValue>{toPrecision(selfVote, precision)}</BoldValue>
+            <BoldValue>{toPrecision(selfBonded, precision)}</BoldValue>
           </li>
           <li>
             <Label>{$t('STAKING_NOMINATION_NUMBER')}</Label>
-            <BoldValue>{toPrecision(totalNomination, precision)}</BoldValue>
+            <BoldValue>{toPrecision(total, precision)}</BoldValue>
           </li>
           <li>
             <Label>{$t('STAKING_JACKPOT_AMOUNT')}</Label>
-            <BoldValue>{toPrecision(jackpot, precision)}</BoldValue>
+            <BoldValue>{toPrecision(rewardPotBalance, precision)}</BoldValue>
           </li>
           <li>
             <Label>{$t('STAKING_JACKPOT_ADDR')}</Label>
-            <Address address={jackpotAddress} />
+            <Address address={rewardPotAccount} />
           </li>
           <li>
             <Label>{$t('STAKING_ACCOUNT_ADDRESS')}</Label>
-            <Address address={accountAddress} />
+            <Address address={account} />
           </li>
         </ul>
       </div>

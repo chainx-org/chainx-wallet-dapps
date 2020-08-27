@@ -110,7 +110,11 @@ export default function() {
 
     setDisabled(true)
     try {
-      const status = await signAndSendExtrinsic(accountAddress, '')
+      const status = await signAndSendExtrinsic(accountAddress, {
+        section: 'xStaking',
+        method: 'rebond',
+        params: [validatorFrom, targetAccount, realAmount, memo]
+      })
       const messages = {
         successTitle: $t('NOTIFICATION_SWITCH_SUCCESS'),
         failTitle: $t('NOTIFICATION_SWITCH_FAIL'),
