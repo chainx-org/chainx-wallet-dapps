@@ -16,6 +16,7 @@ import {
 import { nominationRecordsSelector } from '@reducers/validatorSlice'
 import Address from '@components/Address'
 import { pcxPrecisionSelector } from '@reducers/assetSlice'
+import Unfreeze from '@pages/Staking/Header/AccountNomination/NominationBoard/Unfreeze'
 
 const Wrapper = styled.div`
   display: flex;
@@ -90,13 +91,15 @@ export default function() {
     <Wrapper>
       <ul>
         {records.map((record, index) => {
+          console.log('record', record)
           const { account, rewardPotBalance: jackpot = 0 } =
             record.validator || {}
-          const { nomination } = record.nomination || {}
+          const { nomination, unbondedChunks } = record.nomination || {}
           const interest = record.interest
-          // const unfreeze = revocations.reduce((result, revocation) => {
-          //   return result + revocation.value
-          // }, 0)
+
+          const unbonded = unbondedChunks.reduce((result, item) => {
+            return result + item.value
+          }, 0)
 
           return (
             <li key={index}>
@@ -109,7 +112,7 @@ export default function() {
                   {/*<span>{name}</span>*/}
                 </div>
                 <div className="operations">
-                  {/*<Unfreeze revocations={revocations} record={record} />*/}
+                  <Unfreeze revocations={unbondedChunks} record={record} />
                   <DefaultButton
                     size="small"
                     style={{ marginRight: 8 }}
@@ -130,8 +133,8 @@ export default function() {
                   <Value>{toPrecision(jackpot, precision)}</Value>
                 </li>
                 <li>
-                  <Label>{$t('COMMON_UNFREEZE')}</Label>
-                  {/*<Value>{toPrecision(unfreeze, precision)}</Value>*/}
+                  <Label>{$t('STAKING_REVOCATION')}</Label>
+                  <Value>{toPrecision(unbonded, precision)}</Value>
                 </li>
                 <li>
                   <Label>{$t('STAKING_MY_NOMINATION')}</Label>

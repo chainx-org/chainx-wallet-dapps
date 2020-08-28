@@ -55,9 +55,6 @@ export default function({ intention }) {
   const [showMore, setShowMore] = useState(false)
   const dispatch = useDispatch()
 
-  console.log('intention', intention)
-  // const { nomination, revocations = [] } = record.info || {}
-
   const popup = useRef(null)
 
   useOutsideClick(popup, () => {

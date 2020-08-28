@@ -8,7 +8,7 @@ import {
 } from '../../../../../reducers/runStatusSlice'
 import $t from '../../../../../locale'
 
-export default function({ record }) {
+export default function({ record, revocations }) {
   const unFreezeOpen = useSelector(unFreezeOpenSelector)
   const dispatch = useDispatch()
 
@@ -17,7 +17,7 @@ export default function({ record }) {
       <DefaultButton
         size="small"
         style={{ marginRight: 8 }}
-        disabled={record.info.revocations.length <= 0 || unFreezeOpen}
+        disabled={revocations.length <= 0 || unFreezeOpen}
         onClick={() => {
           dispatch(setUnFreezeOpen(true))
           dispatch(setUnFreezeRecord(record))
