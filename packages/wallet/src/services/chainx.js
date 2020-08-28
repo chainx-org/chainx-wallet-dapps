@@ -1,11 +1,12 @@
 import { ApiPromise, WsProvider } from '@chainx-v2/api'
+import types from './types'
 
 let api = null
 let provider = null
 
 export const setChainx = async url => {
   const wsProvider = new WsProvider(url)
-  api = new ApiPromise({ provider: wsProvider })
+  api = new ApiPromise({ provider: wsProvider, types })
 
   await api.isReady
 

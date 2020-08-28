@@ -20,6 +20,7 @@ import historyTxsReducer from './historyTxSlice'
 import oddEvenReducer from './oddevenSlice'
 import miningAssetReducer from './miningAssetSlice'
 import validatorReducer from './validatorSlice'
+import dexReducer from './dexSlice'
 
 export default combineReducers({
   test: testReducer,
@@ -42,5 +43,6 @@ export default combineReducers({
   historyTxs: historyTxsReducer,
   oddEven: oddEvenReducer,
   miningAsset: miningAssetReducer,
-  validator: validatorReducer
+  validator: validatorReducer,
+  dex: dexReducer
 })

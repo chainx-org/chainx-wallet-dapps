@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { getChainxPromised } from '../services/chainx'
 
-const tradeSlice = createSlice({
+const dexSlice = createSlice({
   name: 'dex',
   initialState: {
     pairs: [],
@@ -17,7 +17,7 @@ const tradeSlice = createSlice({
   }
 })
 
-export const { setPairs, setCurrentPair } = tradeSlice.actions
+export const { setPairs, setCurrentPair } = dexSlice.actions
 
 export const fetchDexPairs = () => async dispatch => {
   const api = await getChainxPromised()
@@ -27,3 +27,12 @@ export const fetchDexPairs = () => async dispatch => {
   dispatch(setPairs(json))
   dispatch(setCurrentPair(json[0]))
 }
+
+export const fetchDexDepth = () => async dispatch => {
+  const api = await getChainxPromised()
+  const depth = await api.rpc.xspot.getDepth(0, 10)
+
+  console.log('depth', depth.toJSON())
+}
+
+export default dexSlice.reducer
