@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
 import Wrapper from './Wrapper'
 import { useDispatch } from 'react-redux'
-import { fetchTradePairs } from '../../reducers/tradeSlice'
+import { fetchDexPairs } from '@reducers/dexSlice'
 
 export default function() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(fetchTradePairs())
+    dispatch(fetchDexPairs())
   }, [dispatch])
 
   return (
