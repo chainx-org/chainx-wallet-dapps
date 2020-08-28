@@ -12,6 +12,7 @@ const runStatusSlice = createSlice({
     switchNominationFrom: null,
     unNominationData: {},
     unFreezeRecord: {},
+    unFreezeData: null,
     loading: false,
     openSignerDownloadDialog: false,
     openExtensionDownloadDialog: false,
@@ -47,6 +48,9 @@ const runStatusSlice = createSlice({
     setUnFreezeRecord(state, action) {
       state.unFreezeRecord = action.payload
     },
+    setUnFreezeData(state, { payload }) {
+      state.unFreezeData = payload
+    },
     setLoading(state, action) {
       state.loading = action.payload
     },
@@ -80,9 +84,11 @@ export const {
   setOpenSignerDownloadDialog,
   setOpenExtensionDownloadDialog,
   setLoadingIntentions,
-  setOpenBetBtcDialog
+  setOpenBetBtcDialog,
+  setUnFreezeData
 } = runStatusSlice.actions
 
+export const unFreezeDataSelector = state => state.runStatus.unFreezeData
 export const switchNominationFromSelector = state =>
   state.runStatus.switchNominationFrom
 export const unNominateOpenSelector = state => state.runStatus.unNominateOpen

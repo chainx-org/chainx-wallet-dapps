@@ -3,10 +3,10 @@ import { DefaultButton } from '@chainx/ui'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   setUnFreezeOpen,
-  setUnFreezeRecord,
   unFreezeOpenSelector
 } from '../../../../../reducers/runStatusSlice'
 import $t from '../../../../../locale'
+import { setUnFreezeData } from '@reducers/runStatusSlice'
 
 export default function({ record, revocations }) {
   const unFreezeOpen = useSelector(unFreezeOpenSelector)
@@ -20,7 +20,12 @@ export default function({ record, revocations }) {
         disabled={revocations.length <= 0 || unFreezeOpen}
         onClick={() => {
           dispatch(setUnFreezeOpen(true))
-          dispatch(setUnFreezeRecord(record))
+          dispatch(
+            setUnFreezeData({
+              account: record.account,
+              revocations
+            })
+          )
         }}
       >
         {$t('COMMON_UNFREEZE')}

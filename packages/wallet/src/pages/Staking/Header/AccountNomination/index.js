@@ -6,6 +6,7 @@ import openIcon from './open.svg'
 import $t from '../../../../locale'
 import useOutsideClick from '../../../../utils/useClickOutside'
 import {
+  loadingIntentionsSelector,
   switchNominationOpenSelector,
   unFreezeOpenSelector,
   unNominateOpenSelector,
@@ -18,6 +19,7 @@ import {
 import { locksSelector, pcxPrecisionSelector } from '@reducers/assetSlice'
 import { toPrecision } from '../../../../utils'
 import NominationBoard from './NominationBoard'
+import LoadingWithText from '@components/LoadingWithText'
 
 const Wrapper = styled.div`
   display: flex;
@@ -77,6 +79,7 @@ export default function() {
   const unNominateOpen = useSelector(unNominateOpenSelector)
   const switchNominationOpen = useSelector(switchNominationOpenSelector)
   const unFreezeOpen = useSelector(unFreezeOpenSelector)
+  const loading = useSelector(loadingIntentionsSelector)
 
   const popup = useRef(null)
 
@@ -91,9 +94,9 @@ export default function() {
     }
   })
 
-  // if (loading) {
-  //   return <LoadingWithText text={$t('STAKING_LOADING_INTEREST')} />
-  // }
+  if (loading) {
+    return <LoadingWithText text={$t('STAKING_LOADING_INTEREST')} />
+  }
 
   return (
     <Wrapper ref={popup}>

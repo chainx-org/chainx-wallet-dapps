@@ -91,7 +91,6 @@ export default function() {
     <Wrapper>
       <ul>
         {records.map((record, index) => {
-          console.log('record', record)
           const { account, rewardPotBalance: jackpot = 0 } =
             record.validator || {}
           const { nomination, unbondedChunks } = record.nomination || {}

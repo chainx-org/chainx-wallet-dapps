@@ -14,11 +14,13 @@ import {
   fetchValidators
 } from '@reducers/validatorSlice'
 import {
+  setUnFreezeOpen,
   switchNominationOpenSelector,
   unNominateOpenSelector
 } from '@reducers/runStatusSlice'
 import UnNominateDialog from './UnNominateDialog'
 import SwitchDialog from './SwitchDialog'
+import UnFreezeDialog from './UnfreezeDialog'
 
 export const Wrapper = styled.div`
   display: flex;
@@ -52,6 +54,7 @@ export default function() {
     dispatch(fetchNominatorInfo(address))
   }, [dispatch, address])
 
+  dispatch(fetchAccountNominationInterest(address, true))
   useEffect(() => {
     const intervalId = setInterval(() => {
       dispatch(fetchAccountNominationInterest(address))
@@ -72,17 +75,17 @@ export default function() {
       {voteOpen ? <VoteDialog /> : null}
       {switchNominationOpen ? <SwitchDialog /> : null}
       {unNominateOpen ? <UnNominateDialog /> : null}
-      {/*<UnFreezeDialog*/}
-      {/*  record={unFreezeRecord}*/}
-      {/*  revocations={*/}
-      {/*    unFreezeRecord &&*/}
-      {/*    unFreezeRecord.info &&*/}
-      {/*    unFreezeRecord.info.revocations*/}
-      {/*  }*/}
-      {/*  handleClose={() => {*/}
-      {/*    dispatch(setUnFreezeOpen(false))*/}
-      {/*  }}*/}
-      {/*/>*/}
+      <UnFreezeDialog
+        // record={unFreezeRecord}
+        // revocations={
+        //   unFreezeRecord &&
+        //   unFreezeRecord.info &&
+        //   unFreezeRecord.info.revocations
+        // }
+        handleClose={() => {
+          dispatch(setUnFreezeOpen(false))
+        }}
+      />
     </Wrapper>
   )
 }

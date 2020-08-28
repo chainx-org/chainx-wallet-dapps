@@ -62,11 +62,22 @@ export const fetchAccountNominations = address => async dispatch => {
   dispatch(setNominationInfo(nominationMap.toJSON()))
 }
 
-export const fetchAccountNominationInterest = address => async dispatch => {
-  const api = getChainx()
-  const interestMap = await api.rpc.xstaking.getDividendByAccount(address)
+export const fetchAccountNominationInterest = (
+  address,
+  setLoading = false
+) => async dispatch => {
+  if (setLoading) {
+    dispatch(setLoadingIntentions(true))
+  }
 
-  dispatch(setInterestInfo(interestMap.toJSON()))
+  try {
+    const api = getChainx()
+    const interestMap = await api.rpc.xstaking.getDividendByAccount(address)
+
+    dispatch(setInterestInfo(interestMap.toJSON()))
+  } finally {
+    dispatch(setLoadingIntentions(false))
+  }
 }
 
 export const fetchValidators = (setLoading = false) => async dispatch => {

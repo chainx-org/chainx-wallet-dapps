@@ -7,11 +7,13 @@ const tradeSlice = createSlice({
     pairs: [],
     currentPair: null
   },
-  setPairs: (state, action) => {
-    state.pairs = action.payload
-  },
-  setCurrentPair: (state, action) => {
-    state.currentPair = action.payload
+  reducers: {
+    setPairs: (state, action) => {
+      state.pairs = action.payload
+    },
+    setCurrentPair: (state, action) => {
+      state.currentPair = action.payload
+    }
   }
 })
 
