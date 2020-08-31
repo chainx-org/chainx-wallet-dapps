@@ -60,5 +60,25 @@ export const pricePrecisionSelector = createSelector(
     return pair.pipDecimals - pair.tickDecimals
   }
 )
+export const maxBuyShowPriceSelector = createSelector(
+  currentPairSelector,
+  pair => {
+    if (!pair) {
+      return 0
+    }
+
+    return pair.maxValidBid
+  }
+)
+export const minSellPriceSelector = createSelector(
+  currentPairSelector,
+  pair => {
+    if (!pair) {
+      return 0
+    }
+
+    return pair.minValidAsk
+  }
+)
 
 export default dexSlice.reducer

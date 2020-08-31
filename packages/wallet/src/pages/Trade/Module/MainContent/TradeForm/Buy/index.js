@@ -3,14 +3,11 @@ import Wrapper, { Error } from './Wrapper'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   currentShowPriceSelector,
-  maxBuyPriceSelector,
   pairAssetPrecision,
   pairAssetSelector,
   pairCurrencyFreeSelector,
   pairCurrencyPrecision,
-  pairCurrencySelector,
-  pairPrecisionSelector,
-  pairShowPrecisionSelector
+  pairCurrencySelector
 } from '../../../selectors'
 import Free from '../components/Free'
 import { AmountInput, Slider, SuccessButton } from '@chainx/ui'
@@ -28,7 +25,6 @@ import {
 } from '../../../../../../utils/chainxProvider'
 import {
   currentPairIdSelector,
-  fetchNowOrders,
   fetchQuotations
 } from '../../../../../../reducers/tradeSlice'
 import { addressSelector } from '../../../../../../reducers/addressSlice'
@@ -38,12 +34,18 @@ import $t from '../../../../../../locale'
 import { getChainx } from '../../../../../../services/chainx'
 import infoIcon from '../../assets/info.svg'
 import { PriceWrapper } from '../components/PriceWrapper'
-import { accountIdSelector } from '../../../../../selectors/assets'
 import EventEmitter, { events } from '../../../eventEmitter'
-import { fetchAccountAssets } from '../../../../../../reducers/assetSlice'
+import {
+  fetchAccountAssets,
+  normalizedAssetsSelector
+} from '../../../../../../reducers/assetSlice'
+import { maxBuyShowPriceSelector } from '@reducers/dexSlice'
+import {
+  pairPipPrecisionSelector,
+  pairPrecisionSelector
+} from '@pages/Trade/Module/AskBid/dexSelectors'
 
 export default function() {
-  const accountId = useSelector(accountIdSelector)
   const address = useSelector(addressSelector)
   const accountAddress = useSelector(addressSelector)
   const isDemoAddr = useSelector(isDemoSelector)
@@ -52,15 +54,19 @@ export default function() {
   const currencyFree = useSelector(pairCurrencyFreeSelector) || {}
   const pairCurrency = useSelector(pairCurrencySelector)
   const pairAsset = useSelector(pairAssetSelector)
-  const pairShowPrecision = useSelector(pairShowPrecisionSelector)
-  const pairPrecision = useSelector(pairPrecisionSelector)
+  const pairShowPrecision = useSelector(pairPrecisionSelector)
+  const pairPrecision = useSelector(pairPipPrecisionSelector)
   const assetPrecision = useSelector(pairAssetPrecision)
   const showPrice = useSelector(currentShowPriceSelector)
   const currencyPrecision = useSelector(pairCurrencyPrecision)
-  const maxBuyPrice = useSelector(maxBuyPriceSelector)
+  const maxBuyPrice = useSelector(maxBuyShowPriceSelector)
   const maxBuyShowPrice = Number(
     toPrecision(maxBuyPrice, pairPrecision)
   ).toFixed(pairShowPrecision)
+
+  const xbtc = useSelector(normalizedAssetsSelector).find(
+    a => a.token === 'XBTC'
+  )
 
   const [price, setPrice] = useState('')
   const [initPairId, setInitPairId] = useState(null)
@@ -154,7 +160,6 @@ export default function() {
       await retry(
         () => {
           dispatch(fetchQuotations(pairId))
-          dispatch(fetchNowOrders(accountId))
           dispatch(fetchAccountAssets(address))
         },
         5,
@@ -168,11 +173,13 @@ export default function() {
   return (
     <Wrapper>
       <div className="info">
-        <Free
-          asset={pairCurrency}
-          free={currencyFree.free}
-          precision={currencyPrecision}
-        />
+        {xbtc && (
+          <Free
+            asset={xbtc.token}
+            free={xbtc.details.free}
+            precision={xbtc.precision}
+          />
+        )}
         <Error>{priceErrMsg || amountErrMsg}</Error>
       </div>
       <div className="price input">

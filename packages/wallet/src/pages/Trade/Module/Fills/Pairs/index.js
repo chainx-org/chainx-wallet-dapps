@@ -1,32 +1,24 @@
 import React, { useState } from 'react'
 import Wrapper, { Header, SymbolCell } from './Wrapper'
-import { useDispatch, useSelector } from 'react-redux'
-import { currenciesSelector } from './selectors'
+import { useSelector } from 'react-redux'
 import { Table, TableBody, TableHead, TableRow } from '@chainx/ui'
-import {
-  pairsSelector,
-  setCurrentPair
-} from '../../../../../reducers/tradeSlice'
 import { toPrecision } from '../../../../../utils'
 import HeadCell from '../../components/HeadCell'
-import {
-  PairPriceAriseCell,
-  PairPriceDownCell
-} from '../../components/PriceCell'
-import { normalizedCurrentFillsSelector } from '../../selectors'
+import { PairPriceDownCell } from '../../components/PriceCell'
 import $t from '../../../../../locale'
+import { currentPairSelector } from '@reducers/dexSlice'
+import {
+  pairPipPrecisionSelector,
+  pairPrecisionSelector
+} from '@pages/Trade/Module/AskBid/dexSelectors'
 
 export default function() {
-  const currencies = useSelector(currenciesSelector)
-  const pairs = useSelector(pairsSelector)
-
+  const currencies = ['XBTC']
   const [activeCurrencyIndex, setActiveCurrencyIndex] = useState(0)
-  const nowCurrency = currencies[activeCurrencyIndex]
-  const targetPairs = pairs.filter(pair => pair.currency === nowCurrency)
 
-  const [latest] = useSelector(normalizedCurrentFillsSelector)
-
-  const dispatch = useDispatch()
+  const pair = useSelector(currentPairSelector)
+  const showPrecision = useSelector(pairPrecisionSelector)
+  const pipPrecision = useSelector(pairPipPrecisionSelector)
 
   return (
     <Wrapper>
@@ -38,12 +30,6 @@ export default function() {
                 key={index}
                 onClick={() => {
                   setActiveCurrencyIndex(index)
-
-                  const currency = currencies[index]
-                  const targetPairs = pairs.filter(
-                    pair => pair.currency === currency
-                  )
-                  dispatch(setCurrentPair(targetPairs[0]))
                 }}
                 className={index === activeCurrencyIndex ? 'active' : null}
               >
@@ -64,28 +50,16 @@ export default function() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {targetPairs.map((pair, index) => {
-            const precision = pair.precision
-            const showPrecision = precision - pair.unitPrecision
-            return (
-              <TableRow key={index}>
-                <SymbolCell>{pair.assets}</SymbolCell>
-                {latest && latest.arise ? (
-                  <PairPriceAriseCell style={{ textAlign: 'right' }}>
-                    {Number(toPrecision(pair.lastPrice, precision)).toFixed(
-                      showPrecision
-                    )}
-                  </PairPriceAriseCell>
-                ) : (
-                  <PairPriceDownCell style={{ textAlign: 'right' }}>
-                    {Number(toPrecision(pair.lastPrice, precision)).toFixed(
-                      showPrecision
-                    )}
-                  </PairPriceDownCell>
+          <TableRow>
+            <SymbolCell>PCX</SymbolCell>
+            {pair && (
+              <PairPriceDownCell style={{ textAlign: 'right' }}>
+                {Number(toPrecision(pair.latestPrice, pipPrecision)).toFixed(
+                  showPrecision
                 )}
-              </TableRow>
-            )
-          })}
+              </PairPriceDownCell>
+            )}
+          </TableRow>
         </TableBody>
       </Table>
     </Wrapper>

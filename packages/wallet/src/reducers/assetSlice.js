@@ -166,10 +166,7 @@ export const pcxAssetSelector = state => state.assets.nativeAsset
 export const pcxFreeSelector = createSelector(
   pcxAssetSelector,
   ({ free, miscFrozen, feeFrozen }) => {
-    return new BigNumber(free)
-      .minus(miscFrozen)
-      .minus(feeFrozen)
-      .toString()
+    return new BigNumber(free).minus(feeFrozen).toString()
   }
 )
 export const pcxTotalSelector = createSelector(

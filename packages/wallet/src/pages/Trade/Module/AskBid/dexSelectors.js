@@ -13,7 +13,6 @@ export const currentPairAssetPrecisionSelector = createSelector(
       return 0
     }
 
-    console.log('assetsInfo', assetsInfo)
     const { baseCurrency } = pair
     if (baseCurrency === 0) {
       return 8
@@ -21,6 +20,17 @@ export const currentPairAssetPrecisionSelector = createSelector(
 
     return assetsInfo.find(asset => String(asset.id) === String(baseCurrency))
       ?.info?.decimals
+  }
+)
+
+export const pairPipPrecisionSelector = createSelector(
+  currentPairSelector,
+  pair => {
+    if (!pair) {
+      return 0
+    }
+
+    return pair.pipDecimals
   }
 )
 

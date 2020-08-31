@@ -3,6 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { latestPriceSelector, pricePrecisionSelector } from '@reducers/dexSlice'
 import { toPrecision } from '../../../../utils'
+import { pairPipPrecisionSelector } from '@pages/Trade/Module/AskBid/dexSelectors'
 
 const Wrapper = styled.div`
   background: #ffffff;
@@ -18,6 +19,7 @@ const Wrapper = styled.div`
 
 export default function() {
   const latestPrice = useSelector(latestPriceSelector)
+  const pipPrecision = useSelector(pairPipPrecisionSelector)
   const precision = useSelector(pricePrecisionSelector)
   const arise = true
 
@@ -26,7 +28,7 @@ export default function() {
       // style={{ color: latest && latest.arise ? '#2caa84' : '#DC6E46' }}
       style={{ color: arise ? '#2caa84' : '#DC6E46' }}
     >
-      {toPrecision(latestPrice, precision)}
+      {Number(toPrecision(latestPrice, pipPrecision)).toFixed(precision)}
     </Wrapper>
   )
 }

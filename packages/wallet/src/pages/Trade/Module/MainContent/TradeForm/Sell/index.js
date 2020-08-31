@@ -3,17 +3,14 @@ import Wrapper from './Wrapper'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   currentShowPriceSelector,
-  minSellPriceSelector,
   pairAssetFreeSelector,
   pairAssetSelector,
   pairCurrencyPrecision,
-  pairCurrencySelector,
-  pairPrecisionSelector,
-  pairShowPrecisionSelector
+  pairCurrencySelector
 } from '../../../selectors'
 import Free from '../components/Free'
 import Label from '../components/Label'
-import { AmountInput, Slider, DangerButton } from '@chainx/ui'
+import { AmountInput, DangerButton, Slider } from '@chainx/ui'
 import { marks } from '../constants'
 import { canRequestSign, retry, toPrecision } from '../../../../../../utils'
 import { addressSelector } from '../../../../../../reducers/addressSlice'
@@ -26,26 +23,29 @@ import {
 } from '../../../../../../utils/chainxProvider'
 import {
   currentPairIdSelector,
-  fetchNowOrders,
   fetchQuotations
 } from '../../../../../../reducers/tradeSlice'
 import $t from '../../../../../../locale'
 import { getChainx } from '../../../../../../services/chainx'
 import infoIcon from '../../assets/info.svg'
 import { PriceWrapper } from '../components/PriceWrapper'
-import { accountIdSelector } from '../../../../../selectors/assets'
 import EventEmitter, { events } from '../../../eventEmitter'
 import { fetchAccountAssets } from '../../../../../../reducers/assetSlice'
+import { pcxFreeSelector } from '@reducers/assetSlice'
+import { minSellPriceSelector } from '@reducers/dexSlice'
+import {
+  pairPipPrecisionSelector,
+  pairPrecisionSelector
+} from '@pages/Trade/Module/AskBid/dexSelectors'
 
 export default function() {
-  const accountId = useSelector(accountIdSelector)
   const address = useSelector(addressSelector)
-  const pairPrecision = useSelector(pairPrecisionSelector)
+  const pairPrecision = useSelector(pairPipPrecisionSelector)
   const { precision: assetPrecision = 0, free: assetFree = 0 } =
     useSelector(pairAssetFreeSelector) || {}
   const pairCurrency = useSelector(pairCurrencySelector)
   const pairAsset = useSelector(pairAssetSelector)
-  const pairShowPrecision = useSelector(pairShowPrecisionSelector)
+  const pairShowPrecision = useSelector(pairPrecisionSelector)
   const showPrice = useSelector(currentShowPriceSelector)
 
   const [price, setPrice] = useState('')
@@ -56,6 +56,7 @@ export default function() {
   const currencyPrecision = useSelector(pairCurrencyPrecision)
   const accountAddress = useSelector(addressSelector)
   const isDemoAddr = useSelector(isDemoSelector)
+  const pcxFree = useSelector(pcxFreeSelector)
 
   const pairId = useSelector(currentPairIdSelector)
 
@@ -137,7 +138,6 @@ export default function() {
       await retry(
         () => {
           dispatch(fetchQuotations(pairId))
-          dispatch(fetchNowOrders(accountId))
           dispatch(fetchAccountAssets(address))
         },
         5,
@@ -151,7 +151,7 @@ export default function() {
   return (
     <Wrapper>
       <div className="info">
-        <Free asset={pairAsset} free={assetFree} precision={assetPrecision} />
+        <Free asset="PCX" free={pcxFree} precision={8} />
         <Error>{priceErrMsg || amountErrMsg}</Error>
       </div>
 
