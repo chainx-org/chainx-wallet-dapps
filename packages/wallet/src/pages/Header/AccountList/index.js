@@ -21,6 +21,7 @@ import {
 } from '../../../reducers/runStatusSlice'
 import ExtensionConnector from './ExtensionConnector'
 import { setDemoAccount, store } from '../../../index'
+import $t from '../../../locale'
 
 export default function({ close = noneFunc }) {
   const network = useSelector(networkSelector)
@@ -30,7 +31,6 @@ export default function({ close = noneFunc }) {
       : mainNetDemoAccount.account
 
   const demoAccountName = demoAccount.name
-  const demoAccountAddress = demoAccount.address
 
   const signerConnected = useSelector(signerConnectedSelector)
   const downloadSignerDialogOpen = useSelector(openSignerDownloadDialogSelector)
@@ -49,12 +49,13 @@ export default function({ close = noneFunc }) {
 
   const account = useSelector(accountSelector) || {}
   const isDemo = useSelector(isDemoSelector)
+  console.log('isDemo', isDemo)
 
   return (
     <Wrapper ref={popup}>
       <li onClick={() => setDemoAccount(store)}>
-        <h4>{demoAccountName}</h4>
-        <p>{demoAccountAddress}</p>
+        <h4>{isDemo ? $t('HEADER_DEMO_ACCOUNT') : demoAccountName}</h4>
+        <p>***</p>
       </li>
       {isDemo ? null : (
         <li>

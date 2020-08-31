@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import { getChainx } from '../../../services/chainx'
 import $t from '../../../locale'
-import { accountSelector } from '../../../reducers/addressSlice'
+import { accountSelector, isDemoSelector } from '../../../reducers/addressSlice'
 
 const Wrapper = styled.div`
   display: flex;
@@ -47,6 +47,8 @@ export default function() {
   const isValidator = !!validator
   const isTrustee = validator && validator.isTrustee.length > 0
 
+  const isDemo = useSelector(isDemoSelector)
+
   const roles = []
   if (isTrustee) {
     roles.push($t('INTENTION_TRUSTEE'))
@@ -57,8 +59,12 @@ export default function() {
 
   return (
     <Wrapper>
-      <Title>{(account.name || '').toUpperCase()}</Title>
-      <Address>{account.address}</Address>
+      <Title>
+        {isDemo
+          ? $t('HEADER_DEMO_ACCOUNT')
+          : (account.name || '').toUpperCase()}
+      </Title>
+      <Address>{isDemo ? '***' : account.address}</Address>
       <Roles>{roles.join('、')}</Roles>
     </Wrapper>
   )

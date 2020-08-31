@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
-import { nameSelector } from '../../../reducers/addressSlice'
+import { isDemoSelector, nameSelector } from '../../../reducers/addressSlice'
 import moreIcon from './more.svg'
+import $t from '../../../locale'
 
 const Name = styled.span`
   height: 100%;
@@ -31,11 +32,12 @@ const Name = styled.span`
 
 export default function({ onClick }) {
   const name = useSelector(nameSelector)
+  const isDemo = useSelector(isDemoSelector)
 
   return (
     <Name>
       <div className="info" onClick={onClick}>
-        <span>{name}</span>
+        <span>{isDemo ? $t('HEADER_DEMO_ACCOUNT') : name}</span>
         <img src={moreIcon} alt="more" />
       </div>
     </Name>
