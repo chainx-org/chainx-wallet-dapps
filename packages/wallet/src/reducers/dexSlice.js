@@ -26,6 +26,12 @@ const dexSlice = createSlice({
 
 export const { setPairs, setCurrentPair, setDepth } = dexSlice.actions
 
+export const getAccountOrders = address => async dispatch => {
+  const api = await getChainxPromised()
+  const orders = await api.rpc.xspot.getOrdersByAccount(address, 0, 100)
+  console.log('orders', orders.toJSON())
+}
+
 export const fetchDexPairs = () => async dispatch => {
   const api = await getChainxPromised()
   const pairs = await api.rpc.xspot.getTradingPairs()

@@ -3,6 +3,7 @@ import Wrapper from './Wrapper'
 import { useDispatch } from 'react-redux'
 import { fetchDexDepth, fetchDexPairs } from '@reducers/dexSlice'
 import Trade from './Module'
+import Orders from './Orders'
 
 export default function() {
   const dispatch = useDispatch()
@@ -15,7 +16,7 @@ export default function() {
   return (
     <Wrapper>
       <Trade />
-      {/*<Orders />*/}
+      <Orders />
     </Wrapper>
   )
 }
