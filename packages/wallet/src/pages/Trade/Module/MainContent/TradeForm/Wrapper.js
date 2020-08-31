@@ -9,7 +9,7 @@ const Wrapper = styled.section`
   padding: 12px 16px 15px;
 
   height: 270px;
-  margin-top: 17px;
+  //margin-top: 17px;
 `
 
 export default Wrapper

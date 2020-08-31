@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 import Wrapper from './Wrapper'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  currentShowPriceSelector,
-  pairAssetFreeSelector,
   pairAssetSelector,
   pairCurrencyPrecision,
   pairCurrencySelector
@@ -21,32 +19,36 @@ import {
   showSnack,
   signAndSendExtrinsic
 } from '../../../../../../utils/chainxProvider'
-import {
-  currentPairIdSelector,
-  fetchQuotations
-} from '../../../../../../reducers/tradeSlice'
 import $t from '../../../../../../locale'
-import { getChainx } from '../../../../../../services/chainx'
 import infoIcon from '../../assets/info.svg'
 import { PriceWrapper } from '../components/PriceWrapper'
 import EventEmitter, { events } from '../../../eventEmitter'
 import { fetchAccountAssets } from '../../../../../../reducers/assetSlice'
-import { pcxFreeSelector } from '@reducers/assetSlice'
-import { minSellPriceSelector } from '@reducers/dexSlice'
+import {
+  fetchChainx2NativeAssetInfo,
+  pcxFreeSelector,
+  pcxPrecisionSelector
+} from '@reducers/assetSlice'
+import {
+  currentPairIdSelector,
+  fetchDexDepth,
+  minSellPriceSelector
+} from '@reducers/dexSlice'
 import {
   pairPipPrecisionSelector,
-  pairPrecisionSelector
+  pairPrecisionSelector,
+  showPriceSelector
 } from '@pages/Trade/Module/AskBid/dexSelectors'
 
 export default function() {
   const address = useSelector(addressSelector)
   const pairPrecision = useSelector(pairPipPrecisionSelector)
-  const { precision: assetPrecision = 0, free: assetFree = 0 } =
-    useSelector(pairAssetFreeSelector) || {}
+  const assetFree = useSelector(pcxFreeSelector)
+  const assetPrecision = useSelector(pcxPrecisionSelector)
   const pairCurrency = useSelector(pairCurrencySelector)
   const pairAsset = useSelector(pairAssetSelector)
   const pairShowPrecision = useSelector(pairPrecisionSelector)
-  const showPrice = useSelector(currentShowPriceSelector)
+  const showPrice = useSelector(showPriceSelector)
 
   const [price, setPrice] = useState('')
   const [initPairId, setInitPairId] = useState(null)
@@ -84,8 +86,6 @@ export default function() {
     toPrecision(minSellPrice, pairPrecision)
   ).toFixed(pairShowPrecision)
 
-  const chainx = getChainx()
-
   const sign = async () => {
     const realPrice = BigNumber(price)
       .multipliedBy(Math.pow(10, pairPrecision))
@@ -115,30 +115,25 @@ export default function() {
 
     setDisabled(true)
     try {
-      const extrinsic = chainx.trade.putOrder(
-        pairId,
-        'Limit',
-        'Sell',
-        realAmount,
-        realPrice
-      )
-      const status = await signAndSendExtrinsic(
-        accountAddress,
-        extrinsic.toHex()
-      )
+      const status = await signAndSendExtrinsic(accountAddress, {
+        section: 'xSpot',
+        method: 'putOrder',
+        params: [pairId, 'Limit', 'Sell', realAmount, realPrice]
+      })
 
       const messages = {
         successTitle: '卖单成功',
         failTitle: '卖单失败',
-        successMessage: `卖单数量 ${amount} ${pairAsset}`,
-        failMessage: `交易hash ${status.txHash}`
+        successMessage: `卖单数量 ${amount} PCX`,
+        failMessage: ``
       }
 
       await showSnack(status, messages, dispatch)
       await retry(
         () => {
-          dispatch(fetchQuotations(pairId))
+          dispatch(fetchDexDepth())
           dispatch(fetchAccountAssets(address))
+          dispatch(fetchChainx2NativeAssetInfo(address))
         },
         5,
         2

@@ -1,6 +1,11 @@
 import { createSelector } from '@reduxjs/toolkit'
-import { currentPairSelector } from '@reducers/dexSlice'
+import {
+  currentPairSelector,
+  latestPriceSelector,
+  pricePrecisionSelector
+} from '@reducers/dexSlice'
 import { assetsInfoSelector } from '@pages/selectors/assets'
+import { toPrecision } from '../../../../utils'
 
 export const asksSelectors = state => state.dex.depth.asks
 export const bidsSelector = state => state.dex.depth.bids
@@ -42,6 +47,15 @@ export const pairPrecisionSelector = createSelector(
     }
 
     return pair.pipDecimals - pair.tickDecimals
+  }
+)
+
+export const showPriceSelector = createSelector(
+  latestPriceSelector,
+  pairPipPrecisionSelector,
+  pricePrecisionSelector,
+  (price, pip, precision) => {
+    return Number(toPrecision(price, pip)).toFixed(precision)
   }
 )
 

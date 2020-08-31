@@ -43,6 +43,10 @@ export const fetchDexDepth = () => async dispatch => {
 }
 
 export const currentPairSelector = state => state.dex.currentPair
+export const currentPairIdSelector = createSelector(
+  currentPairSelector,
+  pair => pair?.id
+)
 export const latestPriceSelector = createSelector(currentPairSelector, pair => {
   if (!pair) {
     return 0

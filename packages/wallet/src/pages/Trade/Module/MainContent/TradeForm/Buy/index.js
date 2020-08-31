@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import Wrapper, { Error } from './Wrapper'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  currentShowPriceSelector,
   pairAssetPrecision,
   pairAssetSelector,
   pairCurrencyFreeSelector,
@@ -23,10 +22,7 @@ import {
   showSnack,
   signAndSendExtrinsic
 } from '../../../../../../utils/chainxProvider'
-import {
-  currentPairIdSelector,
-  fetchQuotations
-} from '../../../../../../reducers/tradeSlice'
+import { fetchQuotations } from '../../../../../../reducers/tradeSlice'
 import { addressSelector } from '../../../../../../reducers/addressSlice'
 import BigNumber from 'bignumber.js'
 import { marks } from '../constants'
@@ -39,10 +35,14 @@ import {
   fetchAccountAssets,
   normalizedAssetsSelector
 } from '../../../../../../reducers/assetSlice'
-import { maxBuyShowPriceSelector } from '@reducers/dexSlice'
+import {
+  currentPairIdSelector,
+  maxBuyShowPriceSelector
+} from '@reducers/dexSlice'
 import {
   pairPipPrecisionSelector,
-  pairPrecisionSelector
+  pairPrecisionSelector,
+  showPriceSelector
 } from '@pages/Trade/Module/AskBid/dexSelectors'
 
 export default function() {
@@ -57,7 +57,8 @@ export default function() {
   const pairShowPrecision = useSelector(pairPrecisionSelector)
   const pairPrecision = useSelector(pairPipPrecisionSelector)
   const assetPrecision = useSelector(pairAssetPrecision)
-  const showPrice = useSelector(currentShowPriceSelector)
+  const showPrice = useSelector(showPriceSelector)
+
   const currencyPrecision = useSelector(pairCurrencyPrecision)
   const maxBuyPrice = useSelector(maxBuyShowPriceSelector)
   const maxBuyShowPrice = Number(

@@ -11,7 +11,6 @@ import Bids from './Bids'
 import Head from './Head'
 
 export default function() {
-  console.log('hhhh')
   const pair = useSelector(currentPairSelector)
   const dispatch = useDispatch()
 
