@@ -62,9 +62,11 @@ export default function({ close = noneFunc }) {
           <h4>
             <span>{account && account.name}</span>
             {account.isFromExtension ? (
-              <span className="extension">插件账户</span>
+              <span className="extension">
+                {$t('header_extension_account')}
+              </span>
             ) : (
-              <span className="extension">Signer账户</span>
+              <span className="extension">{$t('header_signer_account')}</span>
             )}
           </h4>
           <p>{account.address}</p>
