@@ -140,6 +140,14 @@ const header = {
   HEADER_SIGNER_DISCONNECT_DETAIL: {
     en: 'ChainX signer disconnectd. Please open it and refresh the page.',
     zh: 'ChainX signer断开连接，请打开signer后刷新页面。'
+  },
+  header_extension_account: {
+    en: 'Extension Account',
+    zh: '插件账户'
+  },
+  header_signer_account: {
+    en: 'Signer Account',
+    zh: 'Signer账户'
   }
 }
 
