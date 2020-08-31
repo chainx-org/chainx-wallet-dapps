@@ -8,8 +8,8 @@ export default function() {
   return (
     <Wrapper>
       <AskBid />
-      <MainContent />
-      <Fills />
+      {/*<MainContent />*/}
+      {/*<Fills />*/}
     </Wrapper>
   )
 }

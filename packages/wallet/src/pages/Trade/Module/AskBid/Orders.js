@@ -1,8 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { currentPairSelector } from '../../../../reducers/tradeSlice'
 import { Table, TableBody, TableRow } from '@chainx/ui'
-import { currentPairAssetInfo } from '../selectors'
 import { toPrecision } from '../../../../utils'
 import {
   OrderAmountCell,
@@ -11,14 +9,16 @@ import {
   TableWrapper
 } from './Wrapper'
 import EventEmitter, { events } from '../eventEmitter'
+import { currentPairSelector } from '@reducers/dexSlice'
+import { currentPairAssetPrecisionSelector } from '@pages/Trade/Module/AskBid/dexSelectors'
 
 export default function({ orders, isAsk }) {
   const pair = useSelector(currentPairSelector)
-  const { precision, unitPrecision } = pair || {
+  const { pipDecimals: precision, tickDecimals: unitPrecision } = pair || {
     precision: 0,
     unitPrecision: 0
   }
-  const { precision: assetPrecision } = useSelector(currentPairAssetInfo) || {}
+  const assetPrecision = useSelector(currentPairAssetPrecisionSelector)
 
   return (
     <TableWrapper
