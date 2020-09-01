@@ -9,6 +9,11 @@ const dexSlice = createSlice({
     depth: {
       asks: [],
       bids: []
+    },
+    orders: {
+      pageIndex: 0,
+      pageSize: 0,
+      data: []
     }
   },
   reducers: {
@@ -20,16 +25,24 @@ const dexSlice = createSlice({
     },
     setDepth: (state, { payload }) => {
       state.depth = payload
+    },
+    setOrders: (state, { payload }) => {
+      state.orders = payload
     }
   }
 })
 
-export const { setPairs, setCurrentPair, setDepth } = dexSlice.actions
+export const {
+  setPairs,
+  setCurrentPair,
+  setDepth,
+  setOrders
+} = dexSlice.actions
 
 export const getAccountOrders = address => async dispatch => {
   const api = await getChainxPromised()
   const orders = await api.rpc.xspot.getOrdersByAccount(address, 0, 100)
-  console.log('orders', orders.toJSON())
+  dispatch(setOrders(orders.toJSON()))
 }
 
 export const fetchDexPairs = () => async dispatch => {
@@ -90,5 +103,6 @@ export const minSellPriceSelector = createSelector(
     return pair.minValidAsk
   }
 )
+export const ordersSelector = state => state.dex.orders
 
 export default dexSlice.reducer

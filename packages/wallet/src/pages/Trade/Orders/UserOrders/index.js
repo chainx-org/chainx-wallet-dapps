@@ -1,32 +1,32 @@
 import React, { useEffect } from 'react'
 import TableHead from './Head'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchNowOrders, userOrders } from '../../../../reducers/tradeSlice'
 import Content from './Content'
 import { Empty } from '../../../../components'
-import { accountIdSelector } from '../../../selectors/assets'
+import { getAccountOrders, ordersSelector } from '@reducers/dexSlice'
+import { addressSelector } from '@reducers/addressSlice'
 
 export default function() {
-  const accountId = useSelector(accountIdSelector)
-  const orders = useSelector(userOrders)
+  const address = useSelector(addressSelector)
+  const orders = useSelector(ordersSelector)
   const dispatch = useDispatch()
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      dispatch(fetchNowOrders(accountId))
+      dispatch(getAccountOrders(address))
     }, 5000)
 
     return () => clearInterval(intervalId)
-  }, [dispatch, accountId])
+  }, [dispatch, address])
 
   useEffect(() => {
-    dispatch(fetchNowOrders(accountId))
-  }, [dispatch, accountId])
+    dispatch(getAccountOrders(address))
+  }, [dispatch, address])
 
   return (
     <>
       <TableHead />
-      {orders.length > 0 ? (
+      {orders.data.length > 0 ? (
         <Content />
       ) : (
         <Empty text="暂无委托" style={{ marginTop: 30, marginBottom: 30 }} />
