@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Header from './Header'
 import { useDispatch, useSelector } from 'react-redux'
 import { addressSelector } from '@reducers/addressSlice'
-import { getAccountOrders, ordersSelector } from '@reducers/dexSlice'
+import { getAccountOrders } from '@reducers/dexSlice'
 import UserOrders from './UserOrders'
 
 export default function() {
@@ -11,10 +11,6 @@ export default function() {
 
   const address = useSelector(addressSelector)
   const dispatch = useDispatch()
-  console.log('address', address)
-
-  const orders = useSelector(ordersSelector)
-  console.log('orders', orders)
 
   useEffect(() => {
     dispatch(getAccountOrders(address))

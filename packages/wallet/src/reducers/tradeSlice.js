@@ -1,5 +1,4 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
-import { getChainxPromised } from '../services/chainx'
 import { getApi } from '../services/api'
 import { remove0xPrefix } from '../utils'
 
@@ -46,19 +45,6 @@ export const {
   setNowOrders,
   setHistoryOrders
 } = tradeSlice.actions
-
-export const fetchTradePairs = () => async dispatch => {
-  const api = await getChainxPromised()
-
-  const pairs = await api.rpc.xspot.getTradingPairs()
-  console.log('pairs', pairs)
-  // await chainx.isRpcReady()
-  // const { trade } = chainx
-  //
-  // const pairs = await trade.getTradingPairs()
-  // dispatch(setPairs(pairs))
-  // dispatch(setCurrentPair(pairs[0]))
-}
 
 export const fetchFills = (pairId, count = 20) => async dispatch => {
   const resp = await window.fetch(
