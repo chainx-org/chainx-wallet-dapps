@@ -5,11 +5,11 @@ import BigNumber from 'bignumber.js'
 import { setSS58Format } from '@chainx-v2/keyring'
 
 const emptyAsset = {
-  Free: '0',
   Locked: '0',
   ReservedDexSpot: '0',
   ReservedWithdrawal: '0',
-  ReservedXRC20: '0'
+  ReservedXRC20: '0',
+  Usable: '0'
 }
 
 const assetSlice = createSlice({
@@ -78,6 +78,7 @@ export const fetchAssetsInfo = () => async dispatch => {
   const api = getChainx()
   const assets = await api.rpc.xassets.getAssets()
   const json = assets.toJSON()
+  console.log('json', json)
 
   const normalized = Object.keys(json).map(id => {
     return {
@@ -160,6 +161,7 @@ export const normalizedAssetsSelector = createSelector(
 )
 
 export const xbtcSelector = createSelector(normalizedAssetsSelector, assets => {
+  console.log(assets)
   return assets.find(asset => asset.token === 'XBTC')
 })
 export const xbtcFreeSelector = createSelector(xbtcSelector, xbtc => {

@@ -3,7 +3,6 @@ import { Label, Value } from '../../../components'
 import StyledDialog from './StyledDialog'
 import { AmountInput, PrimaryButton, SelectInput, TextInput } from '@chainx/ui'
 import { useDispatch, useSelector } from 'react-redux'
-import { xbtcFreeSelector } from '../selectors'
 import $t from '../../../../../locale'
 import { canRequestSign, retry, toPrecision } from '../../../../../utils'
 import infoIcon from '../../../../../static/explan.svg'
@@ -24,17 +23,15 @@ import {
   checkAmountAndHasError,
   checkMemoAndHasError
 } from '../../../../../utils/errorCheck'
-import { fetchWithdrawals } from '../../../../../reducers/crosschainSlice'
 import { isDemoSelector } from '../../../../../selectors'
-import { accountIdSelector } from '../../../../selectors/assets'
 import { getChainx } from '../../../../../services/chainx'
+import { xbtcFreeSelector, xbtcPrecisionSelector } from '@reducers/assetSlice'
 
 export default function({ handleClose }) {
   const network = useSelector(networkSelector)
   const dispatch = useDispatch()
   const accountAddress = useSelector(addressSelector)
   const isDemoAddr = useSelector(isDemoSelector)
-  const accountId = useSelector(accountIdSelector)
 
   const [address, setAddress] = useState('')
   const [addressErrMsg, setAddressErrMsg] = useState('')
@@ -42,7 +39,9 @@ export default function({ handleClose }) {
   const [amount, setAmount] = useState('')
   const [amountErrMsg, setAmountErrMsg] = useState('')
 
-  const { free, precision } = useSelector(xbtcFreeSelector)
+  // const { free, precision } = useSelector(xbtcFreeSelector)
+  const free = useSelector(xbtcFreeSelector)
+  const precision = useSelector(xbtcPrecisionSelector)
 
   const [memo, setMemo] = useState('')
   const [memoErrMsg, setMemoErrMsg] = useState('')
@@ -143,7 +142,6 @@ export default function({ handleClose }) {
       await retry(
         () => {
           dispatch(fetchAccountAssets(accountAddress))
-          dispatch(fetchWithdrawals(accountId))
         },
         5,
         2
@@ -228,7 +226,13 @@ export default function({ handleClose }) {
           <div className="right">
             <p>
               <img src={infoIcon} alt="info" />
-              <span>{$t('ASSET_WITHDRAWAL__REQU_AMOUNT')}</span>
+              {limit && (
+                <span>
+                  {$t('ASSET_WITHDRAWAL_REQU_AMOUNT', {
+                    mini: toPrecision(limit.minimalWithdrawal, precision)
+                  })}
+                </span>
+              )}
             </p>
           </div>
         </div>

@@ -217,9 +217,9 @@ export default {
     en: 'Will be processed within 24 hours',
     zh: '提现申请会在 24 小时内处理'
   },
-  ASSET_WITHDRAWAL__REQU_AMOUNT: {
-    en: 'Minimum withdrawal value 0.0015',
-    zh: '最小提现数量为 0.0015'
+  ASSET_WITHDRAWAL_REQU_AMOUNT: {
+    en: 'Minimum withdrawal value {mini}',
+    zh: '最小提现数量为 {mini}'
   },
   ASSET_WITHDRAWAL_FINAL_AMOUNT: {
     en: 'Final amount',

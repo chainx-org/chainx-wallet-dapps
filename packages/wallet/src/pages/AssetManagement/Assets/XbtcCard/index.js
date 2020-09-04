@@ -119,7 +119,7 @@ export default function() {
         {$t('DEPOSIT')}
       </PrimaryButton>
       <DefaultButton
-        // onClick={() => setWithdrawOpen(true)}
+        onClick={() => setWithdrawOpen(true)}
         style={{ marginRight: 8 }}
       >
         {$t('WITHDRAW')}
