@@ -71,28 +71,26 @@ export default function() {
     <Table>
       <TableBody>
         {orders.data.map((order, index) => {
-          const amount = toPrecision(order.props.amount, pcxPrecision)
-          const price = toPrecision(
-            order.props.price,
-            pairPrecision,
-            false
-          ).toFixed(pairShowPrecision)
+          const amount = toPrecision(order.amount, pcxPrecision)
+          const price = toPrecision(order.price, pairPrecision, false).toFixed(
+            pairShowPrecision
+          )
           const fillPercentage = Number(
-            (order.alreadyFilled / order.props.amount) * 100
+            (order.alreadyFilled / order.amount) * 100
           ).toFixed(2)
 
           return (
             <TableRow key={index}>
               <TimeCell style={{ width: '12%' }}>
                 <div>
-                  <span className={order.props.side} />
+                  <span className={order.side} />
                   <span className="time">
-                    {order.props.createdAt}
+                    {order.createdAt}
                     {/*{moment(order['block.time']).format('YYYY/MM/DD HH:mm')}*/}
                   </span>
                 </div>
               </TimeCell>
-              <IndexCell style={{ width: '5%' }}>{order.props.id}</IndexCell>
+              <IndexCell style={{ width: '5%' }}>{order.orderId}</IndexCell>
               <PairCell style={{ width: '8%' }}>PCX/XBTC</PairCell>
               <NumberCell style={{ width: '11%' }}>
                 {price + ' '}
@@ -119,17 +117,17 @@ export default function() {
                 <span className="percentage"> / {fillPercentage}% </span>
               </FillCell>
               <ActionCell>
-                {disabled && targetId === order.props.id ? (
+                {disabled && targetId === order.orderId ? (
                   <img
                     src={cancelDisabledIcon}
                     alt="cancel"
-                    onClick={() => cancelOrder(order.props.id)}
+                    onClick={() => cancelOrder(order.orderId)}
                   />
                 ) : (
                   <img
                     src={cancelIcon}
                     alt="cancel"
-                    onClick={() => cancelOrder(order.props.id)}
+                    onClick={() => cancelOrder(order.orderId)}
                     className="cancel"
                   />
                 )}
