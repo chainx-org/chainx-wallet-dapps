@@ -4,14 +4,13 @@ import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { addressSelector } from '../../../../../reducers/addressSlice'
 import { u8aToHex } from '@polkadot/util'
-import { CheckBox, ClipBoard } from '../../../../../components'
+import { ClipBoard } from '../../../../../components'
 import infoIcon from '../../../../../static/explan.svg'
 import {
   fetchTrusteeSessionInfo,
   hotAddressSelector
 } from '../../../../../reducers/trustSlice'
 import OpReturnWallet from '../../components/OpReturnWallet'
-import IntentionSelect from '../../../../../components/IntentionSelect'
 import $t from '../../../../../locale'
 
 const StyledDialog = styled(Dialog)`
@@ -121,7 +120,7 @@ const StyledDialog = styled(Dialog)`
 `
 
 export default function({ handleClose }) {
-  const [checked, setChecked] = useState(false)
+  // const [checked, setChecked] = useState(false)
   const address = useSelector(addressSelector)
 
   const trusteeHotAddress = useSelector(hotAddressSelector)
@@ -131,7 +130,7 @@ export default function({ handleClose }) {
     dispatch(fetchTrusteeSessionInfo())
   }, [dispatch])
 
-  const [channel, setChannel] = useState('')
+  const [channel] = useState('')
   const addressHex = u8aToHex(
     new TextEncoder('utf-8').encode(`${address}${channel ? '@' + channel : ''}`)
   ).replace(/^0x/, '')
@@ -149,23 +148,23 @@ export default function({ handleClose }) {
         </h1>
         <p className={'op-return'}>{$t('ASSET_GET_OP_RETURN_DETAIL')}</p>
         <section className="show-code">
-          <h3>
-            <span className="title">OP_RETURN</span>
-            <CheckBox
-              checked={checked}
-              onClick={() => setChecked(!checked)}
-              className="channel"
-            >
-              {$t('ASSET_ADD_REFERRER')}
-            </CheckBox>
-          </h3>
-          {checked ? (
-            <IntentionSelect
-              value={channel}
-              onChange={setChannel}
-              style={{ marginBottom: 8 }}
-            />
-          ) : null}
+          {/*<h3>*/}
+          {/*  <span className="title">OP_RETURN</span>*/}
+          {/*  <CheckBox*/}
+          {/*    checked={checked}*/}
+          {/*    onClick={() => setChecked(!checked)}*/}
+          {/*    className="channel"*/}
+          {/*  >*/}
+          {/*    {$t('ASSET_ADD_REFERRER')}*/}
+          {/*  </CheckBox>*/}
+          {/*</h3>*/}
+          {/*{checked ? (*/}
+          {/*  <IntentionSelect*/}
+          {/*    value={channel}*/}
+          {/*    onChange={setChannel}*/}
+          {/*    style={{ marginBottom: 8 }}*/}
+          {/*  />*/}
+          {/*) : null}*/}
           <ClipBoard className="hex">{addressHex}</ClipBoard>
         </section>
         <h1 className="step-2">

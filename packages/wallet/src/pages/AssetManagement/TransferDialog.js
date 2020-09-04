@@ -1,5 +1,11 @@
 import React, { useState } from 'react'
-import { AmountInput, Dialog, PrimaryButton, SelectInput } from '@chainx/ui'
+import {
+  AmountInput,
+  Dialog,
+  PrimaryButton,
+  SelectInput,
+  TextInput
+} from '@chainx/ui'
 import styled from 'styled-components'
 import $t from '../../locale'
 import { canRequestSign, retry, toPrecision } from '../../utils'
@@ -12,10 +18,17 @@ import {
   fetchAccountAssets,
   pcxPrecisionSelector
 } from '../../reducers/assetSlice'
-import { checkAmountAndHasError } from '../../utils/errorCheck'
+import {
+  checkAmountAndHasError,
+  checkMemoAndHasError
+} from '../../utils/errorCheck'
 import { isDemoSelector } from '../../selectors'
-import { fetchTransfers } from '../../reducers/transactionSlice'
-import { pcxFreeSelector } from '@reducers/assetSlice'
+import {
+  pcxFreeSelector,
+  xbtcFreeSelector,
+  xbtcIdSelector,
+  xbtcPrecisionSelector
+} from '@reducers/assetSlice'
 import { Account } from '@chainx-v2/account'
 
 const StyledDialog = styled(Dialog)`
@@ -53,25 +66,23 @@ export default function({ handleClose, token }) {
   const pcxFree = useSelector(pcxFreeSelector)
   const pcxPrecision = useSelector(pcxPrecisionSelector)
 
-  // const { free: xbtcFree, precision: xbtcPrecision } = useSelector(
-  //   xbtcFreeSelector
-  // )
+  const xbtcFree = useSelector(xbtcFreeSelector)
+  const xbtcPrecision = useSelector(xbtcPrecisionSelector)
+  const xbtcId = useSelector(xbtcIdSelector)
+  const isBtc = token === 'XBTC'
 
   let free = pcxFree
   let precision = pcxPrecision
-  // if (token === 'BTC') {
-  //   free = xbtcFree
-  //   precision = xbtcPrecision
-  // }
+  if (isBtc) {
+    free = xbtcFree
+    precision = xbtcPrecision
+  }
 
+  const [memo, setMemo] = useState('')
+  const [memoErrMsg, setMemoErrMsg] = useState('')
   const [disabled, setDisabled] = useState(false)
-
   const dispatch = useDispatch()
-
-  const tokenName = token === 'BTC' ? 'X-BTC' : token
-
-  // const accountId = useSelector(accountIdSelector)
-  const accountId = null
+  const tokenName = token
 
   const sign = async () => {
     const isAddressValid = Account.isAddressValid(address)
@@ -87,6 +98,10 @@ export default function({ handleClose, token }) {
       return
     }
 
+    if (isBtc && checkMemoAndHasError(memo, setMemoErrMsg)) {
+      return
+    }
+
     const realAmount = BigNumber(amount)
       .multipliedBy(Math.pow(10, precision))
       .toString()
@@ -94,9 +109,11 @@ export default function({ handleClose, token }) {
     setDisabled(true)
     try {
       const status = await signAndSendExtrinsic(accountAddress, {
-        section: 'balances',
+        section: isBtc ? 'xAssets' : 'balances',
         method: 'transfer',
-        params: [address, realAmount]
+        params: isBtc
+          ? [address, xbtcId, realAmount, memo]
+          : [address, realAmount]
       })
 
       const messages = {
@@ -112,10 +129,7 @@ export default function({ handleClose, token }) {
       handleClose()
       retry(
         () => {
-          Promise.all([
-            dispatch(fetchAccountAssets(accountAddress)),
-            dispatch(fetchTransfers(accountId))
-          ])
+          Promise.all([dispatch(fetchAccountAssets(accountAddress))])
         },
         5,
         2
@@ -172,6 +186,23 @@ export default function({ handleClose, token }) {
             </div>
           ) : null}
         </div>
+
+        {isBtc && (
+          <div>
+            <TextInput
+              value={memo}
+              onChange={value => {
+                setMemoErrMsg('')
+                setMemo(value)
+              }}
+              multiline={true}
+              rows={2}
+              placeholder={$t('COMMON_MEMO')}
+              error={!!memoErrMsg}
+              errorText={memoErrMsg}
+            />
+          </div>
+        )}
 
         <div>
           <PrimaryButton

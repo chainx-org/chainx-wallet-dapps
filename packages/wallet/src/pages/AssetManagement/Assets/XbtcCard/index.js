@@ -113,7 +113,7 @@ export default function() {
   const Ops = (
     <div>
       <PrimaryButton
-        // onClick={() => setDepositOpen(true)}
+        onClick={() => setDepositOpen(true)}
         style={{ marginRight: 8 }}
       >
         {$t('DEPOSIT')}
@@ -125,7 +125,7 @@ export default function() {
         {$t('WITHDRAW')}
       </DefaultButton>
       <DefaultButton
-        // onClick={() => setTransferOpen(true)}
+        onClick={() => setTransferOpen(true)}
         style={{ marginRight: 8 }}
       >
         {$t('TRANSFER')}
@@ -146,7 +146,7 @@ export default function() {
             <Line>
               <AssetView
                 title={$t('ASSET_FREE')}
-                value={details.free}
+                value={details.usable}
                 precision={precision}
                 disabled={false}
                 bold
@@ -185,7 +185,7 @@ export default function() {
       </Footer>
 
       {transferOpen && (
-        <TransferDialog handleClose={handleTransferClose} token="BTC" />
+        <TransferDialog handleClose={handleTransferClose} token="XBTC" />
       )}
       {depositOpen && <DepositDialog handleClose={handleDepositClose} />}
       {withdrawOpen && (

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getChainx } from '../services/chainx'
+import { getChainx, getChainxPromised } from '../services/chainx'
 import { getApi } from '../services/api'
 
 const bitcoin = 'Bitcoin'
@@ -33,8 +33,7 @@ const trustSlice = createSlice({
 export const btcWithdrawLimitSelector = state => state.trust.btcWithdrawLimit
 
 export const hotAddressSelector = state =>
-  state.trust.trusteeSessionInfo &&
-  state.trust.trusteeSessionInfo.hotEntity.addr
+  state.trust.trusteeSessionInfo?.hotAddress.addr
 export const withdrawalsSelector = state => state.trust.withdrawals
 
 const {
@@ -67,10 +66,10 @@ export const fetchWithdrawals = () => async dispatch => {
 }
 
 export const fetchTrusteeSessionInfo = () => async dispatch => {
-  const { trustee } = await getChainx()
-  const resp = await trustee.getTrusteeSessionInfo(bitcoin)
+  const api = await getChainxPromised()
+  const info = await api.rpc.xgatewaycommon.bitcoinTrusteeSessionInfo()
 
-  dispatch(setTrusteeSessionInfo(resp))
+  dispatch(setTrusteeSessionInfo(info.toJSON()))
 }
 
 export const fetchBtcWithdrawLimit = () => async dispatch => {

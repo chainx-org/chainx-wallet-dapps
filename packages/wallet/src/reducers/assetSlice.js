@@ -147,6 +147,7 @@ export const normalizedAssetsSelector = createSelector(
         )
 
         return {
+          id,
           total,
           details: camelCaseKey(details),
           token,
@@ -161,6 +162,13 @@ export const normalizedAssetsSelector = createSelector(
 export const xbtcSelector = createSelector(normalizedAssetsSelector, assets => {
   return assets.find(asset => asset.token === 'XBTC')
 })
+export const xbtcFreeSelector = createSelector(xbtcSelector, xbtc => {
+  return xbtc.details.usable
+})
+export const xbtcPrecisionSelector = createSelector(xbtcSelector, xbtc => {
+  return xbtc.precision
+})
+export const xbtcIdSelector = createSelector(xbtcSelector, xbtc => xbtc.id)
 
 export const pcxAssetSelector = state => state.assets.nativeAsset
 export const pcxFreeSelector = createSelector(
