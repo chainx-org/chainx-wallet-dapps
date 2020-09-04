@@ -168,7 +168,7 @@ export const xbtcFreeSelector = createSelector(xbtcSelector, xbtc => {
   return xbtc.details.usable
 })
 export const xbtcPrecisionSelector = createSelector(xbtcSelector, xbtc => {
-  return xbtc.precision
+  return xbtc?.precision
 })
 export const xbtcIdSelector = createSelector(xbtcSelector, xbtc => xbtc.id)
 

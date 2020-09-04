@@ -111,11 +111,11 @@ export default function() {
             {$t('STAKING')}
           </NavLink>
         </Nav>
-        {/*<Nav>*/}
-        {/*  <NavLink exact activeClassName="active" to="/trust">*/}
-        {/*    {$t('TRUST')}*/}
-        {/*  </NavLink>*/}
-        {/*</Nav>*/}
+        <Nav>
+          <NavLink exact activeClassName="active" to="/trust">
+            {$t('TRUST')}
+          </NavLink>
+        </Nav>
         <Nav>
           <NavLink exact activeClassName="active" to="/trade">
             {$t('TRADE')}

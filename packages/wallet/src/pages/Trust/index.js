@@ -1,15 +1,10 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  fetchWithdrawals,
-  withdrawalsSelector
-} from '../../reducers/trustSlice'
+import { withdrawalsSelector } from '../../reducers/trustSlice'
 import Card from '../../components/Card'
 import Empty from '../../components/Empty'
-import Status from './Status'
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@chainx/ui'
-import { getChainx } from '../../services/chainx'
 import Address from '../../components/Address'
 import BtcAddress from '../AssetManagement/Records/components/BtcAddress'
 import {
@@ -17,15 +12,12 @@ import {
   BaseCell,
   HeadCell,
   IndexCell,
-  RightAlignCell,
   StatusHeadCell
 } from './Wrapper'
-import { xbtcPrecisionSelector } from '../selectors/assets'
-import { reverseHex, toPrecision } from '../../utils'
-import BtcTx from '../AssetManagement/Records/components/BtcTx'
+import { toPrecision } from '../../utils'
 import $t from '../../locale'
-import moment from 'moment'
-import { timeFormat } from '../../utils/constants'
+import { fetchWithdrawalList } from '@reducers/trustSlice'
+import { assetsInfoSelector, xbtcPrecisionSelector } from '@reducers/assetSlice'
 
 const Wrapper = styled.div`
   display: flex;
@@ -42,11 +34,12 @@ const EmptyWrapper = styled.div`
 export default function() {
   const dispatch = useDispatch()
   const withdrawals = useSelector(withdrawalsSelector)
-  const chainx = getChainx()
+  // const chainx = getChainx()
   const precision = useSelector(xbtcPrecisionSelector)
+  const assetsInfo = useSelector(assetsInfoSelector)
 
   useEffect(() => {
-    dispatch(fetchWithdrawals())
+    dispatch(fetchWithdrawalList())
   }, [dispatch])
 
   return (
@@ -69,39 +62,47 @@ export default function() {
                 <HeadCell>{$t('TRUST_AMOUNT')}</HeadCell>
                 <HeadCell>{$t('TRUST_ACCOUNT_ADDR')}</HeadCell>
                 <HeadCell>{$t('TRUST_ORIGINAL_CHAIN')}</HeadCell>
+                <HeadCell>{$t('COMMON_MEMO_SHORT')}</HeadCell>
                 <HeadCell>{$t('TRUST_TX_HASH')}</HeadCell>
                 <StatusHeadCell>{$t('TRUST_STATUS')}</StatusHeadCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {withdrawals.map(data => {
-                const address = chainx.account.encodeAddress(data.accountid)
-                const time = data.time
-                  ? moment(data.time).format(timeFormat)
-                  : null
+              {withdrawals.map((data, idx) => {
+                const {
+                  height,
+                  index,
+                  applicant,
+                  addr,
+                  assetId,
+                  balance,
+                  ext
+                } = data
+                const token = assetsInfo.find(
+                  a => String(a.id) === String(assetId)
+                )?.info?.token
 
                 return (
-                  <TableRow key={data.id}>
-                    <BaseCell>{time}</BaseCell>
-                    <IndexCell>{data.id}</IndexCell>
-                    <BaseCell>{data.token}</BaseCell>
-                    <AmountCell>
-                      {toPrecision(data.balance, precision)}
-                    </AmountCell>
+                  <TableRow key={idx}>
+                    <BaseCell>{height}</BaseCell>
+                    <IndexCell>{index}</IndexCell>
+                    <BaseCell>{token}</BaseCell>
+                    <AmountCell>{toPrecision(balance, precision)}</AmountCell>
                     <TableCell>
-                      <Address address={address} />
+                      <Address address={applicant} />
                     </TableCell>
                     <TableCell>
-                      <BtcAddress address={data.address} />
+                      <BtcAddress address={addr} />
                     </TableCell>
-                    <TableCell>
-                      {data.txid ? (
-                        <BtcTx hash={reverseHex(data.txid)} />
-                      ) : null}
-                    </TableCell>
-                    <RightAlignCell>
-                      <Status status={data.status} />
-                    </RightAlignCell>
+                    <TableCell>{ext}</TableCell>
+                    {/*<TableCell>*/}
+                    {/*  {data.txid ? (*/}
+                    {/*    <BtcTx hash={reverseHex(data.txid)} />*/}
+                    {/*  ) : null}*/}
+                    {/*</TableCell>*/}
+                    {/*<RightAlignCell>*/}
+                    {/*  <Status status={data.status} />*/}
+                    {/*</RightAlignCell>*/}
                   </TableRow>
                 )
               })}
@@ -112,15 +113,6 @@ export default function() {
               <Empty text="暂无提现记录" />
             </EmptyWrapper>
           )}
-          {/* <TablePagination
-            page={currentPage}
-            pageSize={10}
-            total={121}
-            onChange={a => {
-              console.log(a)
-              setPage(a)
-            }}
-          ></TablePagination> */}
         </div>
       </Card>
     </Wrapper>

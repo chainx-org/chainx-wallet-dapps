@@ -75,9 +75,22 @@ export const fetchTrusteeSessionInfo = () => async dispatch => {
 export const fetchBtcWithdrawLimit = () => async dispatch => {
   const api = await getChainxPromised()
   const limit = await api.rpc.xgatewaycommon.withdrawalLimit(1)
-  console.log('limit', limit.toJSON())
 
   dispatch(setBtcWithdrawLimit(limit.toJSON()))
+}
+
+export const fetchWithdrawalList = () => async dispatch => {
+  const api = await getChainxPromised()
+  const list = await api.rpc.xgatewayrecords.withdrawalList()
+  const json = list.toJSON()
+  const withdrawals = Object.entries(json).map(([index, value]) => {
+    return {
+      index,
+      ...value
+    }
+  })
+  console.log('withdrawals', withdrawals)
+  dispatch(setWithdrawals(withdrawals))
 }
 
 export default trustSlice.reducer
