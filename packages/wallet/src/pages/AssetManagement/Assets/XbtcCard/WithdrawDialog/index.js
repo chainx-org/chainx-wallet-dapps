@@ -24,8 +24,11 @@ import {
   checkMemoAndHasError
 } from '../../../../../utils/errorCheck'
 import { isDemoSelector } from '../../../../../selectors'
-import { getChainx } from '../../../../../services/chainx'
-import { xbtcFreeSelector, xbtcPrecisionSelector } from '@reducers/assetSlice'
+import {
+  xbtcFreeSelector,
+  xbtcIdSelector,
+  xbtcPrecisionSelector
+} from '@reducers/assetSlice'
 
 export default function({ handleClose }) {
   const network = useSelector(networkSelector)
@@ -39,9 +42,9 @@ export default function({ handleClose }) {
   const [amount, setAmount] = useState('')
   const [amountErrMsg, setAmountErrMsg] = useState('')
 
-  // const { free, precision } = useSelector(xbtcFreeSelector)
   const free = useSelector(xbtcFreeSelector)
   const precision = useSelector(xbtcPrecisionSelector)
+  const xbtcId = useSelector(xbtcIdSelector)
 
   const [memo, setMemo] = useState('')
   const [memoErrMsg, setMemoErrMsg] = useState('')
@@ -105,36 +108,18 @@ export default function({ handleClose }) {
       return
     }
 
-    const chainx = getChainx()
-
     setDisabled(true)
     try {
-      const extrinsic = do {
-        if (chainx.api.tx.xAssetsProcess) {
-          chainx.asset.withdraw(
-            'BTC',
-            realAmount,
-            address,
-            memo ? memo.trim() : ''
-          )
-        } else {
-          chainx.api.tx.withdrawal.withdraw(
-            'BTC',
-            realAmount,
-            address,
-            memo ? memo.trim() : ''
-          )
-        }
-      }
-      const status = await signAndSendExtrinsic(
-        accountAddress,
-        extrinsic.toHex()
-      )
+      const status = await signAndSendExtrinsic(accountAddress, {
+        section: 'xGatewayCommon',
+        method: 'withdraw',
+        params: [xbtcId, realAmount, address, memo ? memo.trim() : '']
+      })
       const messages = {
         successTitle: $t('NOTIFICATION_WITHDRAWAL_SUCCESS'),
         failTitle: $t('NOTIFICATION_WITHDRAWAL_FAIL'),
         successMessage: `${$t('NOTIFICATION_WITHDRAWAL_AMOUNT')} ${amount} BTC`,
-        failMessage: `${$t('NOTIFICATION_TX_HASH')} ${status.txHash}`
+        failMessage: `${$t('NOTIFICATION_TX_HASH')}`
       }
 
       await showSnack(status, messages, dispatch)
