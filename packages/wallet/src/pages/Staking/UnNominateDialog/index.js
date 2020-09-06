@@ -22,7 +22,7 @@ import {
   intentionBondingDaysSelector,
   isUnNominationFromSelfIntention
 } from './selectors'
-import { pcxPrecisionSelector } from '@reducers/assetSlice'
+import { fetchLocks, pcxPrecisionSelector } from '@reducers/assetSlice'
 import {
   fetchAccountNominations,
   fetchValidators
@@ -100,6 +100,7 @@ export default function() {
           dispatch(fetchChainx2NativeAssetInfo(accountAddress))
           dispatch(fetchValidators())
           dispatch(fetchAccountNominations(accountAddress))
+          dispatch(fetchLocks(accountAddress))
         },
         5,
         2

@@ -78,7 +78,6 @@ export const fetchAssetsInfo = () => async dispatch => {
   const api = getChainx()
   const assets = await api.rpc.xassets.getAssets()
   const json = assets.toJSON()
-  console.log('json', json)
 
   const normalized = Object.keys(json).map(id => {
     return {
