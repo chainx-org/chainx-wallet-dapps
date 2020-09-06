@@ -35,20 +35,12 @@ export const Wrapper = styled.div`
 
 export default function() {
   const address = useSelector(addressSelector)
-  // const unFreezeRecord = useSelector(unFreezeRecordSelector)
   const voteOpen = useSelector(voteOpenSelector)
   const switchNominationOpen = useSelector(switchNominationOpenSelector)
   const unNominateOpen = useSelector(unNominateOpenSelector)
-  // const api = getApi()
 
   const dispatch = useDispatch()
 
-  // useEffect(() => {
-  //   dispatch(fetchSenators())
-  //   dispatch(fetchAssetsInfo())
-  //   dispatch(fetchLogos())
-  // }, [dispatch, api])
-  //
   useEffect(() => {
     dispatch(fetchAccountNominations(address))
     dispatch(fetchNominatorInfo(address))

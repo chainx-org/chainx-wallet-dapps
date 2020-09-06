@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import StyledDialog from './StyledDialog'
-import { AmountInput, PrimaryButton, TextInput } from '@chainx/ui'
+import { AmountInput, PrimaryButton } from '@chainx/ui'
 import { useDispatch, useSelector } from 'react-redux'
 import $t from '../../../locale'
 import { canRequestSign, retry, toPrecision } from '../../../utils'
@@ -10,10 +10,7 @@ import BigNumber from 'bignumber.js'
 import { showSnack, signAndSendExtrinsic } from '../../../utils/chainxProvider'
 import { addressSelector } from '../../../reducers/addressSlice'
 import { fetchChainx2NativeAssetInfo } from '../../../reducers/assetSlice'
-import {
-  checkAmountAndHasError,
-  checkMemoAndHasError
-} from '../../../utils/errorCheck'
+import { checkAmountAndHasError } from '../../../utils/errorCheck'
 import { isDemoSelector } from '../../../selectors'
 import {
   setUnNominateOpen,
@@ -39,8 +36,6 @@ export default function() {
   const [amountErrMsg, setAmountErrMsg] = useState('')
   const precision = useSelector(pcxPrecisionSelector)
 
-  const [memo, setMemo] = useState('')
-  const [memoErrMsg, setMemoErrMsg] = useState('')
   const [disabled, setDisabled] = useState(false)
   const hasAmount = !amountErrMsg && amount
   const dispatch = useDispatch()
@@ -69,12 +64,6 @@ export default function() {
       return
     }
 
-    if (
-      checkMemoAndHasError(memo, setMemoErrMsg, setDisabled.bind(null, true))
-    ) {
-      return
-    }
-
     if (!canRequestSign()) {
       // TODO: 考虑没有安装插件的情况下怎么与用户进行交互
       return
@@ -89,7 +78,7 @@ export default function() {
       const status = await signAndSendExtrinsic(accountAddress, {
         section: 'xStaking',
         method: 'unbond',
-        params: [target, realAmount, memo]
+        params: [target, realAmount]
       })
 
       console.log('status', status)
@@ -138,21 +127,6 @@ export default function() {
             precision={precision}
             error={!!amountErrMsg}
             errorText={amountErrMsg}
-          />
-        </div>
-
-        <div>
-          <TextInput
-            value={memo}
-            onChange={value => {
-              setMemoErrMsg('')
-              setMemo(value)
-            }}
-            multiline={true}
-            rows={2}
-            placeholder={$t('COMMON_MEMO')}
-            error={!!memoErrMsg}
-            errorText={memoErrMsg}
           />
         </div>
 

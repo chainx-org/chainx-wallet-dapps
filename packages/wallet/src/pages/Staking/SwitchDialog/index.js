@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import StyledDialog from './StyledDialog'
-import { AmountInput, PrimaryButton, TextInput } from '@chainx/ui'
+import { AmountInput, PrimaryButton } from '@chainx/ui'
 import $t from '../../../locale'
 import { useDispatch, useSelector } from 'react-redux'
 import { retry, toPrecision } from '../../../utils'
@@ -12,7 +12,6 @@ import { addressSelector } from '../../../reducers/addressSlice'
 import IntentionSelect from './IntentionSelect'
 import { fetchNominationRecords } from '../../../reducers/intentionSlice'
 import { fetchAccountAssets } from '../../../reducers/assetSlice'
-import { checkMemoAndHasError } from '../../../utils/errorCheck'
 import { isDemoSelector } from '../../../selectors'
 import {
   setSwitchNominationOpen,
@@ -41,9 +40,6 @@ export default function() {
 
   const validatorFrom = useSelector(switchNominationFromSelector)
   const nowNomination = nominationInfo[validatorFrom]?.nomination
-
-  const [memo, setMemo] = useState('')
-  const [memoErrMsg, setMemoErrMsg] = useState('')
   const [targetAccount, setTargetAccount] = useState('')
 
   const [amount, setAmount] = useState('')
@@ -102,18 +98,12 @@ export default function() {
       return
     }
 
-    if (
-      checkMemoAndHasError(memo, setMemoErrMsg, setDisabled.bind(null, true))
-    ) {
-      return
-    }
-
     setDisabled(true)
     try {
       const status = await signAndSendExtrinsic(accountAddress, {
         section: 'xStaking',
         method: 'rebond',
-        params: [validatorFrom, targetAccount, realAmount, memo]
+        params: [validatorFrom, targetAccount, realAmount]
       })
       const messages = {
         successTitle: $t('NOTIFICATION_SWITCH_SUCCESS'),
@@ -172,21 +162,6 @@ export default function() {
             precision={precision}
             error={!!amountErrMsg}
             errorText={amountErrMsg}
-          />
-        </div>
-
-        <div>
-          <TextInput
-            value={memo}
-            onChange={value => {
-              setMemoErrMsg('')
-              setMemo(value)
-            }}
-            multiline={true}
-            rows={2}
-            placeholder={$t('COMMON_MEMO')}
-            error={!!memoErrMsg}
-            errorText={memoErrMsg}
           />
         </div>
 

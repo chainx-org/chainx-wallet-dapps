@@ -88,6 +88,10 @@ export const {
   setUnFreezeData
 } = runStatusSlice.actions
 
+export const openVoteDialog = open => dispatch => {
+  dispatch(setVoteOpen(open))
+}
+
 export const unFreezeDataSelector = state => state.runStatus.unFreezeData
 export const switchNominationFromSelector = state =>
   state.runStatus.switchNominationFrom

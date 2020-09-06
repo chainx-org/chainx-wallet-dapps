@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import StyledDialog from './StyledDialog'
-import { AmountInput, PrimaryButton, TextInput } from '@chainx/ui'
+import { AmountInput, PrimaryButton } from '@chainx/ui'
 import $t from '../../../locale'
 import { Label, Value } from '../../AssetManagement/components'
 import { canRequestSign, retry, toPrecision } from '../../../utils'
@@ -16,10 +16,7 @@ import {
   pcxFreeSelector,
   pcxPrecisionSelector
 } from '../../../reducers/assetSlice'
-import {
-  checkAmountAndHasError,
-  checkMemoAndHasError
-} from '../../../utils/errorCheck'
+import { checkAmountAndHasError } from '../../../utils/errorCheck'
 import {
   setVoteOpen,
   voteIntentionSelector,
@@ -54,9 +51,6 @@ export default function() {
   const [amountErrMsg, setAmountErrMsg] = useState('')
   const dispatch = useDispatch()
 
-  const [memo, setMemo] = useState('')
-  const [memoErrMsg, setMemoErrMsg] = useState('')
-
   const pcxFree = useSelector(pcxFreeSelector)
   const precision = useSelector(pcxPrecisionSelector)
 
@@ -65,10 +59,6 @@ export default function() {
 
   const sign = async () => {
     if (checkAmountAndHasError(amount, pcxFree, precision, setAmountErrMsg)) {
-      return
-    }
-
-    if (checkMemoAndHasError(memo, setMemoErrMsg)) {
       return
     }
 
@@ -92,7 +82,7 @@ export default function() {
       const status = await signAndSendExtrinsic(accountAddress, {
         section: 'xStaking',
         method: 'bond',
-        params: [intention.account, realAmount, memo]
+        params: [intention.account, realAmount]
       })
       const messages = {
         successTitle: $t('NOTIFICATION_VOTE_SUCCESS'),
@@ -141,21 +131,6 @@ export default function() {
               <Value>{toPrecision(pcxFree, precision)} PCX</Value>
             </div>
           ) : null}
-        </div>
-
-        <div>
-          <TextInput
-            value={memo}
-            onChange={value => {
-              setMemoErrMsg('')
-              setMemo(value)
-            }}
-            multiline={true}
-            rows={2}
-            placeholder={$t('COMMON_MEMO')}
-            error={!!memoErrMsg}
-            errorText={memoErrMsg}
-          />
         </div>
 
         <div className="info">
