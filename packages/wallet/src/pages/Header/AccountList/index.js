@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux'
 import {
   accountSelector,
   isDemoSelector,
-  isExtensionSelector,
   signerConnectedSelector
 } from '../../../reducers/addressSlice'
 import useOutsideClick from '../../../utils/useClickOutside'
@@ -19,7 +18,6 @@ import {
   openExtensionDownloadDialogSelector,
   openSignerDownloadDialogSelector
 } from '../../../reducers/runStatusSlice'
-import ExtensionConnector from './ExtensionConnector'
 import { setDemoAccount, store } from '../../../index'
 import $t from '@locale/index'
 
@@ -31,11 +29,9 @@ export default function({ close = noneFunc }) {
       : mainNetDemoAccount.account
 
   const demoAccountName = demoAccount.name
-  const demoAccountAddress = demoAccount.address
 
   const signerConnected = useSelector(signerConnectedSelector)
   const downloadSignerDialogOpen = useSelector(openSignerDownloadDialogSelector)
-  const isExtensionAccount = useSelector(isExtensionSelector)
   const downloadExtensionDialogOpen = useSelector(
     openExtensionDownloadDialogSelector
   )
@@ -54,8 +50,8 @@ export default function({ close = noneFunc }) {
   return (
     <Wrapper ref={popup}>
       <li onClick={() => setDemoAccount(store)}>
-        <h4>{demoAccountName}</h4>
-        <p>{demoAccountAddress}</p>
+        <h4>{isDemo ? $t('HEADER_DEMO_ACCOUNT') : demoAccountName}</h4>
+        <p>***</p>
       </li>
       {isDemo ? null : (
         <li>
@@ -73,7 +69,7 @@ export default function({ close = noneFunc }) {
         </li>
       )}
       {signerConnected ? null : <SignerConnector />}
-      {isExtensionAccount ? null : <ExtensionConnector />}
+      {/*{isExtensionAccount ? null : <ExtensionConnector />}*/}
     </Wrapper>
   )
 }
