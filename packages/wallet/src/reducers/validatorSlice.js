@@ -76,7 +76,9 @@ export const fetchAccountNominationInterest = (
 
     dispatch(setInterestInfo(interestMap.toJSON()))
   } finally {
-    dispatch(setLoadingIntentions(false))
+    if (setLoading) {
+      dispatch(setLoadingIntentions(false))
+    }
   }
 }
 
@@ -91,7 +93,9 @@ export const fetchValidators = (setLoading = false) => async dispatch => {
 
     dispatch(setValidators(validators.toJSON()))
   } finally {
-    dispatch(setLoadingIntentions(false))
+    if (setLoading) {
+      dispatch(setLoadingIntentions(false))
+    }
   }
 }
 

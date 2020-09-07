@@ -46,8 +46,8 @@ export default function() {
     dispatch(fetchNominatorInfo(address))
   }, [dispatch, address])
 
-  dispatch(fetchAccountNominationInterest(address, true))
   useEffect(() => {
+    dispatch(fetchAccountNominationInterest(address, true))
     const intervalId = setInterval(() => {
       dispatch(fetchAccountNominationInterest(address))
     }, 6000)
