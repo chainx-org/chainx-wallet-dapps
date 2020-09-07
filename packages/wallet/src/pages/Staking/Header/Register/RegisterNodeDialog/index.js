@@ -11,8 +11,7 @@ import {
 } from '../../../../../utils/chainxProvider'
 import { useDispatch, useSelector } from 'react-redux'
 import { addressSelector } from '../../../../../reducers/addressSlice'
-import { fetchIntentions } from '../../../../../reducers/intentionSlice'
-import { getChainx } from '../../../../../services/chainx'
+import { fetchValidators } from '@reducers/validatorSlice'
 
 export default function({ handleClose = noneFunc }) {
   const accountAddress = useSelector(addressSelector)
@@ -22,8 +21,6 @@ export default function({ handleClose = noneFunc }) {
   const [disabled, setDisabled] = useState(false)
   const dispatch = useDispatch()
 
-  const chainx = getChainx()
-
   const register = async () => {
     if (name.length > 12) {
       setNameErrMsg($t('COMMON_TOO_LONG'))
@@ -32,16 +29,16 @@ export default function({ handleClose = noneFunc }) {
 
     setDisabled(true)
     try {
-      const extrinsic = chainx.stake.register(name.trim())
-      const status = await signAndSendExtrinsic(
-        accountAddress,
-        extrinsic.toHex()
-      )
+      const status = await signAndSendExtrinsic(accountAddress, {
+        section: 'xStaking',
+        method: 'register',
+        params: [name]
+      })
       const messages = {
-        successTitle: '注册成功',
-        failTitle: '注册失败',
-        successMessage: `注册名称 ${name.trim()}`,
-        failMessage: `交易hash ${status.txHash}`
+        successTitle: $t('staking_register_success'),
+        failTitle: $t('staking_register_fail'),
+        successMessage: `${$t('staking_register_nickname')} ${name.trim()}`,
+        failMessage: ``
       }
 
       setDisabled(false)
@@ -49,7 +46,7 @@ export default function({ handleClose = noneFunc }) {
       handleClose()
       retry(
         () => {
-          dispatch(fetchIntentions())
+          dispatch(fetchValidators())
         },
         5,
         2
@@ -73,8 +70,8 @@ export default function({ handleClose = noneFunc }) {
         <div>
           <TextInput
             value={name}
-            onChange={setName}
-            placeholder="节点名（12 字符以内）"
+            onChange={v => setName((v || '').trim())}
+            placeholder={$t('staking_validator_name_restriction')}
             error={!!nameErrMsg}
             errorText={nameErrMsg}
           />

@@ -134,6 +134,22 @@ const staking = {
   STAKING_MINIMUM_NOMINATION: {
     zh: '参选需总得票{amount}PCX',
     en: 'At least {amount} PCX nomination'
+  },
+  staking_register_success: {
+    zh: '注册成功',
+    en: 'Register successfully'
+  },
+  staking_register_fail: {
+    zh: '注册失败',
+    en: 'Register failed'
+  },
+  staking_register_nickname: {
+    zh: '注册名称',
+    en: 'Nickname'
+  },
+  staking_validator_name_restriction: {
+    zh: '节点别名（12 字符以内）',
+    en: 'Nickname(less than 12 characters)'
   }
 }
 

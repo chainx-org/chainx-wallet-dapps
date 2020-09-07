@@ -1,6 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import AccountNomination from './AccountNomination'
+import Register from './Register'
+import { useSelector } from 'react-redux'
+import { validatorsSelector } from '@reducers/validatorSlice'
+import { addressSelector } from '@reducers/addressSlice'
 
 const Wrapper = styled.header`
   display: flex;
@@ -19,18 +23,16 @@ const Left = styled.div`
 `
 
 export default function() {
-  // const address = useSelector(addressSelector)
-  //
-  // const intentions = useSelector(intentionsSelector)
-  // const isIntention = intentions.find(
-  //   intention => intention.account === accountId
-  // )
+  const address = useSelector(addressSelector)
+  const validators = useSelector(validatorsSelector)
+  const isValidator = validators.find(v => v.account === address)
 
   return (
     <Wrapper>
       <Left>
         {/*<NominationInfo />*/}
         {/*{isIntention ? <Update /> : <Register />}*/}
+        {!isValidator && <Register />}
       </Left>
       <AccountNomination />
     </Wrapper>
