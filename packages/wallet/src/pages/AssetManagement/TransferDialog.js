@@ -1,11 +1,5 @@
 import React, { useState } from 'react'
-import {
-  AmountInput,
-  Dialog,
-  PrimaryButton,
-  SelectInput,
-  TextInput
-} from '@chainx/ui'
+import { AmountInput, Dialog, PrimaryButton, SelectInput } from '@chainx/ui'
 import styled from 'styled-components'
 import $t from '../../locale'
 import { canRequestSign, retry, toPrecision } from '../../utils'
@@ -18,10 +12,7 @@ import {
   fetchAccountAssets,
   pcxPrecisionSelector
 } from '../../reducers/assetSlice'
-import {
-  checkAmountAndHasError,
-  checkMemoAndHasError
-} from '../../utils/errorCheck'
+import { checkAmountAndHasError } from '../../utils/errorCheck'
 import { isDemoSelector } from '../../selectors'
 import {
   pcxFreeSelector,
@@ -78,8 +69,6 @@ export default function({ handleClose, token }) {
     precision = xbtcPrecision
   }
 
-  const [memo, setMemo] = useState('')
-  const [memoErrMsg, setMemoErrMsg] = useState('')
   const [disabled, setDisabled] = useState(false)
   const dispatch = useDispatch()
   const tokenName = token
@@ -98,10 +87,6 @@ export default function({ handleClose, token }) {
       return
     }
 
-    if (isBtc && checkMemoAndHasError(memo, setMemoErrMsg)) {
-      return
-    }
-
     const realAmount = BigNumber(amount)
       .multipliedBy(Math.pow(10, precision))
       .toString()
@@ -111,9 +96,7 @@ export default function({ handleClose, token }) {
       const status = await signAndSendExtrinsic(accountAddress, {
         section: isBtc ? 'xAssets' : 'balances',
         method: 'transfer',
-        params: isBtc
-          ? [address, xbtcId, realAmount, memo]
-          : [address, realAmount]
+        params: isBtc ? [address, xbtcId, realAmount] : [address, realAmount]
       })
 
       const messages = {
@@ -186,23 +169,6 @@ export default function({ handleClose, token }) {
             </div>
           ) : null}
         </div>
-
-        {isBtc && (
-          <div>
-            <TextInput
-              value={memo}
-              onChange={value => {
-                setMemoErrMsg('')
-                setMemo(value)
-              }}
-              multiline={true}
-              rows={2}
-              placeholder={$t('COMMON_MEMO')}
-              error={!!memoErrMsg}
-              errorText={memoErrMsg}
-            />
-          </div>
-        )}
 
         <div>
           <PrimaryButton
