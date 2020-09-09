@@ -43,6 +43,10 @@ export const btcNextClaimSelector = createSelector(
   btcLedgerSelector,
   xbtcClaimRestrictions,
   (ledger, restrictions) => {
+    if (ledger && !ledger.lastClaim) {
+      return 0
+    }
+
     return (ledger?.lastClaim || 0) + (restrictions?.frequencyLimit || 0)
   }
 )

@@ -13,6 +13,7 @@ import Card from '@components/Card'
 import styled from 'styled-components'
 import Logo from '@pages/AssetManagement/Assets/components/Logo'
 import {
+  fetchChainx2NativeAsset,
   locksSelector,
   xbtcIdSelector,
   xbtcSelector
@@ -24,10 +25,14 @@ import {
   fetchInterestByAccount,
   xbtcInterestSelector
 } from '@reducers/miningAssetSlice'
-import { toPrecision } from '../../../../utils'
+import { canRequestSign, retry, toPrecision } from '../../../../utils'
 import { reachClaimHeightSelector } from '@pages/AssetManagement/Assets/XbtcCard/selectors'
 import WarningPop from './WarningPop'
 import warningIcon from './WarningPop/warning.svg'
+import {
+  showSnack,
+  signAndSendExtrinsic
+} from '../../../../utils/chainxProvider'
 
 const XbtcCard = styled(Card)`
   position: relative;
@@ -115,12 +120,14 @@ export default function() {
   const [transferOpen, setTransferOpen] = useState(false)
   const [depositOpen, setDepositOpen] = useState(false)
   const [withdrawOpen, setWithdrawOpen] = useState(false)
+  const [disabled, setDisabled] = useState(false)
   const [openPop, setOpenPop] = useState(false)
   const { details, precision, chain, total } = useSelector(xbtcSelector) || {}
   const dispatch = useDispatch()
   const address = useSelector(addressSelector)
   const xbtcId = useSelector(xbtcIdSelector)
 
+  const accountAddress = useSelector(addressSelector)
   const { Bonded: bonded } = useSelector(locksSelector)
 
   const xbtcInterest = useSelector(xbtcInterestSelector)
@@ -147,6 +154,47 @@ export default function() {
 
   const handleTransferClose = () => setTransferOpen(false)
   const handleDepositClose = () => setDepositOpen(false)
+
+  async function claim() {
+    if (!canRequestSign()) {
+      return
+    }
+
+    if (xbtcInterest <= 0) {
+      return
+    }
+
+    setDisabled(true)
+    try {
+      const status = await signAndSendExtrinsic(accountAddress, {
+        section: 'xMiningAsset',
+        method: 'claim',
+        params: [xbtcId]
+      })
+
+      const messages = {
+        successTitle: $t('COMMON_MSG_SUCCESS', { msg: $t('STAKING_CLAIM') }),
+        failTitle: $t('COMMON_MSG_Fail', { msg: $t('STAKING_CLAIM') }),
+        successMessage: ``,
+        failMessage: ``
+      }
+      showSnack(status, messages, dispatch)
+
+      retry(
+        () => {
+          Promise.all([
+            dispatch(fetchAccountMinerLedger(accountAddress)),
+            dispatch(fetchInterestByAccount(accountAddress)),
+            dispatch(fetchChainx2NativeAsset(accountAddress))
+          ])
+        },
+        5,
+        2
+      ).then(() => console.log('Refresh assets 5 times after transfer'))
+    } finally {
+      setDisabled(false)
+    }
+  }
 
   const Ops = (
     <div>
@@ -227,9 +275,9 @@ export default function() {
         </span>
 
         <PrimaryButton
-          disabled={!reachClaimHeight || !hasEnoughStaking}
+          disabled={!canClaim || disabled}
           size="small"
-          onClick={() => console.log('claim TODO')}
+          onClick={() => claim()}
         >
           {$t('PSEDU_CLAIM')}
         </PrimaryButton>
