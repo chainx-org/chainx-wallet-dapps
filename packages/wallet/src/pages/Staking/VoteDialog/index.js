@@ -3,9 +3,8 @@ import StyledDialog from './StyledDialog'
 import { AmountInput, PrimaryButton } from '@chainx/ui'
 import $t from '../../../locale'
 import { Label, Value } from '../../AssetManagement/components'
-import { canRequestSign, retry, toPrecision } from '../../../utils'
+import { canRequestSign, retry, safeAdd, toPrecision } from '../../../utils'
 import { useDispatch, useSelector } from 'react-redux'
-import { nominationRecordsSelector } from '../../../reducers/intentionSlice'
 import arrow from '../svg/arrow.svg'
 import darkArrow from '../svg/dark-arrow.svg'
 import { showSnack, signAndSendExtrinsic } from '../../../utils/chainxProvider'
@@ -24,13 +23,15 @@ import {
 } from '../../../reducers/runStatusSlice'
 import {
   fetchAccountNominations,
-  fetchValidators
+  fetchValidators,
+  nominationRecordsSelector
 } from '@reducers/validatorSlice'
 import { fetchChainx2NativeAssetInfo } from '@reducers/assetSlice'
 
 export default function() {
   const accountAddress = useSelector(addressSelector)
   const nominationRecords = useSelector(nominationRecordsSelector)
+
   const isDemoAddr = useSelector(isDemoSelector)
   const voteOpen = useSelector(voteOpenSelector)
 
@@ -40,11 +41,11 @@ export default function() {
   const handleClose = () => dispatch(setVoteOpen(false))
 
   const record = (nominationRecords || []).find(
-    record => record.intention === intention.account
+    record => record.account === intention.account
   )
   let nomination = 0
   if (record) {
-    nomination = record.info.nomination
+    nomination = record.nomination.nomination
   }
 
   const [amount, setAmount] = useState('')
@@ -145,7 +146,7 @@ export default function() {
               {!hasAmount
                 ? '-'
                 : `${toPrecision(
-                    nomination + amount * Math.pow(10, precision),
+                    safeAdd(nomination, amount * Math.pow(10, precision)),
                     precision
                   )} PCX`}
             </p>

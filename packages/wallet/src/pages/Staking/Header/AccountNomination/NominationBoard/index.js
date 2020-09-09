@@ -116,7 +116,7 @@ export default function() {
                     size="small"
                     style={{ marginRight: 8 }}
                     onClick={() => {
-                      dispatch(setVoteIntention(record.intention))
+                      dispatch(setVoteIntention(record.validator))
                       dispatch(setVoteOpen(true))
                     }}
                   >

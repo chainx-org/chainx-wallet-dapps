@@ -3,6 +3,7 @@ import { getChainx, getChainxPromised } from '../services/chainx'
 import { setLoadingIntentions } from '@reducers/runStatusSlice'
 import chunk from 'lodash.chunk'
 import BigNumber from 'bignumber.js'
+import { safeAdd } from '../utils'
 
 const validatorSlice = createSlice({
   name: 'validators',
@@ -112,7 +113,7 @@ export const totalNominationSelector = createSelector(
   nominationInfoSelector,
   info => {
     return Object.entries(info).reduce((result, [_, { nomination }]) => {
-      return result + nomination
+      return safeAdd(result, nomination)
     }, 0)
   }
 )
