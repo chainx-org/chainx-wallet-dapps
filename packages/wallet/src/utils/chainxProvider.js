@@ -77,7 +77,7 @@ function handleSignerExtrinsicResult(
   const result = { events, status, normalizedEvents }
   console.log('result', result)
 
-  if (!status?.Finalized) {
+  if (!status?.InBlock) {
     return
   }
 
