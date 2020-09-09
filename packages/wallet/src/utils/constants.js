@@ -9,7 +9,7 @@ export const timeFormat = 'YYYY/MM/DD HH:mm:ss'
 
 export const exSuccess = 'ExtrinsicSuccess'
 export const exFailed = 'ExtrinsicFailed'
-export const blockDuration = 2000
+export const blockDuration = 6000
 
 export const mainNetDemoAccount = {
   version: 1,

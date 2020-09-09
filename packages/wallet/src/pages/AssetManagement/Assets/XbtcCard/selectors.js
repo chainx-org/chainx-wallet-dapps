@@ -54,3 +54,12 @@ export const reachClaimHeightSelector = createSelector(
     return blockNumber >= nextClaim
   }
 )
+
+// 距离下次claim的block数
+export const nextClaimDistanceSelector = createSelector(
+  btcNextClaimSelector,
+  blockNumberSelector,
+  (nextClaim, blockNumber) => {
+    return blockNumber >= nextClaim ? 0 : nextClaim - blockNumber
+  }
+)

@@ -26,8 +26,11 @@ import {
 } from '@reducers/miningAssetSlice'
 import { toPrecision } from '../../../../utils'
 import { reachClaimHeightSelector } from '@pages/AssetManagement/Assets/XbtcCard/selectors'
+import WarningPop from './WarningPop'
+import warningIcon from './WarningPop/warning.svg'
 
 const XbtcCard = styled(Card)`
+  position: relative;
   display: flex;
   flex-direction: column;
   padding: 0;
@@ -75,6 +78,11 @@ const Footer = styled.footer`
   align-items: center;
   justify-content: space-between;
 
+  span.info {
+    display: inline-flex;
+    align-items: center;
+  }
+
   span.label {
     opacity: 0.32;
     font-size: 12px;
@@ -92,12 +100,22 @@ const Footer = styled.footer`
     letter-spacing: 0.12px;
     line-height: 24px;
   }
+
+  span.warning {
+    display: inline-flex;
+    align-items: center;
+    img {
+      margin-left: 6px;
+      width: 16px;
+    }
+  }
 `
 
 export default function() {
   const [transferOpen, setTransferOpen] = useState(false)
   const [depositOpen, setDepositOpen] = useState(false)
   const [withdrawOpen, setWithdrawOpen] = useState(false)
+  const [openPop, setOpenPop] = useState(false)
   const { details, precision, chain, total } = useSelector(xbtcSelector) || {}
   const dispatch = useDispatch()
   const address = useSelector(addressSelector)
@@ -109,6 +127,7 @@ export default function() {
   const hasEnoughStaking = bonded > (xbtcInterest * 100) / 9
 
   const reachClaimHeight = useSelector(reachClaimHeightSelector)
+  const canClaim = reachClaimHeight && hasEnoughStaking
 
   useEffect(() => {
     if (xbtcId) {
@@ -200,6 +219,11 @@ export default function() {
           <span className="interest">
             {toPrecision(xbtcInterest, precision)} PCX
           </span>
+          {xbtcInterest > 0 && !canClaim ? (
+            <span className="warning" onMouseEnter={() => setOpenPop(true)}>
+              <img src={warningIcon} alt="interest" />
+            </span>
+          ) : null}
         </span>
 
         <PrimaryButton
@@ -210,6 +234,8 @@ export default function() {
           {$t('PSEDU_CLAIM')}
         </PrimaryButton>
       </Footer>
+
+      {openPop && <WarningPop close={() => setOpenPop(false)} />}
 
       {transferOpen && (
         <TransferDialog handleClose={handleTransferClose} token="XBTC" />
