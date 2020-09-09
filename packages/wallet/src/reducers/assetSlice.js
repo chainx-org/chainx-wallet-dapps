@@ -168,7 +168,7 @@ export const xbtcFreeSelector = createSelector(xbtcSelector, xbtc => {
 export const xbtcPrecisionSelector = createSelector(xbtcSelector, xbtc => {
   return xbtc?.precision
 })
-export const xbtcIdSelector = createSelector(xbtcSelector, xbtc => xbtc.id)
+export const xbtcIdSelector = createSelector(xbtcSelector, xbtc => xbtc?.id)
 
 export const pcxAssetSelector = state => state.assets.nativeAsset
 export const pcxFreeSelector = createSelector(

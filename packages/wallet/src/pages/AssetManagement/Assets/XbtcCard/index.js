@@ -12,14 +12,20 @@ import WithdrawDialog from './WithdrawDialog'
 import Card from '@components/Card'
 import styled from 'styled-components'
 import Logo from '@pages/AssetManagement/Assets/components/Logo'
-import { xbtcSelector } from '@reducers/assetSlice'
+import {
+  locksSelector,
+  xbtcIdSelector,
+  xbtcSelector
+} from '@reducers/assetSlice'
 import { addressSelector } from '@reducers/addressSlice'
 import {
   fetchAccountMinerLedger,
+  fetchClaimRestrictionOf,
   fetchInterestByAccount,
   xbtcInterestSelector
 } from '@reducers/miningAssetSlice'
 import { toPrecision } from '../../../../utils'
+import { reachClaimHeightSelector } from '@pages/AssetManagement/Assets/XbtcCard/selectors'
 
 const XbtcCard = styled(Card)`
   display: flex;
@@ -67,6 +73,7 @@ const Footer = styled.footer`
 
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   span.label {
     opacity: 0.32;
@@ -94,8 +101,20 @@ export default function() {
   const { details, precision, chain, total } = useSelector(xbtcSelector) || {}
   const dispatch = useDispatch()
   const address = useSelector(addressSelector)
+  const xbtcId = useSelector(xbtcIdSelector)
+
+  const { Bonded: bonded } = useSelector(locksSelector)
 
   const xbtcInterest = useSelector(xbtcInterestSelector)
+  const hasEnoughStaking = bonded > (xbtcInterest * 100) / 9
+
+  const reachClaimHeight = useSelector(reachClaimHeightSelector)
+
+  useEffect(() => {
+    if (xbtcId) {
+      dispatch(fetchClaimRestrictionOf(xbtcId))
+    }
+  }, [dispatch, xbtcId])
 
   useEffect(() => {
     dispatch(fetchAccountMinerLedger(address))
@@ -182,6 +201,14 @@ export default function() {
             {toPrecision(xbtcInterest, precision)} PCX
           </span>
         </span>
+
+        <PrimaryButton
+          disabled={!reachClaimHeight || !hasEnoughStaking}
+          size="small"
+          onClick={() => console.log('claim TODO')}
+        >
+          {$t('PSEDU_CLAIM')}
+        </PrimaryButton>
       </Footer>
 
       {transferOpen && (
