@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Wrapper, { Error } from './Wrapper'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  pairAssetPrecision,
   pairAssetSelector,
-  pairCurrencyFreeSelector,
   pairCurrencyPrecision,
   pairCurrencySelector
 } from '../../../selectors'
@@ -22,21 +20,20 @@ import {
   showSnack,
   signAndSendExtrinsic
 } from '../../../../../../utils/chainxProvider'
-import { fetchQuotations } from '../../../../../../reducers/tradeSlice'
 import { addressSelector } from '../../../../../../reducers/addressSlice'
 import BigNumber from 'bignumber.js'
 import { marks } from '../constants'
 import $t from '../../../../../../locale'
-import { getChainx } from '../../../../../../services/chainx'
 import infoIcon from '../../assets/info.svg'
 import { PriceWrapper } from '../components/PriceWrapper'
 import EventEmitter, { events } from '../../../eventEmitter'
 import {
   fetchAccountAssets,
-  normalizedAssetsSelector
+  fetchChainx2NativeAssetInfo
 } from '../../../../../../reducers/assetSlice'
 import {
   currentPairIdSelector,
+  fetchDexDepth,
   maxBuyShowPriceSelector
 } from '@reducers/dexSlice'
 import {
@@ -44,6 +41,7 @@ import {
   pairPrecisionSelector,
   showPriceSelector
 } from '@pages/Trade/Module/AskBid/dexSelectors'
+import { xbtcFreeSelector, xbtcPrecisionSelector } from '@reducers/assetSlice'
 
 export default function() {
   const address = useSelector(addressSelector)
@@ -51,12 +49,10 @@ export default function() {
   const isDemoAddr = useSelector(isDemoSelector)
 
   const pairId = useSelector(currentPairIdSelector)
-  const currencyFree = useSelector(pairCurrencyFreeSelector) || {}
   const pairCurrency = useSelector(pairCurrencySelector)
   const pairAsset = useSelector(pairAssetSelector)
   const pairShowPrecision = useSelector(pairPrecisionSelector)
   const pairPrecision = useSelector(pairPipPrecisionSelector)
-  const assetPrecision = useSelector(pairAssetPrecision)
   const showPrice = useSelector(showPriceSelector)
 
   const currencyPrecision = useSelector(pairCurrencyPrecision)
@@ -65,9 +61,8 @@ export default function() {
     toPrecision(maxBuyPrice, pairPrecision)
   ).toFixed(pairShowPrecision)
 
-  const xbtc = useSelector(normalizedAssetsSelector).find(
-    a => a.token === 'XBTC'
-  )
+  const xbtcFree = useSelector(xbtcFreeSelector)
+  const xbtcPrecision = useSelector(xbtcPrecisionSelector)
 
   const [price, setPrice] = useState('')
   const [initPairId, setInitPairId] = useState(null)
@@ -91,14 +86,13 @@ export default function() {
   const [max, setMax] = useState(0)
 
   useEffect(() => {
-    if (Number(price) <= 0 || !currencyFree.free) {
+    if (Number(price) <= 0 || !xbtcFree) {
       return
     }
 
-    const rawMax =
-      currencyFree.free / (Number(price) * Math.pow(10, currencyPrecision))
+    const rawMax = xbtcFree / (Number(price) * Math.pow(10, currencyPrecision))
     setMax(normalizeNumber(rawMax, currencyPrecision))
-  }, [currencyFree, price, currencyPrecision])
+  }, [xbtcFree, price, currencyPrecision])
 
   const [disabled, setDisabled] = useState(false)
   const dispatch = useDispatch()
@@ -106,14 +100,12 @@ export default function() {
   const [priceErrMsg, setPriceErrMsg] = useState('')
   const [amountErrMsg, setAmountErrMsg] = useState('')
 
-  const chainx = getChainx()
-
   const sign = async () => {
     const realPrice = BigNumber(price)
       .multipliedBy(Math.pow(10, pairPrecision))
       .toNumber()
     const realAmount = BigNumber(amount)
-      .multipliedBy(Math.pow(10, assetPrecision))
+      .multipliedBy(Math.pow(10, xbtcPrecision))
       .toNumber()
 
     if (realPrice <= 0) {
@@ -138,17 +130,11 @@ export default function() {
     setDisabled(true)
 
     try {
-      const extrinsic = chainx.trade.putOrder(
-        pairId,
-        'Limit',
-        'Buy',
-        realAmount,
-        realPrice
-      )
-      const status = await signAndSendExtrinsic(
-        accountAddress,
-        extrinsic.toHex()
-      )
+      const status = await signAndSendExtrinsic(accountAddress, {
+        section: 'xSpot',
+        method: 'putOrder',
+        params: [pairId, 'Limit', 'Buy', realAmount, realPrice]
+      })
 
       const messages = {
         successTitle: $t('TRADE_BUY_SUCCESS'),
@@ -160,8 +146,9 @@ export default function() {
       await showSnack(status, messages, dispatch)
       await retry(
         () => {
-          dispatch(fetchQuotations(pairId))
+          dispatch(fetchDexDepth())
           dispatch(fetchAccountAssets(address))
+          dispatch(fetchChainx2NativeAssetInfo(address))
         },
         5,
         2
@@ -174,13 +161,7 @@ export default function() {
   return (
     <Wrapper>
       <div className="info">
-        {xbtc && (
-          <Free
-            asset={xbtc.token}
-            free={xbtc.details.free}
-            precision={xbtc.precision}
-          />
-        )}
+        <Free asset="XBTC" free={xbtcFree} precision={xbtcPrecision} />
         <Error>{priceErrMsg || amountErrMsg}</Error>
       </div>
       <div className="price input">
@@ -222,7 +203,7 @@ export default function() {
             }
           }}
           tokenName={pairAsset}
-          precision={assetPrecision}
+          precision={xbtcPrecision}
           error={!!amountErrMsg}
         />
       </div>
@@ -232,11 +213,11 @@ export default function() {
         onChange={value => {
           setAmountErrMsg('')
           setPercentage(value)
-          if (!currencyFree.free) {
+          if (!xbtcFree) {
             return
           }
 
-          setAmount(((max * value) / 100).toFixed(assetPrecision))
+          setAmount(((max * value) / 100).toFixed(xbtcPrecision))
         }}
         value={percentage}
         min={0}

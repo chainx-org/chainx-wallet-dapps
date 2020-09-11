@@ -163,7 +163,7 @@ export const xbtcSelector = createSelector(normalizedAssetsSelector, assets => {
   return assets.find(asset => asset.token === 'XBTC')
 })
 export const xbtcFreeSelector = createSelector(xbtcSelector, xbtc => {
-  return xbtc.details.usable
+  return xbtc?.details?.usable
 })
 export const xbtcPrecisionSelector = createSelector(xbtcSelector, xbtc => {
   return xbtc?.precision

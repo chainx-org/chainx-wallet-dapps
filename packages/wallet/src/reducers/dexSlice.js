@@ -103,6 +103,15 @@ export const minSellPriceSelector = createSelector(
     return pair.minValidAsk
   }
 )
+
+export const maxBuyPriceSelector = createSelector(currentPairSelector, pair => {
+  if (!pair) {
+    return 0
+  }
+
+  return pair.maxValidBid
+})
+
 export const ordersSelector = state => state.dex.orders
 
 export default dexSlice.reducer

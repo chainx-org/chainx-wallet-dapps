@@ -74,4 +74,14 @@ export const normalizedAsksSelector = createSelector(asksSelectors, asks => {
     .reverse()
 })
 
-export const normalizedBidsSelector = createSelector(bidsSelector, bids => {})
+export const normalizedBidsSelector = createSelector(bidsSelector, bids => {
+  return [...bids].reduce((result, [price, amount]) => {
+    const len = result.length
+    result.push({
+      price,
+      amount,
+      sumAmount: len <= 0 ? amount : result[len - 1].sum + amount
+    })
+    return result
+  }, [])
+})
