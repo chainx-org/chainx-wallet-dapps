@@ -61,11 +61,11 @@ export const showPriceSelector = createSelector(
 
 export const normalizedAsksSelector = createSelector(asksSelectors, asks => {
   return [...asks]
-    .reduce((result, [amount, price]) => {
+    .reduce((result, [price, amount]) => {
       const len = result.length
       result.push({
-        amount,
         price,
+        amount,
         sumAmount: len <= 0 ? amount : result[len - 1].sum + amount
       })
 
