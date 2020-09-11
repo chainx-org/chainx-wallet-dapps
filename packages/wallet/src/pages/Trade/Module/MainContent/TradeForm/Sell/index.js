@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Wrapper from './Wrapper'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  pairAssetSelector,
-  pairCurrencyPrecision,
-  pairCurrencySelector
-} from '../../../selectors'
+import { pairAssetSelector, pairCurrencySelector } from '../../../selectors'
 import Free from '../components/Free'
 import Label from '../components/Label'
 import { AmountInput, DangerButton, Slider } from '@chainx/ui'
@@ -27,7 +23,8 @@ import { fetchAccountAssets } from '../../../../../../reducers/assetSlice'
 import {
   fetchChainx2NativeAssetInfo,
   pcxFreeSelector,
-  pcxPrecisionSelector
+  pcxPrecisionSelector,
+  xbtcPrecisionSelector
 } from '@reducers/assetSlice'
 import {
   currentPairIdSelector,
@@ -55,7 +52,7 @@ export default function() {
   const [amount, setAmount] = useState('0')
 
   const [percentage, setPercentage] = useState(0)
-  const currencyPrecision = useSelector(pairCurrencyPrecision)
+  const currencyPrecision = useSelector(xbtcPrecisionSelector)
   const accountAddress = useSelector(addressSelector)
   const isDemoAddr = useSelector(isDemoSelector)
   const pcxFree = useSelector(pcxFreeSelector)
@@ -188,7 +185,7 @@ export default function() {
               )
             }
           }}
-          tokenName={pairAsset}
+          tokenName="PCX"
           precision={assetPrecision}
           error={!!amountErrMsg}
         />
@@ -210,11 +207,7 @@ export default function() {
 
       <div className="volume">
         <span>{$t('TRADE_VOLUME')} </span>
-        {pairCurrency ? (
-          <span>
-            {volume.toFixed(currencyPrecision)} {pairCurrency}
-          </span>
-        ) : null}
+        <span>{volume.toFixed(currencyPrecision)} XBTC</span>
       </div>
 
       <div className="button">

@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Wrapper, { Error } from './Wrapper'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  pairAssetSelector,
-  pairCurrencyPrecision,
-  pairCurrencySelector
-} from '../../../selectors'
+import { pairAssetSelector, pairCurrencySelector } from '../../../selectors'
 import Free from '../components/Free'
 import { AmountInput, Slider, SuccessButton } from '@chainx/ui'
 import Label from '../components/Label'
@@ -29,7 +25,8 @@ import { PriceWrapper } from '../components/PriceWrapper'
 import EventEmitter, { events } from '../../../eventEmitter'
 import {
   fetchAccountAssets,
-  fetchChainx2NativeAssetInfo
+  fetchChainx2NativeAssetInfo,
+  pcxPrecisionSelector
 } from '../../../../../../reducers/assetSlice'
 import {
   currentPairIdSelector,
@@ -55,7 +52,7 @@ export default function() {
   const pairPrecision = useSelector(pairPipPrecisionSelector)
   const showPrice = useSelector(showPriceSelector)
 
-  const currencyPrecision = useSelector(pairCurrencyPrecision)
+  const currencyPrecision = useSelector(xbtcPrecisionSelector)
   const maxBuyPrice = useSelector(maxBuyShowPriceSelector)
   const maxBuyShowPrice = Number(
     toPrecision(maxBuyPrice, pairPrecision)
@@ -63,6 +60,7 @@ export default function() {
 
   const xbtcFree = useSelector(xbtcFreeSelector)
   const xbtcPrecision = useSelector(xbtcPrecisionSelector)
+  const assetPrecision = useSelector(pcxPrecisionSelector)
 
   const [price, setPrice] = useState('')
   const [initPairId, setInitPairId] = useState(null)
@@ -139,8 +137,8 @@ export default function() {
       const messages = {
         successTitle: $t('TRADE_BUY_SUCCESS'),
         failTitle: $t('TRADE_BUY_FAIL'),
-        successMessage: `买单数量 ${amount} ${pairAsset}`,
-        failMessage: `交易hash ${status.txHash}`
+        successMessage: `买单数量 ${amount} XBTC`,
+        failMessage: ``
       }
 
       await showSnack(status, messages, dispatch)
@@ -202,8 +200,8 @@ export default function() {
               setPercentage((value / max) * 100)
             }
           }}
-          tokenName={pairAsset}
-          precision={xbtcPrecision}
+          tokenName="PCX"
+          precision={assetPrecision}
           error={!!amountErrMsg}
         />
       </div>
@@ -227,11 +225,7 @@ export default function() {
       />
       <div className="volume">
         <span>{$t('TRADE_VOLUME')} </span>
-        {pairCurrency ? (
-          <span>
-            {volume.toFixed(currencyPrecision)} {pairCurrency}
-          </span>
-        ) : null}
+        <span>{volume.toFixed(currencyPrecision)} XBTC</span>
       </div>
 
       <div className="button">
