@@ -2,7 +2,7 @@
 
 ## Architecture
 
-![image](https://github.com/chainx-org/chainx-wallet-dapps/tree/feature/document/images/architecture.jpg)
+![image](https://github.com/chainx-org/chainx-wallet-dapps/tree/feature/document/images/architecture.png)
 
 - Start Signer App in the computer, select account and node. It will start a small websocket server and expose the port when the Signer App initialize itself.
 - Then the Dapp Browser Wallet will initialize the Signaler-Connector, connects to the signer service, and gets the connection status.
