@@ -71,7 +71,9 @@ export default function() {
   }, [dispatch, accountId, mounted])
 
   const transfersElement = transfers.map((transfer, index) => {
-    return <Line transfer={transfer} key={index} />
+    return (
+      <Line transfer={transfer} key={index} currentAddress={account.address} />
+    )
   })
 
   if (loading) {
