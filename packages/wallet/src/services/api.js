@@ -7,7 +7,9 @@ export const btcMainNetHost = 'https://live.blockcypher.com/btc/'
 export const testNetDefaultNodeUrl = 'wss://testnet.w1.chainx.org.cn/ws'
 export const mainNetDefaultNodeUrl = 'wss://w1.chainx.org/ws'
 
-let api = mainNetApi
+export const mainNetApiV2 = 'https://api-v2.chainx.org/'
+
+let api = mainNetApiV2
 
 export const setApi = url => {
   api = url

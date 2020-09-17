@@ -7,6 +7,7 @@ import { Empty, MiniLoading } from '../../../../components'
 import Line from './Line'
 import { accountIdSelector } from '../../../selectors/assets'
 import { useIsMounted } from '../../../../utils/hooks'
+import { accountSelector } from '../../../../reducers/addressSlice'
 
 const Wrapper = styled.div`
   & > div.empty {
@@ -56,12 +57,13 @@ export default function() {
   const [loading, setLoading] = useState(true)
 
   const accountId = useSelector(accountIdSelector)
+  const account = useSelector(accountSelector)
   const dispatch = useDispatch()
   const mounted = useIsMounted()
 
   useEffect(() => {
     setLoading(true)
-    dispatch(fetchTransfers(accountId)).finally(() => {
+    dispatch(fetchTransfers(account.address)).finally(() => {
       if (mounted.current) {
         setLoading(false)
       }

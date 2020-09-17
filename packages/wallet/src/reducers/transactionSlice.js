@@ -1,5 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { getApi } from '../services/api'
+import { Account } from '@chainx-v2/account'
+import { useSelector } from 'react-redux'
+import { accountSelector } from './addressSlice'
 
 const transactionSlice = createSlice({
   name: 'asset',
@@ -32,9 +35,9 @@ export const {
   appendScrollTransfers
 } = transactionSlice.actions
 
-export const fetchTransfers = (accountId, page = 0) => async dispatch => {
+export const fetchTransfers = (address, page = 0) => async dispatch => {
   const resp = await window.fetch(
-    `${getApi()}account/${accountId}/transfers?page=${page}`
+    `${getApi()}accounts/${address}/transfers?page=${page}`
   )
   const data = await resp.json()
   if (!page || page <= 0) {
