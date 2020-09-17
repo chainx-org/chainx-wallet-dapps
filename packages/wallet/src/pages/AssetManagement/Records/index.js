@@ -2,9 +2,6 @@ import React, { useState } from 'react'
 import Card from '../../../components/Card'
 import styled from 'styled-components'
 import TransferRecords from './TransferRecords'
-import CrossChainRecords from './CrossChainRecord'
-import { useSelector } from 'react-redux'
-import { accountSelector } from '../../../reducers/addressSlice'
 import $t from '../../../locale'
 
 const Wrapper = styled(Card)`

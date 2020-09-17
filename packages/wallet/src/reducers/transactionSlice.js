@@ -1,8 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { getApi } from '../services/api'
-import { Account } from '@chainx-v2/account'
-import { useSelector } from 'react-redux'
-import { accountSelector } from './addressSlice'
 
 const transactionSlice = createSlice({
   name: 'asset',

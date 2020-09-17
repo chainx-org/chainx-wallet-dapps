@@ -1,7 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit'
 import { token } from '../../utils/constants'
 import { addressSelector } from '../../reducers/addressSlice'
-import { getChainx } from '../../services/chainx'
 import { Account } from '@chainx-v2/account'
 
 export const assetsInfoSelector = state => {
