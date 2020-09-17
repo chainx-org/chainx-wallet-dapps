@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getApi } from '../services/api'
+import { mainNetApiV2 } from '../services/api'
 
 const transactionSlice = createSlice({
   name: 'asset',
@@ -34,7 +34,7 @@ export const {
 
 export const fetchTransfers = (address, page = 0) => async dispatch => {
   const resp = await window.fetch(
-    `${getApi()}accounts/${address}/transfers?page=${page}`
+    `${mainNetApiV2}accounts/${address}/transfers?page=${page}`
   )
   const data = await resp.json()
   if (!page || page <= 0) {

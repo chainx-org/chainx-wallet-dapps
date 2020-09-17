@@ -9,7 +9,7 @@ export const mainNetDefaultNodeUrl = 'wss://w1.chainx.org/ws'
 
 export const mainNetApiV2 = 'https://api-v2.chainx.org/'
 
-let api = mainNetApiV2
+let api = mainNetApi
 
 export const setApi = url => {
   api = url

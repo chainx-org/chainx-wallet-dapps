@@ -5,9 +5,8 @@ import { fetchTransfers } from '../../../../reducers/transactionSlice'
 import { normalizedScrollTransfers } from '../selectors'
 import { Empty, MiniLoading } from '../../../../components'
 import Line from './Line'
-import { accountIdSelector } from '../../../selectors/assets'
 import { useIsMounted } from '../../../../utils/hooks'
-import { accountSelector } from '../../../../reducers/addressSlice'
+import { addressSelector } from '../../../../reducers/addressSlice'
 
 const Wrapper = styled.div`
   & > div.empty {
@@ -56,24 +55,22 @@ export default function() {
   const transfers = useSelector(normalizedScrollTransfers)
   const [loading, setLoading] = useState(true)
 
-  const accountId = useSelector(accountIdSelector)
-  const account = useSelector(accountSelector)
+  const address = useSelector(addressSelector)
+
   const dispatch = useDispatch()
   const mounted = useIsMounted()
 
   useEffect(() => {
     setLoading(true)
-    dispatch(fetchTransfers(account.address)).finally(() => {
+    dispatch(fetchTransfers(address)).finally(() => {
       if (mounted.current) {
         setLoading(false)
       }
     })
-  }, [dispatch, accountId, mounted])
+  }, [dispatch, address, mounted])
 
   const transfersElement = transfers.map((transfer, index) => {
-    return (
-      <Line transfer={transfer} key={index} currentAddress={account.address} />
-    )
+    return <Line transfer={transfer} key={index} currentAddress={address} />
   })
 
   if (loading) {

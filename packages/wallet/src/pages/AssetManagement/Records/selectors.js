@@ -2,7 +2,6 @@ import { createSelector } from '@reduxjs/toolkit'
 import { scrollTransfersSelector } from '../../../reducers/transactionSlice'
 import moment from 'moment'
 import { addressSelector } from '../../../reducers/addressSlice'
-import { getChainx } from '../../../services/chainx'
 import { ensure0xPrefix, toPrecision } from '../../../utils'
 
 import $t from '../../../locale'
