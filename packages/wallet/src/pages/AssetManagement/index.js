@@ -2,6 +2,7 @@ import React from 'react'
 import PcxCard from './PcxCard'
 import styled from 'styled-components'
 import Assets from './Assets'
+import Records from './Records'
 
 const Wrapper = styled.div`
   display: flex;
@@ -29,9 +30,9 @@ function AssetManagement() {
         <PcxCard />
         <Assets />
       </div>
-      {/*<div className="right">*/}
-      {/*  <Records />*/}
-      {/*</div>*/}
+      <div className="right">
+        <Records />
+      </div>
     </Wrapper>
   )
 }

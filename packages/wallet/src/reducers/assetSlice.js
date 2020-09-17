@@ -2,7 +2,7 @@ import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { getChainx } from '../services/chainx'
 import { camelCaseKey } from './util'
 import BigNumber from 'bignumber.js'
-import { setSS58Format } from '@chainx-v2/keyring'
+import { setSS58Format } from '@polkadot/keyring'
 
 const emptyAsset = {
   Locked: '0',

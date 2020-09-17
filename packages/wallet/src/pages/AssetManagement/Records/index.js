@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import Card from '../../../components/Card'
 import styled from 'styled-components'
 import TransferRecords from './TransferRecords'
-import CrossChainRecords from './CrossChainRecord'
 import $t from '../../../locale'
 
 const Wrapper = styled(Card)`
@@ -48,12 +47,13 @@ export default function() {
           >
             {$t('ASSET_TRANSFER_RECORD')}
           </li>
+          {/*
           <li
             onClick={() => setRecordType(2)}
             className={recordType === 2 ? 'active' : null}
           >
             {$t('ASSET_CROSS_CHAIN_RECORD')}
-          </li>
+          </li>*}
           {/*<li*/}
           {/*  onClick={() => setRecordType(3)}*/}
           {/*  className={recordType === 3 ? 'active' : null}*/}
@@ -64,7 +64,7 @@ export default function() {
       </header>
       <main>
         {recordType === 1 ? <TransferRecords /> : null}
-        {recordType === 2 ? <CrossChainRecords /> : null}
+        {/*{recordType === 2 ? <CrossChainRecords /> : null}*/}
       </main>
     </Wrapper>
   )

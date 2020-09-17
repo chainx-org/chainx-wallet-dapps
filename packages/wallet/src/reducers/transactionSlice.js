@@ -32,9 +32,9 @@ export const {
   appendScrollTransfers
 } = transactionSlice.actions
 
-export const fetchTransfers = (accountId, page = 0) => async dispatch => {
+export const fetchTransfers = (address, page = 0) => async dispatch => {
   const resp = await window.fetch(
-    `${getApi()}account/${accountId}/transfers?page=${page}`
+    `${getApi()}accounts/${address}/transfers?page=${page}`
   )
   const data = await resp.json()
   if (!page || page <= 0) {
