@@ -4,8 +4,8 @@
   "private": true,
   "dependencies": {
     "@babel/core": "7.6.0",
-    "@chainx-v2/account": "^0.0.33",
-    "@chainx-v2/api": "^0.0.33",
+    "@chainx-v2/account": "^0.0.35",
+    "@chainx-v2/api": "^0.0.35",
     "@polkadot/api": "^1.33.1",
     "@polkadot/keyring": "^3.4.1",
     "@polkadot/types": "^1.33.1",
