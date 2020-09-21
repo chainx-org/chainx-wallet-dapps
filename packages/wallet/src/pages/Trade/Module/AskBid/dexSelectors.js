@@ -5,7 +5,7 @@ import {
   pricePrecisionSelector
 } from '@reducers/dexSlice'
 import { assetsInfoSelector } from '@pages/selectors/assets'
-import { toPrecision } from '../../../../utils'
+import { safeAdd, toPrecision } from '../../../../utils'
 
 export const asksSelectors = state => state.dex.depth.asks
 export const bidsSelector = state => state.dex.depth.bids
@@ -75,12 +75,12 @@ export const normalizedAsksSelector = createSelector(asksSelectors, asks => {
 })
 
 export const normalizedBidsSelector = createSelector(bidsSelector, bids => {
-  return [...bids].reduce((result, [price, amount]) => {
+  return [...bids].reverse().reduce((result, [price, amount]) => {
     const len = result.length
     result.push({
       price,
       amount,
-      sumAmount: len <= 0 ? amount : result[len - 1].sum + amount
+      sumAmount: len <= 0 ? amount : safeAdd(result[len - 1].sumAmount, amount)
     })
     return result
   }, [])
