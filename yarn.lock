@@ -1058,10 +1058,10 @@
     bs58 "^4.0.1"
     tweetnacl "^1.0.0"
 
-"@chainx-v2/account@^0.0.33":
-  version "0.0.33"
-  resolved "https://registry.yarnpkg.com/@chainx-v2/account/-/account-0.0.33.tgz#6c190de4bc092b79b94897d0268b95d494ff2881"
-  integrity sha512-RSTlWmz9SQ4A9tXZqhQokcbrTjbcz+73n0dhSmpnCISQfjlxiDGRECy9dy/T1Oq5+2l8ydrgghz92+eLB7sQEg==
+"@chainx-v2/account@^0.0.35":
+  version "0.0.35"
+  resolved "https://registry.yarnpkg.com/@chainx-v2/account/-/account-0.0.35.tgz#d8c14b8ec1697a2f156683ebdc465d5dd59caaac"
+  integrity sha512-xA8Bg2U/xmIa4nlIHD/n7FY/XWmPCA9MGQW8hY4+C8Cw8VyKhAskEYLMK0OsWQpAwZi+3F6/cnSDo1G2VbATow==
   dependencies:
     "@polkadot/keyring" "^3.4.1"
     "@types/node" "^14.0.23"
@@ -1069,10 +1069,10 @@
     bs58 "^4.0.1"
     tweetnacl "^1.0.0"
 
-"@chainx-v2/api@^0.0.33":
-  version "0.0.33"
-  resolved "https://registry.yarnpkg.com/@chainx-v2/api/-/api-0.0.33.tgz#b6e322d1ad938dea3e7461e01b0a889e24d6f28b"
-  integrity sha512-mAuQ+wa7tVbh42wLRUUggT3fgRsMZvh9N/mdTOTJYsQRP3Pbw2b3PnRxlnsEs3EN2bj5tTFAiGT65f/EAsyAKw==
+"@chainx-v2/api@^0.0.35":
+  version "0.0.35"
+  resolved "https://registry.yarnpkg.com/@chainx-v2/api/-/api-0.0.35.tgz#9d2cb9d68c533fcd914f53c7b599714eef43f9ee"
+  integrity sha512-PdwoKprOC6a9qaUsl5VI57es7FKqttPdvVjRC4Lbkjt7l8eoIHfpzjiixc+cqd20Os3Kf3Wu1UDOsmtfenADBg==
   dependencies:
     "@babel/runtime" "^7.11.2"
     "@chainx-v2/account" "0.0.27"
