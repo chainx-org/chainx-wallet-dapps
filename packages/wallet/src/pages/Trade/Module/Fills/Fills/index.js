@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchFills, fillsSelector } from '../../../../../reducers/tradeSlice'
+import { fetchFills } from '../../../../../reducers/tradeSlice'
+import { normalizedCurrentFillsSelector } from '../../selectors'
 import { currentPairSelector } from '../../../../../reducers/dexSlice'
 import { Empty } from '../../../../../components'
 import TitledCard from '../../../components/TitledCard'
@@ -9,7 +10,7 @@ import Body from './Body'
 
 export default function() {
   const pair = useSelector(currentPairSelector)
-  const fills = useSelector(fillsSelector)
+  const fills = useSelector(normalizedCurrentFillsSelector)
   const dispatch = useDispatch()
 
   useEffect(() => {
