@@ -28,11 +28,12 @@ export default function({ handleClose = noneFunc }) {
     }
 
     setDisabled(true)
+    // add initvalue for register node
     try {
       const status = await signAndSendExtrinsic(accountAddress, {
         section: 'xStaking',
         method: 'register',
-        params: [name]
+        params: [name, 1000000000]
       })
       const messages = {
         successTitle: $t('staking_register_success'),
