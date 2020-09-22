@@ -48,7 +48,6 @@ export const getAccountOrders = address => async dispatch => {
 export const fetchDexPairs = () => async dispatch => {
   const api = await getChainxPromised()
   const pairs = await api.rpc.xspot.getTradingPairs()
-
   const json = pairs.toJSON()
   dispatch(setPairs(json))
   dispatch(setCurrentPair(json[0]))

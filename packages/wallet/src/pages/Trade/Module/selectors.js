@@ -1,8 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit'
-import {
-  currentPairSelector,
-  fillsSelector
-} from '../../../reducers/tradeSlice'
+import { fillsSelector } from '../../../reducers/tradeSlice'
+import { currentPairSelector } from '../../../reducers/dexSlice'
 import { assetsInfoSelector } from '../../selectors/assets'
 import { toPrecision } from '../../../utils'
 import { xbtcFreeSelector } from '../../AssetManagement/Assets/XbtcCard/selectors'
@@ -118,13 +116,11 @@ export const pairAssetFreeSelector = createSelector(
   }
 )
 
-export const pairCurrencySelector = createSelector(
-  currentPairSelector,
-  pair => (pair ? pair.currency : null)
+export const pairCurrencySelector = createSelector(currentPairSelector, pair =>
+  pair ? pair.currency : null
 )
-export const pairAssetSelector = createSelector(
-  currentPairSelector,
-  pair => (pair ? pair.assets : null)
+export const pairAssetSelector = createSelector(currentPairSelector, pair =>
+  pair ? pair.assets : null
 )
 export const pairShowPrecisionSelector = createSelector(
   currentPairSelector,
@@ -162,12 +158,9 @@ export const pairCurrencyPrecision = createSelector(
   }
 )
 
-export const maxBuyPriceSelector = createSelector(
-  currentPairSelector,
-  pair => {
-    return pair ? pair.maximumBid : 0
-  }
-)
+export const maxBuyPriceSelector = createSelector(currentPairSelector, pair => {
+  return pair ? pair.maximumBid : 0
+})
 
 export const minSellPriceSelector = createSelector(
   currentPairSelector,
