@@ -23,7 +23,7 @@ export default function() {
   const pair = useSelector(currentPairSelector)
   const fills = useSelector(normalizedCurrentFillsSelector)
   const asset = useSelector(currentPairAssetInfo)
-  debugger
+
   return (
     <Wrapper>
       <Table>
