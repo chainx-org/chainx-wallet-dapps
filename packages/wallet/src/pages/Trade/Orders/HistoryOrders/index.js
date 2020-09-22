@@ -13,7 +13,7 @@ import { Empty } from '../../../../components'
 export default function() {
   const address = useSelector(addressSelector)
   const chainx = getChainx()
-  const accountId = chainx.account.decodeAddress(address, false)
+  const accountId = address
   const orders = useSelector(historyOrdersSelector)
 
   const dispatch = useDispatch()
