@@ -33,7 +33,7 @@ export default function({ handleClose = noneFunc }) {
       const status = await signAndSendExtrinsic(accountAddress, {
         section: 'xStaking',
         method: 'register',
-        params: [name, Math.pow(10, 8)]
+        params: [name, 1000000000]
       })
       const messages = {
         successTitle: $t('staking_register_success'),
