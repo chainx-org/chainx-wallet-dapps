@@ -4,7 +4,7 @@ import Header from './Header'
 import { useDispatch, useSelector } from 'react-redux'
 import { addressSelector } from '@reducers/addressSlice'
 import { getAccountOrders } from '@reducers/dexSlice'
-import HistoryOrders from './HistoryOrders'
+//import HistoryOrders from './HistoryOrders'
 import UserOrders from './UserOrders'
 
 export default function() {
@@ -20,7 +20,8 @@ export default function() {
   return (
     <Wrapper>
       <Header idx={idx} setIdx={setIdx} />
-      {idx === 0 ? <UserOrders /> : <HistoryOrders />}
+      <UserOrders />
+      {/*idx === 0 ? <UserOrders /> : <HistoryOrders />*/}
     </Wrapper>
   )
 }
