@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  currentPairSelector,
-  fetchFills
-} from '../../../../../reducers/tradeSlice'
+import { fetchFills } from '../../../../../reducers/tradeSlice'
+import { normalizedCurrentFillsSelector } from '../../selectors'
+import { currentPairSelector } from '../../../../../reducers/dexSlice'
 import { Empty } from '../../../../../components'
 import TitledCard from '../../../components/TitledCard'
-import { normalizedCurrentFillsSelector } from '../../selectors'
 import Head from './Head'
 import Body from './Body'
 

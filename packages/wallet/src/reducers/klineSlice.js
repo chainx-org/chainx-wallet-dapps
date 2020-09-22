@@ -2,7 +2,7 @@ import { createSlice, createSelector } from '@reduxjs/toolkit'
 import { getApi } from '../services/api'
 import moment from 'moment'
 import { getSeconds } from '../utils'
-import { currentPairIdSelector } from './tradeSlice'
+import { currentPairIdSelector } from './dexSlice'
 
 const klineSlice = createSlice({
   name: 'kline',

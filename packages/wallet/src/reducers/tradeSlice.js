@@ -1,6 +1,5 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit'
-import { getApi } from '../services/api'
-import { remove0xPrefix } from '../utils'
+import { createSlice } from '@reduxjs/toolkit'
+import { mainNetApiV2 } from '../services/api'
 
 const tradeSlice = createSlice({
   name: 'trade',
@@ -46,50 +45,34 @@ export const {
   setHistoryOrders
 } = tradeSlice.actions
 
-export const fetchFills = (pairId, count = 20) => async dispatch => {
-  const resp = await window.fetch(
-    `${getApi()}trade/latestfills/${pairId}?count=${count}`
-  )
-
+export const fetchFills = pairId => async dispatch => {
+  const resp = await window.fetch(`${mainNetApiV2}dex/fills/${pairId}`)
   const data = await resp.json()
-  dispatch(setFills({ pairId, fills: data }))
+  dispatch(setFills({ pairId, fills: data.items }))
 }
 
 export const fetchQuotations = (pairId, count = 50) => async dispatch => {
-  const resp = await window.fetch(
-    `${getApi()}trade/handicap/${pairId}?count=${count}`
-  )
-  const data = await resp.json()
-  dispatch(setQuotations(data))
+  //const resp = await window.fetch(
+  //  `${getApi()}trade/handicap/${pairId}?count=${count}`
+  //)
+  //const data = await resp.json()
+  //dispatch(setQuotations(data))
 }
 
-export const fetchNowOrders = accountId => async dispatch => {
-  const resp = await window.fetch(
-    `${getApi()}trade/userorders/${remove0xPrefix(accountId)}?status=0`
-  )
+export const fetchNowOrders = pairId => async dispatch => {
+  const resp = await window.fetch(`${mainNetApiV2}dex/open_orders/${pairId}`)
 
   const data = await resp.json()
   dispatch(setNowOrders(data.items))
 }
 
-export const fetchHistoryOrders = accountId => async dispatch => {
+export const fetchHistoryOrders = (accountId, pairId) => async dispatch => {
   const resp = await window.fetch(
-    `${getApi()}trade/userorders/${remove0xPrefix(accountId)}?status=3`
+    `${mainNetApiV2}dex/${accountId}/account_orders/${pairId}`
   )
-
   const data = await resp.json()
   dispatch(setHistoryOrders(data.items))
 }
-
-export const pairsSelector = state => state.trade.pairs
-export const currentPairSelector = state => state.trade.currentPair
-export let currentPairIdSelector = createSelector(currentPairSelector, pair => {
-  if (!pair) {
-    return null
-  }
-
-  return pair.id
-})
 
 export const fillsSelector = state => state.trade.fills
 export const asksSelector = state => state.trade.quotations.asks

@@ -6,7 +6,7 @@ import AmountCell from '../../components/AmountCell'
 import TimeCell from './TimeCell'
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { currentPairSelector } from '../../../../../reducers/tradeSlice'
+import { currentPairSelector } from '../../../../../reducers/dexSlice'
 import {
   currentPairAssetInfo,
   normalizedCurrentFillsSelector
@@ -23,19 +23,18 @@ export default function() {
   const pair = useSelector(currentPairSelector)
   const fills = useSelector(normalizedCurrentFillsSelector)
   const asset = useSelector(currentPairAssetInfo)
-
   return (
     <Wrapper>
       <Table>
         <TableBody>
           {fills.map((fill, index) => {
-            const { precision, unitPrecision } = pair || {
-              precision: 0,
-              unitPrecision: 0
+            const { pipDecimals, tickDecimals } = pair || {
+              pipDecimals: 0,
+              tickDecimals: 0
             }
-            const price = Number(
-              toPrecision(fill.price, pair.precision)
-            ).toFixed(precision - unitPrecision)
+            const price = Number(toPrecision(fill.price, pipDecimals)).toFixed(
+              pipDecimals - tickDecimals
+            )
             const m = moment(fill['block.time'])
             const time = m.format('HH:mm:ss')
             const fullTime = m.format(timeFormat)
@@ -52,7 +51,7 @@ export default function() {
                   </PriceDownCell>
                 )}
                 <AmountCell
-                  value={fill.amount}
+                  value={fill.turnover}
                   precision={asset && asset.precision}
                   style={{ width: '42%' }}
                 />

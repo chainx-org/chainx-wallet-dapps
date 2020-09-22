@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
 import TitledCard from '../../components/TitledCard'
-import {
-  currentPairSelector,
-  fetchQuotations
-} from '../../../../reducers/tradeSlice'
+import { fetchQuotations } from '../../../../reducers/tradeSlice'
+import { currentPairSelector } from '../../../../reducers/dexSlice'
+
 import { useDispatch, useSelector } from 'react-redux'
 import Asks from './Asks'
 import Price from './Price'
