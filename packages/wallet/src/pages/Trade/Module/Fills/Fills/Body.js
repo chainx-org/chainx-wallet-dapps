@@ -23,6 +23,7 @@ export default function() {
   const pair = useSelector(currentPairSelector)
   const fills = useSelector(normalizedCurrentFillsSelector)
   const asset = useSelector(currentPairAssetInfo)
+  debugger
   return (
     <Wrapper>
       <Table>
@@ -35,9 +36,11 @@ export default function() {
             const price = Number(toPrecision(fill.price, pipDecimals)).toFixed(
               pipDecimals - tickDecimals
             )
+            const assetDecimals = asset && asset.info ? asset.info.decimals : 0
             const m = moment(fill['block.time'])
             const time = m.format('HH:mm:ss')
             const fullTime = m.format(timeFormat)
+            const amount = Number(toPrecision(fill.turnover, assetDecimals))
 
             return (
               <TableRow key={index}>
@@ -51,7 +54,7 @@ export default function() {
                   </PriceDownCell>
                 )}
                 <AmountCell
-                  value={fill.turnover}
+                  value={amount}
                   precision={asset && asset.precision}
                   style={{ width: '42%' }}
                 />

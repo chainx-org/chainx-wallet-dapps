@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 import { localeSelector } from '../../../reducers/settingsSlice'
 
 const signerReleasesPageUrl =
-  'https://github.com/chainx-org/chainx-signer/releases'
+  'https://github.com/wliyongfeng/chainx2-signer/releases'
 
 export default function({ handleClose }) {
   const locale = useSelector(localeSelector)
