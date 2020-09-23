@@ -25,6 +25,7 @@ import {
 } from '@reducers/dexSlice'
 import { pairPrecisionSelector } from '@pages/Trade/Module/AskBid/dexSelectors'
 import { pcxPrecisionSelector } from '@reducers/assetSlice'
+import moment from 'moment'
 
 export default function() {
   const accountAddress = useSelector(addressSelector)
@@ -85,8 +86,7 @@ export default function() {
                 <div>
                   <span className={order.side} />
                   <span className="time">
-                    {order.createdAt}
-                    {/*{moment(order['block.time']).format('YYYY/MM/DD HH:mm')}*/}
+                    {moment(order.blockTime).format('YYYY/MM/DD HH:mm')}
                   </span>
                 </div>
               </TimeCell>
