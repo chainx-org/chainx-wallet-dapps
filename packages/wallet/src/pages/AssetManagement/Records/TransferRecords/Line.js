@@ -4,7 +4,7 @@ import { Address, Hash } from '../../../../components'
 import Detail from '../components/Detail'
 import Label from '../components/Label'
 import $t from '../../../../locale'
-import { toPrecision } from '../../../../utils'
+import { toPrecision, getLocalTime } from '../../../../utils'
 
 export default function({ transfer, currentAddress }) {
   const [open, setOpen] = useState(false)
@@ -12,12 +12,13 @@ export default function({ transfer, currentAddress }) {
   useOutsideClick(wrapper, () => {
     setOpen(false)
   })
+  debugger
 
   return (
     <div className="line" onClick={() => setOpen(!open)} ref={wrapper}>
       <header>
         <span>{transfer.token}</span>
-        <span>{transfer.time}</span>
+        <span>{getLocalTime(transfer.indexer.blockTime)}</span>
       </header>
       <main>
         <span>{toPrecision(transfer.value, 8)}</span>
