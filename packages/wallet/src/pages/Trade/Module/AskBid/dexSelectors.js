@@ -4,11 +4,12 @@ import {
   latestPriceSelector,
   pricePrecisionSelector
 } from '@reducers/dexSlice'
+import { bidsSelector, asksSelector } from '@reducers/tradeSlice'
 import { assetsInfoSelector } from '@pages/selectors/assets'
 import { safeAdd, toPrecision } from '../../../../utils'
 
-export const asksSelectors = state => state.dex.depth.asks
-export const bidsSelector = state => state.dex.depth.bids
+//export const asksSelector = state => state.dex.depth.asks
+//export const bidsSelector = state => state.dex.depth.bids
 
 export const currentPairAssetPrecisionSelector = createSelector(
   currentPairSelector,
@@ -59,29 +60,40 @@ export const showPriceSelector = createSelector(
   }
 )
 
-export const normalizedAsksSelector = createSelector(asksSelectors, asks => {
+export const compare = property => {
+  return function(a, b) {
+    var value1 = a[property]
+    var value2 = b[property]
+    return value2 - value1
+  }
+}
+export const normalizedAsksSelector = createSelector(asksSelector, asks => {
   return [...asks]
-    .reduce((result, [price, amount]) => {
+    .reduce((result, { price, amount }) => {
       const len = result.length
       result.push({
         price,
         amount,
-        sumAmount: len <= 0 ? amount : result[len - 1].sum + amount
+        sumAmount:
+          len <= 0 ? amount : safeAdd(result[len - 1].sumAmount, amount)
       })
 
       return result
     }, [])
-    .reverse()
+    .sort(compare('price'))
 })
 
 export const normalizedBidsSelector = createSelector(bidsSelector, bids => {
-  return [...bids].reverse().reduce((result, [price, amount]) => {
-    const len = result.length
-    result.push({
-      price,
-      amount,
-      sumAmount: len <= 0 ? amount : safeAdd(result[len - 1].sumAmount, amount)
-    })
-    return result
-  }, [])
+  return [...bids]
+    .reduce((result, { price, amount }) => {
+      const len = result.length
+      result.push({
+        price,
+        amount,
+        sumAmount:
+          len <= 0 ? amount : safeAdd(result[len - 1].sumAmount, amount)
+      })
+      return result
+    }, [])
+    .sort(compare('price'))
 })

@@ -52,11 +52,9 @@ export const fetchFills = pairId => async dispatch => {
 }
 
 export const fetchQuotations = (pairId, count = 50) => async dispatch => {
-  //const resp = await window.fetch(
-  //  `${getApi()}trade/handicap/${pairId}?count=${count}`
-  //)
-  //const data = await resp.json()
-  //dispatch(setQuotations(data))
+  const resp = await window.fetch(`${mainNetApiV2}dex/handicap/${pairId}`)
+  const data = await resp.json()
+  dispatch(setQuotations(data))
 }
 
 export const fetchNowOrders = pairId => async dispatch => {
@@ -75,8 +73,10 @@ export const fetchHistoryOrders = (accountId, pairId) => async dispatch => {
 }
 
 export const fillsSelector = state => state.trade.fills
-export const asksSelector = state => state.trade.quotations.asks
-export const bidsSelector = state => state.trade.quotations.bids
+export const asksSelector = state =>
+  state.trade.quotations ? state.trade.quotations.asks : []
+export const bidsSelector = state =>
+  state.trade.quotations ? state.trade.quotations.bids : []
 export const userOrders = state => state.trade.nowOrders
 export const historyOrdersSelector = state => state.trade.historyOrders
 

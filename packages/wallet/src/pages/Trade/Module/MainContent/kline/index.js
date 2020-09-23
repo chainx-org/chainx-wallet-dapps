@@ -8,7 +8,7 @@ import {
 import { typeCandlesSelector } from './selectors'
 import Galaxy from './Galaxy/main'
 import TypeSelector from './TypeSelector'
-import { currentPairIdSelector } from '../../../../../reducers/tradeSlice'
+import { currentPairIdSelector } from '../../../../../reducers/dexSlice'
 import Stat from './Stat'
 import { networkSelector } from '../../../../../reducers/settingsSlice'
 

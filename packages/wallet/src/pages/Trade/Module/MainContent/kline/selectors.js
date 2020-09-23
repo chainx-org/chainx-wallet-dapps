@@ -3,7 +3,7 @@ import {
   klineTypeSelector,
   candlesSelector
 } from '../../../../../reducers/klineSlice'
-import { currentPairSelector } from '../../../../../reducers/tradeSlice'
+import { currentPairSelector } from '../../../../../reducers/dexSlice'
 import { toPrecision } from '../../../../../utils'
 
 function normalizePrice(price, precision, unitPrecision) {
