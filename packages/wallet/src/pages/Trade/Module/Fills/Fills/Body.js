@@ -37,7 +37,7 @@ export default function() {
               pipDecimals - tickDecimals
             )
             const assetDecimals = asset && asset.info ? asset.info.decimals : 0
-            const m = moment(fill['block.time'])
+            const m = moment(fill.blockTime)
             const time = m.format('HH:mm:ss')
             const fullTime = m.format(timeFormat)
             const amount = Number(toPrecision(fill.turnover, assetDecimals))
