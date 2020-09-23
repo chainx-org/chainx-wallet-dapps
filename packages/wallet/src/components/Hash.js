@@ -10,7 +10,7 @@ import LinkWrapper from './common/LinkWrapper'
 export default function({ hash = '', length = 5 }) {
   const network = useSelector(networkSelector)
   const host = network === 'testnet' ? testNetExplorer : mainNetExplorer
-  const url = `${host}txs/${ensure0xPrefix(hash)}`
+  const url = `${host}extrinsics/${ensure0xPrefix(hash)}`
 
   let result = remove0xPrefix(hash)
   if (hash.length > 2 * length) {
