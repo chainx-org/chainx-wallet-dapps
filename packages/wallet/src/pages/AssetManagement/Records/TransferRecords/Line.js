@@ -12,7 +12,6 @@ export default function({ transfer, currentAddress }) {
   useOutsideClick(wrapper, () => {
     setOpen(false)
   })
-  debugger
 
   return (
     <div className="line" onClick={() => setOpen(!open)} ref={wrapper}>
