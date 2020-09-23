@@ -22,6 +22,10 @@ export function safeAdd(...items) {
   }, 0)
 }
 
+export function getLocalTime(nS) {
+  return new Date(parseInt(nS)).toLocaleString().replace(/:\d{1,2}$/, ' ')
+}
+
 export function normalizeNumber(num, precision = 0) {
   return Number(num.toFixed(precision))
 }
