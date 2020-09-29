@@ -22,6 +22,7 @@ const Wrapper = styled.div`
   position: relative;
   & > div.info {
     display: flex;
+    width: 228px;
 
     img {
       width: 40px;
