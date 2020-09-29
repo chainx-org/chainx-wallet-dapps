@@ -20,7 +20,7 @@ const Main = styled.main`
       display: flex;
       justify-content: center;
       & > ul {
-        min-width: 1248px;
+        width: 1248px;
       }
     }
   }
