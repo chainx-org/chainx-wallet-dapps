@@ -14,13 +14,13 @@ const Main = styled.main`
   & > div {
     margin: 0 auto;
     min-width: 1280px;
-    max-width: 1440px;
+    max-width: 1540px;
 
     &.chunks {
       display: flex;
       justify-content: center;
       & > ul {
-        min-width: 1248px;
+        min-width: 1362px;
       }
     }
   }
