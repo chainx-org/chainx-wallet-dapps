@@ -38,6 +38,10 @@ const Wrapper = styled.div`
           color: #000000;
           line-height: 20px;
         }
+        span.title {
+          display: inline-block;
+          width: 91px;
+        }
       }
 
       & > ul {
