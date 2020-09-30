@@ -40,7 +40,7 @@ const Wrapper = styled.div`
         }
         span.title {
           display: inline-block;
-          width: 91px;
+          max-width: 91px;
         }
       }
 
