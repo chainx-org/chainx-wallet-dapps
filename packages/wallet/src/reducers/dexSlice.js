@@ -42,6 +42,7 @@ export const {
 export const getAccountOrders = address => async dispatch => {
   const api = await getChainxPromised()
   const orders = await api.rpc.xspot.getOrdersByAccount(address, 0, 100)
+  console.log('getAccountOrders', orders.toJSON())
   dispatch(setOrders(orders.toJSON()))
 }
 

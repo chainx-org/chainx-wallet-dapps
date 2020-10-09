@@ -43,6 +43,10 @@ export default {
     en: 'Number',
     zh: '编号'
   },
+  TRADE_SIDE: {
+    en: 'Type',
+    zh: '买入 / 卖出'
+  },
   TRADE_PAIR: {
     en: 'Pair',
     zh: '交易对'

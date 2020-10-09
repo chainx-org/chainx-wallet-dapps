@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Table, TableBody, TableRow } from '@chainx/ui'
 import { toPrecision } from '../../../../utils'
 import {
+  BaseCell,
   ActionCell,
   FillCell,
   IndexCell,
@@ -26,6 +27,7 @@ import {
 import { pairPrecisionSelector } from '@pages/Trade/Module/AskBid/dexSelectors'
 import { pcxPrecisionSelector } from '@reducers/assetSlice'
 import moment from 'moment'
+import $t from '../../../../locale'
 
 export default function() {
   const accountAddress = useSelector(addressSelector)
@@ -91,6 +93,9 @@ export default function() {
                 </div>
               </TimeCell>
               <IndexCell style={{ width: '5%' }}>{order.orderId}</IndexCell>
+              <BaseCell style={{ width: '10%' }}>
+                {order.side === 'Sell' ? $t('TRADE_SELL') : $t('TRADE_BUY')}
+              </BaseCell>
               <PairCell style={{ width: '8%' }}>PCX/XBTC</PairCell>
               <NumberCell style={{ width: '11%' }}>
                 {price + ' '}

@@ -10,6 +10,7 @@ export default function() {
         <TableRow>
           <HeadCell style={{ width: '12%' }}>{$t('TRADE_DATE')}</HeadCell>
           <HeadCell style={{ width: '5%' }}>{$t('TRADE_INDEX')}</HeadCell>
+          <HeadCell style={{ width: '10%' }}>{$t('TRADE_SIDE')}</HeadCell>
           <HeadCell style={{ width: '8%' }}>{$t('TRADE_PAIR')}</HeadCell>
           <HeadCell style={{ width: '11%' }}>
             {$t('TRADE_ORDER_PRICE')}
