@@ -27,9 +27,17 @@ export default {
     en: 'Open Orders',
     zh: '当前委托'
   },
+  TRADE_ORDERS_NONE: {
+    en: 'No Orders',
+    zh: '暂无委托'
+  },
   TRADE_HISTORY_ORDERS: {
     en: 'Order History',
     zh: '历史委托'
+  },
+  TRADE_HISTORY_ORDERS_NONE: {
+    en: 'No Order History',
+    zh: '无历史委托'
   },
   TRADE_INDEX: {
     en: 'Number',
@@ -122,5 +130,37 @@ export default {
   TRADE_ORDER_STATUS_PARTIAL_FILLED: {
     en: 'PartFill&Cancelled',
     zh: '部分成交已撤销'
+  },
+  TRADE_MODULE_FILLS_FILLED: {
+    en: 'No Data',
+    zh: '无成交'
+  },
+  HISTORY_TRADE_ID: {
+    en: 'ID',
+    zh: 'ID'
+  },
+  HISTORY_TRADE_PRICE: {
+    en: 'Price',
+    zh: '价格'
+  },
+  HISTORY_TRADE_TURNOVER: {
+    en: 'Turn Over',
+    zh: '成交数量'
+  },
+  HISTORY_TRADE_MAKER: {
+    en: 'Maker Account',
+    zh: 'Maker账户'
+  },
+  HISTORY_TRADE_MAKER_ORDER_ID: {
+    en: 'Maker Order Id',
+    zh: 'Maker委托编号'
+  },
+  HISTORY_TRADE_TAKER: {
+    en: 'Taker Account',
+    zh: 'Taker账户'
+  },
+  HISTORY_TRADE_TAKER_ORDER_ID: {
+    en: 'Taker Order Id',
+    zh: 'Taker委托编号'
   }
 }

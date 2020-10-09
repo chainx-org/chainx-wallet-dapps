@@ -64,6 +64,9 @@ export default function initStore() {
   })
 
   store.subscribe(() => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log(store.getState())
+    }
     const { address, node, settings } = store.getState()
     saveState({ address, node, settings })
   })

@@ -8,6 +8,7 @@ import {
 } from '../../../../reducers/tradeSlice'
 import Content from './Content'
 import { Empty } from '../../../../components'
+import $t from '../../../../locale'
 
 export default function() {
   const address = useSelector(addressSelector)
@@ -30,7 +31,7 @@ export default function() {
         <>
           <TableHead />
           <Empty
-            text="无历史委托"
+            text={$t('TRADE_HISTORY_ORDERS_NONE')}
             style={{ marginTop: 30, marginBottom: 30 }}
           />
         </>

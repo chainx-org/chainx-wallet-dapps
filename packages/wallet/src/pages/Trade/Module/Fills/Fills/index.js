@@ -7,6 +7,7 @@ import { Empty } from '../../../../../components'
 import TitledCard from '../../../components/TitledCard'
 import Head from './Head'
 import Body from './Body'
+import $t from '../../../../../locale'
 
 export default function() {
   const pair = useSelector(currentPairSelector)
@@ -34,7 +35,12 @@ export default function() {
       <header>Latest</header>
       <Head />
       <Body />
-      {fills.length <= 0 && <Empty text={'无成交'} style={{ marginTop: 30 }} />}
+      {fills.length <= 0 && (
+        <Empty
+          text={$t('TRADE_MODULE_FILLS_FILLED')}
+          style={{ marginTop: 30 }}
+        />
+      )}
     </TitledCard>
   )
 }

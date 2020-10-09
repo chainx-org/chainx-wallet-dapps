@@ -46,12 +46,14 @@ export const {
 } = tradeSlice.actions
 
 export const fetchFills = pairId => async dispatch => {
+  // https://api-v2.chainx.org/dex/fills/0
   const resp = await window.fetch(`${mainNetApiV2}dex/fills/${pairId}`)
   const data = await resp.json()
   dispatch(setFills({ pairId, fills: data.items }))
 }
 
 export const fetchQuotations = (pairId, count = 50) => async dispatch => {
+  // https://api-v2.chainx.org/dex/handicap/0
   const resp = await window.fetch(`${mainNetApiV2}dex/handicap/${pairId}`)
   const data = await resp.json()
   dispatch(setQuotations(data))
@@ -64,12 +66,19 @@ export const fetchNowOrders = pairId => async dispatch => {
   dispatch(setNowOrders(data.items))
 }
 
-export const fetchHistoryOrders = (accountId, pairId) => async dispatch => {
+export const fetchHistoryOrders = (accountId, pairId = 0) => async dispatch => {
+  //  废弃
+  // const resp = await window.fetch(
+  //   `${mainNetApiV2}dex/${accountId}/account_orders/${pairId}`
+  // )
   const resp = await window.fetch(
-    `${mainNetApiV2}dex/${accountId}/account_orders/${pairId}`
+    `${mainNetApiV2}dex/fills/${pairId}?page=0&page_size=20`
   )
   const data = await resp.json()
-  dispatch(setHistoryOrders(data.items))
+  console.log(data.items)
+  dispatch(
+    setHistoryOrders(data.items).filter(val => val.accountId === accountId)
+  )
 }
 
 export const fillsSelector = state => state.trade.fills

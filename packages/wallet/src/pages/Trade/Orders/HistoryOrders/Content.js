@@ -7,16 +7,11 @@ import {
   pairCurrencyPrecision
 } from '../../Module/selectors'
 import { toPrecision } from '../../../../utils'
-import {
-  FillCell,
-  IndexCell,
-  NumberCell,
-  PairCell,
-  TimeCell
-} from '../UserOrders/Wrapper'
+import { NumberCell, BaseCell, TimeCell } from '../UserOrders/Wrapper'
 import moment from 'moment'
 import { HeadCell, StatCell } from '../Wrapper'
 import $t from '../../../../locale'
+import { Amount } from '@components'
 
 export default function() {
   const orders = useSelector(historyOrdersSelector)
@@ -27,27 +22,26 @@ export default function() {
     <Table>
       <TableHead>
         <TableRow>
-          <HeadCell style={{ width: '12%' }}>{$t('TRADE_DATE')}</HeadCell>
-          <HeadCell style={{ width: '5%' }}>{$t('TRADE_INDEX')}</HeadCell>
-          <HeadCell style={{ width: '8%' }}>{$t('TRADE_PAIR')}</HeadCell>
-          <HeadCell style={{ width: '11%' }}>
-            {$t('TRADE_ORDER_PRICE')}
-          </HeadCell>
-          <HeadCell style={{ width: '14%' }}>
-            {$t('TRADE_ORDER_AMOUNT')}
+          <HeadCell style={{ width: '5%' }}>{$t('HISTORY_TRADE_ID')}</HeadCell>
+          <HeadCell style={{ width: '8%' }}>
+            {$t('HISTORY_TRADE_PRICE')}
           </HeadCell>
           <HeadCell style={{ width: '15%' }}>
-            {$t('TRADE_ORDER_FILLED_PERCENT')}
+            {$t('HISTORY_TRADE_TURNOVER')}
           </HeadCell>
           <HeadCell style={{ width: '11%' }}>
-            {$t('TRADE_ORDER_FILL_AVG_PRICE')}
+            {$t('HISTORY_TRADE_MAKER')}
           </HeadCell>
           <HeadCell style={{ width: '15%' }}>
-            {$t('TRADE_ORDER_FILL_ALL_VOLUME')}
+            {$t('HISTORY_TRADE_MAKER_ORDER_ID')}
           </HeadCell>
           <HeadCell style={{ textAlign: 'right' }}>
-            {$t('COMMON_STATUS')}
+            {$t('HISTORY_TRADE_TAKER')}
           </HeadCell>
+          <HeadCell style={{ textAlign: 'right' }}>
+            {$t('HISTORY_TRADE_TAKER_ORDER_ID')}
+          </HeadCell>
+          <HeadCell style={{ width: '12%' }}>{$t('TRADE_DATE')}</HeadCell>
         </TableRow>
       </TableHead>
 
@@ -78,53 +72,35 @@ export default function() {
 
           return (
             <TableRow key={index}>
+              <BaseCell style={{ width: '5%' }}>
+                {order.tradingHistoryIdx}
+              </BaseCell>
+              <BaseCell style={{ width: '11%' }}>
+                <Amount
+                  style={{ opacity: 0.32 }}
+                  value={order.price}
+                  precision={8}
+                />
+              </BaseCell>
+              <BaseCell style={{ width: '11%' }}>
+                <Amount value={order.turnover} precision={8} />
+              </BaseCell>
+              <NumberCell style={{ width: '11%' }}>{order.maker}</NumberCell>
+              <NumberCell style={{ width: '11%' }}>
+                {order.makerOrderId.toString()}
+              </NumberCell>
+              <NumberCell style={{ width: '11%' }}>{order.taker}</NumberCell>
+              <NumberCell style={{ width: '11%' }}>
+                {order.takerOrderId.toString()}
+              </NumberCell>
               <TimeCell style={{ width: '12%' }}>
                 <div>
                   <span className={order.direction} />
                   <span className="time">
-                    {moment(order['block.time']).format('YYYY/MM/DD HH:mm')}
+                    {moment(order['blockTime']).format('YYYY/MM/DD HH:mm')}
                   </span>
                 </div>
               </TimeCell>
-              <IndexCell style={{ width: '5%' }}>{order.id}</IndexCell>
-              <PairCell style={{ width: '8%' }}>{`${currencyPair[0]} / ${
-                currencyPair[1]
-              }`}</PairCell>
-              <NumberCell style={{ width: '11%' }}>
-                {price + ' '}
-                <span>{currencyPair[1]}</span>
-              </NumberCell>
-              <NumberCell style={{ width: '14%' }}>
-                {amount + ' '}
-                <span>{currencyPair[0]}</span>
-              </NumberCell>
-              <FillCell
-                style={{ width: '15%' }}
-                className={order.hasfill_amount <= 0 ? 'zero' : order.direction}
-              >
-                <span className="amount">{`${toPrecision(
-                  order.hasfill_amount,
-                  assetPrecision
-                )}`}</span>
-                <span className="percentage"> / {fillPercentage}% </span>
-              </FillCell>
-              <NumberCell style={{ width: '11%' }}>
-                {fillAveragePrice + ' '}
-                <span>{currencyPair[1]}</span>
-              </NumberCell>
-              <NumberCell style={{ width: '15%' }}>
-                {totalFillCurrency + ' '}
-                <span>{currencyPair[1]}</span>
-              </NumberCell>
-              <StatCell>
-                {order.status === 'Canceled'
-                  ? $t('TRADE_ORDER_STATUS_CANCELED')
-                  : order.status === 'Filled'
-                  ? $t('TRADE_ORDER_STATUS_FILLED')
-                  : order.status === 'ParitialFillAndCanceled'
-                  ? $t('TRADE_ORDER_STATUS_PARTIAL_FILLED')
-                  : ''}
-              </StatCell>
             </TableRow>
           )
         })}

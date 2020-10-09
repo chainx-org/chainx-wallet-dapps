@@ -9,9 +9,9 @@ export default function({ idx, setIdx }) {
         <li className={idx === 0 ? 'active' : null} onClick={() => setIdx(0)}>
           {$t('TRADE_OPEN_ORDERS')}
         </li>
-        {/*<li className={idx === 1 ? 'active' : null} onClick={() => setIdx(1)}>
+        <li className={idx === 1 ? 'active' : null} onClick={() => setIdx(1)}>
           {$t('TRADE_HISTORY_ORDERS')}
-        </li>  */}
+        </li>
       </ul>
     </Header>
   )

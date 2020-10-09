@@ -5,6 +5,7 @@ import Content from './Content'
 import { Empty } from '../../../../components'
 import { getAccountOrders, ordersSelector } from '@reducers/dexSlice'
 import { addressSelector } from '@reducers/addressSlice'
+import $t from '../../../../locale'
 
 export default function() {
   const address = useSelector(addressSelector)
@@ -29,7 +30,10 @@ export default function() {
       {orders.data.length > 0 ? (
         <Content />
       ) : (
-        <Empty text="暂无委托" style={{ marginTop: 30, marginBottom: 30 }} />
+        <Empty
+          text={$t('TRADE_ORDERS_NONE')}
+          style={{ marginTop: 30, marginBottom: 30 }}
+        />
       )}
     </>
   )
