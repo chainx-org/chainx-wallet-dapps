@@ -6,12 +6,12 @@
     "@babel/core": "7.6.0",
     "@chainx-v2/account": "^0.0.35",
     "@chainx-v2/api": "^0.0.35",
-    "@polkadot/api": "^1.33.1",
-    "@polkadot/keyring": "^3.4.1",
-    "@polkadot/types": "^1.33.1",
     "@chainx/signer-connector": "^1.0.12",
     "@chainx/ui": "0.1.4",
     "@chainx/util": "^2.22.31",
+    "@polkadot/api": "^1.33.1",
+    "@polkadot/keyring": "^3.4.1",
+    "@polkadot/types": "^1.33.1",
     "@polkadot/util": "^1.6.1",
     "@reduxjs/toolkit": "^1.0.4",
     "@svgr/webpack": "4.3.2",
@@ -173,6 +173,11 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-do-expressions": "^7.8.3",
-    "@babel/plugin-proposal-optional-chaining": "^7.8.3"
+    "@babel/plugin-proposal-optional-chaining": "^7.8.3",
+    "@types/node": "^14.11.2",
+    "@types/react": "^16.9.49",
+    "@types/react-dom": "^16.9.8",
+    "awesome-typescript-loader": "^5.2.1",
+    "typescript": "^4.0.3"
   }
 }

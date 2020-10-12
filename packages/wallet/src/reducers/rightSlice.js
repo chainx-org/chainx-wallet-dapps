@@ -24,4 +24,4 @@ export const fetchProposals = () => async dispatch => {
   dispatch(setProposals(data))
 }
 
-export const proposalsSelector = state => state.right.proposals
+export const proposalsSelector = state => state.reducers
