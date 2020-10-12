@@ -14,7 +14,7 @@ export const currentPairAssetInfo = createSelector(
     if (!pair) {
       return null
     }
-
+    // 没有
     const assets = pair.assets
     return assetsInfo.find(asset => asset.name === assets)
   }

@@ -42,7 +42,7 @@ export const {
 export const getAccountOrders = address => async dispatch => {
   const api = await getChainxPromised()
   const orders = await api.rpc.xspot.getOrdersByAccount(address, 0, 100)
-  console.log('getAccountOrders', orders.toJSON())
+  // console.log('getAccountOrders', orders.toJSON())
   dispatch(setOrders(orders.toJSON()))
 }
 
@@ -60,6 +60,19 @@ export const fetchDexDepth = () => async dispatch => {
 
   dispatch(setDepth(depth.toJSON()))
 }
+
+// baseCurrency: 0
+// highestBid: 64900
+// id: 0
+// latestPrice: 65000
+// latestPriceUpdatedAt: 0
+// lowestAsk: 65000
+// maxValidBid: 75000
+// minValidAsk: 54900
+// pipDecimals: 9
+// quoteCurrency: 1
+// tickDecimals: 2
+// tradable: true
 
 export const currentPairSelector = state => state.dex.currentPair
 export const currentPairIdSelector = createSelector(
