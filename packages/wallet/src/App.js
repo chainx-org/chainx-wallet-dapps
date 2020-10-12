@@ -27,6 +27,7 @@ import Staking from '@pages/Staking'
 import { fetchLocks } from '@reducers/assetSlice'
 import Trade from '@pages/Trade'
 import Trust from '@pages/Trust'
+import Right from '@pages/Right'
 
 const isChrome =
   /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
@@ -98,6 +99,7 @@ function App() {
           {/*<Route exact path="/mining" component={CrossChainMining} />*/}
           <Route exact path="/staking" component={Staking} />
           <Route exact path="/trust" component={Trust} />
+          <Route exact path="/right" component={Right} />
           <Route exact path="/trade" component={Trade} />
           {/*<Route exact path="/contract" component={Contract} />*/}
           {/*<Route exact path="/txs" component={HistoryTransactions} />*/}

@@ -9,6 +9,7 @@ import txs from './txs'
 import common from './common'
 import predict from './predict'
 import sign from './sign'
+import right from './right'
 
 const intention = {
   INTENTION_VALIDATOR: {
@@ -166,5 +167,6 @@ export default {
   ...notification,
   ...txs,
   ...predict,
-  ...sign
+  ...sign,
+  ...right
 }

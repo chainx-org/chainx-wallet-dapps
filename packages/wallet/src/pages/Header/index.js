@@ -117,6 +117,11 @@ export default function() {
           </NavLink>
         </Nav>
         <Nav>
+          <NavLink exact activeClassName="active" to="/right">
+            {$t('RIGHT')}
+          </NavLink>
+        </Nav>
+        <Nav>
           <NavLink exact activeClassName="active" to="/trade">
             {$t('TRADE')}
           </NavLink>
