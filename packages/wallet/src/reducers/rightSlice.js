@@ -23,5 +23,6 @@ export const fetchProposals = () => async dispatch => {
 
   dispatch(setProposals(data))
 }
+debugger
 
-export const proposalsSelector = state => state.reducers
+export const proposalsSelector = state => state.right.proposals
