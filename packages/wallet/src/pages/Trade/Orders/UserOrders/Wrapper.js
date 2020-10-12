@@ -6,6 +6,7 @@ export const BaseCell = styled(TableCell)`
   letter-spacing: 0.2px;
   line-height: 16px !important;
   color: #000000;
+  text-align: center !important;
 `
 
 export const TimeCell = styled(BaseCell)`
