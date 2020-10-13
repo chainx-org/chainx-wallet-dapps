@@ -34,5 +34,13 @@ export default {
   RIGHT_REFERENCE: {
     en: 'References',
     zh: '参考文献'
+  },
+  RIGHT_ADD_IMAGE: {
+    en: 'ADD IMAGE',
+    zh: '提交原像'
+  },
+  RIGHT_ADD_PROPOSAL: {
+    en: 'ADD Proposal',
+    zh: '提交议案'
   }
 }

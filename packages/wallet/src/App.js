@@ -28,6 +28,7 @@ import { fetchLocks } from '@reducers/assetSlice'
 import Trade from '@pages/Trade'
 import Trust from '@pages/Trust'
 import Right from '@pages/Right'
+import 'antd/dist/antd.css'
 
 const isChrome =
   /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
