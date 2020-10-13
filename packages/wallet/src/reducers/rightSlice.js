@@ -25,3 +25,5 @@ export const fetchProposals = () => async dispatch => {
 }
 
 export const proposalsSelector = state => state.right.proposals
+
+export default rightSlice.reducer

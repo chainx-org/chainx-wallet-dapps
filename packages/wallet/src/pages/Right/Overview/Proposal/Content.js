@@ -1,28 +1,40 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { historyOrdersSelector } from '../../../../reducers/tradeSlice'
+import { proposalsSelector } from '../../../../reducers/rightSlice'
 import { TableBody, TableRow } from '@chainx/ui'
 import { BaseCell } from '../../../Trade/Orders/UserOrders/Wrapper'
+import { FlexCell } from './Wrapper'
 import $t from '../../../../locale'
 import { Amount } from '@components'
+import { hexToBytes, remove0xPrefix } from '../../../../utils'
+import { Button } from '../index'
+import addIcon from '../addIcon'
 
 export default function() {
-  const orders = useSelector(historyOrdersSelector)
-
+  const list = useSelector(proposalsSelector)
+  console.log(list)
   return (
     <TableBody>
-      {orders.map((order, index) => {
+      {list.map((val, index) => {
         return (
           <TableRow key={index}>
-            <BaseCell style={{ width: '50%' }}>
-              <Amount value={order.turnover} precision={8} />
-            </BaseCell>
+            <FlexCell>
+              <span>{String(val.index)}</span>
+              <span>{val.proposer}</span>
+            </FlexCell>
             <BaseCell style={{ width: '25%' }}>
-              <Amount value={order.turnover} precision={8} />
+              <span>{hexToBytes(remove0xPrefix(val.imageHash))}</span>
             </BaseCell>
-            <BaseCell style={{ width: '25%' }}>
-              <Amount value={order.turnover} precision={8} />
-            </BaseCell>
+            <FlexCell>
+              <span>
+                <Amount value={val.balance} precision={8} />
+                PCX
+              </span>
+              <Button>
+                {addIcon()}
+                图像
+              </Button>
+            </FlexCell>
           </TableRow>
         )
       })}

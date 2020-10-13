@@ -21,6 +21,7 @@ import oddEvenReducer from './oddevenSlice'
 import miningAssetReducer from './miningAssetSlice'
 import validatorReducer from './validatorSlice'
 import dexReducer from './dexSlice'
+import rightReducer from './rightSlice'
 
 export default combineReducers({
   test: testReducer,
@@ -44,5 +45,6 @@ export default combineReducers({
   oddEven: oddEvenReducer,
   miningAsset: miningAssetReducer,
   validator: validatorReducer,
-  dex: dexReducer
+  dex: dexReducer,
+  right: rightReducer
 })

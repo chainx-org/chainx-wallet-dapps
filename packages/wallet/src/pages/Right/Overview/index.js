@@ -40,38 +40,39 @@ const ButtonGroup = styled.div`
   justify-content: flex-end;
   padding-right: 32px;
   margin: 10px 0;
-  button {
-    display: flex;
-    align-items: center;
-    height: 32px;
-    border-radius: 4px;
-    border: none;
-    background: #fff;
-    margin-left: 10px;
+`
+
+export const Button = styled.button`
+  display: flex;
+  align-items: center;
+  height: 32px;
+  border-radius: 4px;
+  border: none;
+  background: #fff;
+  margin-left: 10px;
+  svg {
+    width: 28px;
+    height: 28px;
+    padding: 7px;
+    box-sizing: border-box;
+    fill: #ffffff;
+    margin-right: 5px;
+    background-color: #f6c94a;
+    border-radius: 50%;
+  }
+  &:hover {
+    background-color: #f6c94a;
+    color: rgba(255, 253, 251, 0.875);
+    text-shadow: none;
+    border: 1px;
+    border-color: #f6c94a;
     svg {
-      width: 28px;
-      height: 28px;
-      padding: 7px;
-      box-sizing: border-box;
       fill: #ffffff;
-      margin-right: 5px;
-      background-color: #f6c94a;
-      border-radius: 50%;
     }
-    &:hover {
-      background-color: #f6c94a;
-      color: rgba(255, 253, 251, 0.875);
-      text-shadow: none;
-      border: 1px;
-      border-color: #f6c94a;
-      svg {
-        fill: #ffffff;
-      }
-    }
-    &:focus {
-      outline: none;
-      border: none;
-    }
+  }
+  &:focus {
+    outline: none;
+    border: none;
   }
 `
 
@@ -120,14 +121,14 @@ export default function() {
         </section> */}
       </Head>
       <ButtonGroup>
-        <button>
+        <Button>
           {addIcon()}
           提交原像
-        </button>
-        <button>
+        </Button>
+        <Button>
           {addIcon()}
           提交议案
-        </button>
+        </Button>
       </ButtonGroup>
       <Proposal />
     </Wrapper>
