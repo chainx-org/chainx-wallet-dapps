@@ -92,7 +92,7 @@ export default function() {
       <Head>
         <section className="detail">
           <div>
-            <span>{$('RIGHT_PROPOSAL')}</span>
+            <span>{$t('RIGHT_PROPOSAL')}</span>
             <span className="number">1</span>
           </div>
           <div>
