@@ -10,6 +10,7 @@ import common from './common'
 import predict from './predict'
 import sign from './sign'
 import right from './right'
+import council from './council'
 
 const intention = {
   INTENTION_VALIDATOR: {
@@ -168,5 +169,6 @@ export default {
   ...txs,
   ...predict,
   ...sign,
-  ...right
+  ...right,
+  ...council
 }

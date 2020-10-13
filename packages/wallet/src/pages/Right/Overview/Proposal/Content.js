@@ -8,7 +8,7 @@ import $t from '../../../../locale'
 import { Amount } from '@components'
 import { hexToBytes, remove0xPrefix } from '../../../../utils'
 import { Button } from '../index'
-import addIcon from '../addIcon'
+import addIcon from '../../../../components/addIcon'
 
 export default function() {
   const list = useSelector(proposalsSelector)

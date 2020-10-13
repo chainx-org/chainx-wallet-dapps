@@ -3,8 +3,11 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { fetchProposals } from '../../../reducers/rightSlice'
 import styled from 'styled-components'
+import { Empty } from '../../../components'
 import addIcon from '../../../components/addIcon.js'
-import Proposal from './Proposal/index.js'
+import checkIcon from '../../../components/checkIcon.js'
+import { Table } from 'antd'
+// import Proposal from './Proposal/index.js'
 import $t from '../../../locale'
 import { Modal } from 'antd'
 import { Form, Input, Select } from 'antd'
@@ -21,6 +24,27 @@ const selectAfter = (
     <Option value="pcx">PCX</Option>
   </Select>
 )
+
+const columns = [
+  {
+    title: '成员',
+    dataIndex: 'name',
+    key: 'name',
+    width: '80%',
+    render: text => <a>{text}</a>
+  },
+  {
+    title: '备份',
+    dataIndex: 'age',
+    key: 'age',
+    width: '10%'
+  },
+  {
+    title: '投票',
+    key: 'action',
+    width: '10%'
+  }
+]
 
 const Wrapper = styled.div`
   display: flex;
@@ -92,6 +116,18 @@ export const Button = styled.button`
   }
 `
 
+const WrapperTable = styled.div`
+  background-color: #f00;
+  .ant-table-thead {
+    .ant-table-cell {
+      padding: 12px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 16px;
+    }
+  }
+`
+
 export default function() {
   const [loading, setLoading] = useState(false)
   const [addImageVisible, setAddImageVisible] = useState(false)
@@ -118,36 +154,45 @@ export default function() {
       <Head>
         <section className="detail">
           <div>
-            <span>{$t('RIGHT_PROPOSAL')}</span>
+            <span>{$t('COUNCIL_SEAT')}</span>
+            <span className="number">1 / 13</span>
+          </div>
+          <div>
+            <span>{'runners up'}</span>
             <span className="number">1</span>
           </div>
           <div>
-            <span>{$t('RIGHT_TOTAL')}</span>
+            <span>{$t('COUNCIL_CANDIDATE')}</span>
             <span className="number">1</span>
           </div>
         </section>
-        <section className="detail">
-          <div>
-            <span>{$t('RIGHT_REFERENCE')}</span>
-            <span className="number">1</span>
-          </div>
-          <div>
-            <span>{$t('RIGHT_TOTAL')}</span>
-            <span className="number">1</span>
-          </div>
-        </section>
+        <section className="detail"></section>
       </Head>
       <ButtonGroup>
         <Button onClick={() => setAddImageVisible(true)}>
-          {addIcon()}
-          {$t('RIGHT_ADD_IMAGE')}
+          {checkIcon()}
+          {$t('COUNCIL_VOTE')}
         </Button>
         <Button onClick={() => setAddProposalVisible(true)}>
           {addIcon()}
-          {$t('RIGHT_ADD_PROPOSAL')}
+          {$t('COUNCIL_ADD_CANDIDATE')}
         </Button>
       </ButtonGroup>
-      <Proposal />
+      <WrapperTable>
+        <Table
+          columns={columns}
+          dataSource={[]}
+          className="table-chainx"
+          locale={{
+            emptyText: (
+              <Empty
+                text={$t('RIGHT_PROPOSAL_NONE')}
+                style={{ marginTop: 30, marginBottom: 30 }}
+              />
+            )
+          }}
+        />
+      </WrapperTable>
       <Modal
         title="Basic Modal"
         visible={addImageVisible}

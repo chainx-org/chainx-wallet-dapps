@@ -28,6 +28,7 @@ import { fetchLocks } from '@reducers/assetSlice'
 import Trade from '@pages/Trade'
 import Trust from '@pages/Trust'
 import Right from '@pages/Right'
+import Council from '@pages/Council'
 import 'antd/dist/antd.css'
 
 const isChrome =
@@ -101,6 +102,7 @@ function App() {
           <Route exact path="/staking" component={Staking} />
           <Route exact path="/trust" component={Trust} />
           <Route exact path="/right" component={Right} />
+          <Route exact path="/council" component={Council} />
           <Route exact path="/trade" component={Trade} />
           {/*<Route exact path="/contract" component={Contract} />*/}
           {/*<Route exact path="/txs" component={HistoryTransactions} />*/}
