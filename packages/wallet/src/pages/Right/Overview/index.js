@@ -5,6 +5,7 @@ import { fetchProposals } from '../../../reducers/rightSlice'
 import styled from 'styled-components'
 import addIcon from './addIcon.js'
 import Proposal from './Proposal/index.js'
+import $t from '../../../locale'
 
 const Wrapper = styled.div`
   display: flex;
@@ -91,21 +92,21 @@ export default function() {
       <Head>
         <section className="detail">
           <div>
-            <span>提案</span>
+            <span>{$('RIGHT_PROPOSAL')}</span>
             <span className="number">1</span>
           </div>
           <div>
-            <span>总共</span>
+            <span>{$t('RIGHT_TOTAL')}</span>
             <span className="number">1</span>
           </div>
         </section>
         <section className="detail">
           <div>
-            <span>参考文献</span>
+            <span>{$t('RIGHT_REFERENCE')}</span>
             <span className="number">1</span>
           </div>
           <div>
-            <span>总共</span>
+            <span>{$t('RIGHT_TOTAL')}</span>
             <span className="number">1</span>
           </div>
         </section>

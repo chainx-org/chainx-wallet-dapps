@@ -22,5 +22,17 @@ export default {
   RIGHT_PROPOSAL_NONE: {
     en: 'No Proposal',
     zh: '暂无提案'
+  },
+  RIGHT_IMAGE: {
+    en: 'Image',
+    zh: '图像'
+  },
+  RIGHT_TOTAL: {
+    en: 'Total',
+    zh: '总共'
+  },
+  RIGHT_REFERENCE: {
+    en: 'References',
+    zh: '参考文献'
   }
 }

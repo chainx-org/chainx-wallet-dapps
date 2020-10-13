@@ -32,7 +32,7 @@ export default function() {
               </span>
               <Button>
                 {addIcon()}
-                图像
+                {$t('RIGHT_IMAGE')}
               </Button>
             </FlexCell>
           </TableRow>
