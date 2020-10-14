@@ -8,6 +8,12 @@ import Proposal from './Proposal/index.js'
 import $t from '../../../locale'
 import { Modal } from 'antd'
 import { Form, Input, Select } from 'antd'
+import {
+  WrapperTable,
+  Button,
+  ButtonGroup,
+  Head
+} from '../../Council/Overview/index'
 
 const { Option } = Select
 
@@ -25,71 +31,6 @@ const selectAfter = (
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-`
-
-const Head = styled.div`
-    display: flex;
-    padding: 16px 32px;
-    height: 80px;
-    align-items: stretch;
-    justify-content: space-between;
-    .detail {
-      display: flex;
-      justify-content: space-between;
-      div {
-        display: flex;
-        flex-direction: column;
-        font-size: 14px;
-        span {
-          margin: 0 10px;
-          color: rgba(78, 78, 78, 0.66);
-        }
-        .number{
-          font-size: 24px;
-        }
-      }
-    }
-  }
-`
-const ButtonGroup = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 32px;
-  margin: 10px 0;
-`
-
-export const Button = styled.button`
-  display: flex;
-  align-items: center;
-  height: 32px;
-  border-radius: 4px;
-  border: none;
-  background: #fff;
-  margin-left: 10px;
-  svg {
-    width: 28px;
-    height: 28px;
-    padding: 7px;
-    box-sizing: border-box;
-    fill: #ffffff;
-    margin-right: 5px;
-    background-color: #f6c94a;
-    border-radius: 50%;
-  }
-  &:hover {
-    background-color: #f6c94a;
-    color: rgba(255, 253, 251, 0.875);
-    text-shadow: none;
-    border: 1px;
-    border-color: #f6c94a;
-    svg {
-      fill: #ffffff;
-    }
-  }
-  &:focus {
-    outline: none;
-    border: none;
-  }
 `
 
 export default function() {

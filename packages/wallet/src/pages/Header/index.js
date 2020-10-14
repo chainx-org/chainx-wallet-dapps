@@ -5,6 +5,8 @@ import mainNetLogo from './logo.svg'
 import testNetLogoEn from './testnet-en.svg'
 import testNetLogoZh from './testnet-zh.svg'
 import { NavLink } from 'react-router-dom'
+import { Menu, Dropdown } from 'antd'
+import { CaretDownOutlined } from '@ant-design/icons'
 import Name from './Name'
 import { useDispatch, useSelector } from 'react-redux'
 import { localeSelector, networkSelector } from '../../reducers/settingsSlice'
@@ -58,6 +60,9 @@ const Nav = styled.span`
     opacity: 0.5;
     color: #fff;
     text-decoration: none;
+    span {
+      margin-left: 5px;
+    }
 
     &.active {
       opacity: 0.8;
@@ -67,6 +72,21 @@ const Nav = styled.span`
   line-height: 22px;
   font-weight: 600;
   cursor: pointer;
+`
+const MenuNav = styled(Nav)`
+  margin-left: 0;
+  & > a {
+    display: inline-flex;
+    height: 100%;
+    align-items: center;
+    opacity: 0.5;
+    color: #ccc;
+    text-decoration: none;
+
+    &.active {
+      opacity: 1;
+    }
+  }
 `
 
 export default function() {
@@ -116,16 +136,40 @@ export default function() {
             {$t('TRUST')}
           </NavLink>
         </Nav>
-        <Nav>
-          <NavLink exact activeClassName="active" to="/right">
-            {$t('RIGHT')}
-          </NavLink>
-        </Nav>
-        <Nav>
-          <NavLink exact activeClassName="active" to="/council">
-            {$t('COUNCIL')}
-          </NavLink>
-        </Nav>
+        <Dropdown
+          overlay={
+            <Menu>
+              <Menu.Item key="0">
+                <MenuNav>
+                  <NavLink exact activeClassName="active" to="/ws/right">
+                    {$t('RIGHT')}
+                  </NavLink>
+                </MenuNav>
+              </Menu.Item>
+              <Menu.Item key="1">
+                <MenuNav>
+                  <NavLink exact activeClassName="active" to="/ws/council">
+                    {$t('COUNCIL')}
+                  </NavLink>
+                </MenuNav>
+              </Menu.Item>
+              <Menu.Item key="3">
+                <MenuNav>
+                  <NavLink exact activeClassName="active" to="/ws/treasury">
+                    {$t('TREASURY')}
+                  </NavLink>
+                </MenuNav>
+              </Menu.Item>
+            </Menu>
+          }
+          trigger={['click']}
+        >
+          <Nav>
+            <NavLink to="/ws" onClick={e => e.preventDefault()}>
+              治理 <CaretDownOutlined />
+            </NavLink>
+          </Nav>
+        </Dropdown>
         <Nav>
           <NavLink exact activeClassName="active" to="/trade">
             {$t('TRADE')}

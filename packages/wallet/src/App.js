@@ -29,6 +29,7 @@ import Trade from '@pages/Trade'
 import Trust from '@pages/Trust'
 import Right from '@pages/Right'
 import Council from '@pages/Council'
+import Treasury from '@pages/Treasury'
 import 'antd/dist/antd.css'
 
 const isChrome =
@@ -101,8 +102,9 @@ function App() {
           {/*<Route exact path="/mining" component={CrossChainMining} />*/}
           <Route exact path="/staking" component={Staking} />
           <Route exact path="/trust" component={Trust} />
-          <Route exact path="/right" component={Right} />
-          <Route exact path="/council" component={Council} />
+          <Route exact path="/ws/right" component={Right} />
+          <Route exact path="/ws/council" component={Council} />
+          <Route exact path="/ws/treasury" component={Treasury} />
           <Route exact path="/trade" component={Trade} />
           {/*<Route exact path="/contract" component={Contract} />*/}
           {/*<Route exact path="/txs" component={HistoryTransactions} />*/}

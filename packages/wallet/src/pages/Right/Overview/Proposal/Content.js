@@ -7,7 +7,7 @@ import { FlexCell } from './Wrapper'
 import $t from '../../../../locale'
 import { Amount } from '@components'
 import { hexToBytes, remove0xPrefix } from '../../../../utils'
-import { Button } from '../index'
+import { Button } from '../../../Council/Overview/index'
 import addIcon from '../../../../components/addIcon'
 
 export default function() {

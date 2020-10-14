@@ -11,6 +11,7 @@ import predict from './predict'
 import sign from './sign'
 import right from './right'
 import council from './council'
+import treasury from './treasury'
 
 const intention = {
   INTENTION_VALIDATOR: {
@@ -170,5 +171,6 @@ export default {
   ...predict,
   ...sign,
   ...right,
-  ...council
+  ...council,
+  ...treasury
 }
