@@ -75,12 +75,13 @@ const Nav = styled.span`
 `
 const MenuNav = styled(Nav)`
   margin-left: 0;
+  color: #000000;
   & > a {
     display: inline-flex;
     height: 100%;
     align-items: center;
-    opacity: 0.5;
-    color: #ccc;
+
+    color: #000;
     text-decoration: none;
 
     &.active {
