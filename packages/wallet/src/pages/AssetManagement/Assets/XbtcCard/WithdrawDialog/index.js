@@ -70,7 +70,11 @@ export default function({ handleClose }) {
       return false
     }
 
-    const valid = WAValidator.validate(address, 'BTC', 'testnet')
+    const valid = WAValidator.validate(
+      address,
+      'BTC',
+      network === 'testnet' ? 'testnet' : 'prod'
+    )
     if (!valid) {
       setAddressErrMsg('地址格式错误')
       return false
