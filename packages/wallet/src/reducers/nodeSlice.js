@@ -4,7 +4,7 @@ const nodeSlice = createSlice({
   name: 'node',
   initialState: {
     name: 'w1.cn',
-    url: 'wss://w1.chainx.org.cn/ws'
+    url: 'wss://w1.chainx.org/ws'
   },
   reducers: {
     setNode(state, action) {

@@ -199,7 +199,7 @@ export const fetchNowBtcStatus = () => async dispatch => {
   const useBtcMainNet = true
 
   const response = await window.fetch(
-    `https://api.chainx.org.cn/bitx/${
+    `https://api.chainx.org/bitx/${
       useBtcMainNet ? 'mainnet' : 'testnet'
     }/block/tip`
   )

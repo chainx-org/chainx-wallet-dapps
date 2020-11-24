@@ -51,12 +51,12 @@ function migrateState(state) {
 
 export const defaultMainNetNode = {
   name: 'w1.cn',
-  url: 'wss://w1.chainx.org.cn/ws'
+  url: 'wss://w1.chainx.org/ws'
 }
 
 export const defaultTestNetNode = {
-  name: 'testnet.w1.org.cn',
-  url: 'wss://testnet.w1.chainx.org.cn/ws'
+  name: 'testnet.w1.org',
+  url: 'wss://testnet.w1.chainx.org/ws'
 }
 
 export default function initStore() {
