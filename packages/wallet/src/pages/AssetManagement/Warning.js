@@ -11,8 +11,11 @@ const Wrapper = styled.div`
 function Warning() {
   const url = (
     <div>
-      <span>{$t('COMMON_NEW_DAPP')}</span>
-      <a href="https://dapp-v2.chainx.org/#/accounts">{$t('COMMON_CLICK')}</a>
+      <span>{$t('ASSET_NEW_DAPP1')}</span>
+      <a href="https://dapp-v2.chainx.org/#/accounts">
+        {$t('ASSET_CLICK_THIS')}
+      </a>
+      <span>{$t('ASSET_NEW_DAPP2')}</span>
     </div>
   )
   return (

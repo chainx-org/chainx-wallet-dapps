@@ -280,5 +280,19 @@ export default {
       '使用支持 OP_RETURN 的钱包向锁仓地址转账（转账金额即锁仓金额），并输入OP_RETURN 信息。',
     en:
       'Transfer BTC to the lock-up address that supports OP_RETURN,( transfer amount is lockup amount),and enter OP_RETURN information.'
+  },
+  ASSET_NEW_DAPP1: {
+    zh: 'ChainX主网已更新至2.0版本，请前往',
+    en: 'ChianX main network has been updated to version 2.0, go to'
+  },
+  ASSET_NEW_DAPP2: {
+    zh:
+      '体验2.0钱包。 1.0钱包功能已全部停止，此网页将在12月15日后失效。如果您还没有保存私钥或助记词，请及时从1.0钱包导出。因此给您带来的不便敬请谅解。',
+    en:
+      "to experience 2.0 Wallet. The 1.0 Wallet feature has been stopped and this page will expire after December 15. If you haven't saved your private key or mable, please export it from your 1.0 Wallet in time. Therefore, please understand the inconvenience."
+  },
+  ASSET_CLICK_THIS: {
+    zh: '这里',
+    en: ' this '
   }
 }

@@ -90,14 +90,5 @@ export default {
   COMMON_FREE: {
     en: 'Free:',
     zh: '余额：'
-  },
-  COMMON_NEW_DAPP: {
-    en:
-      '1.0 wallet has been suspended, please transfer to 2.0 wallet, new wallet entrance：',
-    zh: '1.0钱包已暂停使用，请大家转移至2.0钱包，新钱包入口：'
-  },
-  COMMON_CLICK: {
-    en: 'click here',
-    zh: '点这里'
   }
 }
