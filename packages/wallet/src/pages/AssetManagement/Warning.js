@@ -16,6 +16,9 @@ function Warning() {
         {$t('ASSET_CLICK_THIS')}
       </a>
       <span>{$t('ASSET_NEW_DAPP2')}</span>
+      <a href="https://mp.weixin.qq.com/s/rTzelAmg_jzTHu0LKacswg">
+        https://mp.weixin.qq.com/s/rTzelAmg_jzTHu0LKacswg
+      </a>
     </div>
   )
   return (

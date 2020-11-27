@@ -287,9 +287,9 @@ export default {
   },
   ASSET_NEW_DAPP2: {
     zh:
-      '体验2.0钱包。 1.0钱包功能已全部停止，此网页将在12月15日后失效。如果您还没有保存私钥或助记词，请及时从1.0钱包导出。因此给您带来的不便敬请谅解。',
+      '体验2.0钱包。 1.0钱包功能已全部停止，此网页将在12月15日后失效。如果您还没有保存私钥或助记词，请及时从1.0钱包导出。因此给您带来的不便敬请谅解。附：ChainX 2.0 钱包迁移指南：',
     en:
-      "to experience 2.0 Wallet. The 1.0 Wallet feature has been stopped and this page will expire after December 15. If you haven't saved your private key or mable, please export it from your 1.0 Wallet in time. Therefore, please understand the inconvenience."
+      "to experience 2.0 Wallet. The 1.0 Wallet feature has been stopped and this page will expire after December 15. If you haven't saved your private key or mable, please export it from your 1.0 Wallet in time. Therefore, please understand the inconvenience.Attached: ChainX 2.0 Wallet Migration Guide: "
   },
   ASSET_CLICK_THIS: {
     zh: '这里',
